@@ -87,7 +87,7 @@ export function Navigation() {
                     ? "text-gray-900 hover:text-yellow-500" 
                     : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
                 )}>
-                  <Link href="/about">About Us</Link>
+                  <Link href="/about-us">About Us</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
@@ -104,14 +104,14 @@ export function Navigation() {
                   <ul className="grid w-[200px] gap-2 p-2 bg-white">
                     <li>
                       <NavigationMenuLink asChild>
-                        <Link href="/services" className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                        <Link href="/our-services" className="block p-2 hover:bg-accent rounded-sm text-gray-900">
                           <div className="font-medium">Our Services</div>
                         </Link>
                       </NavigationMenuLink>
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <Link href="/products" className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                        <Link href="/our-products" className="block p-2 hover:bg-accent rounded-sm text-gray-900">
                           <div className="font-medium">Our Products</div>
                         </Link>
                       </NavigationMenuLink>
@@ -128,7 +128,7 @@ export function Navigation() {
                     ? "text-gray-900 hover:text-yellow-500" 
                     : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
                 )}>
-                  <Link href="/partners">Our Partners</Link>
+                  <Link href="/our-partners">Our Partners</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
@@ -164,7 +164,7 @@ export function Navigation() {
                     ? "text-gray-900 hover:text-yellow-500" 
                     : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
                 )}>
-                  <Link href="/contact">Contact Us</Link>
+                  <Link href="/contact-us">Contact Us</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>
@@ -219,7 +219,7 @@ export function Navigation() {
               {/* Mobile menu items */}
               <nav className="flex-1 px-4 py-6 space-y-2">
                 <Link
-                  href="/about"
+                  href="/about-us"
                   className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                   onClick={closeMobileMenu}
                 >
@@ -232,14 +232,14 @@ export function Navigation() {
                     Our Offerings
                   </div>
                   <Link
-                    href="/services"
+                    href="/our-services"
                     className="block px-6 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                     onClick={closeMobileMenu}
                   >
                     Our Services
                   </Link>
                   <Link
-                    href="/products"
+                    href="/our-products"
                     className="block px-6 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                     onClick={closeMobileMenu}
                   >
@@ -248,7 +248,7 @@ export function Navigation() {
                 </div>
 
                 <Link
-                  href="/partners"
+                  href="/our-partners"
                   className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                   onClick={closeMobileMenu}
                 >
@@ -272,7 +272,7 @@ export function Navigation() {
                 </Link>
                 
                 <Link
-                  href="/contact"
+                  href="/contact-us"
                   className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                   onClick={closeMobileMenu}
                 >
