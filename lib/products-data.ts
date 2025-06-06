@@ -5,6 +5,7 @@ export interface Product {
   logo: string
   image: string
   heroImage: string
+  videoUrl: string
   description: string
   shortDescription: string
   subtitle: string
@@ -30,6 +31,7 @@ export const products: Product[] = [
     logo: "/logos/ACE.png",
     image: "/assets/image1.png",
     heroImage: "/assets/image1.png",
+    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     description: "Advanced Clinical Excellence platform for healthcare management and patient care optimization.",
     shortDescription: "Advanced Clinical Excellence platform for healthcare management and patient care optimization.",
     subtitle: "Transforming Clinical Excellence Through Technology",
@@ -82,6 +84,8 @@ export const products: Product[] = [
     logo: "/logos/CliniQ.png",
     image: "/assets/image2.png",
     heroImage: "/assets/image2.png",
+    // videoUrl: "https://www.youtube.com/watch?v=9bZkp7q19f0",
+    videoUrl: "https://youtube.com/shorts/KUNycXG36fA?si=c2CSUi61UfTmi0Yx",
     description: "Comprehensive clinic management solution with integrated patient scheduling and records.",
     shortDescription: "Comprehensive clinic management solution with integrated patient scheduling and records.",
     subtitle: "Complete Clinic Management Made Simple",
@@ -134,6 +138,7 @@ export const products: Product[] = [
     logo: "/logos/LabLink.png",
     image: "/assets/image3.png",
     heroImage: "/assets/image3.png",
+    videoUrl: "https://www.youtube.com/watch?v=ScMzIvxBSi4",
     description: "Laboratory information management system for seamless diagnostic workflows.",
     shortDescription: "Laboratory information management system for seamless diagnostic workflows.",
     subtitle: "Connecting Diagnostics, Delivering Results",
@@ -186,6 +191,7 @@ export const products: Product[] = [
     logo: "/logos/AxonCare.png",
     image: "/assets/image4.png",
     heroImage: "/assets/image4.png",
+    videoUrl: "https://www.youtube.com/watch?v=jNQXAC9IVRw",
     description: "Complete healthcare ecosystem connecting patients, providers, and care coordinators.",
     shortDescription: "Complete healthcare ecosystem connecting patients, providers, and care coordinators.",
     subtitle: "Connecting Care, Empowering Health",
@@ -238,6 +244,7 @@ export const products: Product[] = [
     logo: "/logos/SurgeHub.png",
     image: "/assets/image5.png",
     heroImage: "/assets/image5.png",
+    videoUrl: "https://www.youtube.com/watch?v=M7lc1UVf-VE",
     description: "Surgical workflow management platform for operating room efficiency and patient safety.",
     shortDescription: "Surgical workflow management platform for operating room efficiency and patient safety.",
     subtitle: "Transforming Operating Theatre Management",
@@ -290,6 +297,7 @@ export const products: Product[] = [
     logo: "/logos/QUIK.png",
     image: "/assets/image6.png",
     heroImage: "/assets/image6.png",
+    videoUrl: "https://www.youtube.com/watch?v=kJQP7kiw5Fk",
     description: "Quick access healthcare platform for rapid patient consultations and care delivery.",
     shortDescription: "Quick access healthcare platform for rapid patient consultations and care delivery.",
     subtitle: "Quick Healthcare Access, Anytime, Anywhere",
@@ -342,6 +350,7 @@ export const products: Product[] = [
     logo: "/logos/AnyTime Health.png",
     image: "/assets/image7.png",
     heroImage: "/assets/image7.png",
+    videoUrl: "https://www.youtube.com/watch?v=ZZ5LpwO-An4",
     description: "24/7 healthcare access platform providing round-the-clock medical support and consultations.",
     shortDescription: "24/7 healthcare access platform providing round-the-clock medical support and consultations.",
     subtitle: "Healthcare That Never Sleeps",
@@ -394,6 +403,7 @@ export const products: Product[] = [
     logo: "/logos/PRISM.png",
     image: "/assets/image1.png",
     heroImage: "/assets/image1.png",
+    videoUrl: "https://www.youtube.com/watch?v=hFZFjoX2cGg",
     description: "Predictive Risk Intelligence for Strategic Medicine - advanced analytics for healthcare outcomes.",
     shortDescription: "Predictive Risk Intelligence for Strategic Medicine - advanced analytics for healthcare outcomes.",
     subtitle: "Predictive Intelligence for Strategic Healthcare",

@@ -5,7 +5,11 @@ import { notFound } from "next/navigation"
 import { PageHeader } from "@/components/page-header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { ContactForm } from "@/components/contact-form"
 import { getProductBySlug, getAllProductSlugs } from "@/lib/products-data"
+import ReactPlayerComponent from "./react-player"
+
 
 interface ProductPageProps {
   params: Promise<{
@@ -36,26 +40,44 @@ export default async function ProductPage({ params }: ProductPageProps) {
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-7xl">
-          <div className="relative overflow-hidden rounded-2xl shadow-xl">
-            <Image
-              src={product.heroImage}
-              alt={product.name}
-              width={1200}
-              height={600}
-              className="w-full h-80 md:h-[500px] object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent flex items-center">
-              <div className="p-8 md:p-16 text-white max-w-3xl">
-                <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Content */}
+            <div className="space-y-8">
+              <div>
+                <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight text-gray-900">
                   {product.subtitle}
                 </h1>
                 <div className="w-24 h-1 bg-yellow-400 mb-8"></div>
-                <p className="text-xl md:text-2xl font-light leading-relaxed mb-10 opacity-95">
+                <p className="text-xl md:text-2xl font-light leading-relaxed mb-10 text-gray-600">
                   {product.description}
                 </p>
-                <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-4 px-10 rounded-xl text-lg transition-all duration-300 hover:scale-105 shadow-lg">
-                  {product.ctaText}
-                </Button>
+              </div>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-4 px-10 rounded-xl text-lg transition-all duration-300 hover:scale-105 shadow-lg">
+                    {product.ctaText}
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle className="text-2xl font-bold text-gray-900">
+                      Get Started with {product.name}
+                    </DialogTitle>
+                    <DialogDescription className="text-gray-600">
+                      Fill out the form below and our team will get back to you within 24 hours to discuss how {product.name} can transform your healthcare operations.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <ContactForm 
+                    productName={product.name}
+                  />
+                </DialogContent>
+              </Dialog>
+            </div>
+
+            {/* Right Video */}
+            <div className="relative flex justify-center">
+              <div className="w-full max-w-2xl">
+                <ReactPlayerComponent product={product} />  
               </div>
             </div>
           </div>
