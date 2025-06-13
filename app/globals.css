@@ -120,3 +120,122 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom prose styles for blog content */
+@layer components {
+  .prose {
+    @apply text-gray-700 leading-relaxed;
+  }
+  
+  .prose h1 {
+    @apply text-4xl font-bold text-gray-900 mt-8 mb-6 leading-tight;
+  }
+  
+  .prose h2 {
+    @apply text-3xl font-bold text-gray-900 mt-8 mb-4 leading-tight;
+  }
+  
+  .prose h3 {
+    @apply text-2xl font-semibold text-gray-900 mt-6 mb-3 leading-tight;
+  }
+  
+  .prose h4 {
+    @apply text-xl font-semibold text-gray-900 mt-6 mb-3 leading-tight;
+  }
+  
+  .prose h5 {
+    @apply text-lg font-semibold text-gray-900 mt-4 mb-2 leading-tight;
+  }
+  
+  .prose h6 {
+    @apply text-base font-semibold text-gray-900 mt-4 mb-2 leading-tight;
+  }
+  
+  .prose p {
+    @apply text-lg text-gray-700 leading-relaxed mb-6;
+  }
+  
+  .prose ul {
+    @apply list-disc list-inside mb-6 space-y-2;
+  }
+  
+  .prose ol {
+    @apply list-decimal list-inside mb-6 space-y-2;
+  }
+  
+  .prose li {
+    @apply text-lg text-gray-700 leading-relaxed;
+  }
+  
+  .prose li > ul,
+  .prose li > ol {
+    @apply mt-2 mb-0 ml-6;
+  }
+  
+  .prose blockquote {
+    @apply border-l-4 border-yellow-500 pl-6 py-2 my-6 bg-gray-50 rounded-r-lg;
+  }
+  
+  .prose blockquote p {
+    @apply text-gray-600 italic mb-0;
+  }
+  
+  .prose code {
+    @apply bg-gray-100 text-gray-800 px-2 py-1 rounded text-sm font-mono;
+  }
+  
+  .prose pre {
+    @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-6;
+  }
+  
+  .prose pre code {
+    @apply bg-transparent text-gray-100 p-0;
+  }
+  
+  .prose a {
+    @apply text-yellow-600 hover:text-yellow-700 underline transition-colors duration-200;
+  }
+  
+  .prose strong {
+    @apply font-bold text-gray-900;
+  }
+  
+  .prose em {
+    @apply italic;
+  }
+  
+  .prose table {
+    @apply w-full border-collapse border border-gray-300 mb-6;
+  }
+  
+  .prose th {
+    @apply border border-gray-300 bg-gray-50 px-4 py-2 text-left font-semibold text-gray-900;
+  }
+  
+  .prose td {
+    @apply border border-gray-300 px-4 py-2 text-gray-700;
+  }
+  
+  .prose hr {
+    @apply border-0 border-t border-gray-300 my-8;
+  }
+  
+  .prose img {
+    @apply rounded-lg shadow-lg mb-6 max-w-full h-auto;
+  }
+  
+  /* First paragraph styling */
+  .prose > p:first-of-type {
+    @apply text-xl text-gray-600 leading-relaxed mb-8 font-light;
+  }
+  
+  /* Remove top margin from first heading */
+  .prose > h1:first-child,
+  .prose > h2:first-child,
+  .prose > h3:first-child,
+  .prose > h4:first-child,
+  .prose > h5:first-child,
+  .prose > h6:first-child {
+    @apply mt-0;
+  }
+}
