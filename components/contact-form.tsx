@@ -11,30 +11,114 @@ interface ContactFormProps {
   onSubmit?: (data: FormData) => void
 }
 
+// Email addresses from the provided list
+const EMAIL_RECIPIENTS = [
+  "axoncare@axonichealth.com",
+  "lablink@axonichealth.com", 
+  "cliniq@axonichealth.com",
+  "surgehub@axonichealth.com",
+  "pharmacy@axonichealth.com"
+]
+
 export function ContactForm({ productName, onSubmit }: ContactFormProps) {
   const [isSubmitting, setIsSubmitting] = React.useState(false)
+  const [submitStatus, setSubmitStatus] = React.useState<'idle' | 'success' | 'error'>('idle')
+  const formRef = React.useRef<HTMLFormElement>(null)
+
+  const sendEmail = async (formData: FormData) => {
+    const firstName = formData.get('firstName') as string
+    const lastName = formData.get('lastName') as string
+    const email = formData.get('email') as string
+    const company = formData.get('company') as string
+    const phone = formData.get('phone') as string
+    const message = formData.get('message') as string
+    const product = formData.get('product') as string
+
+    // Create HTML formatted email content
+    const htmlContent = `
+      <h2>New Contact Form Submission</h2>
+      <h3>Product Interest: ${product}</h3>
+      <hr>
+      <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Company:</strong> ${company || 'Not provided'}</p>
+      <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
+      <p><strong>Message:</strong></p>
+      <p>${message || 'No message provided'}</p>
+      <hr>
+      <p><em>This message was sent from the Axonic Health website contact form.</em></p>
+    `
+
+    // Select appropriate email based on product
+    let recipientEmail = EMAIL_RECIPIENTS[0] // Default to axoncare
+    
+    if (product.toLowerCase().includes('lablink')) {
+      recipientEmail = EMAIL_RECIPIENTS[1]
+    } else if (product.toLowerCase().includes('cliniq')) {
+      recipientEmail = EMAIL_RECIPIENTS[2]
+    } else if (product.toLowerCase().includes('surgehub')) {
+      recipientEmail = EMAIL_RECIPIENTS[3]
+    } else if (product.toLowerCase().includes('pharman') || product.toLowerCase().includes('pharmacy')) {
+      recipientEmail = EMAIL_RECIPIENTS[4]
+    }
+
+    const emailPayload = {
+      // to: recipientEmail,
+      to: "dhruv.bhavsar@axonichealth.com",
+      from: "info@axonichealth.com",
+      subject: `New Contact Form Submission - ${product}`,
+      data: htmlContent
+    }
+
+    try {
+      const response = await fetch('https://ojw0jjra11.execute-api.ap-south-1.amazonaws.com/prod/sendEmail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(emailPayload)
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      return await response.json()
+    } catch (error) {
+      console.error('Error sending email:', error)
+      throw error
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setSubmitStatus('idle')
     
     const formData = new FormData(e.currentTarget)
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
-    if (onSubmit) {
-      onSubmit(formData)
+    try {
+      await sendEmail(formData)
+      
+      if (onSubmit) {
+        onSubmit(formData)
+      }
+      
+      setSubmitStatus('success')
+      // Reset form on success using the ref
+      if (formRef.current) {
+        formRef.current.reset()
+      }
+    } catch (error) {
+      console.error('Failed to send email:', error)
+      setSubmitStatus('error')
+    } finally {
+      setIsSubmitting(false)
     }
-    
-    setIsSubmitting(false)
-    
-    // Reset form
-    e.currentTarget.reset()
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
@@ -110,6 +194,21 @@ export function ContactForm({ productName, onSubmit }: ContactFormProps) {
         <input type="hidden" name="product" value={productName} />
       </div>
 
+      {/* Status Messages */}
+      {submitStatus === 'success' && (
+        <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+          <p className="text-green-800 font-medium">Message sent successfully!</p>
+          <p className="text-green-600 text-sm">We'll get back to you within 24 hours.</p>
+        </div>
+      )}
+
+      {submitStatus === 'error' && (
+        <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+          <p className="text-red-800 font-medium">Failed to send message.</p>
+          <p className="text-red-600 text-sm">Please try again or contact us directly.</p>
+        </div>
+      )}
+
       <div className="flex flex-col sm:flex-row gap-3 pt-4">
         <Button
           type="submit"
@@ -122,7 +221,7 @@ export function ContactForm({ productName, onSubmit }: ContactFormProps) {
           type="button"
           variant="outline"
           className="py-3 px-8 rounded-xl font-semibold"
-          onClick={() => window.open(`tel:+1-800-AXONIC`, '_self')}
+          onClick={() => window.open(`tel:+1-408-693-6337`, '_self')}
         >
           Call Us Instead
         </Button>
