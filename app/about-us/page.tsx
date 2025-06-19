@@ -229,6 +229,7 @@ function LeadershipCard({ name, title, image, description, linkedinUrl }: Leader
             
             <Link 
               href={linkedinUrl}
+              target="_blank"
               className="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors duration-300 w-fit"
             >
               <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
