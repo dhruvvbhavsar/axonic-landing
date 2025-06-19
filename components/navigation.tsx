@@ -104,7 +104,7 @@ export function Navigation() {
                   <ul className="grid w-[200px] gap-2 p-2 bg-white">
                     <li>
                       <NavigationMenuLink asChild>
-                        <Link href="/our-services" className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                        <Link href="https://axoncare.axonichealth.com" target="_blank" className="block p-2 hover:bg-accent rounded-sm text-gray-900">
                           <div className="font-medium">Our Services</div>
                         </Link>
                       </NavigationMenuLink>
@@ -232,7 +232,8 @@ export function Navigation() {
                     Our Offerings
                   </div>
                   <Link
-                    href="/our-services"
+                    href="https://axoncare.axonichealth.com"
+                    target="_blank"
                     className="block px-6 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                     onClick={closeMobileMenu}
                   >

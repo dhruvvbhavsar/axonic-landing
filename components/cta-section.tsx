@@ -24,7 +24,7 @@ export function CTASection() {
           </p>
 
           <Link
-            href="/contact"
+            href="/contact-us"
             className="inline-block bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg"
           >
             Contact Today!

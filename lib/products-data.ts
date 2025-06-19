@@ -21,6 +21,7 @@ export interface Product {
   }[]
   ctaText: string
   ctaSubtext: string
+  redirectUrl?: string
 }
 
 export const products: Product[] = [
@@ -74,7 +75,7 @@ export const products: Product[] = [
         image: "/assets/image3.png"
       }
     ],
-    ctaText: "Transform Your Clinical Excellence",
+    ctaText: "Request Demo",
     ctaSubtext: "Join the ACE Network and revolutionize your healthcare delivery with advanced clinical management solutions."
   },
   {
@@ -127,7 +128,7 @@ export const products: Product[] = [
         image: "/assets/image3.png"
       }
     ],
-    ctaText: "Optimize Your Clinic Operations",
+    ctaText: "Request Demo",
     ctaSubtext: "Join the CliniQ Network and transform your clinic management with comprehensive digital solutions."
   },
   {
@@ -180,62 +181,62 @@ export const products: Product[] = [
         image: "/assets/image2.png"
       }
     ],
-    ctaText: "Revolutionize Your Laboratory",
+    ctaText: "Request Demo",
     ctaSubtext: "Join the LabLink Network and enhance your diagnostic capabilities with advanced laboratory management solutions."
   },
-  {
-    id: 4,
-    name: "AxonCare",
-    slug: "axoncare",
-    logo: "/logos/AxonCare.png",
-    image: "/assets/image4.png",
-    heroImage: "/assets/image4.png",
-    videoUrl: "https://www.youtube.com/shorts/KUNycXG36fA",
-    description: "Complete healthcare ecosystem connecting patients, providers, and care coordinators.",
-    shortDescription: "Complete healthcare ecosystem connecting patients, providers, and care coordinators.",
-    subtitle: "Connecting Care, Empowering Health",
-    features: [
-      {
-        title: "Integrated Care Coordination",
-        description: "Seamless coordination between healthcare providers, specialists, and care teams to ensure comprehensive patient care across all touchpoints.",
-        image: "/assets/image1.png"
-      },
-      {
-        title: "Patient Engagement Platform",
-        description: "Comprehensive patient portal with health tracking, appointment management, secure messaging, and educational resources.",
-        image: "/assets/image2.png"
-      },
-      {
-        title: "Population Health Management",
-        description: "Advanced analytics and insights for managing patient populations, identifying health trends, and implementing preventive care strategies.",
-        image: "/assets/image3.png"
-      },
-      {
-        title: "Telehealth Integration",
-        description: "Built-in telehealth capabilities for remote consultations, virtual care delivery, and continuous patient monitoring.",
-        image: "/assets/image5.png"
-      }
-    ],
-    valuePropositions: [
-      {
-        title: "Comprehensive Care Delivery",
-        description: "AxonCare enables coordinated care delivery across the entire healthcare ecosystem, improving patient outcomes and care quality.",
-        image: "/assets/image4.png"
-      },
-      {
-        title: "Improved Patient Engagement",
-        description: "Enhanced patient involvement in their care journey through accessible tools, education, and communication platforms.",
-        image: "/assets/image1.png"
-      },
-      {
-        title: "Data-Driven Health Insights",
-        description: "Advanced analytics provide valuable insights into population health trends, enabling proactive care management and better health outcomes.",
-        image: "/assets/image2.png"
-      }
-    ],
-    ctaText: "Transform Healthcare Delivery",
-    ctaSubtext: "Join the AxonCare Network and create a connected healthcare ecosystem that empowers both patients and providers."
-  },
+  // {
+  //   id: 4,
+  //   name: "AxonCare",
+  //   slug: "axoncare",
+  //   logo: "/logos/AxonCare.png",
+  //   image: "/assets/image4.png",
+  //   heroImage: "/assets/image4.png",
+  //   videoUrl: "https://www.youtube.com/shorts/KUNycXG36fA",
+  //   description: "Complete healthcare ecosystem connecting patients, providers, and care coordinators.",
+  //   shortDescription: "Complete healthcare ecosystem connecting patients, providers, and care coordinators.",
+  //   subtitle: "Connecting Care, Empowering Health",
+  //   features: [
+  //     {
+  //       title: "Integrated Care Coordination",
+  //       description: "Seamless coordination between healthcare providers, specialists, and care teams to ensure comprehensive patient care across all touchpoints.",
+  //       image: "/assets/image1.png"
+  //     },
+  //     {
+  //       title: "Patient Engagement Platform",
+  //       description: "Comprehensive patient portal with health tracking, appointment management, secure messaging, and educational resources.",
+  //       image: "/assets/image2.png"
+  //     },
+  //     {
+  //       title: "Population Health Management",
+  //       description: "Advanced analytics and insights for managing patient populations, identifying health trends, and implementing preventive care strategies.",
+  //       image: "/assets/image3.png"
+  //     },
+  //     {
+  //       title: "Telehealth Integration",
+  //       description: "Built-in telehealth capabilities for remote consultations, virtual care delivery, and continuous patient monitoring.",
+  //       image: "/assets/image5.png"
+  //     }
+  //   ],
+  //   valuePropositions: [
+  //     {
+  //       title: "Comprehensive Care Delivery",
+  //       description: "AxonCare enables coordinated care delivery across the entire healthcare ecosystem, improving patient outcomes and care quality.",
+  //       image: "/assets/image4.png"
+  //     },
+  //     {
+  //       title: "Improved Patient Engagement",
+  //       description: "Enhanced patient involvement in their care journey through accessible tools, education, and communication platforms.",
+  //       image: "/assets/image1.png"
+  //     },
+  //     {
+  //       title: "Data-Driven Health Insights",
+  //       description: "Advanced analytics provide valuable insights into population health trends, enabling proactive care management and better health outcomes.",
+  //       image: "/assets/image2.png"
+  //     }
+  //   ],
+  //   ctaText: "Transform Healthcare Delivery",
+  //   ctaSubtext: "Join the AxonCare Network and create a connected healthcare ecosystem that empowers both patients and providers."
+  // },
   {
     id: 5,
     name: "SurgeHub",
@@ -286,7 +287,7 @@ export const products: Product[] = [
         image: "/assets/image2.png"
       }
     ],
-    ctaText: "Join the AxonCare Network",
+    ctaText: "Request Demo",
     ctaSubtext: "Transform your operating theatre management with SurgeHub's advanced surgical workflow solutions."
   },
   {
@@ -339,7 +340,7 @@ export const products: Product[] = [
         image: "/assets/image2.png"
       }
     ],
-    ctaText: "Access Quick Healthcare",
+    ctaText: "Request Demo",
     ctaSubtext: "Join the QUIK Network and provide your patients with instant access to quality healthcare services."
   },
   {
@@ -392,7 +393,7 @@ export const products: Product[] = [
         image: "/assets/image2.png"
       }
     ],
-    ctaText: "Enable 24/7 Healthcare",
+    ctaText: "Request Demo",
     ctaSubtext: "Join the AnyTime Health Network and provide your patients with round-the-clock access to quality healthcare services."
   },
   {
@@ -445,8 +446,9 @@ export const products: Product[] = [
         image: "/assets/image3.png"
       }
     ],
-    ctaText: "Harness Predictive Intelligence",
-    ctaSubtext: "Join the PRISM Network and revolutionize your healthcare strategy with advanced predictive analytics and risk intelligence."
+    ctaText: "Book Appointment Now",
+    ctaSubtext: "Join the PRISM Network and revolutionize your healthcare strategy with advanced predictive analytics and risk intelligence.",
+    redirectUrl: "https://prism.axonichealth.co.in/login"
   }
 ]
 

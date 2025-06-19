@@ -109,7 +109,8 @@ export function AboutSection() {
               {/* CTA Button */}
               <div className="mt-8">
                 <Link
-                  href="/about"
+                  href="https://axoncare.axonichealth.com"
+                  target="_blank"
                   className="inline-block bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg"
                 >
                   Know More

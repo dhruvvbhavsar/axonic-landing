@@ -38,7 +38,7 @@ export default function OurProductsPage() {
       <PageHeader title="Our Products" />
 
       {/* First Image Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      {/* <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto">
           <div className="relative overflow-hidden rounded-3xl shadow-2xl">
             <Image
@@ -61,7 +61,7 @@ export default function OurProductsPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Products Carousel Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">

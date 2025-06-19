@@ -52,26 +52,34 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   {product.description}
                 </p>
               </div>
-              <Dialog>
-                <DialogTrigger asChild>
+              {product.redirectUrl ? (
+                <Link href={product.redirectUrl} target="_blank" rel="noopener noreferrer">
                   <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-4 px-10 rounded-xl text-lg transition-all duration-300 hover:scale-105 shadow-lg">
                     {product.ctaText}
                   </Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
-                  <DialogHeader>
-                    <DialogTitle className="text-2xl font-bold text-gray-900">
-                      Get Started with {product.name}
-                    </DialogTitle>
-                    <DialogDescription className="text-gray-600">
-                      Fill out the form below and our team will get back to you within 24 hours to discuss how {product.name} can transform your healthcare operations.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <ContactForm 
-                    productName={product.name}
-                  />
-                </DialogContent>
-              </Dialog>
+                </Link>
+              ) : (
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-4 px-10 rounded-xl text-lg transition-all duration-300 hover:scale-105 shadow-lg">
+                      {product.ctaText}
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle className="text-2xl font-bold text-gray-900">
+                        Get Started with {product.name}
+                      </DialogTitle>
+                      <DialogDescription className="text-gray-600">
+                        Fill out the form below and our team will get back to you within 24 hours to discuss how {product.name} can transform your healthcare operations.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <ContactForm 
+                      productName={product.name}
+                    />
+                  </DialogContent>
+                </Dialog>
+              )}
             </div>
 
             {/* Right Video */}

@@ -67,9 +67,12 @@ export default function AboutUsPage() {
                 </div>
 
                 <div className="mt-8">
-                  <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105">
+                  <Link
+                    href="/contact-us"
+                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+                  >
                     Join the Global Network
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -158,7 +161,7 @@ export default function AboutUsPage() {
               title="Founder"
               image={abhayChopada}
               description="With a background as a general surgeon based in the UK, Dr Abhay brings forth his clinical expertise to address global healthcare challenges effectively."
-              linkedinUrl="#"
+              linkedinUrl="https://www.linkedin.com/in/abhaychopada1/"
             />
 
             {/* Priti Jain */}
@@ -167,7 +170,7 @@ export default function AboutUsPage() {
               title="Founder"
               image={pritiJain}
               description="Priti brings extensive experience in healthcare operations and strategic planning, driving innovation in healthcare accessibility and patient care solutions."
-              linkedinUrl="#"
+              linkedinUrl="https://www.linkedin.com/in/priti-jain-b2a3a3/"
             />
 
             {/* Francie Patel */}
@@ -176,7 +179,7 @@ export default function AboutUsPage() {
               title="CEO"
               image={franciePatel}
               description="Francie leads the company's vision with expertise in healthcare technology and business development, ensuring sustainable growth and innovation."
-              linkedinUrl="#"
+              linkedinUrl="https://www.linkedin.com/in/francie-patel/"
             />
           </div>
         </div>

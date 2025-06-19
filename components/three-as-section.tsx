@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { Users, Globe, MapPin } from "lucide-react"
+import Link from "next/link"
 
 export function ThreeAsSection() {
   return (
@@ -132,9 +133,13 @@ export function ThreeAsSection() {
           <p className="text-xl text-gray-300 mb-6">
             Experience the future of healthcare today
           </p>
-          <button className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-yellow-500/30">
+          <Link 
+            href="https://axoncare.axonichealth.com"
+            target="_blank"
+            className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-yellow-500/30"
+          >
             Learn More About Our Solutions
-          </button>
+          </Link>
         </div>
       </div>
     </section>
