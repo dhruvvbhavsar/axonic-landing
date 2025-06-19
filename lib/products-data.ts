@@ -6,6 +6,7 @@ export interface Product {
   image: string
   heroImage: string
   videoUrl: string
+  testimonialUrl: string
   description: string
   shortDescription: string
   subtitle: string
@@ -33,6 +34,7 @@ export const products: Product[] = [
     image: "/assets/image1.png",
     heroImage: "/assets/image1.png",
     videoUrl: "https://www.youtube.com/watch?v=u_xkIe_htWI",
+    testimonialUrl: "https://www.youtube.com/embed/qrCEQBEdrC4",
     description: "Advanced Clinical Excellence platform for healthcare management and patient care optimization.",
     shortDescription: "Advanced Clinical Excellence platform for healthcare management and patient care optimization.",
     subtitle: "Transforming Clinical Excellence Through Technology",
@@ -86,6 +88,7 @@ export const products: Product[] = [
     image: "/assets/image2.png",
     heroImage: "/assets/image2.png",
     videoUrl: "https://www.youtube.com/shorts/K3ZI3SL_GL0",
+    testimonialUrl: "https://www.youtube.com/embed/AQmvWNxE-XM",
     description: "Comprehensive clinic management solution with integrated patient scheduling and records.",
     shortDescription: "Comprehensive clinic management solution with integrated patient scheduling and records.",
     subtitle: "Complete Clinic Management Made Simple",
@@ -139,6 +142,7 @@ export const products: Product[] = [
     image: "/assets/image3.png",
     heroImage: "/assets/image3.png",
     videoUrl: "https://www.youtube.com/watch?v=NPt4Uo4uwx4",
+    testimonialUrl: "https://www.youtube.com/embed/2OPJaJoi0Gs",
     description: "Laboratory information management system for seamless diagnostic workflows.",
     shortDescription: "Laboratory information management system for seamless diagnostic workflows.",
     subtitle: "Connecting Diagnostics, Delivering Results",
@@ -245,6 +249,7 @@ export const products: Product[] = [
     image: "/assets/image5.png",
     heroImage: "/assets/image5.png",
     videoUrl: "https://www.youtube.com/watch?v=u_xkIe_htWI",
+    testimonialUrl: "https://www.youtube.com/embed/qrCEQBEdrC4",
     description: "Surgical workflow management platform for operating room efficiency and patient safety.",
     shortDescription: "Surgical workflow management platform for operating room efficiency and patient safety.",
     subtitle: "Transforming Operating Theatre Management",
@@ -298,6 +303,7 @@ export const products: Product[] = [
     image: "/assets/image6.png",
     heroImage: "/assets/image6.png",
     videoUrl: "https://www.youtube.com/shorts/K3ZI3SL_GL0",
+    testimonialUrl: "https://www.youtube.com/embed/AQmvWNxE-XM",
     description: "Quick access healthcare platform for rapid patient consultations and care delivery.",
     shortDescription: "Quick access healthcare platform for rapid patient consultations and care delivery.",
     subtitle: "Quick Healthcare Access, Anytime, Anywhere",
@@ -351,6 +357,7 @@ export const products: Product[] = [
     image: "/assets/image7.png",
     heroImage: "/assets/image7.png",
     videoUrl: "https://www.youtube.com/watch?v=NPt4Uo4uwx4",
+    testimonialUrl: "https://www.youtube.com/embed/2OPJaJoi0Gs",
     description: "24/7 healthcare access platform providing round-the-clock medical support and consultations.",
     shortDescription: "24/7 healthcare access platform providing round-the-clock medical support and consultations.",
     subtitle: "Healthcare That Never Sleeps",
@@ -404,6 +411,7 @@ export const products: Product[] = [
     image: "/assets/image1.png",
     heroImage: "/assets/image1.png",
     videoUrl: "https://www.youtube.com/shorts/KUNycXG36fA",
+    testimonialUrl: "https://www.youtube.com/embed/qrCEQBEdrC4",
     description: "Predictive Risk Intelligence for Strategic Medicine - advanced analytics for healthcare outcomes.",
     shortDescription: "Predictive Risk Intelligence for Strategic Medicine - advanced analytics for healthcare outcomes.",
     subtitle: "Predictive Intelligence for Strategic Healthcare",

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { ContactForm } from "@/components/contact-form"
+import { ProductTestimonialsSection } from "@/components/product-testimonials-section"
 import { getProductBySlug, getAllProductSlugs } from "@/lib/products-data"
 import ReactPlayerComponent from "./react-player"
 
@@ -208,6 +209,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
         </div>
       </section> */}
+
+      {/* Testimonials Section */}
+      <ProductTestimonialsSection 
+        testimonialUrl={product.testimonialUrl}
+        productName={product.name}
+      />
 
       {/* Back to Products */}
       <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50/50">

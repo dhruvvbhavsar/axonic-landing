@@ -28,12 +28,12 @@ export function TestimonialsSection() {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-            What Our Patients Say
+          Trusted by Patients. Backed by Doctors. See What They're Saying.
           </h2>
           <div className="w-20 h-1 bg-yellow-500 mx-auto mb-6"></div>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Hear directly from our patients about their experiences with our healthcare solutions and how we've made a difference in their lives.
-          </p>
+          {/* <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+          Trusted by Patients. Backed by Doctors. See What They're Saying.
+          </p> */}
         </div>
 
         {/* Video Grid */}
