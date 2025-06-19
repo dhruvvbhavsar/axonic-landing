@@ -164,6 +164,18 @@ export function Navigation() {
                     ? "text-gray-900 hover:text-yellow-500" 
                     : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
                 )}>
+                  <Link href="/#testimonials">Testimonials</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild className={cn(
+                  navigationMenuTriggerStyle(),
+                  "transition-colors duration-300",
+                  isScrolled 
+                    ? "text-gray-900 hover:text-yellow-500" 
+                    : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
+                )}>
                   <Link href="/contact-us">Contact Us</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
@@ -270,6 +282,14 @@ export function Navigation() {
                   onClick={closeMobileMenu}
                 >
                   Blogs
+                </Link>
+                
+                <Link
+                  href="/#testimonials"
+                  className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
+                  onClick={closeMobileMenu}
+                >
+                  Testimonials
                 </Link>
                 
                 <Link
