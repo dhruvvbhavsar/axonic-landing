@@ -1,6 +1,13 @@
 "use client"
 
 import * as React from "react"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 export function TestimonialsSection() {
   // Convert YouTube URLs to embed format
@@ -19,6 +26,16 @@ export function TestimonialsSection() {
       id: 3,
       embedUrl: "https://www.youtube.com/embed/2OPJaJoi0Gs",
       title: "Patient Testimonial 3"
+    },
+    {
+      id: 4,
+      embedUrl: "https://www.youtube.com/embed/amo_RnMSuKY",
+      title: "Patient Testimonial 4"
+    },
+    {
+      id: 5,
+      embedUrl: "https://youtube.com/embed/XalSjho8J5Q",
+      title: "Patient Testimonial 5"
     }
   ]
 
@@ -36,24 +53,38 @@ export function TestimonialsSection() {
           </p> */}
         </div>
 
-        {/* Video Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {testimonials.map((testimonial) => (
-            <div key={testimonial.id} className="group">
-              <div className="relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-                <div className="aspect-[9/16] relative">
-                  <iframe
-                    src={testimonial.embedUrl}
-                    title={testimonial.title}
-                    className="absolute inset-0 w-full h-full"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                  />
-                </div>
-              </div>
-            </div>
-          ))}
+        {/* Video Carousel */}
+        <div className="max-w-6xl mx-auto">
+          <Carousel
+            opts={{
+              align: "center",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-2 md:-ml-4">
+              {testimonials.map((testimonial) => (
+                <CarouselItem key={testimonial.id} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/3">
+                  <div className="group">
+                    <div className="relative bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                      <div className="aspect-[9/16] relative">
+                        <iframe
+                          src={testimonial.embedUrl}
+                          title={testimonial.title}
+                          className="absolute inset-0 w-full h-full"
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowFullScreen
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden md:flex -left-12 lg:-left-16" />
+            <CarouselNext className="hidden md:flex -right-12 lg:-right-16" />
+          </Carousel>
         </div>
 
         {/* Call to Action */}
