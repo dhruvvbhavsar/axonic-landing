@@ -14,28 +14,33 @@ export function TestimonialsSection() {
   const testimonials = [
     {
       id: 1,
-      embedUrl: "https://www.youtube.com/embed/qrCEQBEdrC4",
+      embedUrl: "https://youtube.com/embed/amo_RnMSuKY",
       title: "Patient Testimonial 1"
     },
     {
       id: 2,
-      embedUrl: "https://www.youtube.com/embed/AQmvWNxE-XM",
+      embedUrl: "https://youtube.com/embed/2OPJaJoi0Gs",
       title: "Patient Testimonial 2"
     },
     {
       id: 3,
-      embedUrl: "https://www.youtube.com/embed/2OPJaJoi0Gs",
+      embedUrl: "https://youtube.com/embed/XalSjho8J5Q",
       title: "Patient Testimonial 3"
     },
     {
       id: 4,
-      embedUrl: "https://www.youtube.com/embed/amo_RnMSuKY",
+      embedUrl: "https://youtube.com/embed/AQmvWNxE-XM",
       title: "Patient Testimonial 4"
     },
     {
       id: 5,
-      embedUrl: "https://youtube.com/embed/XalSjho8J5Q",
+      embedUrl: "https://youtube.com/embed/xaVclNCE4BY",
       title: "Patient Testimonial 5"
+    },
+    {
+      id: 6,
+      embedUrl: "https://youtube.com/embed/qrCEQBEdrC4",
+      title: "Patient Testimonial 6"
     }
   ]
 
@@ -57,8 +62,9 @@ export function TestimonialsSection() {
         <div className="max-w-6xl mx-auto">
           <Carousel
             opts={{
-              align: "center",
+              align: "start",
               loop: true,
+              startIndex: 0,
             }}
             className="w-full"
           >
