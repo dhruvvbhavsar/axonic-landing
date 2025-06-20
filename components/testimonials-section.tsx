@@ -82,9 +82,17 @@ export function TestimonialsSection() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="hidden md:flex -left-12 lg:-left-16" />
-            <CarouselNext className="hidden md:flex -right-12 lg:-right-16" />
+            <CarouselPrevious className="-left-4 md:-left-12 lg:-left-16 size-10 md:size-12 hover:size-12 md:hover:size-14 transition-all duration-200 bg-white/90 hover:bg-white shadow-lg border-2 border-gray-200 hover:border-yellow-500" />
+            <CarouselNext className="-right-4 md:-right-12 lg:-right-16 size-10 md:size-12 hover:size-12 md:hover:size-14 transition-all duration-200 bg-white/90 hover:bg-white shadow-lg border-2 border-gray-200 hover:border-yellow-500" />
           </Carousel>
+          
+          {/* Navigation Instructions */}
+          <div className="text-center mt-8">
+            <p className="text-sm text-gray-500 flex items-center justify-center gap-2">
+              <span className="hidden md:inline">← Use the arrows to see more testimonials →</span>
+              <span className="md:hidden">Swipe left or right to see more testimonials</span>
+            </p>
+          </div>
         </div>
 
         {/* Call to Action */}
