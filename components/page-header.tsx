@@ -38,7 +38,7 @@ export function PageHeader({ title, backgroundImage }: PageHeaderProps) {
           {/* Decorative Line Above Title */}
           <div className="w-16 sm:w-20 md:w-24 h-px bg-gradient-to-r from-transparent via-yellow-400 to-transparent mx-auto mb-3 sm:mb-4 md:mb-6"></div>
 
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-2 sm:mb-3 md:mb-4 tracking-tight leading-tight">
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-2 sm:mb-3 md:mb-4 tracking-tight leading-tight">
             {title}
           </h1>
 
