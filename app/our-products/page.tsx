@@ -10,6 +10,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel"
 import { products } from "@/lib/products-data"
@@ -102,13 +104,13 @@ export default function OurProductsPage() {
                         <div className="p-6 flex-1 flex flex-col">
                           {/* Product Logo */}
                           <div className="mb-6 flex justify-center">
-                            <div className="h-14 flex items-center justify-center">
+                            <div className="h-20 flex items-center justify-center">
                               <Image
                                 src={product.logo}
                                 alt={`${product.name} Logo`}
-                                width={120}
-                                height={56}
-                                className="max-h-12 w-auto object-contain"
+                                width={160}
+                                height={80}
+                                className="max-h-16 w-auto object-contain"
                               />
                             </div>
                           </div>
@@ -132,6 +134,8 @@ export default function OurProductsPage() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
             </Carousel>
             
             {/* Carousel Dots */}
