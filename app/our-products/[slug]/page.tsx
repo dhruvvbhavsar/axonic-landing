@@ -45,7 +45,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             {/* Left Content */}
             <div className="space-y-8">
               <div>
-                <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight text-gray-900">
+                <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-tight text-gray-900">
                   {product.subtitle}
                 </h1>
                 <div className="w-24 h-1 bg-yellow-400 mb-8"></div>
