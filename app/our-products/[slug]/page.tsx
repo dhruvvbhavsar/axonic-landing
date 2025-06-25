@@ -45,24 +45,24 @@ export default async function ProductPage({ params }: ProductPageProps) {
             {/* Left Content */}
             <div className="space-y-8">
               <div>
-                <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-tight text-gray-900">
+                <h1 className="text-2xl md:text-3xl font-bold mb-6 leading-tight text-gray-900">
                   {product.subtitle}
                 </h1>
                 <div className="w-24 h-1 bg-yellow-400 mb-8"></div>
-                <p className="text-xl md:text-2xl font-light leading-relaxed mb-10 text-gray-600">
+                <p className="text-lg md:text-xl font-light leading-relaxed mb-10 text-gray-600">
                   {product.description}
                 </p>
               </div>
               {product.redirectUrl ? (
                 <Link href={product.redirectUrl} target="_blank" rel="noopener noreferrer">
-                  <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-4 px-10 rounded-xl text-lg transition-all duration-300 hover:scale-105 shadow-lg">
+                  <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-4 px-10 rounded-xl text-base transition-all duration-300 hover:scale-105 shadow-lg">
                     {product.ctaText}
                   </Button>
                 </Link>
               ) : (
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-4 px-10 rounded-xl text-lg transition-all duration-300 hover:scale-105 shadow-lg">
+                    <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-4 px-10 rounded-xl text-base transition-all duration-300 hover:scale-105 shadow-lg">
                       {product.ctaText}
                     </Button>
                   </DialogTrigger>
@@ -97,10 +97,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50/50">
         <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
               Key Features
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Discover the powerful capabilities that make our solution stand out
             </p>
             <div className="w-20 h-1 bg-yellow-400 mx-auto mt-6"></div>
@@ -124,10 +124,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     
                     {/* Content */}
                     <div className="lg:w-3/5 p-8 lg:p-10 flex flex-col justify-center">
-                      <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-yellow-600 transition-colors duration-300">
+                      <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-yellow-600 transition-colors duration-300">
                         {feature.title}
                       </h3>
-                      <p className="text-gray-600 leading-relaxed text-lg">
+                      <p className="text-gray-600 leading-relaxed text-base">
                         {feature.description}
                       </p>
                     </div>
@@ -143,10 +143,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
               Why Choose Us
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Experience the benefits that set us apart from the competition
             </p>
             <div className="w-20 h-1 bg-yellow-400 mx-auto mt-6"></div>
@@ -170,10 +170,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   
                   {/* Content */}
                   <div className="p-8 flex-1 flex flex-col">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-yellow-600 transition-colors duration-300">
+                    <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-yellow-600 transition-colors duration-300">
                       {value.title}
                     </h3>
-                    <p className="text-gray-600 leading-relaxed flex-1 text-lg">
+                    <p className="text-gray-600 leading-relaxed flex-1 text-base">
                       {value.description}
                     </p>
                   </div>
@@ -220,7 +220,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50/50">
         <div className="container mx-auto text-center">
           <Link href="/our-products">
-            <Button variant="outline" className="font-medium py-3 px-8 rounded-xl text-lg hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+            <Button variant="outline" className="font-medium py-3 px-8 rounded-xl text-base hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
               ← Back to All Products
             </Button>
           </Link>

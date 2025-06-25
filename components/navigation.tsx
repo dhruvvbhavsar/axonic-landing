@@ -132,17 +132,7 @@ export function Navigation() {
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild className={cn(
-                  navigationMenuTriggerStyle(),
-                  "transition-colors duration-300",
-                  isScrolled 
-                    ? "text-gray-900 hover:text-yellow-500" 
-                    : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
-                )}>
-                  <Link href="/careers">Careers</Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
+
 
               <NavigationMenuItem>
                 <NavigationMenuLink asChild className={cn(
@@ -165,6 +155,18 @@ export function Navigation() {
                     : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
                 )}>
                   <Link href="/#testimonials">Testimonials</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuLink asChild className={cn(
+                  navigationMenuTriggerStyle(),
+                  "transition-colors duration-300",
+                  isScrolled 
+                    ? "text-gray-900 hover:text-yellow-500" 
+                    : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
+                )}>
+                  <Link href="/careers">Careers</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
@@ -268,13 +270,7 @@ export function Navigation() {
                   Our Partners
                 </Link>
                 
-                <Link
-                  href="/careers"
-                  className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
-                  onClick={closeMobileMenu}
-                >
-                  Careers
-                </Link>
+
                 
                 <Link
                   href="/blogs"
@@ -290,6 +286,14 @@ export function Navigation() {
                   onClick={closeMobileMenu}
                 >
                   Testimonials
+                </Link>
+
+                <Link
+                  href="/careers"
+                  className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
+                  onClick={closeMobileMenu}
+                >
+                  Careers
                 </Link>
                 
                 <Link
