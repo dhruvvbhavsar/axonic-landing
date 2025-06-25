@@ -13,7 +13,7 @@ export default function OurServicesPage() {
             {/* Image */}
             <div className="relative">
               <Image
-                src="/assets/image1.png"
+                src="/assets/services/ServicesAxoncare1.png"
                 alt="AxonCare Healthcare Technology"
                 width={600}
                 height={400}
@@ -63,7 +63,7 @@ export default function OurServicesPage() {
             {/* Image */}
             <div className="relative">
               <Image
-                src="/assets/image2.png"
+                src="/assets/services/ServicesAxoncare2.png"
                 alt="AxonCare Platform"
                 width={600}
                 height={400}
@@ -89,7 +89,7 @@ export default function OurServicesPage() {
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
               <div className="relative h-48">
                 <Image
-                  src="/assets/image3.png"
+                  src="/assets/services/ClinicalEfficiencyPlatform.png"
                   alt="Clinical Efficiency Platform"
                   fill
                   className="object-cover"
@@ -109,7 +109,7 @@ export default function OurServicesPage() {
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
               <div className="relative h-48">
                 <Image
-                  src="/assets/image4.png"
+                  src="/assets/services/SmartAnyTimeHealth.png"
                   alt="Smart Anytime Health Kiosks"
                   fill
                   className="object-cover"
@@ -129,7 +129,7 @@ export default function OurServicesPage() {
             <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
               <div className="relative h-48">
                 <Image
-                  src="/assets/image5.png"
+                  src="/assets/services/GlobalSpeciality.png"
                   alt="Global Specialist Network"
                   fill
                   className="object-cover"

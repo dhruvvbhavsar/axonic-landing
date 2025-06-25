@@ -6,13 +6,13 @@ import Link from "next/link"
 import { PageHeader } from "@/components/page-header"
 
 // Import images from assets
-import image1 from "@/public/assets/image1.png"
-import image2 from "@/public/assets/image2.png"
-import image3 from "@/public/assets/image3.png"
-import image4 from "@/public/assets/image4.png"
-import image5 from "@/public/assets/image5.png"
-import image6 from "@/public/assets/image6.png"
-import image7 from "@/public/assets/image7.png"
+import image1 from "@/public/assets/ourPartners/empty-hospital-room-with-nobody-it-having-single-bed.png"
+import image2 from "@/public/assets/ourPartners/close-up-law-hammer.png"
+import image3 from "@/public/assets/ourPartners/confident-senior-doctor-with-clipboard.png"
+import image4 from "@/public/assets/ourPartners/Insurance.png"
+import image5 from "@/public/assets/ourPartners/computer-with-covid19.png"
+import image6 from "@/public/assets/ourPartners/close-up-glass-vacutainer-filled-with-dna-solution.png"
+import image7 from "@/public/assets/ourPartners/empty-drugstore-with-bottles-packages.png"
 
 export default function OurPartnersPage() {
   return (

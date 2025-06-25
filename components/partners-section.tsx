@@ -3,55 +3,55 @@
 import * as React from "react"
 import Image from "next/image"
 
-import image1 from "@/public/assets/image1.png"
-import image2 from "@/public/assets/image2.png"
-import image3 from "@/public/assets/image3.png"
-import image4 from "@/public/assets/image4.png"
-import image5 from "@/public/assets/image5.png"
-import image6 from "@/public/assets/image6.png"
-import image7 from "@/public/assets/image7.png"
+import HealthcareProfessionals from "@/public/assets/partnerSection/HealthcareProfessionals.png"
+import MedicalEquipment from "@/public/assets/partnerSection/MedicalEquipment.png"
+import InsuranceIndustry from "@/public/assets/partnerSection/InsuranceIndustry.png"
+import HealthcareConsultancy from "@/public/assets/partnerSection/medical-banner-with-doctor-holding-stethoscope1.png"
+import MedicalFacility from "@/public/assets/partnerSection/hand-with-protective-gloves-holding-blood-samples-covid-test.png"
+import ResearchLabs from "@/public/assets/partnerSection/resech.png"
+import Pharmaceutical from "@/public/assets/partnerSection/female-pharmacist-working-drugstore-scaled.png"
 
 export function PartnersSection() {
   const partners = [
     {
       id: 1,
-      image: image1,
+      image: HealthcareProfessionals,
       title: "Healthcare Professionals",
       category: "Medical Staff"
     },
     {
       id: 2,
-      image: image2,
+      image: MedicalEquipment,
       title: "Medical Equipment",
       category: "Technology"
     },
     {
       id: 3,
-      image: image3,
+      image: InsuranceIndustry,
       title: "Insurance Industry",
       category: "Insurance"
     },
     {
       id: 4,
-      image: image4,
+      image: HealthcareConsultancy,
       title: "Healthcare Consultancy",
       category: "Consulting"
     },
     {
       id: 5,
-      image: image5,
+      image: MedicalFacility,
       title: "Medical Facilities",
       category: "Infrastructure"
     },
     {
       id: 6,
-      image: image6,
+      image: ResearchLabs,
       title: "Research Labs",
       category: "Research"
     },
     {
       id: 7,
-      image: image7,
+      image: Pharmaceutical,
       title: "Pharmaceutical",
       category: "Pharmacy"
     }

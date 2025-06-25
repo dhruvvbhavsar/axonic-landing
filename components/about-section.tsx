@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
-import Image from "next/image"
+import * as React from "react";
+import Link from "next/link";
+import Image from "next/image";
 
-import image1 from "@/public/assets/image1.png"
-import image2 from "@/public/assets/image2.png"
-import image3 from "@/public/assets/image3.png"
-import image4 from "@/public/assets/image4.png"
-import image5 from "@/public/assets/image5.png"
+import image1 from "@/public/assets/aboutSection/aboutSection1.png";
+import image2 from "@/public/assets/aboutSection/aboutSection2.png";
+import image3 from "@/public/assets/aboutSection/aboutSection3.png";
+import image4 from "@/public/assets/aboutSection/aboutSection4.png";
+import image5 from "@/public/assets/aboutSection/aboutSection5.png";
 
 export function AboutSection() {
   return (
@@ -16,51 +16,41 @@ export function AboutSection() {
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left side - Image Grid */}
-          <div className="relative">
-            <div className="grid grid-cols-2 gap-4">
-              {/* Top row */}
-              <div className="space-y-4">
-                <div className="relative h-48 rounded-lg overflow-hidden shadow-lg">
-                  <Image
-                    src={image1}
-                    alt="Healthcare professional with tablet"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="relative h-32 rounded-lg overflow-hidden shadow-lg">
-                  <Image
-                    src={image3}
-                    alt="Medical consultation"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              </div>
-              
-              {/* Right column */}
-              <div className="space-y-4 mt-8">
-                <div className="relative h-32 rounded-lg overflow-hidden shadow-lg">
-                  <Image
-                    src={image2}
-                    alt="Healthcare team discussion"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="relative h-48 rounded-lg overflow-hidden shadow-lg">
-                  <Image
-                    src={image4}
-                    alt="Medical technology"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              </div>
+
+          <div className="grid grid-cols-2 grid-rows-3 gap-4 h-[550px] self-center p-5">
+            <div className="relative rounded-lg overflow-hidden shadow-lg">
+              <Image
+                src={image1}
+                alt="Healthcare professional with tablet"
+                fill
+                className="object-cover"
+              />
             </div>
-            
-            {/* Bottom image spanning full width */}
-            <div className="relative h-40 rounded-lg overflow-hidden shadow-lg mt-4">
+            <div className="relative row-span-2 rounded-lg overflow-hidden shadow-lg">
+              <Image
+                src={image2}
+                alt="Healthcare team discussion"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative rounded-lg overflow-hidden shadow-lg">
+              <Image
+                src={image3}
+                alt="Medical consultation"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative h-48 rounded-lg overflow-hidden shadow-lg">
+              <Image
+                src={image4}
+                alt="Medical technology"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="relative h-48 rounded-lg overflow-hidden shadow-lg">
               <Image
                 src={image5}
                 alt="Medical equipment and consultation"
@@ -87,22 +77,29 @@ export function AboutSection() {
               {/* Content */}
               <div className="space-y-6 text-gray-700 leading-relaxed">
                 <p>
-                  The current state of healthcare is a harsh reality. Millions lose their 
-                  lives each year due to delayed care, limited access, affordability issues, 
-                  and even poor quality of service. In India alone, over 2.3 million lives 
-                  were lost in 2018 for these very reasons. Globally, the number climbs 
-                  to a staggering 5 million. Even developed nations struggle, with 
-                  countries like England facing hundreds of needless deaths weekly 
-                  from excessive emergency room wait times.
+                  The current state of healthcare is a harsh reality. Millions
+                  lose their lives each year due to delayed care, limited
+                  access, affordability issues, and even poor quality of
+                  service. In India alone, over 2.3 million lives were lost in
+                  2018 for these very reasons. Globally, the number climbs to a
+                  staggering 5 million. Even developed nations struggle, with
+                  countries like England facing hundreds of needless deaths
+                  weekly from excessive emergency room wait times.
                 </p>
 
                 <p>
-                  <span className="font-semibold text-gray-900">Axonic is here to disrupt the status quo.</span> We envision a future where 
-                  seamless data empowers <span className="font-semibold">everyone</span>, regardless of location, to access 
-                  quality healthcare. Our service <span className="font-semibold text-yellow-600">AxonCare</span>, demolishes barriers, 
-                  making care accessible, readily available, and affordable. No matter 
-                  where you are, AxonCare by Axonic connects you to the care you 
-                  deserve.
+                  <span className="font-semibold text-gray-900">
+                    Axonic is here to disrupt the status quo.
+                  </span>{" "}
+                  We envision a future where seamless data empowers{" "}
+                  <span className="font-semibold">everyone</span>, regardless of
+                  location, to access quality healthcare. Our service{" "}
+                  <span className="font-semibold text-yellow-600">
+                    AxonCare
+                  </span>
+                  , demolishes barriers, making care accessible, readily
+                  available, and affordable. No matter where you are, AxonCare
+                  by Axonic connects you to the care you deserve.
                 </p>
               </div>
 
@@ -121,5 +118,5 @@ export function AboutSection() {
         </div>
       </div>
     </section>
-  )
-} 
+  );
+}

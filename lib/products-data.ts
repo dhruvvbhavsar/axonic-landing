@@ -31,8 +31,8 @@ export const products: Product[] = [
     name: "ACE",
     slug: "ace",
     logo: "/logos/ACE.png",
-    image: "/assets/image1.png",
-    heroImage: "/assets/image1.png",
+    image: "/assets/ourProducts/ACE.png",
+    heroImage: "/assets/ourProducts/ACE.png",
     videoUrl: "https://www.youtube.com/watch?v=u_xkIe_htWI",
     testimonialUrl: "https://www.youtube.com/embed/qrCEQBEdrC4",
     description: "Advanced Clinical Excellence platform for healthcare management and patient care optimization.",
@@ -85,8 +85,8 @@ export const products: Product[] = [
     name: "CliniQ",
     slug: "cliniq",
     logo: "/logos/CliniQ.png",
-    image: "/assets/image2.png",
-    heroImage: "/assets/image2.png",
+    image: "/assets/ourProducts/cliniq.png",
+    heroImage: "/assets/ourProducts/cliniq.png",
     videoUrl: "https://www.youtube.com/shorts/K3ZI3SL_GL0",
     testimonialUrl: "https://www.youtube.com/embed/AQmvWNxE-XM",
     description: "Comprehensive clinic management solution with integrated patient scheduling and records.",
@@ -139,8 +139,8 @@ export const products: Product[] = [
     name: "LabLink",
     slug: "lablink",
     logo: "/logos/LabLink.png",
-    image: "/assets/image3.png",
-    heroImage: "/assets/image3.png",
+    image: "/assets/ourProducts/LabLink.png",
+    heroImage: "/assets/ourProducts/LabLink.png",
     videoUrl: "https://www.youtube.com/watch?v=NPt4Uo4uwx4",
     testimonialUrl: "https://www.youtube.com/embed/2OPJaJoi0Gs",
     description: "Laboratory information management system for seamless diagnostic workflows.",
@@ -188,66 +188,14 @@ export const products: Product[] = [
     ctaText: "Request Demo",
     ctaSubtext: "Join the LabLink Network and enhance your diagnostic capabilities with advanced laboratory management solutions."
   },
-  // {
-  //   id: 4,
-  //   name: "AxonCare",
-  //   slug: "axoncare",
-  //   logo: "/logos/AxonCare.png",
-  //   image: "/assets/image4.png",
-  //   heroImage: "/assets/image4.png",
-  //   videoUrl: "https://www.youtube.com/shorts/KUNycXG36fA",
-  //   description: "Complete healthcare ecosystem connecting patients, providers, and care coordinators.",
-  //   shortDescription: "Complete healthcare ecosystem connecting patients, providers, and care coordinators.",
-  //   subtitle: "Connecting Care, Empowering Health",
-  //   features: [
-  //     {
-  //       title: "Integrated Care Coordination",
-  //       description: "Seamless coordination between healthcare providers, specialists, and care teams to ensure comprehensive patient care across all touchpoints.",
-  //       image: "/assets/image1.png"
-  //     },
-  //     {
-  //       title: "Patient Engagement Platform",
-  //       description: "Comprehensive patient portal with health tracking, appointment management, secure messaging, and educational resources.",
-  //       image: "/assets/image2.png"
-  //     },
-  //     {
-  //       title: "Population Health Management",
-  //       description: "Advanced analytics and insights for managing patient populations, identifying health trends, and implementing preventive care strategies.",
-  //       image: "/assets/image3.png"
-  //     },
-  //     {
-  //       title: "Telehealth Integration",
-  //       description: "Built-in telehealth capabilities for remote consultations, virtual care delivery, and continuous patient monitoring.",
-  //       image: "/assets/image5.png"
-  //     }
-  //   ],
-  //   valuePropositions: [
-  //     {
-  //       title: "Comprehensive Care Delivery",
-  //       description: "AxonCare enables coordinated care delivery across the entire healthcare ecosystem, improving patient outcomes and care quality.",
-  //       image: "/assets/image4.png"
-  //     },
-  //     {
-  //       title: "Improved Patient Engagement",
-  //       description: "Enhanced patient involvement in their care journey through accessible tools, education, and communication platforms.",
-  //       image: "/assets/image1.png"
-  //     },
-  //     {
-  //       title: "Data-Driven Health Insights",
-  //       description: "Advanced analytics provide valuable insights into population health trends, enabling proactive care management and better health outcomes.",
-  //       image: "/assets/image2.png"
-  //     }
-  //   ],
-  //   ctaText: "Transform Healthcare Delivery",
-  //   ctaSubtext: "Join the AxonCare Network and create a connected healthcare ecosystem that empowers both patients and providers."
-  // },
+  
   {
     id: 5,
     name: "SurgeHub",
     slug: "surgehub", 
     logo: "/logos/SurgeHub.png",
-    image: "/assets/image5.png",
-    heroImage: "/assets/image5.png",
+    image: "/assets/ourProducts/SurgeHub.png",
+    heroImage: "/assets/ourProducts/SurgeHub.png",
     videoUrl: "https://www.youtube.com/watch?v=u_xkIe_htWI",
     testimonialUrl: "https://www.youtube.com/embed/qrCEQBEdrC4",
     description: "Surgical workflow management platform for operating room efficiency and patient safety.",
@@ -300,8 +248,8 @@ export const products: Product[] = [
     name: "QUIK",
     slug: "quik",
     logo: "/logos/QUIK.png",
-    image: "/assets/image6.png",
-    heroImage: "/assets/image6.png",
+    image: "/assets/ourProducts/QUIK.png",
+    heroImage: "/assets/ourProducts/QUIK.png",
     videoUrl: "https://www.youtube.com/shorts/K3ZI3SL_GL0",
     testimonialUrl: "https://www.youtube.com/embed/AQmvWNxE-XM",
     description: "Quick access healthcare platform for rapid patient consultations and care delivery.",
@@ -354,8 +302,8 @@ export const products: Product[] = [
     name: "AnyTime Health",
     slug: "anytime-health",
     logo: "/logos/AnyTime Health.png",
-    image: "/assets/image7.png",
-    heroImage: "/assets/image7.png",
+    image: "/assets/ourProducts/AnyTimeHealth.png",
+    heroImage: "/assets/ourProducts/AnyTimeHealth.png",
     videoUrl: "https://www.youtube.com/watch?v=NPt4Uo4uwx4",
     testimonialUrl: "https://www.youtube.com/embed/2OPJaJoi0Gs",
     description: "24/7 healthcare access platform providing round-the-clock medical support and consultations.",
@@ -408,8 +356,8 @@ export const products: Product[] = [
     name: "PRISM",
     slug: "prism",
     logo: "/logos/PRISM.png",
-    image: "/assets/image1.png",
-    heroImage: "/assets/image1.png",
+    image: "/assets/ourProducts/PrismProductImage.png",
+    heroImage: "/assets/ourProducts/PrismProductImage.png",
     videoUrl: "https://www.youtube.com/shorts/KUNycXG36fA",
     testimonialUrl: "https://www.youtube.com/embed/qrCEQBEdrC4",
     description: "Predictive Risk Intelligence for Strategic Medicine - advanced analytics for healthcare outcomes.",
