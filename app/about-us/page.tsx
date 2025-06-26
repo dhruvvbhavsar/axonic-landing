@@ -4,12 +4,12 @@ import * as React from "react"
 import Image, { StaticImageData } from "next/image"
 import Link from "next/link"
 import { PageHeader } from "@/components/page-header"
-import founderImage from "@/public/assets/founder-image.png"
-import visionImage from "@/public/assets/aboutUs/digital-doctor-healthcare-science-medical-remote-technology-concept-1-scaled.png"
-import missionImage from "@/public/assets/aboutUs/medical-banner-with-doctor-wearing-stethoscope.png"
-import abhayChopada from "@/public/assets/abhay-chopada.png"
-import pritiJain from "@/public/assets/priti-jain.png"
-import franciePatel from "@/public/assets/francie-patel.png"
+import founderImage from "@/public/assets/founder-image.png";
+import visionImage from "@/public/assets/aboutUs/businesswoman-medicalVision.png";
+import missionImage from "@/public/assets/aboutUs/medical-banner-with-doctor-wearing-stethoscope.png";
+import abhayChopada from "@/public/assets/abhay-chopada.png";
+import pritiJain from "@/public/assets/priti-jain.png";
+import franciePatel from "@/public/assets/francie-patel.png";
 
 export default function AboutUsPage() {
   return (
