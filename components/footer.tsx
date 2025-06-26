@@ -28,16 +28,16 @@ export function Footer() {
             
             {/* Social Media Icons */}
             <div className="flex space-x-3">
-              <Link href="#" className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-yellow-500 transition-colors">
+              {/* <Link href="https://x.com/AxonicH86117" className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-yellow-500 transition-colors">
                 <Twitter className="w-4 h-4 text-[#1a1a2e]" />
-              </Link>
-              <Link href="#" className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-yellow-500 transition-colors">
+              </Link> */}
+              <Link href="https://www.facebook.com/axonichealth/" target="_blank" className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-yellow-500 transition-colors">
                 <Facebook className="w-4 h-4 text-[#1a1a2e]" />
               </Link>
-              <Link href="#" className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-yellow-500 transition-colors">
+              <Link href="https://in.linkedin.com/company/axonichealth" target="_blank" className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-yellow-500 transition-colors">
                 <Linkedin className="w-4 h-4 text-[#1a1a2e]" />
               </Link>
-              <Link href="#" className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-yellow-500 transition-colors">
+              <Link href="https://www.instagram.com/axonichealth?igsh=Y29wNWJvZHk2aTJw" className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-yellow-500 transition-colors">
                 <Instagram className="w-4 h-4 text-[#1a1a2e]" />
               </Link>
             </div>
