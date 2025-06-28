@@ -169,11 +169,11 @@ export default function OurProductsPage() {
             />
             <div className="absolute inset-0 bg-gradient-to-l from-gray-900/90 to-transparent flex items-center justify-end">
               <div className="p-8 md:p-12 text-white max-w-2xl text-right">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <h2 className="text-lg sm:text-3xl md:text-4xl font-bold mb-4">
                   Building the Future of Healthcare
                 </h2>
                 <div className="w-20 h-1 bg-yellow-500 mb-6 ml-auto"></div>
-                <p className="text-lg md:text-xl opacity-90 leading-relaxed">
+                <p className="text-sm sm:text-lg md:text-xl opacity-90 leading-relaxed">
                   Join us in our mission to create innovative healthcare solutions that improve patient outcomes and empower healthcare professionals worldwide.
                 </p>
               </div>

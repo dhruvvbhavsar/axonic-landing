@@ -16,18 +16,18 @@ export function ThreeAsSection() {
 
       <div className="container mx-auto px-6 relative z-10">
         {/* Section Title */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-6 sm:mb-20">
           <div className="inline-block">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+            <h2 className="text-sm sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
               Achieving The{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600">
                 3As
               </span>{" "}
               of Healthcare
             </h2>
-            <div className="flex items-center justify-center gap-4 mb-4">
+            <div className="flex items-center justify-center gap-4 mb-0 sm:mb-4">
               <div className="h-px bg-gradient-to-r from-transparent to-yellow-500 w-20"></div>
-              <span className="text-xl md:text-2xl font-semibold text-yellow-400 px-4">
+              <span className="text-xs sm:text-xl md:text-2xl font-semibold text-yellow-400 px-4">
                 Accessible • Available • Affordable
               </span>
               <div className="h-px bg-gradient-to-l from-transparent to-yellow-500 w-20"></div>
@@ -39,7 +39,7 @@ export function ThreeAsSection() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {/* Card 1 - Accessible */}
           <div className="group relative">
-            <div className="relative bg-white/5 backdrop-blur-sm border border-white/20 rounded-2xl p-8 h-full transition-all duration-500 hover:bg-white/10 hover:border-yellow-500/50 hover:shadow-2xl hover:shadow-yellow-500/20 hover:-translate-y-2">
+            <div className="relative bg-white/5 backdrop-blur-sm border border-white/20 rounded-2xl p-4 sm:p-8 h-full transition-all duration-500 hover:bg-white/10 hover:border-yellow-500/50 hover:shadow-2xl hover:shadow-yellow-500/20 hover:-translate-y-2">
               {/* Gradient overlay on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
@@ -70,7 +70,7 @@ export function ThreeAsSection() {
 
           {/* Card 2 - Available */}
           <div className="group relative">
-            <div className="relative bg-white/5 backdrop-blur-sm border border-white/20 rounded-2xl p-8 h-full transition-all duration-500 hover:bg-white/10 hover:border-yellow-500/50 hover:shadow-2xl hover:shadow-yellow-500/20 hover:-translate-y-2">
+            <div className="relative bg-white/5 backdrop-blur-sm border border-white/20 rounded-2xl p-4 sm:p-8 h-full transition-all duration-500 hover:bg-white/10 hover:border-yellow-500/50 hover:shadow-2xl hover:shadow-yellow-500/20 hover:-translate-y-2">
               {/* Gradient overlay on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
@@ -101,7 +101,7 @@ export function ThreeAsSection() {
 
           {/* Card 3 - Affordable */}
           <div className="group relative">
-            <div className="relative bg-white/5 backdrop-blur-sm border border-white/20 rounded-2xl p-8 h-full transition-all duration-500 hover:bg-white/10 hover:border-yellow-500/50 hover:shadow-2xl hover:shadow-yellow-500/20 hover:-translate-y-2">
+            <div className="relative bg-white/5 backdrop-blur-sm border border-white/20 rounded-2xl p-4 sm:p-8 h-full transition-all duration-500 hover:bg-white/10 hover:border-yellow-500/50 hover:shadow-2xl hover:shadow-yellow-500/20 hover:-translate-y-2">
               {/* Gradient overlay on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
@@ -129,14 +129,14 @@ export function ThreeAsSection() {
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center mt-16">
-          <p className="text-xl text-gray-300 mb-6">
+        <div className="text-center mt-8 sm:mt-16">
+          <p className="text-lg sm:text-xl text-gray-300 mb-6">
             Experience the future of healthcare today
           </p>
           <Link 
             href="https://axoncare.axonichealth.com"
             target="_blank"
-            className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-yellow-500/30"
+            className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white px-4 sm:px-8 py-2 sm:py-4 rounded-xl font-semibold text-sm sm:text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-yellow-500/30"
           >
             Learn More About Our Solutions
           </Link>
