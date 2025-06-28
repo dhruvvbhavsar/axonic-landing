@@ -26,10 +26,10 @@ export default function OurPartnersPage() {
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-xl lg:text-4xl font-bold text-gray-900 mb-4">
               Partners in the Global Healthcare Revolution
             </h2>
-            <p className="text-lg text-gray-600 max-w-4xl mx-auto">
+            <p className="text-sm md:text-lg text-gray-600 max-w-4xl mx-auto">
               Innovating, empowering, and collaborating across the healthcare ecosystem to drive a global healthcare transformation.
             </p>
           </div>
@@ -168,20 +168,20 @@ function PartnerCard({ title, subtitle, image, description, buttonText, buttonLi
         {/* Default overlay with title and subtitle */}
         <div className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity duration-300 ${isHovered ? 'opacity-0' : 'opacity-100'}`}>
           <div className="absolute bottom-4 left-4 right-4 text-white">
-            <h3 className="text-lg font-bold mb-1">{title}</h3>
-            <p className="text-xs text-gray-200 leading-relaxed">{subtitle}</p>
+            <h3 className="text-[10px] sm:text-sm md:text-lg font-bold mb-1">{title}</h3>
+            <p className="text-[6px] md:text-xs text-gray-200 leading-relaxed">{subtitle}</p>
           </div>
         </div>
 
         {/* Hover overlay with description and button */}
         <div className={`absolute inset-0 bg-black/90 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
           <div className="absolute inset-4 flex flex-col justify-center text-white">
-            <h3 className="text-lg font-bold mb-3 text-yellow-400">{title}</h3>
-            <p className="text-xs leading-relaxed mb-4 text-gray-200">{description}</p>
+            <h3 className="text-[10px] md:text-lg font-bold mb-3 text-yellow-400">{title}</h3>
+            <p className="text-[6px] md:text-xs leading-relaxed mb-4 text-gray-200">{description}</p>
             
             <Link 
               href="/contact-us"
-              className="inline-flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-semibold transition-colors duration-300 w-fit text-sm"
+              className="inline-flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-white px-2 sm:px-4 sm:py-2 rounded-lg font-semibold transition-colors duration-300 w-fit text-center text-[8px] sm:text-sm"
             >
               {buttonText}
             </Link>

@@ -21,11 +21,11 @@ export default function AboutUsPage() {
 
       {/* Founder's Note Section */}
       <section className="py-20 bg-white">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-2 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left side - Founder Image */}
             <div className="relative">
-              <div className="relative h-96 lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+              <div className="relative h-76 sm:h-96 lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
                 <Image
                   src={founderImage}
                   alt="Founder"
@@ -36,14 +36,14 @@ export default function AboutUsPage() {
             </div>
 
             {/* Right side - Founder's Note */}
-            <div className="lg:pl-8">
-              <div className="bg-gray-50 rounded-2xl p-8 shadow-lg">
-                <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+            <div className="pl-4 sm:pl-6 lg:pl-8">
+              <div className="bg-gray-50 rounded-2xl p-4 sm:p-8 shadow-lg">
+                <h2 className="text-xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 sm:mb-6">
                   Founder's Note
                 </h2>
-                <div className="w-20 h-1 bg-yellow-500 mb-8"></div>
+                <div className="w-20 h-1 bg-yellow-500 mb-4 sm:mb-8"></div>
                 
-                <div className="space-y-6 text-gray-700 leading-relaxed">
+                <div className="space-y-2 md:space-y-4 lg:space-y-6 text-gray-700 leading-relaxed text-sm md:text-lg">
                   <p>
                     The global healthcare system is a paradox: a trillion-dollar industry 
                     that leaves billions behind. An average spend of $1,000 per person 
@@ -69,7 +69,7 @@ export default function AboutUsPage() {
                 <div className="mt-8">
                   <Link
                     href="/contact-us"
-                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-1 md:py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
                   >
                     Join the Global Network
                   </Link>

@@ -75,18 +75,18 @@ export default function OurProductsPage() {
             <div className="w-16 h-0.5 bg-yellow-500 mx-auto"></div>
           </div>
 
-          <div className="flex flex-col items-center">
+          <div className="mx-auto w-[80%] sm:w-full flex flex-col items-center">
             <Carousel
               setApi={setApi}
               opts={{
                 align: "center",
                 loop: true,
               }}
-              className="w-full mb-6"
+              className="w-[96%] md:w-full mb-6"
             >
-              <CarouselContent className="-ml-6">
+              <CarouselContent className="-ml-6 sm:-ml-6">
                 {products.map((product) => (
-                  <CarouselItem key={product.id} className="pl-6 md:basis-1/2 lg:basis-1/2 xl:basis-1/3">
+                  <CarouselItem key={product.id} className="pl-2 sm:pl-6 md:basis-1/2 lg:basis-1/2 xl:basis-1/3">
                     <Card className="h-full p-0 duration-300 rounded-xl">
                       <CardContent className="p-0 h-full flex flex-col">
                         {/* Product Image */}
