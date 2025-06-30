@@ -28,8 +28,8 @@ export interface Product {
 export const products: Product[] = [
   {
     id: 1,
-    name: "ACE",
-    slug: "ace",
+    name: "AxonHIS",
+    slug: "axonhis",
     logo: "/logos/ACE.png",
     image: "/assets/ourProducts/ACE.png",
     heroImage: "/assets/ourProducts/ACE.png",
@@ -63,7 +63,7 @@ export const products: Product[] = [
     valuePropositions: [
       {
         title: "Enhanced Clinical Outcomes",
-        description: "ACE optimizes clinical workflows and decision-making processes, leading to improved patient outcomes and reduced medical errors through systematic excellence.",
+        description: "AxonHIS optimizes clinical workflows and decision-making processes, leading to improved patient outcomes and reduced medical errors through systematic excellence.",
         image: "/assets/image1.png"
       },
       {
@@ -78,12 +78,12 @@ export const products: Product[] = [
       }
     ],
     ctaText: "Request Demo",
-    ctaSubtext: "Join the ACE Network and revolutionize your healthcare delivery with advanced clinical management solutions."
+    ctaSubtext: "Join the AxonHIS Network and revolutionize your healthcare delivery with advanced clinical management solutions."
   },
   {
     id: 2,
-    name: "CliniQ",
-    slug: "cliniq",
+    name: "AxonMD",
+    slug: "axonmd",
     logo: "/logos/CliniQ.png",
     image: "/assets/ourProducts/cliniq.png",
     heroImage: "/assets/ourProducts/cliniq.png",
@@ -117,7 +117,7 @@ export const products: Product[] = [
     valuePropositions: [
       {
         title: "Streamlined Operations",
-        description: "CliniQ integrates all clinic operations into one platform, reducing administrative overhead and improving overall clinic efficiency.",
+        description: "AxonMD integrates all clinic operations into one platform, reducing administrative overhead and improving overall clinic efficiency.",
         image: "/assets/image2.png"
       },
       {
@@ -132,12 +132,12 @@ export const products: Product[] = [
       }
     ],
     ctaText: "Request Demo",
-    ctaSubtext: "Join the CliniQ Network and transform your clinic management with comprehensive digital solutions."
+    ctaSubtext: "Join the AxonMD Network and transform your clinic management with comprehensive digital solutions."
   },
   {
     id: 3,
-    name: "LabLink",
-    slug: "lablink",
+    name: "AxonLab",
+    slug: "axonlab",
     logo: "/logos/LabLink.png",
     image: "/assets/ourProducts/LabLink.png",
     heroImage: "/assets/ourProducts/LabLink.png",
@@ -171,7 +171,7 @@ export const products: Product[] = [
     valuePropositions: [
       {
         title: "Improved Test Accuracy",
-        description: "LabLink reduces manual errors and ensures consistent quality through automated processes and comprehensive quality control measures.",
+        description: "AxonLab reduces manual errors and ensures consistent quality through automated processes and comprehensive quality control measures.",
         image: "/assets/image3.png"
       },
       {
@@ -186,13 +186,13 @@ export const products: Product[] = [
       }
     ],
     ctaText: "Request Demo",
-    ctaSubtext: "Join the LabLink Network and enhance your diagnostic capabilities with advanced laboratory management solutions."
+    ctaSubtext: "Join the AxonLab Network and enhance your diagnostic capabilities with advanced laboratory management solutions."
   },
   
   {
     id: 5,
-    name: "SurgeHub",
-    slug: "surgehub", 
+    name: "AxonSurge",
+    slug: "axonsurge", 
     logo: "/logos/SurgeHub.png",
     image: "/assets/ourProducts/SurgeHub.png",
     heroImage: "/assets/ourProducts/SurgeHub.png",
@@ -226,7 +226,7 @@ export const products: Product[] = [
     valuePropositions: [
       {
         title: "Improved Surgical Efficiency",
-        description: "SurgeHub optimises resource utilisation, reduces operating room downtime, and allows hospitals to perform more procedures.",
+        description: "AxonSurge optimises resource utilisation, reduces operating room downtime, and allows hospitals to perform more procedures.",
         image: "/assets/image5.png"
       },
       {
@@ -236,17 +236,17 @@ export const products: Product[] = [
       },
       {
         title: "Data-Driven Decision Making",
-        description: "SurgeHub provides actionable insights to continuously improve surgical processes and patient care delivery.",
+        description: "AxonSurge provides actionable insights to continuously improve surgical processes and patient care delivery.",
         image: "/assets/image2.png"
       }
     ],
     ctaText: "Request Demo",
-    ctaSubtext: "Transform your operating theatre management with SurgeHub's advanced surgical workflow solutions."
+    ctaSubtext: "Transform your operating theatre management with AxonSurge's advanced surgical workflow solutions."
   },
   {
     id: 6,
-    name: "QUIK",
-    slug: "quik",
+    name: "AxonPharma",
+    slug: "axonpharma",
     logo: "/logos/QUIK.png",
     image: "/assets/ourProducts/QUIK.png",
     heroImage: "/assets/ourProducts/QUIK.png",
@@ -280,7 +280,7 @@ export const products: Product[] = [
     valuePropositions: [
       {
         title: "Immediate Healthcare Access",
-        description: "QUIK provides instant access to healthcare services, eliminating wait times and ensuring patients receive timely care when needed.",
+        description: "AxonPharma provides instant access to healthcare services, eliminating wait times and ensuring patients receive timely care when needed.",
         image: "/assets/image6.png"
       },
       {
@@ -295,12 +295,12 @@ export const products: Product[] = [
       }
     ],
     ctaText: "Request Demo",
-    ctaSubtext: "Join the QUIK Network and provide your patients with instant access to quality healthcare services."
+    ctaSubtext: "Join the AxonPharma Network and provide your patients with instant access to quality healthcare services."
   },
   {
     id: 7,
-    name: "AnyTime Health",
-    slug: "anytime-health",
+    name: "AxonHealthHub",
+    slug: "axonhealthhub",
     logo: "/logos/AnyTime Health.png",
     image: "/assets/ourProducts/AnyTimeHealth.png",
     heroImage: "/assets/ourProducts/AnyTimeHealth.png",
@@ -334,7 +334,7 @@ export const products: Product[] = [
     valuePropositions: [
       {
         title: "Always Available Care",
-        description: "AnyTime Health ensures healthcare is available 24/7, providing peace of mind and immediate access to medical support whenever needed.",
+        description: "AxonHealthHub ensures healthcare is available 24/7, providing peace of mind and immediate access to medical support whenever needed.",
         image: "/assets/image7.png"
       },
       {
@@ -349,12 +349,12 @@ export const products: Product[] = [
       }
     ],
     ctaText: "Request Demo",
-    ctaSubtext: "Join the AnyTime Health Network and provide your patients with round-the-clock access to quality healthcare services."
+    ctaSubtext: "Join the AxonHealthHub Network and provide your patients with round-the-clock access to quality healthcare services."
   },
   {
     id: 8,
-    name: "PRISM",
-    slug: "prism",
+    name: "AxonCare",
+    slug: "axoncare",
     logo: "/logos/PRISM.png",
     image: "/assets/ourProducts/PrismProductImage.png",
     heroImage: "/assets/ourProducts/PrismProductImage.png",
@@ -388,7 +388,7 @@ export const products: Product[] = [
     valuePropositions: [
       {
         title: "Proactive Risk Management",
-        description: "PRISM enables early identification of health risks, allowing for proactive interventions that prevent adverse outcomes and improve patient care.",
+        description: "AxonCare enables early identification of health risks, allowing for proactive interventions that prevent adverse outcomes and improve patient care.",
         image: "/assets/image1.png"
       },
       {
@@ -403,7 +403,7 @@ export const products: Product[] = [
       }
     ],
     ctaText: "Book Appointment Now",
-    ctaSubtext: "Join the PRISM Network and revolutionize your healthcare strategy with advanced predictive analytics and risk intelligence.",
+    ctaSubtext: "Join the AxonCare Network and revolutionize your healthcare strategy with advanced predictive analytics and risk intelligence.",
     redirectUrl: "https://prism.axonichealth.co.in/login"
   }
 ]
