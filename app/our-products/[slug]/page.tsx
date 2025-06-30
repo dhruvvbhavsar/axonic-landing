@@ -9,6 +9,8 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { ContactForm } from "@/components/contact-form"
 import { ProductTestimonialsSection } from "@/components/product-testimonials-section"
 import { getProductBySlug, getAllProductSlugs } from "@/lib/products-data"
+import { BackToProductsButton } from "@/components/back-to-products-button"
+import ReactPlayerComponent from "./react-player"
 
 
 interface ProductPageProps {
@@ -227,11 +229,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       {/* Back to Products */}
       <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50/50">
         <div className="container mx-auto text-center">
-          <Link href="/our-products">
-            <Button variant="outline" className="font-medium py-3 px-8 rounded-xl text-base hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-              ← Back to All Products
-            </Button>
-          </Link>
+          <BackToProductsButton />
         </div>
       </section>
     </div>

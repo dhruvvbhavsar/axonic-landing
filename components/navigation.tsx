@@ -14,11 +14,33 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-import { cn } from "@/lib/utils"
+import { cn, getBaseDomain } from "@/lib/utils"
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = React.useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
+  const [isSubdomain, setIsSubdomain] = React.useState(false)
+  const [baseDomain, setBaseDomain] = React.useState('')
+
+  // Check if we're on a subdomain after hydration
+  React.useEffect(() => {
+    const hostname = window.location.hostname
+    const domain = getBaseDomain()
+    const isOnSubdomain = hostname !== 'localhost' && hostname !== '127.0.0.1' && hostname !== domain.split(':')[0]
+    
+    setIsSubdomain(isOnSubdomain)
+    setBaseDomain(domain)
+  }, [])
+
+  // Helper function to generate navigation URLs
+  const getNavUrl = (path: string) => {
+    if (isSubdomain && baseDomain) {
+      const protocol = baseDomain.includes('localhost') ? 'http:' : 'https:'
+      return `${protocol}//${baseDomain}${path}`
+    }
+    // If we're on the main domain or during SSR, use relative paths
+    return path
+  }
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -64,7 +86,7 @@ export function Navigation() {
       )}>
         {/* Logo */}
         <div className="flex items-center">
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href={getNavUrl("/")} className="flex items-center space-x-2">
             <Image
               src={isScrolled ? "/logos/logo-black.png" : "/logos/logo-white.png"}
               alt="Axonic Logo"
@@ -87,7 +109,7 @@ export function Navigation() {
                     ? "text-gray-900 hover:text-yellow-500" 
                     : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
                 )}>
-                  <Link href="/about-us">About Us</Link>
+                  <Link href={getNavUrl("/about-us")}>About Us</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
@@ -111,7 +133,7 @@ export function Navigation() {
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <Link href="/our-products" className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                        <Link href={getNavUrl("/our-products")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
                           <div className="font-medium">Our Products</div>
                         </Link>
                       </NavigationMenuLink>
@@ -128,7 +150,7 @@ export function Navigation() {
                     ? "text-gray-900 hover:text-yellow-500" 
                     : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
                 )}>
-                  <Link href="/our-partners">Our Partners</Link>
+                  <Link href={getNavUrl("/our-partners")}>Our Partners</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
@@ -142,7 +164,7 @@ export function Navigation() {
                     ? "text-gray-900 hover:text-yellow-500" 
                     : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
                 )}>
-                  <Link href="/blogs">Blogs</Link>
+                  <Link href={getNavUrl("/blogs")}>Blogs</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
@@ -154,7 +176,7 @@ export function Navigation() {
                     ? "text-gray-900 hover:text-yellow-500" 
                     : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
                 )}>
-                  <Link href="/#testimonials">Testimonials</Link>
+                  <Link href={getNavUrl("/#testimonials")}>Testimonials</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
@@ -166,7 +188,7 @@ export function Navigation() {
                     ? "text-gray-900 hover:text-yellow-500" 
                     : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
                 )}>
-                  <Link href="/careers">Careers</Link>
+                  <Link href={getNavUrl("/careers")}>Careers</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
@@ -178,7 +200,7 @@ export function Navigation() {
                     ? "text-gray-900 hover:text-yellow-500" 
                     : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
                 )}>
-                  <Link href="/contact-us">Contact Us</Link>
+                  <Link href={getNavUrl("/contact-us")}>Contact Us</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>
@@ -233,7 +255,7 @@ export function Navigation() {
               {/* Mobile menu items */}
               <nav className="flex-1 px-4 py-6 space-y-2">
                 <Link
-                  href="/about-us"
+                  href={getNavUrl("/about-us")}
                   className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                   onClick={closeMobileMenu}
                 >
@@ -254,7 +276,7 @@ export function Navigation() {
                     Our Services
                   </Link>
                   <Link
-                    href="/our-products"
+                    href={getNavUrl("/our-products")}
                     className="block px-6 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                     onClick={closeMobileMenu}
                   >
@@ -263,7 +285,7 @@ export function Navigation() {
                 </div>
 
                 <Link
-                  href="/our-partners"
+                  href={getNavUrl("/our-partners")}
                   className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                   onClick={closeMobileMenu}
                 >
@@ -273,7 +295,7 @@ export function Navigation() {
 
                 
                 <Link
-                  href="/blogs"
+                  href={getNavUrl("/blogs")}
                   className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                   onClick={closeMobileMenu}
                 >
@@ -281,7 +303,7 @@ export function Navigation() {
                 </Link>
                 
                 <Link
-                  href="/#testimonials"
+                  href={getNavUrl("/#testimonials")}
                   className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                   onClick={closeMobileMenu}
                 >
@@ -289,7 +311,7 @@ export function Navigation() {
                 </Link>
 
                 <Link
-                  href="/careers"
+                  href={getNavUrl("/careers")}
                   className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                   onClick={closeMobileMenu}
                 >
@@ -297,7 +319,7 @@ export function Navigation() {
                 </Link>
                 
                 <Link
-                  href="/contact-us"
+                  href={getNavUrl("/contact-us")}
                   className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                   onClick={closeMobileMenu}
                 >

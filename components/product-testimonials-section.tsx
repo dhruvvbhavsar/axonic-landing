@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import {
   Carousel,
   CarouselContent,
@@ -8,6 +9,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import { getBaseDomain } from "@/lib/utils"
 
 // Ensure TypeScript knows about the YT global that the IFrame API adds
 declare global {
@@ -23,6 +25,9 @@ interface ProductTestimonialsSectionProps {
 }
 
 export function ProductTestimonialsSection({ testimonialUrl, productName }: ProductTestimonialsSectionProps) {
+  const [isSubdomain, setIsSubdomain] = React.useState(false)
+  const [baseDomain, setBaseDomain] = React.useState('')
+
   // All testimonials including the product-specific one
   const testimonials = [
     { id: 1, videoId: "amo_RnMSuKY", title: "Patient Testimonial 1" },
@@ -35,6 +40,26 @@ export function ProductTestimonialsSection({ testimonialUrl, productName }: Prod
 
   // Hold onto every player so we can control them
   const playersRef = React.useRef<any[]>([])
+
+  // Check if we're on a subdomain after hydration
+  React.useEffect(() => {
+    const hostname = window.location.hostname
+    const domain = getBaseDomain()
+    const isOnSubdomain = hostname !== 'localhost' && hostname !== '127.0.0.1' && hostname !== domain.split(':')[0]
+    
+    setIsSubdomain(isOnSubdomain)
+    setBaseDomain(domain)
+  }, [])
+
+  // Helper function to generate navigation URLs
+  const getNavUrl = (path: string) => {
+    if (isSubdomain && baseDomain) {
+      const protocol = baseDomain.includes('localhost') ? 'http:' : 'https:'
+      return `${protocol}//${baseDomain}${path}`
+    }
+    // If we're on the main domain or during SSR, use relative paths
+    return path
+  }
 
   React.useEffect(() => {
     // Helper to create YT players once API is ready
@@ -161,12 +186,12 @@ export function ProductTestimonialsSection({ testimonialUrl, productName }: Prod
           <p className="text-gray-600 mb-6">
             Ready to experience the difference with {productName}? Join thousands of satisfied users.
           </p>
-          <a
-            href="/contact-us"
+          <Link
+            href={getNavUrl("/contact-us")}
             className="inline-flex items-center bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
           >
             Get Started Today
-          </a>
+          </Link>
         </div>
       </div>
     </section>

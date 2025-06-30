@@ -1,6 +1,5 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { PageHeader } from "@/components/page-header"
+import { NotFoundNavigation } from "@/components/not-found-navigation"
 
 export default function NotFound() {
   return (
@@ -20,18 +19,7 @@ export default function NotFound() {
               </p>
             </div>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/our-products">
-                <Button className="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-3 px-8 rounded-lg transition-colors duration-200">
-                  View All Products
-                </Button>
-              </Link>
-              <Link href="/">
-                <Button variant="outline" className="font-medium py-3 px-8 rounded-lg">
-                  Go Home
-                </Button>
-              </Link>
-            </div>
+            <NotFoundNavigation />
           </div>
         </div>
       </section>

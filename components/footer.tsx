@@ -4,8 +4,31 @@ import * as React from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react"
+import { getBaseDomain } from "@/lib/utils"
 
 export function Footer() {
+  const [isSubdomain, setIsSubdomain] = React.useState(false)
+  const [baseDomain, setBaseDomain] = React.useState('')
+
+  // Check if we're on a subdomain after hydration
+  React.useEffect(() => {
+    const hostname = window.location.hostname
+    const domain = getBaseDomain()
+    const isOnSubdomain = hostname !== 'localhost' && hostname !== '127.0.0.1' && hostname !== domain.split(':')[0]
+    
+    setIsSubdomain(isOnSubdomain)
+    setBaseDomain(domain)
+  }, [])
+
+  // Helper function to generate navigation URLs
+  const getNavUrl = (path: string) => {
+    if (isSubdomain && baseDomain) {
+      const protocol = baseDomain.includes('localhost') ? 'http:' : 'https:'
+      return `${protocol}//${baseDomain}${path}`
+    }
+    // If we're on the main domain or during SSR, use relative paths
+    return path
+  }
   return (
     <footer className="bg-[#1a1a2e] text-white">
       {/* Main Footer Content */}
@@ -69,27 +92,27 @@ export function Footer() {
             <h3 className="text-lg font-semibold mb-4 text-yellow-500">Pages</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/about-us" className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
+                <Link href={getNavUrl("/about-us")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/our-partners" className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
+                <Link href={getNavUrl("/our-partners")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
                   Our Partners
                 </Link>
               </li>
               <li>
-                <Link href="/careers" className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
+                <Link href={getNavUrl("/careers")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
                   Careers
                 </Link>
               </li>
               <li>
-                <Link href="/blogs" className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
+                <Link href={getNavUrl("/blogs")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
                   Blogs
                 </Link>
               </li>
               <li>
-                <Link href="/contact-us" className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
+                <Link href={getNavUrl("/contact-us")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
                   Contact Us
                 </Link>
               </li>
@@ -101,12 +124,12 @@ export function Footer() {
             <h3 className="text-lg font-semibold mb-4 text-yellow-500">Our Offerings</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/our-products" className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
+                <Link href={getNavUrl("/our-products")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
                   Our Products
                 </Link>
               </li>
               <li>
-                <Link href="/our-services" className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
+                <Link href={getNavUrl("/our-services")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
                   Our Services
                 </Link>
               </li>
@@ -123,15 +146,15 @@ export function Footer() {
               Copyright © 2024 Axonic All rights reserved
             </div>
             <div className="flex flex-wrap items-center space-x-6 text-sm">
-              <Link href="/refund-policy" className="text-gray-400 hover:text-yellow-500 transition-colors flex items-center">
+              <Link href={getNavUrl("/refund-policy")} className="text-gray-400 hover:text-yellow-500 transition-colors flex items-center">
                 <span className="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span>
                 Refund Policy
               </Link>
-              <Link href="/privacy-policy" className="text-gray-400 hover:text-yellow-500 transition-colors flex items-center">
+              <Link href={getNavUrl("/privacy-policy")} className="text-gray-400 hover:text-yellow-500 transition-colors flex items-center">
                 <span className="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span>
                 Privacy Policy
               </Link>
-              <Link href="/terms-conditions" className="text-gray-400 hover:text-yellow-500 transition-colors flex items-center">
+              <Link href={getNavUrl("/terms-conditions")} className="text-gray-400 hover:text-yellow-500 transition-colors flex items-center">
                 <span className="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span>
                 Term and Conditions
               </Link>
