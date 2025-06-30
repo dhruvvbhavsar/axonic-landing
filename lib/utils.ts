@@ -35,16 +35,24 @@ export function getBaseDomain(): string {
 
 // Utility function to generate subdomain URL for products
 export function getProductSubdomainUrl(productSlug: string): string {
-  // Always return path-based routing during SSR to prevent hydration errors
+  // For production domains, always use subdomain routing
+  const baseDomain = process.env.NEXT_PUBLIC_BASE_DOMAIN || 'localhost:3000'
+  
+  // If we have a production domain set, use subdomain routing
+  if (baseDomain !== 'localhost:3000' && !baseDomain.includes('localhost')) {
+    return `https://${productSlug}.${baseDomain}`
+  }
+  
+  // Handle localhost development
   if (typeof window === 'undefined') {
     return `/our-products/${productSlug}`
   }
   
-  const baseDomain = getBaseDomain()
+  const currentBaseDomain = getBaseDomain()
   const protocol = window.location.protocol
   
   // Handle localhost development - check if subdomain routing is being used
-  if (baseDomain.includes('localhost')) {
+  if (currentBaseDomain.includes('localhost')) {
     // If we're already on a subdomain (e.g., axonhis.localhost), use subdomain URLs
     if (window.location.hostname.includes('.localhost')) {
       return `${protocol}//${productSlug}.localhost:${window.location.port || '3000'}`
@@ -53,7 +61,7 @@ export function getProductSubdomainUrl(productSlug: string): string {
     return `/our-products/${productSlug}`
   }
   
-  return `${protocol}//${productSlug}.${baseDomain}`
+  return `${protocol}//${productSlug}.${currentBaseDomain}`
 }
 
 // Utility function to check if subdomain routing is available
