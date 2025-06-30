@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { getAllCareers, getUniqueDepartments } from "@/lib/careers-utils"
-import { MapPin, Clock, Calendar, Briefcase, DollarSign } from "lucide-react"
+import { MapPin, Clock, Briefcase } from "lucide-react"
 
 export default function CareersPage() {
   const careers = getAllCareers()
@@ -87,17 +87,6 @@ export default function CareersPage() {
                       <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-200">
                         {career.department}
                       </Badge>
-                      {career.applicationDeadline && (
-                        <div className="flex items-center text-xs text-gray-500">
-                          <Calendar className="w-3 h-3 mr-1" />
-                          <span>
-                            Deadline: {new Date(career.applicationDeadline).toLocaleDateString('en-US', { 
-                              month: 'short', 
-                              day: 'numeric' 
-                            })}
-                          </span>
-                        </div>
-                      )}
                     </div>
                     
                     {/* Job Title */}
@@ -123,13 +112,6 @@ export default function CareersPage() {
                         <Briefcase className="w-4 h-4 mr-2 text-gray-400" />
                         <span>{career.type} • {career.experience}</span>
                       </div>
-                      
-                      {career.salary && (
-                        <div className="flex items-center text-sm text-gray-600">
-                          <DollarSign className="w-4 h-4 mr-2 text-gray-400" />
-                          <span>{career.salary}</span>
-                        </div>
-                      )}
                       
                       <div className="flex items-center text-sm text-gray-500">
                         <Clock className="w-4 h-4 mr-2 text-gray-400" />

@@ -11,10 +11,8 @@ export interface Career {
   location: string
   type: string
   experience: string
-  salary?: string
   description: string
   postedDate: string
-  applicationDeadline?: string
   requirements: string[]
   responsibilities: string[]
   benefits: string[]
@@ -28,10 +26,8 @@ export interface CareerMeta {
   location: string
   type: string
   experience: string
-  salary?: string
   description: string
   postedDate: string
-  applicationDeadline?: string
   requirements: string[]
   responsibilities: string[]
   benefits: string[]
@@ -62,10 +58,8 @@ export function getCareerBySlug(slug: string): Career | null {
       location: data.location || 'Remote',
       type: data.type || 'Full-time',
       experience: data.experience || 'Entry Level',
-      salary: data.salary,
       description: data.description || '',
       postedDate: data.postedDate || new Date().toISOString(),
-      applicationDeadline: data.applicationDeadline,
       requirements: data.requirements || [],
       responsibilities: data.responsibilities || [],
       benefits: data.benefits || [],

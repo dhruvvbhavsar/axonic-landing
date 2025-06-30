@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { ContactForm } from "@/components/contact-form"
 import { ShareJobButton } from "@/components/share-job-button"
 import { getCareerBySlug, getAllCareerSlugs } from "@/lib/careers-utils"
-import { MapPin, Clock, Calendar, Briefcase, DollarSign, ArrowLeft, CheckCircle } from "lucide-react"
+import { MapPin, Clock, Calendar, Briefcase, ArrowLeft, CheckCircle } from "lucide-react"
 import { MDXRemote } from 'next-mdx-remote/rsc'
 
 interface CareerPageProps {
@@ -59,15 +59,6 @@ export default async function CareerPage({ params }: CareerPageProps) {
                   <Badge className="bg-yellow-100 text-yellow-800 hover:bg-yellow-200">
                     {career.department}
                   </Badge>
-                  {career.applicationDeadline && (
-                    <Badge variant="outline" className="text-red-600 border-red-200">
-                      Deadline: {new Date(career.applicationDeadline).toLocaleDateString('en-US', { 
-                        month: 'short', 
-                        day: 'numeric',
-                        year: 'numeric'
-                      })}
-                    </Badge>
-                  )}
                 </div>
 
                 <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
@@ -103,16 +94,6 @@ export default async function CareerPage({ params }: CareerPageProps) {
                       <p className="text-sm text-gray-600">{career.experience}</p>
                     </div>
                   </div>
-                  
-                  {career.salary && (
-                    <div className="flex items-center text-gray-700">
-                      <DollarSign className="w-5 h-5 mr-3 text-gray-400" />
-                      <div>
-                        <span className="font-medium">Salary Range</span>
-                        <p className="text-sm text-gray-600">{career.salary}</p>
-                      </div>
-                    </div>
-                  )}
                 </div>
 
                 <div className="flex items-center text-sm text-gray-500 mb-8">
@@ -222,9 +203,9 @@ export default async function CareerPage({ params }: CareerPageProps) {
                             Please include your resume and a brief cover letter explaining why you're interested in this role.
                           </DialogDescription>
                         </DialogHeader>
-                                                 <ContactForm 
-                           productName={`Job Application: ${career.title}`}
-                         />
+                        <ContactForm 
+                          productName={`Job Application: ${career.title}`}
+                        />
                       </DialogContent>
                     </Dialog>
 
