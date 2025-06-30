@@ -134,7 +134,7 @@ export function ThreeAsSection() {
             Experience the future of healthcare today
           </p>
           <Link 
-            href="https://axoncare.axonichealth.com"
+            href="/our-products"
             target="_blank"
             className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white px-4 sm:px-8 py-2 sm:py-4 rounded-xl font-semibold text-sm sm:text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-yellow-500/30"
           >
