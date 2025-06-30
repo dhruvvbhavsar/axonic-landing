@@ -28,8 +28,8 @@ export interface Product {
 export const products: Product[] = [
   {
     id: 1,
-    name: "ACE",
-    slug: "ace",
+    name: "AxonHIS",
+    slug: "axonhis",
     logo: "/logos/AxonHIS.png",
     image: "/assets/ourProducts/ACE.png",
     heroImage: "/assets/ourProducts/ACE.png",
@@ -82,8 +82,8 @@ export const products: Product[] = [
   },
   {
     id: 2,
-    name: "CliniQ",
-    slug: "cliniq",
+    name: "AxonMD",
+    slug: "axonmd",
     logo: "/logos/AxonMD.png",
     image: "/assets/ourProducts/cliniq.png",
     heroImage: "/assets/ourProducts/cliniq.png",
@@ -136,8 +136,8 @@ export const products: Product[] = [
   },
   {
     id: 3,
-    name: "LabLink",
-    slug: "lablink",
+    name: "AxonLab",
+    slug: "axonlab",
     logo: "/logos/AxonLab.png",
     image: "/assets/ourProducts/LabLink.png",
     heroImage: "/assets/ourProducts/LabLink.png",
@@ -191,8 +191,8 @@ export const products: Product[] = [
   
   {
     id: 5,
-    name: "SurgeHub",
-    slug: "surgehub", 
+    name: "AxonSurge",
+    slug: "axonsurge", 
     logo: "/logos/AxonSurge.png",
     image: "/assets/ourProducts/SurgeHub.png",
     heroImage: "/assets/ourProducts/SurgeHub.png",
@@ -245,8 +245,8 @@ export const products: Product[] = [
   },
   {
     id: 6,
-    name: "QUIK",
-    slug: "quik",
+    name: "AxonPharma",
+    slug: "axonpharma",
     logo: "/logos/AxonQUIK.png",
     image: "/assets/ourProducts/QUIK.png",
     heroImage: "/assets/ourProducts/QUIK.png",
@@ -299,8 +299,8 @@ export const products: Product[] = [
   },
   {
     id: 7,
-    name: "AnyTime Health",
-    slug: "anytime-health",
+    name: "AxonHealthHub",
+    slug: "axonhealthhub",
     logo: "/logos/AxonHealthHub.png",
     image: "/assets/ourProducts/AnyTimeHealth.png",
     heroImage: "/assets/ourProducts/AnyTimeHealth.png",
@@ -353,8 +353,8 @@ export const products: Product[] = [
   },
   {
     id: 8,
-    name: "PRISM",
-    slug: "prism",
+    name: "AxonCare",
+    slug: "axoncare",
     logo: "/logos/AxonCarePrism.png",
     image: "/assets/ourProducts/PrismProductImage.png",
     heroImage: "/assets/ourProducts/PrismProductImage.png",

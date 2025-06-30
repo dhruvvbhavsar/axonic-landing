@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import Image from "next/image"
+import Link from "next/link"
 
 import HealthcareProfessionals from "@/public/assets/partnerSection/HealthcareProfessionals.png"
 import MedicalEquipment from "@/public/assets/partnerSection/MedicalEquipment.png"
@@ -126,17 +127,22 @@ export function PartnersSection() {
                   </p>
 
                   {/* Learn More Button */}
-                  <button className="mt-4 bg-white/20 hover:bg-yellow-500 text-white px-6 py-2 rounded-lg backdrop-blur-sm transition-all duration-300 hover:scale-105">
-                    Learn More
-                  </button>
+                  <Link 
+                    href="/contact-us"
+                    className="inline-block mt-4 relative z-10"
+                  >
+                    <button className="bg-white/20 hover:bg-yellow-500 text-white px-6 py-2 rounded-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 relative z-10">
+                      Learn More
+                    </button>
+                  </Link>
                 </div>
               </div>
 
               {/* Hover Border Effect */}
-              <div className="absolute inset-0 border-2 border-transparent group-hover:border-yellow-500 transition-colors duration-500"></div>
+              <div className="absolute inset-0 border-2 border-transparent group-hover:border-yellow-500 transition-colors duration-500 pointer-events-none"></div>
 
               {/* Shine Effect */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
                 <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"></div>
               </div>
             </div>
@@ -199,18 +205,23 @@ export function PartnersSection() {
 
                   {/* Learn More Button */}
                   <div className="text-center">
-                    <button className="bg-white/20 hover:bg-yellow-500 text-white px-4 py-1.5 rounded-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 text-sm">
-                      Learn More
-                    </button>
+                    <Link 
+                      href="/contact-us"
+                      className="inline-block relative z-10"
+                    >
+                      <button className="bg-white/20 hover:bg-yellow-500 text-white px-4 py-1.5 rounded-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 text-sm relative z-10">
+                        Learn More
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>
 
               {/* Hover Border Effect */}
-              <div className="absolute inset-0 border-2 border-transparent group-hover:border-yellow-500 transition-colors duration-500 rounded-lg"></div>
+              <div className="absolute inset-0 border-2 border-transparent group-hover:border-yellow-500 transition-colors duration-500 rounded-lg pointer-events-none"></div>
 
               {/* Shine Effect */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
                 <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent via-white/10 to-transparent transform -translate-y-full group-hover:translate-y-full transition-transform duration-1000 ease-out"></div>
               </div>
             </div>
