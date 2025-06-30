@@ -9,7 +9,6 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { ContactForm } from "@/components/contact-form"
 import { ProductTestimonialsSection } from "@/components/product-testimonials-section"
 import { getProductBySlug, getAllProductSlugs } from "@/lib/products-data"
-import ReactPlayerComponent from "./react-player"
 
 
 interface ProductPageProps {
@@ -83,10 +82,19 @@ export default async function ProductPage({ params }: ProductPageProps) {
               )}
             </div>
 
-            {/* Right Video */}
+            {/* Right Image */}
             <div className="relative flex justify-center">
               <div className="w-full max-w-2xl">
-                <ReactPlayerComponent product={product} />  
+                <div className="relative overflow-hidden rounded-3xl border-2 border-gray-200">
+                  <Image
+                    src={product.heroImage}
+                    alt={product.name}
+                    width={800}
+                    height={600}
+                    className="w-full h-auto object-cover"
+                    priority
+                  />
+                </div>
               </div>
             </div>
           </div>
