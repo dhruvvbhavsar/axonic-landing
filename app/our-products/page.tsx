@@ -35,6 +35,11 @@ export default function OurProductsPage() {
     })
   }, [api])
 
+  // React.useEffect(()=>{
+  //   products = 
+  // },[])
+  products.sort((a, b) => a.id - b.id);
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Page Header */}
@@ -82,12 +87,16 @@ export default function OurProductsPage() {
               opts={{
                 align: "center",
                 loop: true,
+                slidesToScroll: 3,
               }}
               className="w-[96%] md:w-full mb-6"
             >
               <CarouselContent className="-ml-6 sm:-ml-6">
                 {products.map((product) => (
-                  <CarouselItem key={product.id} className="pl-2 sm:pl-6 md:basis-1/2 lg:basis-1/2 xl:basis-1/3">
+                  <CarouselItem key={product.id} 
+                  // className="pl-2 sm:pl-6 md:basis-1/2 lg:basis-1/2 xl:basis-1/3"
+                  className="pl-2 sm:pl-6 basis-full md:basis-1/2 lg:basis-1/2 xl:basis-1/3"
+                  >
                     <Card className="h-full p-0 duration-300 rounded-xl">
                       <CardContent className="p-0 h-full flex flex-col">
                         {/* Product Image */}

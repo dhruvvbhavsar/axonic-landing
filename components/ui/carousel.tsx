@@ -54,6 +54,7 @@ function Carousel({
   const [carouselRef, api] = useEmblaCarousel(
     {
       ...opts,
+      slidesToScroll: 3,
       axis: orientation === "horizontal" ? "x" : "y",
     },
     plugins
