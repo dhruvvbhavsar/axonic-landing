@@ -186,7 +186,7 @@ export const products: Product[] = [
         image: "/assets/image3.png"
       }
     ],
-    ctaText: "Request Demo",
+    ctaText: "Join our network",
     ctaSubtext: "Join the AxonMD Network and transform your clinic management with comprehensive digital solutions."
   },
   {
