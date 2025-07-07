@@ -515,7 +515,7 @@ export const products: Product[] = [
   ],
   "ctaText": "Download AxonBuddy",
   "ctaSubtext": "Stay on top of your health with your new digital buddy.",
-  "redirectUrl": "https://axoncare.axonichealth.com"
+  "redirectUrl": "https://axoncare.axonichealth.com#features"
 },
 {
   "id": 11,
