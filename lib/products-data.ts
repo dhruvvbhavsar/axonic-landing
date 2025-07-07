@@ -361,8 +361,8 @@ export const products: Product[] = [
     heroImage: "/assets/new-products/AxonPharma.png",
     videoUrl: "https://www.youtube.com/shorts/K3ZI3SL_GL0",
     testimonialUrl: "https://www.youtube.com/embed/AQmvWNxE-XM",
-    description: "Smarter Pharmacy, Safer Patients ",
-    shortDescription: "Smarter Pharmacy, Safer Patients ",
+    description: "Smarter Pharmacy, Safer Patients",
+    shortDescription: "Smarter Pharmacy, Safer Patients",
     subtitle: "Smarter Pharmacy, Safer Patients",
     features: [
       {
@@ -393,7 +393,7 @@ export const products: Product[] = [
         image: "/assets/image6.png"
       },
       {
-        title: " Reduced stockouts and wastage",
+        title: "Reduced stockouts and wastage",
         description: "Automated classification, alerts, and refill triggers ensure optimal stock levels and reduce expired stock loss.",
         image: "/assets/image1.png"
       },
@@ -419,7 +419,7 @@ export const products: Product[] = [
   "testimonialUrl": "https://www.youtube.com/embed/abc123doc",
   "description": "Smart documentation system tailored for modern healthcare professionals.",
   "shortDescription": "Instant Expertise, Infinite Care.",
-  "subtitle": "Instant Expertise, Infinite Car",
+  "subtitle": "Instant Expertise, Infinite Care",
   "features": [
     {
       "title": "Smart triage with auto-generated EMR summaries",
@@ -559,7 +559,7 @@ export const products: Product[] = [
       "image": "/assets/image1.png"
     },
     {
-      "title": " Improved accuracy & consistency in records",
+      "title": "Improved accuracy & consistency in records",
       "description": "Standardized notes reduce errors and enhance communication across the care team.",
       "image": "/assets/image2.png"
     },
@@ -639,7 +639,7 @@ export const products: Product[] = [
   "testimonialUrl": "https://www.youtube.com/embed/abc123life",
   "description": "Nurturing Dreams into Reality",
   "shortDescription": "Nurturing Dreams into Reality",
-  "subtitle": "LNurturing Dreams into Reality",
+  "subtitle": "Nurturing Dreams into Reality",
   "features": [
     {
       "title": "Couple-centric registration and records",
