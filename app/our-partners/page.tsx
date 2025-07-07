@@ -23,7 +23,7 @@ export default function OurPartnersPage() {
       />
 
       {/* Partners Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-10 bg-gray-50">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-xl lg:text-4xl font-bold text-gray-900 mb-4">

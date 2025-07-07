@@ -7,7 +7,7 @@ export default function NotFound() {
     <div className="min-h-screen bg-gray-50">
       <PageHeader title="Job Not Found" />
       
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <section className="py-8 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-2xl text-center">
           <div className="bg-white rounded-3xl shadow-lg p-8 md:p-12">
             <div className="mb-8">

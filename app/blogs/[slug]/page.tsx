@@ -35,7 +35,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
       <PageHeader title={blog.title} />
 
       {/* Blog Content */}
-      <article className="py-16 px-4 sm:px-6 lg:px-8">
+      <article className="py-8 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-4xl">
           {/* Back Button */}
           <div className="mb-8">

@@ -20,7 +20,7 @@ export default function AboutUsPage() {
       />
 
       {/* Founder's Note Section */}
-      <section className="py-20 bg-white">
+      <section className="py-10 bg-white">
         <div className="container mx-auto px-2 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left side - Founder Image */}
@@ -81,7 +81,7 @@ export default function AboutUsPage() {
       </section>
 
       {/* Vision and Mission Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-10 bg-gray-50">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Vision */}
@@ -145,7 +145,7 @@ export default function AboutUsPage() {
       </section>
 
       {/* Leadership Section */}
-      <section className="py-20 bg-white">
+      <section className="py-10 bg-white">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">

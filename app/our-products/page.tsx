@@ -72,14 +72,9 @@ export default function OurProductsPage() {
       </section> */}
 
       {/* Products Carousel Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-8 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="container mx-auto max-w-5xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-3">
-              Our Products
-            </h2>
-            <div className="w-16 h-0.5 bg-yellow-500 mx-auto"></div>
-          </div>
+          
 
           <div className="mx-auto w-[80%] sm:w-full flex flex-col items-center">
             <Carousel
@@ -167,7 +162,7 @@ export default function OurProductsPage() {
       </section>
 
       {/* Third Image Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <section className="py-8 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto">
           <div className="relative overflow-hidden rounded-3xl shadow-2xl">
             <Image

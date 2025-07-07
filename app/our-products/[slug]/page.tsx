@@ -40,7 +40,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <PageHeader title={product.name} />
 
       {/* Hero Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
+      <section className="py-10 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
@@ -104,7 +104,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       </section>
 
       {/* Functions Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50/50">
+      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50/50">
         <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
@@ -150,7 +150,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       </section>
 
       {/* Value Proposition Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
@@ -227,7 +227,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       />
 
       {/* Back to Products */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50/50">
+      <section className="py-6 px-4 sm:px-6 lg:px-8 bg-gray-50/50">
         <div className="container mx-auto text-center">
           <BackToProductsButton />
         </div>

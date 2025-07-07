@@ -7,7 +7,7 @@ export default function OurServicesPage() {
       <PageHeader title="Our Services" />
       
       {/* AxonCare Service Section */}
-      <section className="py-16 bg-white">
+      <section className="py-8 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Image */}
@@ -39,7 +39,7 @@ export default function OurServicesPage() {
       </section>
 
       {/* AxonCare Constitutes Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-8 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Content */}
@@ -75,7 +75,7 @@ export default function OurServicesPage() {
       </section>
 
       {/* Who It Is For Section */}
-      <section className="py-16 bg-white">
+      <section className="py-8 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">

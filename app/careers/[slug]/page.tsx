@@ -38,7 +38,7 @@ export default async function CareerPage({ params }: CareerPageProps) {
       <PageHeader title={career.title} />
 
       {/* Career Content */}
-      <article className="py-16 px-4 sm:px-6 lg:px-8">
+      <article className="py-8 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-6xl">
           {/* Back Button */}
           <div className="mb-8">
