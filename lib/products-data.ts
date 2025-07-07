@@ -461,7 +461,6 @@ export const products: Product[] = [
   ],
   "ctaText": "Try AxonDoc",
   "ctaSubtext": "Experience the future of healthcare documentation today.",
-  "redirectUrl": "https://axondoc.axonichealth.co.in/login"
 },
 {
   "id": 10,
@@ -516,7 +515,7 @@ export const products: Product[] = [
   ],
   "ctaText": "Download AxonBuddy",
   "ctaSubtext": "Stay on top of your health with your new digital buddy.",
-  "redirectUrl": "https://axonbuddy.axonichealth.co.in/login"
+  "redirectUrl": "https://axoncare.axonichealth.com"
 },
 {
   "id": 11,
@@ -571,7 +570,7 @@ export const products: Product[] = [
   ],
   "ctaText": "Book Demo",
   "ctaSubtext": "Revolutionize your consultation process with AxonScribe.",
-  "redirectUrl": "https://axonscribe.axonichealth.co.in/login"
+  "redirectUrl": "https://axonscribe.axonichealth.com"
 },
 {
   "id": 12,
@@ -626,68 +625,8 @@ export const products: Product[] = [
   ],
   "ctaText": "Explore AxonA",
   "ctaSubtext": "Turn your data into action with healthcare intelligence.",
-  "redirectUrl": "https://axona.axonichealth.co.in/login"
+  "redirectUrl": "https://axonmd.axonichealth.com"
 },
-{
-  "id": 13,
-  "name": "AxonLife",
-  "slug": "axonlife",
-  "logo": "/logos/AxonLife.png",
-  "image": "/assets/ourProducts/AxonaLifeImage.png",
-  "heroImage": "/assets/new-products/AxonSurge.png",
-  "videoUrl": "https://www.youtube.com/shorts/abc123life",
-  "testimonialUrl": "https://www.youtube.com/embed/abc123life",
-  "description": "Nurturing Dreams into Reality",
-  "shortDescription": "Nurturing Dreams into Reality",
-  "subtitle": "Nurturing Dreams into Reality",
-  "features": [
-    {
-      "title": "Couple-centric registration and records",
-      "description": "Create linked profiles for partners, enabling seamless tracking of joint history, investigations, and treatment plans.",
-      "image": "/assets/image1.png"
-    },
-    {
-      "title": "Integrated lab and radiology investigations",
-      "description": "Order, track, and view all fertility-related tests and imaging from within the platform — no manual follow-up needed.",
-      "image": "/assets/image2.png"
-    },
-    {
-      "title": "Structured diagnosis and individualized treatment planning",
-      "description": "Support for evidence-based protocols with customizable plans for IVF, IUI, and other fertility treatments.",
-      "image": "/assets/image3.png"
-    },
-    {
-      "title": "End-to-end clinical outcome and pregnancy tracking",
-      "description": "Monitor success rates, ongoing pregnancies, and outcomes with easy-to-view dashboards and analytics.",
-      "image": "/assets/image4.png"
-    }
-  ],
-  "valuePropositions": [
-    {
-      "title": "Streamlined care journey for couples",
-      "description": "From registration to pregnancy tracking, AxonLife keeps the process smooth, transparent, and connected.",
-      "image": "/assets/image1.png"
-    },
-    {
-      "title": "Improved decision-making and success tracking",
-      "description": "Consolidated data and outcomes analytics support smarter clinical choices and better patient communication.",
-      "image": "/assets/image2.png"
-    },
-    {
-      "title": "Reduced admin load, enhanced compliance",
-      "description": "Automated workflows and built-in documentation help clinics stay efficient and audit-ready.",
-      "image": "/assets/image3.png"
-    }
-  ],
-  "ctaText": "Join AxonLife",
-  "ctaSubtext": "Empower your everyday life with health-first choices.",
-  "redirectUrl": "https://axonlife.axonichealth.co.in/login"
-},
-
-
-
-
-  
 ]
 
 export function getProductBySlug(slug: string): Product | undefined {
