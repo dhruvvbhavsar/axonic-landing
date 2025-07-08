@@ -79,7 +79,7 @@ export const products: Product[] = [
     ],
     ctaText: "Book Appointment Now",
     ctaSubtext: "Join the AxonCare Network and revolutionize your healthcare strategy with advanced predictive analytics and risk intelligence.",
-    redirectUrl: "https://prism.axonichealth.co.in/login"
+    redirectUrl: "https://axoncare.axonichealth.com"
   },
   {
     id: 2,
@@ -356,7 +356,7 @@ export const products: Product[] = [
     id: 7,
     name: "AxonPharma",
     slug: "axonpharma",
-    logo: "/logos/AxonQUIK.png",
+    logo: "/logos/AxonCarePharma.png",
     image: "/assets/ourProducts/QUIK.png",
     heroImage: "/assets/new-products/AxonPharma.png",
     videoUrl: "https://www.youtube.com/shorts/K3ZI3SL_GL0",
@@ -461,6 +461,7 @@ export const products: Product[] = [
   ],
   "ctaText": "Try AxonDoc",
   "ctaSubtext": "Experience the future of healthcare documentation today.",
+  "redirectUrl": "https://axoncare.axonichealth.com"
 },
 {
   "id": 10,
