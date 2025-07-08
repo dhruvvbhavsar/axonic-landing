@@ -118,26 +118,28 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {product.features.map((feature, index) => (
-              <Card key={index} className="group hover:shadow-2xl transition-all duration-500 border-0 bg-white rounded-3xl overflow-hidden hover:-translate-y-2">
-                <CardContent className="p-0">
-                  <div className="flex flex-col lg:flex-row h-full">
+              <Card key={index} className="group hover:shadow-2xl transition-all duration-500 border-0 bg-white rounded-3xl overflow-hidden hover:-translate-y-2 h-full">
+                <CardContent className="p-0 h-full">
+                  <div className="flex flex-col lg:flex-row h-full min-h-[280px]">
                     {/* Image */}
-                    <div className="lg:w-2/5 relative overflow-hidden">
-                      <Image
-                        src={feature.image}
-                        alt={feature.title}
-                        width={300}
-                        height={200}
-                        className="w-full h-64 lg:h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                      />
+                    <div className="lg:w-2/5 relative overflow-hidden flex items-center justify-center p-2">
+                      <div className="relative w-44 h-44 lg:w-52 lg:h-52 flex-shrink-0">
+                        <Image
+                          src={feature.image}
+                          alt={feature.title}
+                          width={208}
+                          height={208}
+                          className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700"
+                        />
+                      </div>
                     </div>
                     
                     {/* Content */}
-                    <div className="lg:w-3/5 p-8 lg:p-10 flex flex-col justify-center">
-                      <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-yellow-600 transition-colors duration-300">
+                    <div className="lg:w-3/5 p-4 lg:p-6 flex flex-col justify-center">
+                      <h3 className="text-lg lg:text-xl font-bold text-gray-900 mb-3 lg:mb-4 group-hover:text-yellow-600 transition-colors duration-300 leading-tight">
                         {feature.title}
                       </h3>
-                      <p className="text-gray-600 leading-relaxed text-base">
+                      <p className="text-gray-600 leading-relaxed text-sm lg:text-base">
                         {feature.description}
                       </p>
                     </div>

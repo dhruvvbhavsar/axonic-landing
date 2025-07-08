@@ -87,7 +87,7 @@ export const products: Product[] = [
     slug: "axonhis",
     logo: "/logos/AxonHIS.png",
     image: "/assets/ourProducts/ACE.png",
-    heroImage: "/assets/new-products/AxonHIS.png",
+    heroImage: "/assets/new-products-1/his/HIS.png",
     videoUrl: "https://www.youtube.com/watch?v=u_xkIe_htWI",
     testimonialUrl: "https://www.youtube.com/embed/qrCEQBEdrC4",
     description: "Advanced Clinical Excellence platform for healthcare management and patient care optimization.",
@@ -95,41 +95,41 @@ export const products: Product[] = [
     subtitle: "Transforming Clinical Excellence Through Technology",
     features: [
       {
-        title: "Unified Clinical Workflow",
-        description: "Streamlined processes that connect all aspects of patient care, from admission to discharge, ensuring seamless coordination across medical teams.",
-        image: "/assets/image2.png"
+        title: "One Platform. Total Control.",
+        description: "50+ modules from registration to discharge. Real-time sync across clinical, financial, and admin workflows with built-in ABDM, HL7, HIPAA & GDPR compliance",
+        image: "/assets/new-products-1/his/his-1.png"
       },
       {
-        title: "Real-time Patient Monitoring",
-        description: "Advanced monitoring systems that provide continuous patient data tracking, alerts, and comprehensive health status updates for immediate response.",
-        image: "/assets/image3.png"
+        title: "Insights That Drive Action",
+        description: "Live BI dashboards and predictive analytics to monitor KPIs, billing, outcomes, and inventory. Drill into patient-level trends for data-driven decisions.",
+        image: "/assets/new-products-1/his/his-2.png"
       },
       {
-        title: "Clinical Decision Support",
-        description: "AI-powered tools that assist healthcare professionals in making informed decisions with evidence-based recommendations and clinical guidelines.",
-        image: "/assets/image4.png"
+        title: "Smarter EMR. Safer Care.",
+        description: "AI-powered EMR with smart documentation, color-coded triage, automated vitals, and voice inputs. Enhances care across OPD, IPD, ER, and specialty workflows",
+        image: "/assets/new-products-1/his/his-3.png"
       },
       {
-        title: "Quality Metrics & Analytics",
-        description: "Comprehensive reporting and analytics that track clinical outcomes, quality measures, and performance indicators for continuous improvement.",
-        image: "/assets/image5.png"
+        title: "Care That Moves With You.",
+        description: "Branded mobile app for staff and patients, manage appointments, reports, billing, and e-prescriptions. Includes queue alerts, remote access & notifications.",
+        image: "/assets/new-products-1/his/his-4.png"
       }
     ],
     valuePropositions: [
       {
         title: "Enhanced Clinical Outcomes",
         description: "AxonHIS optimizes clinical workflows and decision-making processes, leading to improved patient outcomes and reduced medical errors through systematic excellence.",
-        image: "/assets/image1.png"
+        image: "/assets/new-products-1/his/c-1.png"
       },
       {
         title: "Improved Operational Efficiency",
         description: "Streamlined processes and automated workflows reduce administrative burden, allowing healthcare professionals to focus more time on direct patient care.",
-        image: "/assets/image2.png"
+        image: "/assets/new-products-1/his/c-2.png"
       },
       {
         title: "Data-Driven Clinical Excellence",
         description: "Advanced analytics and reporting provide actionable insights to continuously improve clinical practices and maintain the highest standards of care.",
-        image: "/assets/image3.png"
+        image: "/assets/new-products-1/his/c-3.png"
       }
     ],
     ctaText: "Request Demo",
@@ -149,41 +149,41 @@ export const products: Product[] = [
     subtitle: "Complete Clinic Management Made Simple",
     features: [
       {
-        title: "Smart Appointment Scheduling",
-        description: "Intelligent scheduling system that optimizes appointment slots, reduces wait times, and manages provider availability efficiently.",
-        image: "/assets/image1.png"
+        title: "One Platform, Total Care",
+        description: "Run in-clinic and virtual care together with a single, secure EMR + video consult hub — no extra tools, no patient drop-offs.",
+        image: "/assets/new-products-1/md/md-1.png"
       },
       {
-        title: "Electronic Health Records",
-        description: "Comprehensive digital patient records with secure storage, easy access, and seamless integration across all clinic departments.",
-        image: "/assets/image3.png"
+        title: "Smart Casesheet with Time-Saving Features",
+        description: "Smart buttons, guided flows, and voice notes make documenting fast, error-free, and almost touchless.",
+        image: "/assets/new-products-1/md/md-2.png"
       },
       {
-        title: "Patient Communication Hub",
-        description: "Integrated communication platform for patient notifications, reminders, and secure messaging between patients and healthcare providers.",
-        image: "/assets/image4.png"
+        title: "Medication Compliance",
+        description: "Automatic dose alerts for patients. Real-time tracking for doctors. Better results, no guesswork.",
+        image: "/assets/new-products-1/md/md-3.png"
       },
       {
-        title: "Billing & Revenue Management",
-        description: "Automated billing processes, insurance claim management, and revenue tracking to streamline financial operations.",
-        image: "/assets/image5.png"
+        title: "Multilingual Global Reach",
+        description: "Break barriers with multilingual casesheets, and video calls through AI-assisted clinitalk. One clinic, any region.",
+        image: "/assets/new-products-1/md/md-4.png"
       }
     ],
     valuePropositions: [
       {
-        title: "Streamlined Operations",
-        description: "AxonMD integrates all clinic operations into one platform, reducing administrative overhead and improving overall clinic efficiency.",
-        image: "/assets/image2.png"
+        title: "More Time for Patients",
+        description: "Spend less time typing, more time caring.",
+        image: "/assets/new-products-1/md/c-1.png"
       },
       {
-        title: "Enhanced Patient Experience",
-        description: "Improved scheduling, communication, and care coordination create a better patient experience with reduced wait times and better service.",
-        image: "/assets/image1.png"
+        title: "Safer, Smarter Practice",
+        description: "Better compliance + smart notes = fewer errors, better outcomes.",
+        image: "/assets/new-products-1/md/c-2.png"
       },
       {
-        title: "Increased Revenue",
-        description: "Optimized scheduling, automated billing, and improved patient retention contribute to increased clinic revenue and profitability.",
-        image: "/assets/image3.png"
+        title: "Grow Without Borders",
+        description: "Reach new communities — no language or location limits.",
+        image: "/assets/new-products-1/md/c-3.png"
       }
     ],
     ctaText: "Join our network",
@@ -195,7 +195,7 @@ export const products: Product[] = [
     slug: "axonhealthhub",
     logo: "/logos/AxonHealthHub.png",
     image: "/assets/ourProducts/AnyTimeHealth.png",
-    heroImage: "/assets/new-products/AxonHealthHub.png",
+    heroImage: "/assets/new-products-1/healthhub/HEALTHHUB.png",
     videoUrl: "https://www.youtube.com/watch?v=NPt4Uo4uwx4",
     testimonialUrl: "https://www.youtube.com/embed/2OPJaJoi0Gs",
     description: "24/7 healthcare access platform providing round-the-clock medical support and consultations.",
@@ -203,41 +203,41 @@ export const products: Product[] = [
     subtitle: "Healthcare That Never Sleeps",
     features: [
       {
-        title: "24/7 Medical Support",
-        description: "Round-the-clock access to qualified healthcare professionals for consultations, advice, and emergency support at any time.",
-        image: "/assets/image1.png"
+        title: "Instant Smart Diagnostics",
+        description: "Do quick basic health checks and PCOT tests on the spot — no queues, no hassle.",
+        image: "/assets/new-products-1/healthhub/healthhub-1.png"
       },
       {
-        title: "Virtual Care Platform",
-        description: "Comprehensive telemedicine platform with video consultations, chat support, and remote monitoring capabilities.",
-        image: "/assets/image2.png"
+        title: "Plug into Expert Help",
+        description: "Seamlessly links patients to AxonDoc for medical guidance follow-ups with real time doctor.",
+        image: "/assets/new-products-1/healthhub/healthhub-2.png"
       },
       {
-        title: "Continuous Health Monitoring",
-        description: "Ongoing health tracking and monitoring with automated alerts and proactive care recommendations.",
-        image: "/assets/image3.png"
+        title: "Book & Connect on the Go",
+        description: "Patients can self-book appointments and jump straight into secure video calls with doctors — anytime, anywhere.",
+        image: "/assets/new-products-1/healthhub/healthhub-3.png"
       },
       {
-        title: "Multi-Channel Communication",
-        description: "Various communication channels including phone, video, chat, and messaging for flexible patient-provider interactions.",
-        image: "/assets/image4.png"
+        title: "Vitals Sync & Care Continuity",
+        description: "All readings and reports flow directly into the patient’s health record — so doctors see the full picture, instantly.",
+        image: "/assets/new-products-1/healthhub/healthhub-4.png"
       }
     ],
     valuePropositions: [
       {
-        title: "Always Available Care",
-        description: "AxonHealthHub ensures healthcare is available 24/7, providing peace of mind and immediate access to medical support whenever needed.",
-        image: "/assets/image7.png"
+        title: "Access Health, Anytime",
+        description: "Get instant tests and vitals without waiting in line — stay ahead of problems, easily.",
+        image: "/assets/new-products-1/healthhub/c-1.png"
       },
       {
-        title: "Reduced Emergency Visits",
-        description: "Early intervention and continuous monitoring help prevent health issues from escalating, reducing unnecessary emergency room visits.",
-        image: "/assets/image1.png"
+        title: "See Doctors, Faster",
+        description: "Book your own slot and connect by video in minutes — no calls, no confusion.",
+        image: "/assets/new-products-1/healthhub/c-2.png"
       },
       {
-        title: "Comprehensive Health Management",
-        description: "Continuous care and monitoring provide comprehensive health management, improving long-term health outcomes and patient satisfaction.",
-        image: "/assets/image2.png"
+        title: "One Hub, Total Care",
+        description: "From quick checks to live consults and follow-ups — everything is linked in one smart system.",
+        image: "/assets/new-products-1/healthhub/c-3.png"
       }
     ],
     ctaText: "Request Demo",
@@ -257,41 +257,41 @@ export const products: Product[] = [
     subtitle: "Connecting Diagnostics, Delivering Results",
     features: [
       {
-        title: "Sample Tracking & Management",
-        description: "Complete sample lifecycle management from collection to disposal, with real-time tracking and chain of custody documentation.",
-        image: "/assets/image1.png"
+        title: "Smart Test Management",
+        description: "Dynamic test catalog with configurable pricing, TAT, reference ranges, and sample rules, customized per specialty",
+        image: "/assets/new-products-1/lab/lab-1.png"
       },
       {
-        title: "Automated Workflow Processing",
-        description: "Streamlined laboratory workflows with automated test processing, result validation, and quality control measures.",
-        image: "/assets/image2.png"
+        title: "Insightful Dashboards and Reports",
+        description: "Track TAT, test volumes, and KPIs with real-time MIS and department-wise compliance reports.",
+        image: "/assets/new-products-1/lab/lab-2.png"
       },
       {
-        title: "Integrated Instrument Connectivity",
-        description: "Seamless integration with laboratory instruments for automated data capture and reduced manual entry errors.",
-        image: "/assets/image4.png"
+        title: "End-to-End Sample Intelligence",
+        description: "Barcode-based Lifecycle Tracking from collection to disposal, Bi-directional Analyzer Integration ensures zero errors and full traceability.",
+        image: "/assets/new-products-1/lab/lab-3.png"
       },
       {
-        title: "Comprehensive Reporting",
-        description: "Advanced reporting capabilities with customizable templates, statistical analysis, and regulatory compliance features.",
-        image: "/assets/image5.png"
+        title: "Specialty Driven Lab workflow",
+        description: "Dedicated modules for Histopathology and Microbiology, covering grossing, slide tracking, antibiograms, and digital reporting for accuracy and compliance.",
+        image: "/assets/new-products-1/lab/lab-4.png"
       }
     ],
     valuePropositions: [
       {
         title: "Improved Test Accuracy",
         description: "AxonLab reduces manual errors and ensures consistent quality through automated processes and comprehensive quality control measures.",
-        image: "/assets/image3.png"
+        image: "/assets/new-products-1/lab/c-1.png"
       },
       {
         title: "Faster Turnaround Times",
         description: "Optimized workflows and automated processes significantly reduce test processing times, delivering results faster to healthcare providers.",
-        image: "/assets/image1.png"
+        image: "/assets/new-products-1/lab/c-2.png"
       },
       {
         title: "Enhanced Laboratory Efficiency",
         description: "Streamlined operations, resource optimization, and improved workflow management increase overall laboratory productivity and efficiency.",
-        image: "/assets/image2.png"
+        image: "/assets/new-products-1/lab/c-3.png"
       }
     ],
     ctaText: "Request Demo",
@@ -312,36 +312,36 @@ export const products: Product[] = [
     subtitle: "Transforming Operating Theatre Management",
     features: [
       {
-        title: "Unified Collaboration",
-        description: "Effortless collaboration between surgeons, nurses, and hospital staff ensures smooth operation flow and minimises delays.",
-        image: "/assets/image1.png"
+        title: "Smart OT Scheduling",
+        description: "Centralized dashboard prevents OT clashes and supports emergency overrides. Real-time availability of surgeons, slots, and equipment—streamlined for efficiency.",
+        image: "/assets/new-products-1/surge/surge-1.png"
       },
       {
-        title: "Streamlined Surgical Operations",
-        description: "Smart OT Start, Digital Documentation, and Automated Workflow features optimise the surgical process and reduce errors.",
-        image: "/assets/image2.png"
+        title: "Instrument & Supply Intelligence",
+        description: "Track trays, implants, and consumables using barcodes/RFID. Get expiry alerts and auto-deduct stock from inventory based on OT usage.",
+        image: "/assets/new-products-1/surge/surge-2.png"
       },
       {
-        title: "Elevated Patient Safety",
-        description: "Enhanced Safety Checklists ensure adherence to protocols, mitigating risks and prioritising patient well-being.",
-        image: "/assets/image3.png"
+        title: "Surgical Workflow Automation",
+        description: "Digitized pre, intra, and post-op workflows with WHO checklists, real-time logging, and multimedia documentation for safer, standardized surgeries.",
+        image: "/assets/new-products-1/surge/surge-3.png"
       },
       {
-        title: "Insightful Analytics",
-        description: "SurgeHub captures valuable data to improve surgical workflows, resource allocation, and overall patient outcomes.",
-        image: "/assets/image4.png"
+        title: "Surgical Outcomes Dashboard",
+        description: "Monitor KPIs like blood loss, complications, and OT time. Visualize outcomes through real-time dashboards and attach photos/videos for complete records.",
+        image: "/assets/new-products-1/surge/surge-4.png"
       }
     ],
     valuePropositions: [
       {
         title: "Improved Surgical Efficiency",
         description: "AxonSurge optimises resource utilisation, reduces operating room downtime, and allows hospitals to perform more procedures.",
-        image: "/assets/image5.png"
+        image: "/assets/new-products-1/surge/c-1.png"
       },
       {
         title: "Enhanced Patient Care",
         description: "Streamlined workflows and focus on safety protocols contribute to better patient outcomes and reduced complications.",
-        image: "/assets/image1.png"
+        image: "/assets/new-products-1/surge/c-2.png"
       },
       {
         title: "Data-Driven Decision Making",
@@ -368,39 +368,39 @@ export const products: Product[] = [
       {
         title: "E-Indents to billing with audit-ready workflows",
         description: "Digitally manage indents, issues, and billing while ensuring every transaction is traceable and compliant.",
-        image: "/assets/image1.png"
-      },
-      {
-        title: "ABC/VED stock classification with smart alerts & refill triggers",
-        description: "Prioritize inventory effectively with automated stock classification, low-stock alerts, and intelligent reordering.",
-        image: "/assets/image2.png"
+        image: "/assets/new-products-1/pharma/pharma-1.png"
       },
       {
         title: "Digital drug registers for narcotics",
         description: "Ensure secure, compliant handling of controlled substances with easy-to-maintain digital registers.",
-        image: "/assets/image3.png"
+        image: "/assets/new-products-1/pharma/pharma-2.png"
+      },
+      {
+        title: "ABC/VED stock classification with smart alerts & refill triggers",
+        description: "Prioritize inventory effectively with automated stock classification, low-stock alerts, and intelligent reordering.",
+        image: "/assets/new-products-1/pharma/pharma-3.png"
       },
       {
         title: "Barcode dispensing with FEFO expiry tracking & multi-store visibility",
         description: "Improve safety and efficiency through barcode-based dispensing, real-time expiry monitoring, and oversight across all pharmacy outlets.",
-        image: "/assets/image4.png"
+        image: "/assets/new-products-1/pharma/pharma-4.png"
       }
     ],
     valuePropositions: [
       {
         title: "Enhanced patient safety and medication accuracy",
         description: "Barcode dispensing and FEFO tracking minimize errors and prevent dispensing expired or incorrect drugs.",
-        image: "/assets/image6.png"
+        image: "/assets/new-products-1/lab/c-1.png"
       },
       {
         title: "Reduced stockouts and wastage",
         description: "Automated classification, alerts, and refill triggers ensure optimal stock levels and reduce expired stock loss.",
-        image: "/assets/image1.png"
+        image: "/assets/new-products-1/lab/c-2.png"
       },
       {
         title: "Simplified compliance and audit readiness",
         description: "Digital registers, traceable workflows, and detailed logs make audits easy and stress-free.",
-        image: "/assets/image2.png"
+        image: "/assets/new-products-1/lab/c-3.png"
       }
     ],
     ctaText: "Request Demo",
