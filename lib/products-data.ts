@@ -86,7 +86,7 @@ export const products: Product[] = [
     name: "AxonHIS",
     slug: "axonhis",
     logo: "/logos/AxonHIS.png",
-    image: "/assets/ourProducts/ACE.png",
+    image: "/assets/ourProducts/HIS.png",
     heroImage: "/assets/new-products-1/his/HIS.png",
     videoUrl: "https://www.youtube.com/watch?v=u_xkIe_htWI",
     testimonialUrl: "https://www.youtube.com/embed/qrCEQBEdrC4",
@@ -414,7 +414,7 @@ export const products: Product[] = [
   "slug": "axondoc",
   "logo": "/logos/AxonDoc.png",
   "image": "/assets/ourProducts/AxonaDocImage.png",
-  "heroImage": "/assets/new-products/AxonSurge.png",
+  "heroImage": "/assets/new-products-1/doc/DOC.png",
   "videoUrl": "https://www.youtube.com/shorts/abc123doc",
   "testimonialUrl": "https://www.youtube.com/embed/abc123doc",
   "description": "Smart documentation system tailored for modern healthcare professionals.",
@@ -422,46 +422,45 @@ export const products: Product[] = [
   "subtitle": "Instant Expertise, Infinite Care",
   "features": [
     {
-      "title": "Smart triage with auto-generated EMR summaries",
-      "description": "AI-driven triage assesses patient symptoms and generates structured summaries directly into the EMR for faster, safer decisions.",
-      "image": "/assets/image1.png"
+      "title": "AI Triage & Guidance",
+      "description": "Smart conversational flows handle early questions, suggest next steps, and ease doctor's workload.",
+      "image": "/assets/new-products-1/doc/doc-1.png"
     },
     {
-      "title": "Supports regional languages",
-      "description": "Break language barriers with multi-lingual capabilities — making quality care accessible to diverse populations.",
-      "image": "/assets/image2.png"
+      "title": "Regional Language Support",
+      "description": "Patients chat naturally in their language — AxonDoc understands and translates for clear, inclusive care.",
+      "image": "/assets/new-products-1/doc/doc-2.png"
     },
     {
-      "title": "24/7 availability for continuous care",
-      "description": "AxonDoc is always on — supporting patients and providers anytime, anywhere.",
-      "image": "/assets/image3.png"
+      "title": "Voice-to-Case in Seconds",
+      "description": "AxonDoc is always on — supporting patients and providers anytime, anywhereCaptures patient symptoms by voice, auto-summarizes them, and fills the casesheet — no typing needed.",
+      "image": "/assets/new-products-1/doc/doc-3.png"
     },
     {
-      "title": "Integrated with AxonHealthHub & emergency services",
-      "description": "Seamless connection with AxonHealthHub and auto-alerts to emergency services for critical cases.",
-      "image": "/assets/image4.png"
+      "title": "Integrated into AxonMD and AxonHealthHub",
+      "description": "Works hand-in-hand with your EMR and Health Hub tools — boosting doctor efficiency without replacing human care.",
+      "image": "/assets/new-products-1/doc/doc-4.png"
     }
   ],
   "valuePropositions": [
     {
-      "title": "Faster, safer clinical decisions",
-      "description": "Smart triage and automated summaries reduce delays and support better-informed choices.",
-      "image": "/assets/image1.png"
+      "title": "Less Manual Work",
+      "description": "Automates routine history-taking and frees doctors for real medical decisions.",
+      "image": "/assets/new-products-1/doc/c-1.png"
     },
     {
-      "title": "Inclusive, accessible healthcare delivery",
-      "description": "Regional language support ensures no patient is left behind due to communication gaps.",
-      "image": "/assets/image2.png"
+      "title": "See More Patients, Smoothly",
+      "description": " Faster triage and summaries mean better flow and shorter waiting times.",
+      "image": "/assets/new-products-1/doc/c-2.png"
     },
     {
-      "title": "Enhanced emergency response & coordinated care",
-      "description": "Real-time integration helps trigger timely interventions, improving outcomes in critical situations.",
-      "image": "/assets/image3.png"
+      "title": "Serve All Communities",
+      "description": "Breaks language barriers and makes smart AI care accessible for everyone.",
+      "image": "/assets/new-products-1/doc/c-3.png"
     }
   ],
   "ctaText": "Try AxonDoc",
   "ctaSubtext": "Experience the future of healthcare documentation today.",
-  "redirectUrl": "https://axoncare.axonichealth.com"
 },
 {
   "id": 10,
@@ -469,54 +468,53 @@ export const products: Product[] = [
   "slug": "axonbuddy",
   "logo": "/logos/AxonBuddy.png",
   "image": "/assets/ourProducts/AxonaBuddyImage.png",
-  "heroImage": "/assets/new-products/AxonSurge.png",
+  "heroImage": "/assets/new-products-1/buddy/BUDDY.png",
   "videoUrl": "https://www.youtube.com/shorts/abc123buddy",
   "testimonialUrl": "https://www.youtube.com/embed/abc123buddy",
   "description": "24/7 Health Wisdom at Your Service",
-  "shortDescription": "Your personal healthcare assistant and companion.",
+  "shortDescription": "Always by your side, AxonBuddy offers intelligent, multilingual health guidance tailored to your symptoms, history, and needs — anytime, anywhere.",
   "subtitle": "24/7 Health Wisdom at Your Service",
   "features": [
     {
       "title": "24/7 personalized health companion",
       "description": "Always available to guide users with reliable health information and support, day or night.",
-      "image": "/assets/image1.png"
+      "image": "/assets/new-products-1/buddy/buddy-1.png"
     },
     {
       "title": "Customized advice based on medical history",
       "description": "Provides recommendations and guidance tailored to each user’s health records and conditions.",
-      "image": "/assets/image2.png"
+      "image": "/assets/new-products-1/buddy/buddy-2.png"
     },
     {
       "title": "Symptom-based specialty consultation suggestion",
       "description": "Smart algorithms suggest when and which specialist to consult — helping users seek timely expert care.",
-      "image": "/assets/image3.png"
+      "image": "/assets/new-products-1/buddy/buddy-3.png"
     },
     {
       "title": "Multilingual, conversational health concierge",
       "description": "Engages users in natural, friendly dialogue in their preferred language for better understanding and comfort.",
-      "image": "/assets/image4.png"
+      "image": "/assets/new-products-1/buddy/buddy-4.png"
     }
   ],
   "valuePropositions": [
     {
       "title": "Empowers users with instant, trusted guidance",
       "description": "AxonBuddy helps people make informed health decisions anytime, reducing anxiety and confusion.",
-      "image": "/assets/image1.png"
+      "image": "/assets/new-products-1/buddy/c-1.png"
     },
     {
       "title": "Drives timely access to the right care",
       "description": "By flagging the need for specialty consultations, it helps prevent delays in diagnosis and treatment.",
-      "image": "/assets/image2.png"
+      "image": "/assets/new-products-1/buddy/c-2.png"
     },
     {
       "title": "Promotes inclusivity and user comfort",
       "description": "Conversational, multilingual support ensures everyone can access advice in a way that feels natural and respectful.",
-      "image": "/assets/image3.png"
+      "image": "/assets/new-products-1/buddy/c-3.png"
     }
   ],
   "ctaText": "Download AxonBuddy",
   "ctaSubtext": "Stay on top of your health with your new digital buddy.",
-  "redirectUrl": "https://axoncare.axonichealth.com#features"
 },
 {
   "id": 11,
@@ -579,54 +577,53 @@ export const products: Product[] = [
   "slug": "axona",
   "logo": "/logos/AxonA.png",
   "image": "/assets/ourProducts/AxonaAImage.png",
-  "heroImage": "/assets/new-products/AxonSurge.png",
+  "heroImage": "/assets/new-products-1/axona/AXONA.png",
   "videoUrl": "https://www.youtube.com/shorts/abc123axa",
   "testimonialUrl": "https://www.youtube.com/embed/abc123axa",
-  "description": "Your Intelligent Clinical Associate makes you a Superdoctor.",
-  "shortDescription": "Your Intelligent Clinical Associate makes you a Superdoctor.",
-  "subtitle": "AI for Smarter Healthcare",
+  "description": "Ambient Scribe, your Intelligent Clinical Associate, who makes you a Superdoctor ",
+  "shortDescription": "Ambient Scribe, your Intelligent Clinical Associate, who makes you a Superdoctor ",
+  "subtitle": "Redefining Healthcare Intelligence",
   "features": [
     {
       "title": "One-click Smart Buttons for Case Entry",
       "description": "Quickly populate casesheets with customizable, condition-specific templates — saving time and ensuring thorough documentation.",
-      "image": "/assets/image1.png"
-    },
-    {
-      "title": "Automated GP Letter Generation",
-      "description": "Instantly create accurate, professional GP referral and update letters using AI-powered templates.",
-      "image": "/assets/image2.png"
+      "image": "/assets/new-products-1/axona/axona-1.png"
     },
     {
       "title": "Hands-free Consultation Mode",
       "description": "Enable voice-driven, AI-supported transcription and record-keeping — no typing, no distraction.",
-      "image": "/assets/image3.png"
+      "image": "/assets/new-products-1/axona/axona-2.png"
+    },
+    {
+      "title": "Automated GP Letter Generation",
+      "description": "Instantly create accurate, professional GP referral and update letters using AI-powered templates.",
+      "image": "/assets/new-products-1/axona/axona-3.png"
     },
     {
       "title": "AI Decision Support & Alerts",
       "description": "Get real-time suggestions, reminders, and safety alerts during consultation — helping you deliver safer, smarter care.",
-      "image": "/assets/image4.png"
+      "image": "/assets/new-products-1/axona/axona-4.png"
     }
   ],
   "valuePropositions": [
     {
       "title": "Faster documentation, higher throughput",
       "description": "One-click smart buttons, automated GP letters, and hands-free consultation tools cut admin time dramatically — so you can see more patients without feeling rushed or overworked.",
-      "image": "/assets/image1.png"
+      "image": "/assets/new-products-1/axona/c-1.png"
     },
     {
       "title": "Consistent accuracy and quality of care",
       "description": "AxonA ensures complete, error-free records and standardized communication — boosting compliance, reducing errors, and enhancing trust with patients and referrers.",
-      "image": "/assets/image2.png"
+      "image": "/assets/new-products-1/axona/c-2.png"
     },
     {
       "title": "Better patient experience, greater satisfaction",
       "description": "With streamlined visits, shorter wait times, and more focused doctor-patient interaction, AxonA helps you deliver care that patients truly value and remember.",
-      "image": "/assets/image3.png"
+      "image": "/assets/new-products-1/axona/c-3.png"
     }
   ],
   "ctaText": "Explore AxonA",
   "ctaSubtext": "Turn your data into action with healthcare intelligence.",
-  "redirectUrl": "https://axonmd.axonichealth.com"
 },
 ]
 
