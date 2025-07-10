@@ -209,21 +209,13 @@ export function ContactForm({ productName, onSubmit }: ContactFormProps) {
         </div>
       )}
 
-      <div className="flex flex-col sm:flex-row gap-3 pt-4">
+      <div className="pt-4">
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-3 px-8 rounded-xl transition-all duration-300 hover:scale-105 flex-1"
+          className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-3 px-8 rounded-xl transition-all duration-300 hover:scale-105 w-full"
         >
           {isSubmitting ? "Sending..." : "Send Message"}
-        </Button>
-        <Button
-          type="button"
-          variant="outline"
-          className="py-3 px-8 rounded-xl font-semibold"
-          onClick={() => window.open(`tel:+1-408-693-6337`, '_self')}
-        >
-          Call Us Instead
         </Button>
       </div>
 

@@ -6,7 +6,9 @@ import { PageHeader } from "@/components/page-header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { CalendlyWidget } from "@/components/calendly-widget"
 import { ContactForm } from "@/components/contact-form"
+import { CallButtonTertiary } from "@/components/call-button-tertiary"
 import { ProductTestimonialsSection } from "@/components/product-testimonials-section"
 import { getProductBySlug, getAllProductSlugs } from "@/lib/products-data"
 import { BackToProductsButton } from "@/components/back-to-products-button"
@@ -54,26 +56,47 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   {product.description}
                 </p>
               </div>
-              {product.redirectUrl ? (
-                <Link href={product.redirectUrl} target="_blank" rel="noopener noreferrer">
-                  <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-4 px-10 rounded-xl text-base transition-all duration-300 hover:scale-105 shadow-lg">
-                    {product.ctaText}
-                  </Button>
-                </Link>
-              ) : (
+              <div className="flex flex-col sm:flex-row gap-4">
                 <Dialog>
                   <DialogTrigger asChild>
                     <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-4 px-10 rounded-xl text-base transition-all duration-300 hover:scale-105 shadow-lg">
-                      {product.ctaText}
+                      Schedule Demo
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle className="text-2xl font-bold text-gray-900">
+                        Schedule Your {product.name} Demo
+                      </DialogTitle>
+                      <DialogDescription className="text-gray-600">
+                        Choose a convenient time slot for your personalized demo
+                      </DialogDescription>
+                    </DialogHeader>
+                    <CalendlyWidget 
+                      productName={product.name}
+                      calendlyUrl={product.calendlyUrl}
+                    />
+                    <div className="text-center pt-4 border-t border-gray-200">
+                      <p className="text-sm text-gray-500">
+                        You can reschedule or cancel your demo anytime before the meeting
+                      </p>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+                
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="outline" className="border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold py-4 px-10 rounded-xl text-base transition-all duration-300 hover:scale-105">
+                      Learn More
                     </Button>
                   </DialogTrigger>
                   <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
                       <DialogTitle className="text-2xl font-bold text-gray-900">
-                        Get Started with {product.name}
+                        Get More Information
                       </DialogTitle>
                       <DialogDescription className="text-gray-600">
-                        Fill out the form below and our team will get back to you within 24 hours to discuss how {product.name} can transform your healthcare operations.
+                        Send us a message and we'll get back to you within 24 hours
                       </DialogDescription>
                     </DialogHeader>
                     <ContactForm 
@@ -81,7 +104,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     />
                   </DialogContent>
                 </Dialog>
-              )}
+                
+                <CallButtonTertiary />
+              </div>
             </div>
 
             {/* Right Image */}

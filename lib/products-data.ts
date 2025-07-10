@@ -23,6 +23,7 @@ export interface Product {
   ctaText: string
   ctaSubtext: string
   redirectUrl?: string
+  calendlyUrl?: string
 }
 
 export const products: Product[] = [
@@ -79,7 +80,8 @@ export const products: Product[] = [
     ],
     ctaText: "Book Appointment Now",
     ctaSubtext: "Join the AxonCare Network and revolutionize your healthcare strategy with advanced predictive analytics and risk intelligence.",
-    redirectUrl: "https://axoncare.axonichealth.com"
+    redirectUrl: "https://axoncare.axonichealth.com",
+    calendlyUrl: "https://calendly.com/axonichealth-info/axoncare"
   },
   {
     id: 2,
@@ -133,7 +135,8 @@ export const products: Product[] = [
       }
     ],
     ctaText: "Request Demo",
-    ctaSubtext: "Join the AxonHIS Network and revolutionize your healthcare delivery with advanced clinical management solutions."
+    ctaSubtext: "Join the AxonHIS Network and revolutionize your healthcare delivery with advanced clinical management solutions.",
+    calendlyUrl: "https://calendly.com/axonichealth-info/axonhis"
   },
   {
     id: 3,
@@ -187,7 +190,8 @@ export const products: Product[] = [
       }
     ],
     ctaText: "Join our network",
-    ctaSubtext: "Join the AxonMD Network and transform your clinic management with comprehensive digital solutions."
+    ctaSubtext: "Join the AxonMD Network and transform your clinic management with comprehensive digital solutions.",
+    calendlyUrl: "https://calendly.com/axonichealth-info/axonmd"
   },
   {
     id: 4,
@@ -241,7 +245,8 @@ export const products: Product[] = [
       }
     ],
     ctaText: "Request Demo",
-    ctaSubtext: "Join the AxonHealthHub Network and provide your patients with round-the-clock access to quality healthcare services."
+    ctaSubtext: "Join the AxonHealthHub Network and provide your patients with round-the-clock access to quality healthcare services.",
+    calendlyUrl: "https://calendly.com/axonichealth-info/axonhealthhub"
   },
   {
     id: 5,
@@ -295,7 +300,8 @@ export const products: Product[] = [
       }
     ],
     ctaText: "Request Demo",
-    ctaSubtext: "Join the AxonLab Network and enhance your diagnostic capabilities with advanced laboratory management solutions."
+    ctaSubtext: "Join the AxonLab Network and enhance your diagnostic capabilities with advanced laboratory management solutions.",
+    calendlyUrl: "https://calendly.com/axonichealth-info/axonlab"
   },
   
   {
@@ -350,7 +356,8 @@ export const products: Product[] = [
       }
     ],
     ctaText: "Request Demo",
-    ctaSubtext: "Transform your operating theatre management with AxonSurge's advanced surgical workflow solutions."
+    ctaSubtext: "Transform your operating theatre management with AxonSurge's advanced surgical workflow solutions.",
+    calendlyUrl: "https://calendly.com/axonichealth-info/axonsurge"
   },
   {
     id: 7,
@@ -404,7 +411,8 @@ export const products: Product[] = [
       }
     ],
     ctaText: "Request Demo",
-    ctaSubtext: "Join the AxonPharma Network and provide your patients with instant access to quality healthcare services."
+    ctaSubtext: "Join the AxonPharma Network and provide your patients with instant access to quality healthcare services.",
+    calendlyUrl: "https://calendly.com/axonichealth-info/axonpharma"
   },
   
   
@@ -433,7 +441,7 @@ export const products: Product[] = [
     },
     {
       "title": "Voice-to-Case in Seconds",
-      "description": "AxonDoc is always on — supporting patients and providers anytime, anywhereCaptures patient symptoms by voice, auto-summarizes them, and fills the casesheet — no typing needed.",
+      "description": "AxonDoc is always on — supporting patients and providers anytime, anywhere.Captures patient symptoms by voice, auto-summarizes them, and fills the casesheet — no typing needed.",
       "image": "/assets/new-products-1/doc/doc-3.png"
     },
     {
@@ -461,6 +469,7 @@ export const products: Product[] = [
   ],
   "ctaText": "Try AxonDoc",
   "ctaSubtext": "Experience the future of healthcare documentation today.",
+  "calendlyUrl": "https://calendly.com/axonichealth-info/axondoc"
 },
 {
   "id": 10,
@@ -515,6 +524,7 @@ export const products: Product[] = [
   ],
   "ctaText": "Download AxonBuddy",
   "ctaSubtext": "Stay on top of your health with your new digital buddy.",
+  "calendlyUrl": "https://calendly.com/axonichealth-info/axonbuddy"
 },
 {
   "id": 11,
@@ -569,7 +579,8 @@ export const products: Product[] = [
   ],
   "ctaText": "Book Demo",
   "ctaSubtext": "Revolutionize your consultation process with AxonScribe.",
-  "redirectUrl": "https://axonscribe.axonichealth.com"
+  "redirectUrl": "https://axonscribe.axonichealth.com",
+  "calendlyUrl": "https://calendly.com/axonichealth-info/axonscribe"
 },
 {
   "id": 12,
@@ -624,6 +635,7 @@ export const products: Product[] = [
   ],
   "ctaText": "Explore AxonA",
   "ctaSubtext": "Turn your data into action with healthcare intelligence.",
+  "calendlyUrl": "https://calendly.com/axonichealth-info/axona"
 },
 ]
 
