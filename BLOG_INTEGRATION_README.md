@@ -34,12 +34,11 @@ Your blog system has been successfully integrated with the API backend! Here's w
 
 ## 🚀 Environment Setup
 
-### Create `.env.local` file:
+### Create `.env.local` file (Optional):
 ```env
-# Blog API Configuration
-NEXT_PUBLIC_BLOG_API_URL=http://localhost:3000
-# In production, change to your deployed blog backend URL:
-# NEXT_PUBLIC_BLOG_API_URL=https://your-blog-backend.vercel.app
+# Blog API Configuration (optional override)
+# NEXT_PUBLIC_BLOG_API_URL=http://localhost:3000  # For local development
+# Default production URL is: https://blogs.axonichealth.com
 ```
 
 ## 🔄 How It Works
@@ -101,10 +100,7 @@ export default function SearchComponent() {
 ## 🚀 Production Deployment
 
 1. **Deploy your blog backend** (the management system you set up)
-2. **Update `.env.local`**:
-   ```env
-   NEXT_PUBLIC_BLOG_API_URL=https://your-blog-backend.vercel.app
-   ```
+2. **The URL is already configured** to use `https://blogs.axonichealth.com`
 3. **Redeploy your main website**
 4. **That's it!** Your site now pulls from the live API
 

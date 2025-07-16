@@ -1,7 +1,7 @@
 // lib/blog-api.ts
 import { BlogMeta, BlogPost, BlogResponse } from '@/types/blog'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_BLOG_API_URL || 'http://localhost:3000'
+const API_BASE_URL = process.env.NEXT_PUBLIC_BLOG_API_URL || 'https://blogs.axonichealth.com'
 
 // Server-side functions (with caching)
 export async function getAllBlogs(): Promise<BlogMeta[]> {
