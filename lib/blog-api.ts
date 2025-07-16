@@ -7,7 +7,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_BLOG_API_URL || 'https://blogs.axon
 export async function getAllBlogs(): Promise<BlogMeta[]> {
   try {
     const response = await fetch(`${API_BASE_URL}/api/blogs?public=true`, {
-      next: { revalidate: 300 }, // Cache for 5 minutes
+        cache: 'no-store',
     })
     
     if (!response.ok) {
@@ -25,7 +25,7 @@ export async function getAllBlogs(): Promise<BlogMeta[]> {
 export async function getRecentBlogs(limit: number = 3): Promise<BlogMeta[]> {
   try {
     const response = await fetch(`${API_BASE_URL}/api/blogs?public=true&limit=${limit}`, {
-      next: { revalidate: 300 },
+        cache: 'no-store',
     })
     
     const data: BlogResponse = await response.json()
@@ -57,7 +57,7 @@ export async function getBlogBySlug(slug: string): Promise<BlogPost | null> {
 export async function searchBlogs(query: string): Promise<BlogMeta[]> {
   try {
     const response = await fetch(`${API_BASE_URL}/api/blogs/search?q=${encodeURIComponent(query)}`, {
-      next: { revalidate: 60 },
+      cache: 'no-store',
     })
     
     const data: BlogResponse = await response.json()
