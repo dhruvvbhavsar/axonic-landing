@@ -4,11 +4,32 @@ import { PageHeader } from "@/components/page-header"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { getAllBlogs } from "@/lib/blog-utils"
+import { getAllBlogs } from "@/lib/blog-api"
+import { getAllBlogs as getAllBlogsLocal } from "@/lib/blog-utils"
 import { Calendar, Clock, User } from "lucide-react"
 
-export default function BlogsPage() {
-  const blogs = getAllBlogs()
+export default async function BlogsPage() {
+  // Try to fetch from API first, fallback to local files
+  let blogs = await getAllBlogs()
+  
+  // If no blogs from API, fallback to local MDX files
+  if (blogs.length === 0) {
+    const localBlogs = getAllBlogsLocal()
+    // Map local blog format to API format
+    blogs = localBlogs.map(blog => ({
+      id: blog.slug,
+      slug: blog.slug,
+      title: blog.title,
+      description: blog.description,
+      author: blog.author,
+      thumbnail: blog.thumbnail,
+      tags: blog.tags,
+      readTime: blog.readTime,
+      publishedAt: blog.date,
+      updatedAt: blog.date,
+      status: 'published' as const
+    }))
+  }
 
   if (blogs.length === 0) {
     return (
@@ -108,7 +129,7 @@ export default function BlogsPage() {
                         </div>
                         <div className="flex items-center space-x-1">
                           <Clock className="w-4 h-4" />
-                          <span>{blog.readTime}</span>
+                          <span>{blog.readTime} min read</span>
                         </div>
                       </div>
                     </div>
@@ -117,7 +138,7 @@ export default function BlogsPage() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-1 text-sm text-gray-500">
                         <Calendar className="w-4 h-4" />
-                        <span>{new Date(blog.date).toLocaleDateString('en-US', { 
+                        <span>{new Date(blog.publishedAt).toLocaleDateString('en-US', { 
                           year: 'numeric', 
                           month: 'short', 
                           day: 'numeric' 

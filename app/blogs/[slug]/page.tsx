@@ -4,7 +4,8 @@ import Link from "next/link"
 import { PageHeader } from "@/components/page-header"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { getBlogBySlug, getAllBlogSlugs } from "@/lib/blog-utils"
+import { getBlogBySlug, getAllBlogs } from "@/lib/blog-api"
+import { getBlogBySlug as getBlogBySlugLocal, getAllBlogSlugs } from "@/lib/blog-utils"
 import { Calendar, Clock, User, ArrowLeft } from "lucide-react"
 import { MDXRemote } from 'next-mdx-remote/rsc'
 
@@ -15,6 +16,15 @@ interface BlogPageProps {
 }
 
 export async function generateStaticParams() {
+  // Try to get blogs from API first, fallback to local files
+  const apiBlogs = await getAllBlogs()
+  if (apiBlogs.length > 0) {
+    return apiBlogs.map((blog) => ({
+      slug: blog.slug,
+    }))
+  }
+  
+  // Fallback to local slugs
   const slugs = getAllBlogSlugs()
   return slugs.map((slug) => ({
     slug: slug,
@@ -23,7 +33,31 @@ export async function generateStaticParams() {
 
 export default async function BlogPage({ params }: BlogPageProps) {
   const { slug } = await params
-  const blog = getBlogBySlug(slug)
+  
+  // Try to fetch from API first
+  let blog = await getBlogBySlug(slug)
+  
+  // If not found in API, try local files
+  if (!blog) {
+    const localBlog = getBlogBySlugLocal(slug)
+    if (localBlog) {
+      // Map local blog format to API format
+      blog = {
+        id: localBlog.slug,
+        slug: localBlog.slug,
+        title: localBlog.title,
+        description: localBlog.description,
+        author: localBlog.author,
+        thumbnail: localBlog.thumbnail,
+        tags: localBlog.tags,
+        readTime: localBlog.readTime,
+        publishedAt: localBlog.date,
+        updatedAt: localBlog.date,
+        status: 'published' as const,
+        content: localBlog.content
+      }
+    }
+  }
 
   if (!blog) {
     notFound()
@@ -80,7 +114,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
               
               <div className="flex items-center space-x-2 text-gray-600">
                 <Calendar className="w-5 h-5" />
-                <span>{new Date(blog.date).toLocaleDateString('en-US', { 
+                <span>{new Date(blog.publishedAt).toLocaleDateString('en-US', { 
                   year: 'numeric', 
                   month: 'long', 
                   day: 'numeric' 
@@ -89,7 +123,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
               
               <div className="flex items-center space-x-2 text-gray-600">
                 <Clock className="w-5 h-5" />
-                <span>{blog.readTime}</span>
+                <span>{blog.readTime} min read</span>
               </div>
             </div>
 

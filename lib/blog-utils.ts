@@ -4,6 +4,9 @@ import matter from 'gray-matter'
 
 const blogsDirectory = path.join(process.cwd(), 'blogs')
 
+// Legacy interfaces for backward compatibility
+// Note: These are similar to the new API types but kept separate for compatibility
+
 export interface BlogPost {
   slug: string
   title: string
@@ -82,4 +85,8 @@ export function getAllBlogs(): BlogMeta[] {
 export function getRecentBlogs(limit: number = 3): BlogMeta[] {
   const allBlogs = getAllBlogs()
   return allBlogs.slice(0, limit)
-} 
+}
+
+// Note: This file provides local MDX file reading functionality
+// The new blog system uses lib/blog-api.ts for API integration
+// These functions serve as fallback when the API is unavailable 
