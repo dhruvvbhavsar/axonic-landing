@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { ContactForm } from "@/components/contact-form"
+import { ApplicationForm } from "@/components/application-form"
 import { ShareJobButton } from "@/components/share-job-button"
-import { getCareerBySlug, getAllCareerSlugs } from "@/lib/careers-utils"
+import { getCareerBySlug, getAllCareers } from "@/lib/careers-api"
 import { MapPin, Clock, Calendar, Briefcase, ArrowLeft, CheckCircle } from "lucide-react"
 import { MDXRemote } from 'next-mdx-remote/rsc'
 
@@ -18,15 +18,15 @@ interface CareerPageProps {
 }
 
 export async function generateStaticParams() {
-  const slugs = getAllCareerSlugs()
-  return slugs.map((slug) => ({
-    slug: slug,
+  const careers = await getAllCareers()
+  return careers.map((career) => ({
+    slug: career.slug,
   }))
 }
 
 export default async function CareerPage({ params }: CareerPageProps) {
   const { slug } = await params
-  const career = getCareerBySlug(slug)
+  const career = await getCareerBySlug(slug)
 
   if (!career) {
     notFound()
@@ -203,8 +203,9 @@ export default async function CareerPage({ params }: CareerPageProps) {
                             Please include your resume and a brief cover letter explaining why you're interested in this role.
                           </DialogDescription>
                         </DialogHeader>
-                        <ContactForm 
-                          productName={`Job Application: ${career.title}`}
+                        <ApplicationForm 
+                          jobId={career.id}
+                          jobTitle={career.title}
                         />
                       </DialogContent>
                     </Dialog>

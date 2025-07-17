@@ -4,12 +4,12 @@ import { PageHeader } from "@/components/page-header"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { getAllCareers, getUniqueDepartments } from "@/lib/careers-utils"
+import { getAllCareers, getUniqueDepartments } from "@/lib/careers-api"
 import { MapPin, Clock, Briefcase } from "lucide-react"
 
-export default function CareersPage() {
-  const careers = getAllCareers()
-  const departments = getUniqueDepartments()
+export default async function CareersPage() {
+  const careers = await getAllCareers()
+  const departments = await getUniqueDepartments()
 
   if (careers.length === 0) {
     return (
