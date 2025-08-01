@@ -198,7 +198,7 @@ export const products: Product[] = [
     name: "AxonHealthHub",
     slug: "axonhealthhub",
     logo: "/logos/AxonHealthHub.png",
-    image: "/assets/ourProducts/AnyTimeHealth.png",
+    image: "/assets/ourProducts/AnyTimeHealth.jpg",
     heroImage: "/assets/new-products-1/healthhub/HEALTHHUB.png",
     videoUrl: "https://www.youtube.com/watch?v=NPt4Uo4uwx4",
     testimonialUrl: "https://www.youtube.com/embed/2OPJaJoi0Gs",

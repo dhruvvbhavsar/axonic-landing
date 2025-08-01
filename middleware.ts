@@ -12,8 +12,15 @@ export function middleware(request: NextRequest) {
   const subdomain = hostname.split('.')[0]
   
   // Skip subdomain routing only for plain localhost (without subdomain)
-  if ((hostname === 'localhost:3000' || hostname === '127.0.0.1:3000' || hostname === 'localhost' || hostname === '127.0.0.1') && !productSlugs.includes(subdomain)) {
+  if ((hostname === 'localhost:3000' || hostname === '127.0.0.1:3000' || hostname === 'localhost' || hostname === '127.0.0.1') && !productSlugs.includes(subdomain) && subdomain !== 'platform') {
     return NextResponse.next()
+  }
+  
+  // Check if the subdomain matches 'platform'
+  if (subdomain === 'platform') {
+    // Rewrite to the platform page
+    url.pathname = '/platform'
+    return NextResponse.rewrite(url)
   }
   
   // Check if the subdomain matches any product slug
