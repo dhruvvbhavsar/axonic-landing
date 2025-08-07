@@ -126,6 +126,13 @@ export function Navigation() {
                   <ul className="grid w-[200px] gap-2 p-2 bg-white">
                     <li>
                       <NavigationMenuLink asChild>
+                        <Link href={getPlatformSubdomainUrl()} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                          <div className="font-medium">Our Complete Platform</div>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
                         <Link href="https://axoncare.axonichealth.com" className="block p-2 hover:bg-accent rounded-sm text-gray-900">
                           <div className="font-medium">Our Services</div>
                         </Link>
@@ -135,13 +142,6 @@ export function Navigation() {
                       <NavigationMenuLink asChild>
                         <Link href={getNavUrl("/our-products")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
                           <div className="font-medium">Our Products</div>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link href={getPlatformSubdomainUrl()} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
-                          <div className="font-medium">Our Complete Platform</div>
                         </Link>
                       </NavigationMenuLink>
                     </li>
