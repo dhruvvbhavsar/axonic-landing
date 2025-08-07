@@ -14,7 +14,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-import { cn, getBaseDomain } from "@/lib/utils"
+import { cn, getBaseDomain, getConsultingSubdomainUrl, getPlatformSubdomainUrl } from "@/lib/utils"
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = React.useState(false)
@@ -135,6 +135,20 @@ export function Navigation() {
                       <NavigationMenuLink asChild>
                         <Link href={getNavUrl("/our-products")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
                           <div className="font-medium">Our Products</div>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link href={getPlatformSubdomainUrl()} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                          <div className="font-medium">Our Complete Platform</div>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link href={getConsultingSubdomainUrl()} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                          <div className="font-medium">Our Consulting Services</div>
                         </Link>
                       </NavigationMenuLink>
                     </li>

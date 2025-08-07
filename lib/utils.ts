@@ -95,6 +95,37 @@ export function getPlatformSubdomainUrl(): string {
   return `${protocol}//platform.${currentBaseDomain}`
 }
 
+// Utility function to generate consulting subdomain URL
+export function getConsultingSubdomainUrl(): string {
+  // For production domains, always use subdomain routing
+  const baseDomain = process.env.NEXT_PUBLIC_BASE_DOMAIN || 'localhost:3000'
+  
+  // If we have a production domain set, use subdomain routing
+  if (baseDomain !== 'localhost:3000' && !baseDomain.includes('localhost')) {
+    return `https://consulting.${baseDomain}`
+  }
+  
+  // Handle localhost development
+  if (typeof window === 'undefined') {
+    return `/consulting`
+  }
+  
+  const currentBaseDomain = getBaseDomain()
+  const protocol = window.location.protocol
+  
+  // Handle localhost development - check if subdomain routing is being used
+  if (currentBaseDomain.includes('localhost')) {
+    // If we're already on a subdomain (e.g., axonhis.localhost), use subdomain URLs
+    if (window.location.hostname.includes('.localhost')) {
+      return `${protocol}//consulting.localhost:${window.location.port || '3000'}`
+    }
+    // Otherwise fallback to path-based routing for plain localhost
+    return `/consulting`
+  }
+  
+  return `${protocol}//consulting.${currentBaseDomain}`
+}
+
 // Utility function to check if subdomain routing is available
 export function isSubdomainRoutingAvailable(): boolean {
   if (typeof window !== 'undefined') {
