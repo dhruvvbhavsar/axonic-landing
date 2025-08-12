@@ -4,6 +4,41 @@ import * as React from "react"
 import Link from "next/link"
 
 export function HeroSection() {
+  const headings: string[] = React.useMemo(
+    () => [
+      "Healthcare Accessible Anytime, Anywhere, In Any Language",
+      "World's First AI integrated Healthcare System",
+      "Doctor in your pocket 24/7",
+      "Revolutionizing Healthcare with AI",
+    ],
+    []
+  )
+
+  const [activeHeadingIndex, setActiveHeadingIndex] = React.useState(0)
+  const [isHeadingVisible, setIsHeadingVisible] = React.useState(true)
+
+  const timeoutsRef = React.useRef<Array<ReturnType<typeof setTimeout>>>([])
+  const intervalRef = React.useRef<ReturnType<typeof setInterval> | null>(null)
+
+  React.useEffect(() => {
+    const animateToNext = () => {
+      setIsHeadingVisible(false)
+      const t = setTimeout(() => {
+        setActiveHeadingIndex((prev) => (prev + 1) % headings.length)
+        setIsHeadingVisible(true)
+      }, 500) // match fade-out duration
+      timeoutsRef.current.push(t)
+    }
+
+    intervalRef.current = setInterval(animateToNext, 4000)
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current)
+      timeoutsRef.current.forEach((t) => clearTimeout(t))
+      timeoutsRef.current = []
+    }
+  }, [headings.length])
+
   return (
     <section className="relative h-screen w-full overflow-hidden">
       {/* Background Video */}
@@ -27,8 +62,18 @@ export function HeroSection() {
         <div className="container mx-auto px-6">
           <div className="text-center text-white max-w-5xl mx-auto">
             {/* Main Heading */}
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight text-yellow-400">
-              Healthcare Accessible Anytime, Anywhere, In Any Language
+            <h1
+              className="text-3xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight text-yellow-400 min-h-[3.25rem] md:min-h-[4.5rem] lg:min-h-[5.5rem]"
+              aria-live="polite"
+            >
+              <span
+                className={
+                  `inline-block transition-all duration-500 ease-out ` +
+                  (isHeadingVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2")
+                }
+              >
+                {headings[activeHeadingIndex]}
+              </span>
             </h1>
 
             {/* Call to Action Button */}
