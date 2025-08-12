@@ -164,7 +164,7 @@ export function Navigation() {
                     ? "text-gray-900 hover:text-yellow-500" 
                     : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
                 )}>
-                  <Link href={getNavUrl("/our-partners")}>Our Partners</Link>
+                  <Link href={"/ai-platform"}>AI Platform</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
@@ -299,11 +299,11 @@ export function Navigation() {
                 </div>
 
                 <Link
-                  href={getNavUrl("/our-partners")}
+                  href={"/ai-platform"}
                   className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                   onClick={closeMobileMenu}
                 >
-                  Our Partners
+                  AI Platform
                 </Link>
                 
 

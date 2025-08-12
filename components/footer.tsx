@@ -97,8 +97,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href={getNavUrl("/our-partners")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
-                  Our Partners
+                <Link href={"/ai-platform"} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
+                  AI Platform
                 </Link>
               </li>
               <li>
