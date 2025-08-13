@@ -4,12 +4,13 @@ import * as React from "react"
 import Link from "next/link"
 
 export function HeroSection() {
+  
   const headings: string[] = React.useMemo(
     () => [
-      "Healthcare Accessible Anytime, Anywhere, In Any Language",
       "World's First AI integrated Healthcare System",
-      "Doctor in your pocket 24/7",
       "Revolutionizing Healthcare with AI",
+      "Doctor in your pocket 24/7",
+      "Healthcare Accessible Anytime, Anywhere, In Any Language",
     ],
     []
   )
