@@ -637,6 +637,61 @@ export const products: Product[] = [
   "ctaSubtext": "Turn your data into action with healthcare intelligence.",
   "calendlyUrl": "https://calendly.com/axonichealth-info/axona"
 },
+{
+  "id": 13,
+  "name": "AxonLife",
+  "slug": "axonlife",
+  "logo": "/logos/AxonLife.png",
+  "image": "/assets/ourProducts/AxonaLifeImage.png",
+  "heroImage": "/assets/new-products/AxonLife.png",
+  "videoUrl": "https://www.youtube.com/shorts/abc123life",
+  "testimonialUrl": "https://www.youtube.com/embed/abc123life",
+  "description": "Nurturing Dreams Into Reality",
+  "shortDescription": "Nurturing Dreams Into Reality",
+  "subtitle": "Nurturing Dreams Into Reality",
+  "features": [
+    {
+      "title": "Personalized Health Insights",
+      "description": "Get tailored health recommendations based on your lifestyle, habits, and medical history.",
+      "image": "/assets/new-products-1/lab/lab-1.png"
+    },
+    {
+      "title": "Real-time Health Monitoring",
+      "description": "Track your health metrics, including heart rate, sleep, and activity levels, to make informed decisions about your well-being.",
+      "image": "/assets/new-products-1/lab/lab-2.png"
+    },
+    {
+      "title": "AI-Powered Health Recommendations",
+      "description": "Get personalized health tips, exercise plans, and lifestyle advice based on your health data and goals.",
+      "image": "/assets/new-products-1/lab/lab-3.png"
+    },
+    {
+      "title": "Secure, Private Health Records",
+      "description": "Store and access your health data securely, with built-in privacy protection and compliance-ready storage.",
+      "image": "/assets/new-products-1/lab/lab-4.png"
+    }
+  ],
+  "valuePropositions": [
+    {
+      "title": "Personalized Health Insights",
+      "description": "Get tailored health recommendations based on your lifestyle, habits, and medical history.",
+      "image": "/assets/new-products-1/lab/c-1.png"
+    },
+    {
+      "title": "Real-time Health Monitoring",
+      "description": "Track your health metrics, including heart rate, sleep, and activity levels, to make informed decisions about your well-being.",
+      "image": "/assets/new-products-1/lab/c-2.png"
+    },
+    {
+      "title": "AI-Powered Health Recommendations",
+      "description": "Get personalized health tips, exercise plans, and lifestyle advice based on your health data and goals.",
+      "image": "/assets/new-products-1/lab/c-3.png"
+    }
+  ],
+  "ctaText": "Download AxonLife",
+  "ctaSubtext": "Stay on top of your health with your new digital companion.",
+  "calendlyUrl": "https://calendly.com/axonichealth-info/axonlife"
+}
 ]
 
 export function getProductBySlug(slug: string): Product | undefined {
