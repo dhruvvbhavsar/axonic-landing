@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import Image from "next/image"
+import Link from "next/link"
 import { PageHeader } from "@/components/page-header"
 import { Card, CardContent } from "@/components/ui/card"
 import { products } from "@/lib/products-data"
@@ -131,34 +132,36 @@ export default function PlatformPage() {
                       hasLeft={hasLeft}
                       hasRight={hasRight}
                     >
-                      <Card className="platform-card relative z-30 bg-white rounded-[28px] shadow-lg hover:shadow-xl transition-all duration-300 p-8 h-[520px] md:h-[540px] flex items-start">
+                      <Card className="platform-card relative z-30 bg-white rounded-[28px] shadow-lg hover:shadow-xl transition-all duration-300 p-8 h-[520px] md:h-[540px] flex items-start cursor-pointer">
                         <CardContent className="p-0 text-center w-full">
-                          {/* Product Image */}
-                          <div className="mb-8 h-64 w-full flex items-center justify-center">
-                            <Image
-                              src={product.heroImage}
-                              alt={product.name}
-                              width={300}
-                              height={256}
-                              className="max-h-full w-auto object-contain"
-                            />
-                          </div>
+                          <Link href={product.redirectUrl || getProductSubdomainUrl(product.slug)} className="block w-full h-full">
+                            {/* Product Image */}
+                            <div className="mb-8 h-64 w-full flex items-center justify-center">
+                              <Image
+                                src={product.heroImage}
+                                alt={product.name}
+                                width={300}
+                                height={256}
+                                className="max-h-full w-auto object-contain"
+                              />
+                            </div>
 
-                          {/* Product Logo */}
-                          <div className="mb-4 flex justify-center">
-                            <Image
-                              src={product.logo}
-                              alt={`${product.name} Logo`}
-                              width={200}
-                              height={60}
-                              className="w-auto max-h-10 md:max-h-12 object-contain"
-                            />
-                          </div>
+                            {/* Product Logo */}
+                            <div className="mb-4 flex justify-center">
+                              <Image
+                                src={product.logo}
+                                alt={`${product.name} Logo`}
+                                width={200}
+                                height={60}
+                                className="w-auto max-h-10 md:max-h-12 object-contain"
+                              />
+                            </div>
 
-                          {/* Description */}
-                          <p className="text-base text-gray-900 leading-relaxed font-semibold">
-                            {product.shortDescription}
-                          </p>
+                            {/* Description */}
+                            <p className="text-base text-gray-900 leading-relaxed font-semibold">
+                              {product.shortDescription}
+                            </p>
+                          </Link>
                         </CardContent>
                       </Card>
                     </ConnectableNode>
@@ -211,34 +214,36 @@ export default function PlatformPage() {
                       hasLeft={hasLeft}
                       hasRight={hasRight}
                     >
-                      <Card className="platform-card relative z-30 bg-white rounded-[28px] shadow-lg hover:shadow-xl transition-all duration-300 p-8 h-[520px] md:h-[540px] flex items-start">
+                      <Card className="platform-card relative z-30 bg-white rounded-[28px] shadow-lg hover:shadow-xl transition-all duration-300 p-8 h-[520px] md:h-[540px] flex items-start cursor-pointer">
                         <CardContent className="p-0 text-center w-full">
-                          {/* Product Image */}
-                          <div className="mb-8 h-64 w-full flex items-center justify-center">
-                            <Image
-                              src={product.heroImage}
-                              alt={product.name}
-                              width={300}
-                              height={256}
-                              className="max-h-full w-auto object-contain"
-                            />
-                          </div>
+                          <Link href={product.redirectUrl || getProductSubdomainUrl(product.slug)} className="block w-full h-full">
+                            {/* Product Image */}
+                            <div className="mb-8 h-64 w-full flex items-center justify-center">
+                              <Image
+                                src={product.heroImage}
+                                alt={product.name}
+                                width={300}
+                                height={256}
+                                className="max-h-full w-auto object-contain"
+                              />
+                            </div>
 
-                          {/* Product Logo */}
-                          <div className="mb-4 flex justify-center">
-                            <Image
-                              src={product.logo}
-                              alt={`${product.name} Logo`}
-                              width={200}
-                              height={60}
-                              className="w-auto max-h-10 md:max-h-12 object-contain"
-                            />
-                          </div>
+                            {/* Product Logo */}
+                            <div className="mb-4 flex justify-center">
+                              <Image
+                                src={product.logo}
+                                alt={`${product.name} Logo`}
+                                width={200}
+                                height={60}
+                                className="w-auto max-h-10 md:max-h-12 object-contain"
+                              />
+                            </div>
 
-                          {/* Description */}
-                          <p className="text-base text-gray-900 leading-relaxed font-semibold">
-                            {product.shortDescription}
-                          </p>
+                            {/* Description */}
+                            <p className="text-base text-gray-900 leading-relaxed font-semibold">
+                              {product.shortDescription}
+                            </p>
+                          </Link>
                         </CardContent>
                       </Card>
                     </ConnectableNode>
@@ -291,34 +296,36 @@ export default function PlatformPage() {
                       hasLeft={hasLeft}
                       hasRight={hasRight}
                     >
-                      <Card className="platform-card relative z-30 bg-white rounded-[28px] shadow-lg hover:shadow-xl transition-all duration-300 p-8 h-[520px] md:h-[540px] flex items-start">
+                      <Card className="platform-card relative z-30 bg-white rounded-[28px] shadow-lg hover:shadow-xl transition-all duration-300 p-8 h-[520px] md:h-[540px] flex items-start cursor-pointer">
                         <CardContent className="p-0 text-center w-full">
-                          {/* Product Image */}
-                          <div className="mb-8 h-64 w-full flex items-center justify-center">
-                            <Image
-                              src={product.heroImage}
-                              alt={product.name}
-                              width={300}
-                              height={256}
-                              className="max-h-full w-auto object-contain"
-                            />
-                          </div>
+                          <Link href={product.redirectUrl || getProductSubdomainUrl(product.slug)} className="block w-full h-full">
+                            {/* Product Image */}
+                            <div className="mb-8 h-64 w-full flex items-center justify-center">
+                              <Image
+                                src={product.heroImage}
+                                alt={product.name}
+                                width={300}
+                                height={256}
+                                className="max-h-full w-auto object-contain"
+                              />
+                            </div>
 
-                          {/* Product Logo */}
-                          <div className="mb-4 flex justify-center">
-                            <Image
-                              src={product.logo}
-                              alt={`${product.name} Logo`}
-                              width={200}
-                              height={60}
-                              className="w-auto max-h-10 md:max-h-12 object-contain"
-                            />
-                          </div>
+                            {/* Product Logo */}
+                            <div className="mb-4 flex justify-center">
+                              <Image
+                                src={product.logo}
+                                alt={`${product.name} Logo`}
+                                width={200}
+                                height={60}
+                                className="w-auto max-h-10 md:max-h-12 object-contain"
+                              />
+                            </div>
 
-                          {/* Description */}
-                          <p className="text-base text-gray-900 leading-relaxed font-semibold">
-                            {product.shortDescription}
-                          </p>
+                            {/* Description */}
+                            <p className="text-base text-gray-900 leading-relaxed font-semibold">
+                              {product.shortDescription}
+                            </p>
+                          </Link>
                         </CardContent>
                       </Card>
                     </ConnectableNode>
