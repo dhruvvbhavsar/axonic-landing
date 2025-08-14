@@ -138,7 +138,7 @@ export default function PlatformPage() {
                             {/* Product Image */}
                             <div className="mb-8 h-64 w-full flex items-center justify-center">
                               <Image
-                                src={product.heroImage}
+                                src={product.platformImage ?? product.heroImage}
                                 alt={product.name}
                                 width={300}
                                 height={256}
@@ -219,8 +219,8 @@ export default function PlatformPage() {
                           <Link href={product.redirectUrl || getProductSubdomainUrl(product.slug)} className="block w-full h-full">
                             {/* Product Image */}
                             <div className="mb-8 h-64 w-full flex items-center justify-center">
-                              <Image
-                                src={product.heroImage}
+                              <Image  
+                                src={product.platformImage ?? product.heroImage}
                                 alt={product.name}
                                 width={300}
                                 height={256}
@@ -273,7 +273,7 @@ export default function PlatformPage() {
                   />
                   <div className="absolute inset-0 bg-black/60" />
                   <div className="absolute inset-0 z-10 flex items-center justify-center">
-                    <h3 className="text-2xl font-bold text-white text-center">CARE<br/>PROVIDERS</h3>
+                    <h3 className="text-2xl font-bold text-white text-center">CARE<br/>FACILITIES</h3>
                   </div>
                 </div>
               </ConnectableNode>
@@ -302,7 +302,7 @@ export default function PlatformPage() {
                             {/* Product Image */}
                             <div className="mb-8 h-64 w-full flex items-center justify-center">
                               <Image
-                                src={product.heroImage}
+                                src={product.platformImage ?? product.heroImage}
                                 alt={product.name}
                                 width={300}
                                 height={256}
