@@ -159,7 +159,7 @@ export default function PlatformPage() {
 
                             {/* Description */}
                             <p className="text-base text-gray-900 leading-relaxed font-semibold">
-                              {product.shortDescription}
+                              {product.shortPunchLine}
                             </p>
                           </Link>
                         </CardContent>
