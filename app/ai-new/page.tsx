@@ -21,7 +21,7 @@ export default function AIPlatformPage() {
 
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col overflow-x-hidden">
       <PageHeader title="AI Platform" />
 
       <section
@@ -33,16 +33,16 @@ export default function AIPlatformPage() {
         />
         <div className="absolute inset-0 bg-white/0" />
 
-        <div className="relative z-10 h-dvh mx-auto flex items-center  justify-around px-4 sm:px-8">
+        <div className="relative z-10 mx-auto flex items-start justify-around gap-8 px-4 sm:px-8 py-8">
           {/* Left Column */}
-          <div className="hidden md:flex flex-col justify-around h-full w-full max-w-md overflow-y-auto pr-2">
+          <div className="hidden md:flex flex-col w-full max-w-md gap-6 pr-2">
             {leftColumn.map(product => (
               <AIPillCard key={product.id} product={product} align="center" />
             ))}
           </div>
 
           {/* Right Column */}
-          <div className="hidden md:flex flex-col justify-around h-full w-full max-w-md items-end overflow-y-auto pl-2">
+          <div className="hidden md:flex flex-col w-full max-w-md items-end gap-6 pl-2">
             {rightColumn.map(product => (
               <AIPillCard key={product.id} product={product} align="center" />
             ))}
@@ -81,10 +81,10 @@ function AIPillCard({ product, align }: { product: Product; align: "left" | "rig
           alt="AI badge"
           width={40}
           height={40}
-          className="h-16 w-16 md:h-16 md:w-16 z-30 object-contain absolute top-1/2 -translate-y-1/2 -left-2"
+          className="h-[clamp(32px,6vw,64px)] w-[clamp(32px,6vw,64px)] z-30 object-contain absolute top-1/2 -translate-y-1/2 -left-[clamp(4px,1.2vw,8px)]"
         />
       <div
-        className={`flex ${alignment} w-full gap-6 rounded-full  bg-white backdrop-blur-md shadow-md ring-1 ring-black/10 px-6 py-5 transition-transform duration-200 hover:scale-[1.02] h-[150px] md:h-[180px] overflow-hidden`}
+        className={`flex ${alignment} w-full rounded-full bg-white backdrop-blur-md shadow-md ring-1 ring-black/10 transition-transform duration-200 hover:scale-[1.02] overflow-hidden gap-[clamp(1rem,2.2vw,2rem)] px-[clamp(1rem,2.5vw,2rem)] py-[clamp(0.75rem,2vw,1.25rem)] h-[clamp(120px,24vw,180px)]`}
       >
         {product.aiImage && (
           <Image
@@ -92,7 +92,7 @@ function AIPillCard({ product, align }: { product: Product; align: "left" | "rig
             alt={`${product.name} AI`}
             width={120}
             height={120}
-            className="h-24 w-24 md:h-48 md:w-48 rounded-2xl object-contain bg-white/70 p-2"
+            className="h-[clamp(64px,12vw,160px)] w-[clamp(64px,12vw,160px)] rounded-2xl object-contain bg-white/70 p-2"
           />
         )}
         <div className={`flex flex-col ${contentAlignment} flex-1`}> 
@@ -102,11 +102,11 @@ function AIPillCard({ product, align }: { product: Product; align: "left" | "rig
               alt={`${product.name} logo`}
               width={100}
               height={100}
-              className="h-10 md:h-12 w-auto object-contain"
+              className="h-[clamp(28px,4vw,48px)] w-auto object-contain"
             />
           )}
           {product.shortDescription && (
-            <p className="mt-2 text-sm text-gray-800 line-clamp-3">
+            <p className="mt-[clamp(0.25rem,1vw,0.5rem)] text-[clamp(0.85rem,1vw,1rem)] text-gray-800 line-clamp-3">
               {product.shortPunchLine}
             </p>
           )}
