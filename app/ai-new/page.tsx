@@ -24,16 +24,42 @@ export default function AIPlatformPage() {
     <div className="min-h-screen flex flex-col overflow-x-hidden">
       <PageHeader title="AI Platform" />
 
+      {/* Mobile Heading - Before background image */}
+      <div className="md:hidden text-center py-8 px-4">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 uppercase">
+          Redefining healthcare with AI intelligence and human touch
+        </h2>
+      </div>
+
       <section
         className="relative w-full flex-1 min-h-[calc(100vh-8rem)] sm:min-h-[calc(100vh-10rem)] md:min-h-[calc(100vh-12rem)] lg:min-h-[calc(100vh-13rem)]"
       >
+        {/* Mobile background */}
         <div
-          className="absolute inset-0 bg-center bg-no-repeat"
-          style={{ backgroundImage: "url(/assets/ai-new.png)", backgroundSize: "80%" }}
+          className="absolute inset-0 bg-center bg-no-repeat md:hidden"
+          style={{ 
+            backgroundImage: "url(/assets/ai-new.png)",
+            backgroundSize: "800px"
+          }}
+        />
+        {/* Desktop background */}
+        <div
+          className="absolute inset-0 bg-center bg-no-repeat hidden md:block"
+          style={{ 
+            backgroundImage: "url(/assets/ai-new.png)",
+            backgroundSize: "1600px"
+          }}
         />
         <div className="absolute inset-0 bg-white/0" />
 
-        <div className="relative z-10 mx-auto flex items-start justify-around gap-8 px-4 sm:px-8 py-8">
+        {/* Heading Section - Inside background image (Desktop only) */}
+        <div className="relative z-20 text-center py-8 px-4 hidden md:block">
+          <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4 uppercase max-w-7xl text-center mx-auto">
+            Redefining healthcare with AI intelligence and human touch
+          </h2>
+        </div>
+
+        <div className="relative z-10 flex items-start justify-between mx-[clamp(1rem,10vw,10rem)]  py-8">
           {/* Left Column */}
           <div className="hidden md:flex flex-col w-full max-w-md gap-6 pr-2">
             {leftColumn.map(product => (
