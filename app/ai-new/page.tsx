@@ -47,7 +47,7 @@ export default function AIPlatformPage() {
           className="absolute inset-0 bg-center bg-no-repeat hidden md:block"
           style={{ 
             backgroundImage: "url(/assets/ai-new.png)",
-            backgroundSize: "1600px"
+            backgroundSize: "1100px"
           }}
         />
         <div className="absolute inset-0 bg-white/0" />
