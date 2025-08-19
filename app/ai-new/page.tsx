@@ -59,7 +59,7 @@ export default function AIPlatformPage() {
           </h2>
         </div>
 
-        <div className="relative z-10 flex items-start justify-between mx-[clamp(1rem,10vw,10rem)]  py-8">
+        <div className="relative z-10 flex items-start justify-between mx-4 md:mx-8  py-8">
           {/* Left Column */}
           <div className="hidden md:flex flex-col w-full max-w-md gap-6 pr-2">
             {leftColumn.map(product => (
