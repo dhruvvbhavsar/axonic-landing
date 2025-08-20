@@ -36,7 +36,7 @@ const ConnectableNode: React.FC<{
 
     {/* Horizontal connectors */}
     {hasLeft && (
-      <span className="hidden md:block pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full w-24 border-t-2 border-dashed border-emerald-600 z-0" />
+      <span className="hidden md:block pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full w-22 border-t-2 border-dashed border-emerald-600 z-0" />
     )}
     {hasRight && (
       <span className="hidden md:block pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 translate-x-full w-24 border-t-2 border-dashed border-emerald-600 z-0" />

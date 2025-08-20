@@ -79,8 +79,7 @@ export function HeroSection() {
 
             {/* Call to Action Button */}
             <Link
-              href="https://axoncare.axonichealth.com"
-              target="_blank"
+              href="/ai-platform"
               className="inline-block bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105"
             >
               Know More

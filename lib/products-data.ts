@@ -222,7 +222,7 @@ export const products: Product[] = [
     features: [
       {
         title: "Instant Smart Diagnostics",
-        description: "Do quick basic health checks and PCOT tests on the spot — no queues, no hassle.",
+        description: "Do quick basic health checks and POCT tests on the spot — no queues, no hassle.",
         image: "/assets/new-products-1/healthhub/healthhub-1.png"
       },
       {

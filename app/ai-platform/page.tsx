@@ -2,7 +2,7 @@
 import * as React from "react"
 import Image from "next/image"
 import { PageHeader } from "@/components/page-header"
-import { products } from "@/lib/products-data"
+import { products, type Product } from "@/lib/products-data"
 import Link from "next/link"
 import { getProductSubdomainUrl } from "@/lib/utils"
 import {
@@ -18,169 +18,94 @@ export default function AIPlatformPage() {
   const productsWithAiImage = products.filter(product => product.aiImage)
   productsWithAiImage.sort((a, b) => a.id - b.id);
 
-  // Limit to first 8 products for a cleaner circle layout
-  const displayedProducts = productsWithAiImage.slice(0, 11)
+  // Keep a focused set for layout
+  const displayedProducts = productsWithAiImage.slice(0, 12)
 
-  // Filter products that have video URLs for testimonials
+  const leftColumn = displayedProducts.filter((_, idx) => idx % 2 === 0)
+  const rightColumn = displayedProducts.filter((_, idx) => idx % 2 === 1)
+
   const productsWithVideos = productsWithAiImage.filter(product => product.videoUrl).slice(0, 13)
 
-  console.log(productsWithVideos)
-
-  // =====================
-  // Tweaking variables
-  // =====================
-  // 1) Size of the central AI circle (in viewport-width units)
-  //    e.g. 60 produces a 60vw × 60vw circle on large screens (capped by max-width below)
-  const CIRCLE_SIZE_VW = 40 // tweak here
-
-  // 2) Radius of the imaginary circle on which the product nodes sit (percentage of container)
-  const RADIUS_PERCENT = 50 // tweak here
-
-  // 3) Diameter of each product node in pixels (desktop/tablet)
-  const NODE_DIAMETER_PX = 160 // tweak here
-
-  // 4) Diameter for mobile nodes
-  const MOBILE_NODE_DIAMETER_PX = 120 // tweak here
-
-  // Helper function to extract YouTube video ID from various URL formats
-  const getYouTubeVideoId = (url: string): string | null => {
-    const patterns = [
-      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([^&\n?#]+)/,
-      /youtube\.com\/embed\/([^&\n?#]+)/
-    ]
-    
-    for (const pattern of patterns) {
-      const match = url.match(pattern)
-      if (match) return match[1]
+    // Helper function to extract YouTube video ID from various URL formats
+    const getYouTubeVideoId = (url: string): string | null => {
+      const patterns = [
+        /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([^&\n?#]+)/,
+        /youtube\.com\/embed\/([^&\n?#]+)/
+      ]
+      
+      for (const pattern of patterns) {
+        const match = url.match(pattern)
+        if (match) return match[1]
+      }
+      return null
     }
-    return null
-  }
 
-  // Small reusable component for product circle
-  const NodeCard = ({ product, diameter }: { product: typeof displayedProducts[number]; diameter: number }) => (
-    <div
-      className="bg-white rounded-full shadow-2xl hover:shadow-3xl flex flex-col items-center text-center hover:scale-105 transition-transform duration-300 overflow-hidden"
-      style={{ width: diameter, height: diameter, padding: diameter * 0.08 }}
-    >
-      {/* Top graphic */}
-      <div className="relative w-full flex-1">
-        <Image
-          src={(product.aiImage ?? product.heroImage) as string}
-          alt={product.name}
-          fill
-          className="object-contain"
-        />
-      </div>
-
-      {/* Logo */}
-      <Image src={product.logo} alt={`${product.name} logo`} width={60} height={24} className="object-contain my-1" />
-
-      {/* Description (hidden on mobile) */}
-      <p className="text-[10px] font-bold leading-tight px-2 pb-2 hidden xl:block line-clamp-2">
-        {product.shortPunchLine || product.shortDescription}
-      </p>
-    </div>
-  )
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center">
-      {/* Page Header */}
+    <div className="min-h-screen flex flex-col overflow-x-hidden">
       <PageHeader title="AI Platform" />
 
-      <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 mt-16">
-      Our AI Suite of Products
-      </h2>
+      {/* Mobile Heading - Before background image */}
+      <div className="md:hidden text-center py-8 px-4">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 uppercase">
+          Redefining healthcare with AI intelligence and human touch
+        </h2>
+      </div>
 
-      {/* Hero Circle Section (desktop / tablet) */}
-      <section className="relative hidden md:flex items-center justify-center w-full py-20 md:py-28 lg:py-32 px-4">
-        {/* Scale wrapper for mobile responsiveness */}
-        <div className="transform scale-75 sm:scale-90 md:scale-100">
+      <section
+        className="relative w-full flex-1 min-h-[calc(100vh-8rem)] sm:min-h-[calc(100vh-10rem)] md:min-h-[calc(100vh-12rem)] lg:min-h-[calc(100vh-13rem)]"
+      >
+        {/* Mobile background */}
+        <div
+          className="absolute inset-0 bg-center bg-no-repeat md:hidden"
+          style={{ 
+            backgroundImage: "url(/assets/ai-new.png)",
+            backgroundSize: "800px"
+          }}
+        />
+        {/* Desktop background */}
+        <div
+          className="absolute inset-0 bg-center bg-no-repeat hidden md:block"
+          style={{ 
+            backgroundImage: "url(/assets/ai-new.png)",
+            backgroundSize: "1100px"
+          }}
+        />
+        <div className="absolute inset-0 bg-white/0" />
 
-          {/* Container that defines the relative positioning context */}
-          <div
-            className="relative max-w-[900px]"
-            style={{ width: `min(${CIRCLE_SIZE_VW}vw, 900px)`, aspectRatio: "1 / 1" }} // square container
-          >
-            {/* Central AI circle image */}
-            <Image
-              src="/assets/ai-circle.png"
-              alt="AI"
-              fill
-              priority
-              className="object-contain select-none pointer-events-none"
-            />
+        {/* Heading Section - Inside background image (Desktop only) */}
+        <div className="relative z-20 text-center py-8 px-4 hidden md:block">
+          <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4 uppercase max-w-7xl text-center mx-auto">
+            Redefining healthcare with AI intelligence and human touch
+          </h2>
+        </div>
 
-            {/* Product nodes positioned around the circle */}
-            {displayedProducts.map((product, index) => {
-              const angleDeg = (index / displayedProducts.length) * 360
-              const angleRad = (angleDeg * Math.PI) / 180
-              const x = Math.cos(angleRad) * RADIUS_PERCENT
-              const y = Math.sin(angleRad) * RADIUS_PERCENT
+        <div className="relative z-10 flex items-start justify-between mx-4 md:mx-8  py-8">
+          {/* Left Column */}
+          <div className="hidden md:flex flex-col w-full max-w-md gap-6 pr-2">
+            {leftColumn.map(product => (
+              <AIPillCard key={product.id} product={product} align="center" />
+            ))}
+          </div>
 
-              return (
-                <Link
-                  key={product.id}
-                  href={getProductSubdomainUrl(product.slug)}
-                  className="absolute"
-                  style={{
-                    top: `calc(50% + ${y}%)`,
-                    left: `calc(50% + ${x}%)`,
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  <div
-                    className="bg-white rounded-full shadow-2xl hover:shadow-3xl flex flex-col items-center text-center hover:scale-105 transition-transform duration-300 overflow-hidden"
-                    style={{ width: NODE_DIAMETER_PX, height: NODE_DIAMETER_PX, padding: NODE_DIAMETER_PX * 0.08 }}
-                  >
-                    {/* Top graphic */}
-                    <div className="relative w-full flex-1">
-                      <Image
-                        src={product.aiImage as string}
-                        alt={product.name}
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-
-                    {/* Logo */}
-                    <Image
-                      src={product.logo}
-                      alt={`${product.name} logo`}
-                      width={70}
-                      height={28}
-                      className="object-contain my-1"
-                    />
-
-                    {/* Description */}
-                    <p className="text-[10px] font-bold leading-tight px-3 pb-2 hidden xl:block line-clamp-2">
-                      {product.shortPunchLine}
-                    </p>
-                  </div>
-                </Link>
-              )
-            })}
-          </div>{/* end scale wrapper */}
+          {/* Right Column */}
+          <div className="hidden md:flex flex-col w-full max-w-md items-end gap-6 pl-2">
+            {rightColumn.map(product => (
+              <AIPillCard key={product.id} product={product} align="center" />
+            ))}
+          </div>
         </div>
       </section>
-
-      {/* Mobile layout */}
-      <section className="md:hidden w-full px-4 py-12 flex flex-col items-center">
-        {/* AI Circle image on top */}
-        <div className="relative w-[70vw] max-w-xs aspect-square mb-10">
-          <Image src="/assets/ai-circle.png" alt="AI" fill className="object-contain" />
-        </div>
-
-        {/* Two-column grid of product nodes */}
-        <div className="grid grid-cols-2 gap-6 justify-items-center w-full max-w-md">
-          {displayedProducts.map((product) => (
-            <Link key={product.id} href={getProductSubdomainUrl(product.slug)}>
-              <NodeCard product={product} diameter={MOBILE_NODE_DIAMETER_PX} />
-            </Link>
+      {/* Mobile stacked list below the background image */}
+      <section className="md:hidden w-full px-4 sm:px-8 py-8">
+        <div className="w-full max-w-xl mx-auto space-y-6">
+          {displayedProducts.map(product => (
+            <AIPillCard key={product.id} product={product} align="center" />
           ))}
         </div>
       </section>
 
-      {/* Product Videos Testimonials Section */}
+            {/* Product Videos Testimonials Section */}
       {productsWithVideos.length > 0 && (
         <section className="w-full py-20 bg-white">
           <div className="container mx-auto px-6">
@@ -275,5 +200,61 @@ export default function AIPlatformPage() {
         </section>
       )}
     </div>
+  )
+}
+
+function AIPillCard({ product, align }: { product: Product; align: "left" | "right" | "center" }) {
+  const href = getProductSubdomainUrl(product.slug)
+  const alignment = align === "right" ? "items-center justify-end text-right" : align === "left" ? "items-center justify-start text-left" : "items-center justify-center text-center"
+  const contentAlignment = align === "right" ? "items-end" : align === "left" ? "items-start" : "items-center"
+  const badgeImages = [
+    "/assets/ai-badges/badge-blue.png",
+    "/assets/ai-badges/badge-green.png",
+    "/assets/ai-badges/badge-orange.png",
+    "/assets/ai-badges/badge-red.png",
+  ]
+  const badgeSrc = badgeImages[Math.abs(product.id) % badgeImages.length]
+
+  return (
+    <Link href={href} className="group block w-full">
+        <div className="relative px-4">
+        <Image
+          src={badgeSrc}
+          alt="AI badge"
+          width={40}
+          height={40}
+          className="h-[clamp(32px,6vw,64px)] w-[clamp(32px,6vw,64px)] z-30 object-contain absolute top-1/2 -translate-y-1/2 -left-[clamp(4px,1.2vw,8px)]"
+        />
+      <div
+        className={`flex ${alignment} w-full rounded-full bg-white backdrop-blur-md shadow-md ring-1 ring-black/10 transition-transform duration-200 hover:scale-[1.02] overflow-hidden gap-[clamp(1rem,2.2vw,2rem)] px-[clamp(1rem,2.5vw,2rem)] py-[clamp(0.75rem,2vw,1.25rem)] h-[clamp(120px,24vw,180px)]`}
+      >
+        {product.aiImage && (
+          <Image
+            src={product.aiImage}
+            alt={`${product.name} AI`}
+            width={120}
+            height={120}
+            className="h-[clamp(64px,12vw,160px)] w-[clamp(64px,12vw,160px)] rounded-2xl object-contain bg-white/70 p-2"
+          />
+        )}
+        <div className={`flex flex-col ${contentAlignment} flex-1`}> 
+          {product.logo && (
+            <Image
+              src={product.logo}
+              alt={`${product.name} logo`}
+              width={100}
+              height={100}
+              className="h-[clamp(28px,4vw,48px)] w-auto object-contain"
+            />
+          )}
+          {product.shortDescription && (
+            <p className="mt-[clamp(0.25rem,1vw,0.5rem)] text-[clamp(0.85rem,1vw,1rem)] text-gray-800 line-clamp-3">
+              {product.shortPunchLine}
+            </p>
+          )}
+        </div>
+      </div>
+      </div>
+    </Link>
   )
 }
