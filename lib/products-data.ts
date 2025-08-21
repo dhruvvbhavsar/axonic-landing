@@ -448,7 +448,7 @@ export const products: Product[] = [
   "heroImage": "/assets/new-products-1/doc/DOC.png",
   "videoUrl": "https://youtu.be/glvGIGOLSlg",
   "testimonialUrl": "https://www.youtube.com/embed/abc123doc",
-  "description": "Smart documentation system tailored for modern healthcare professionals.",
+  "description": "AxonDoc — Listening to patients, simplifying for doctors.",
   "shortDescription": "Instant Expertise, Infinite Care.",
   "subtitle": "Instant Expertise, Infinite Care",
   "features": [
