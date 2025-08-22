@@ -33,10 +33,10 @@ export function PageHeader({ title, backgroundImage }: PageHeaderProps) {
       <div className="absolute inset-0 bg-black/40" />
 
       {/* Content */}
-      <div className="absolute inset-0 flex items-center justify-center z-10">
+      <div className="absolute inset-0 flex items-end pb-6 justify-center z-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
 
-          <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white mb-1 sm:mb-2 tracking-tight leading-tight">
+          <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white tracking-tight leading-tight">
             {title}
           </h1>
 
