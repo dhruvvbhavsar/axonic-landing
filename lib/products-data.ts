@@ -683,43 +683,43 @@ export const products: Product[] = [
   "description": "Nurturing Dreams Into Reality",
   "shortDescription": "Nurturing Dreams Into Reality",
   "subtitle": "Nurturing Dreams Into Reality",
-  "features": [
+  features: [
     {
-      "title": "Personalized Health Insights",
-      "description": "Get tailored health recommendations based on your lifestyle, habits, and medical history.",
-      "image": "/assets/new-products-1/lab/lab-1.png"
+      title: "End-to-End Fertility Journey Management –",
+      description: "From first consultation to embryo transfer, everything in one platform.",
+      image: "/assets/new-products-1/life/life-1.png"
     },
     {
-      "title": "Real-time Health Monitoring",
-      "description": "Track your health metrics, including heart rate, sleep, and activity levels, to make informed decisions about your well-being.",
-      "image": "/assets/new-products-1/lab/lab-2.png"
+      title: "Advanced Embryology & Cryopreservation Tools –",
+      description: "Professional-grade lab and storage management made simple.",
+      image: "/assets/new-products-1/life/life-2.png"
     },
     {
-      "title": "AI-Powered Health Recommendations",
-      "description": "Get personalized health tips, exercise plans, and lifestyle advice based on your health data and goals.",
-      "image": "/assets/new-products-1/lab/lab-3.png"
+      title: "Seamless Multi-Clinic & Partner Tracking –",
+      description: "Unified records for couples across multiple locations.",
+      image: "/assets/new-products-1/life/life-3.png"
     },
     {
-      "title": "Secure, Private Health Records",
-      "description": "Store and access your health data securely, with built-in privacy protection and compliance-ready storage.",
-      "image": "/assets/new-products-1/lab/lab-4.png"
-    }
+      title: "Smart Operations with Compliance & Security –",
+      description: "Automated scheduling, billing, and HIPAA-ready data protection.",
+      image: "/assets/new-products-1/life/life-4.png"
+    },
   ],
-  "valuePropositions": [
+  valuePropositions: [
     {
-      "title": "Personalized Health Insights",
-      "description": "Get tailored health recommendations based on your lifestyle, habits, and medical history.",
-      "image": "/assets/new-products-1/lab/c-1.png"
+      title: "Seamless Fertility Journey",
+      description: "Manage every step from first consultation to embryo transfer in one integrated platform.",
+      image: "/assets/new-products-1/life/c-1.png"
     },
     {
-      "title": "Real-time Health Monitoring",
-      "description": "Track your health metrics, including heart rate, sleep, and activity levels, to make informed decisions about your well-being.",
-      "image": "/assets/new-products-1/lab/c-2.png"
+      title: "Advanced Embryology & Andrology Tools",
+      description: "Professional-grade lab management tailored for reproductive medicine.",
+      image: "/assets/new-products-1/life/c-2.png"
     },
     {
-      "title": "AI-Powered Health Recommendations",
-      "description": "Get personalized health tips, exercise plans, and lifestyle advice based on your health data and goals.",
-      "image": "/assets/new-products-1/lab/c-3.png"
+      title: "Scalable, Secure & Compliant",
+      description: "HIPAA-ready system designed for single clinics to multi-branch fertility networks.",
+      image: "/assets/new-products-1/life/c-3.png"
     }
   ],
   "ctaText": "Download AxonLife",

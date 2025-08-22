@@ -60,7 +60,7 @@ export default function AIPlatformPage() {
           className="absolute inset-0 bg-center bg-no-repeat md:hidden"
           style={{ 
             backgroundImage: "url(/assets/ai-new.png)",
-            backgroundSize: "800px"
+            backgroundSize: "1200px"
           }}
         />
         {/* Desktop background */}
@@ -68,14 +68,14 @@ export default function AIPlatformPage() {
           className="absolute inset-0 bg-center bg-no-repeat hidden md:block"
           style={{ 
             backgroundImage: "url(/assets/ai-new.png)",
-            backgroundSize: "1100px"
+            backgroundSize: "1800px"
           }}
         />
         <div className="absolute inset-0 bg-white/0" />
 
         {/* Heading Section - Inside background image (Desktop only) */}
         <div className="relative z-20 text-center py-8 px-4 hidden md:block">
-          <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4 uppercase max-w-7xl text-center mx-auto">
+          <h2 className="text-2xl lg:text-3xl bg-amber-400 rounded-full font-bold py-1 text-gray-900 mb-4 uppercase max-w-7xl text-center mx-auto">
             Redefining healthcare with AI intelligence and human touch
           </h2>
         </div>
@@ -107,8 +107,17 @@ export default function AIPlatformPage() {
 
             {/* Product Videos Testimonials Section */}
       {productsWithVideos.length > 0 && (
-        <section className="w-full py-20 bg-white">
-          <div className="container mx-auto px-6">
+        <section className="w-full py-20 relative bg-white">
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 bg-center bg-no-repeat opacity-40"
+            style={{ 
+              backgroundImage: "url(/assets/bg-new.png)",
+              backgroundSize: "1800px"
+            }}
+          />
+          <div className="relative z-10">
+            <div className="container mx-auto px-6">
             {/* Section Header */}
             <div className="text-center mb-16">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
@@ -197,6 +206,7 @@ export default function AIPlatformPage() {
               </a>
             </div>
           </div>
+        </div>
         </section>
       )}
     </div>
@@ -226,7 +236,7 @@ function AIPillCard({ product, align }: { product: Product; align: "left" | "rig
           className="h-[clamp(32px,6vw,64px)] w-[clamp(32px,6vw,64px)] z-30 object-contain absolute top-1/2 -translate-y-1/2 -left-[clamp(4px,1.2vw,8px)]"
         />
       <div
-        className={`flex ${alignment} w-full rounded-full bg-white backdrop-blur-md shadow-md ring-1 ring-black/10 transition-transform duration-200 hover:scale-[1.02] overflow-hidden gap-[clamp(1rem,2.2vw,2rem)] px-[clamp(1rem,2.5vw,2rem)] py-[clamp(0.75rem,2vw,1.25rem)] h-[clamp(120px,24vw,180px)]`}
+        className={`flex ${alignment} w-full rounded-full bg-white backdrop-blur-md shadow-md ring-1 ring-black/10 transition-transform duration-200 hover:scale-[1.02] overflow-hidden gap-[clamp(1rem,2.2vw,2rem)] px-[clamp(1rem,2.5vw,2rem)] py-[clamp(0.75rem,2vw,1.25rem)] h-[clamp(100px,20vw,160px)]`}
       >
         {product.aiImage && (
           <Image

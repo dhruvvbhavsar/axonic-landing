@@ -191,7 +191,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {product.valuePropositions.map((value, index) => (
-              <Card key={index} className="group hover:shadow-2xl transition-all duration-500 border-0 bg-white rounded-3xl overflow-hidden h-full hover:-translate-y-3 shadow-lg">
+              <Card key={index} className="group hover:shadow-2xl transition-all pt-0 duration-500 border-0 rounded-3xl overflow-hidden h-full hover:-translate-y-3 shadow-lg">
                 <CardContent className="p-0 h-full flex flex-col">
                   {/* Image */}
                   <div className="relative overflow-hidden">
