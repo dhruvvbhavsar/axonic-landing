@@ -19,14 +19,14 @@ declare global {
 
 export function TestimonialsSection() {
   // Each testimonial just needs a unique player id & the YouTube video id
-  const testimonials = [
+  const testimonials = React.useMemo(() => [
     { id: 1, videoId: "amo_RnMSuKY", title: "Patient Testimonial 1" },
     { id: 2, videoId: "2OPJaJoi0Gs", title: "Patient Testimonial 2" },
     { id: 3, videoId: "XalSjho8J5Q", title: "Patient Testimonial 3" },
     { id: 4, videoId: "AQmvWNxE-XM", title: "Patient Testimonial 4" },
     { id: 5, videoId: "xaVclNCE4BY", title: "Patient Testimonial 5" },
     { id: 6, videoId: "qrCEQBEdrC4", title: "Patient Testimonial 6" },
-  ]
+  ], [])
 
   // Hold onto every player so we can control them
   const playersRef = React.useRef<any[]>([])
@@ -85,7 +85,8 @@ export function TestimonialsSection() {
 
     // Cleanup all players on unmount
     return () => {
-      playersRef.current.forEach((p) => {
+      const currentPlayers = playersRef.current
+      currentPlayers.forEach((p) => {
         try {
           p.destroy()
         } catch (_) {
@@ -93,8 +94,7 @@ export function TestimonialsSection() {
         }
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [testimonials])
 
   return (
     <section id="testimonials" className="py-20 bg-gray-50">

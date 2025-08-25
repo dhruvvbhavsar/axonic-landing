@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
@@ -47,7 +48,9 @@ export default function RootLayout({
           `}
         </Script>
         <Navigation />
-        <GaTracker />
+        <Suspense fallback={null}>
+          <GaTracker />
+        </Suspense>
         <main>
           {children}
         </main>
