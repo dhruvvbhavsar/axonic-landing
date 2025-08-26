@@ -6,17 +6,55 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { PageHeader } from "@/components/page-header"
 import { MapPin, Phone, Mail } from "lucide-react"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { COUNTRY_CODES, findDialCodeByIso2, iso2ToFlagEmoji } from "@/lib/country-codes"
 
 export default function ContactUsPage() {
   const [isSubmitting, setIsSubmitting] = React.useState(false)
   const [submitStatus, setSubmitStatus] = React.useState<'idle' | 'success' | 'error'>('idle')
   const formRef = React.useRef<HTMLFormElement>(null)
+  const [dialCode, setDialCode] = React.useState<string>("+1")
+  const [selectedIso2, setSelectedIso2] = React.useState<string>("US")
+  const [geo, setGeo] = React.useState<{ countryCode?: string; countryName?: string; ip?: string; callingCode?: string }>({})
+
+  React.useEffect(() => {
+    let isMounted = true
+    const fetchGeo = async () => {
+      try {
+        const res = await fetch('https://ipapi.co/json/')
+        if (!res.ok) throw new Error('Failed to fetch geo')
+        const data = await res.json()
+        // ipapi fields: country_code, country_name, ip, country_calling_code
+        const countryCode: string | undefined = data?.country_code
+        const countryName: string | undefined = data?.country_name
+        const ip: string | undefined = data?.ip
+        const callingCode: string | undefined = data?.country_calling_code
+        if (!isMounted) return
+        const fallbackDial = findDialCodeByIso2(countryCode) || "+1"
+        setGeo({ countryCode, countryName, ip, callingCode })
+        setSelectedIso2(countryCode || "US")
+        setDialCode((callingCode || fallbackDial) as string)
+      } catch (e) {
+        // Fallback to default
+        if (!isMounted) return
+        setGeo({})
+        setSelectedIso2("US")
+        setDialCode("+1")
+      }
+    }
+    fetchGeo()
+    return () => { isMounted = false }
+  }, [])
 
   const sendEmail = async (formData: FormData) => {
     const name = formData.get('name') as string
     const email = formData.get('email') as string
     const mobile = formData.get('mobile') as string
     const comment = formData.get('comment') as string
+    const selectedDialCode = (formData.get('dialCode') as string) || dialCode
+    const geoCountry = (formData.get('geoCountry') as string) || geo.countryName || ''
+    const geoCountryCode = (formData.get('geoCountryCode') as string) || geo.countryCode || ''
+    const ipAddress = (formData.get('ipAddress') as string) || geo.ip || ''
 
     // Create HTML formatted email content
     const htmlContent = `
@@ -24,7 +62,9 @@ export default function ContactUsPage() {
       <hr>
       <p><strong>Name:</strong> ${name}</p>
       <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Mobile Number:</strong> ${mobile || 'Not provided'}</p>
+      <p><strong>Mobile Number:</strong> ${mobile ? `${selectedDialCode} ${mobile}` : 'Not provided'}</p>
+      <p><strong>Detected Country:</strong> ${geoCountry || 'Unknown'}${geoCountryCode ? ` (${geoCountryCode})` : ''}</p>
+      <p><strong>IP Address:</strong> ${ipAddress || 'Unknown'}</p>
       <p><strong>Comment/Questions:</strong></p>
       <p>${comment || 'No comment provided'}</p>
       <hr>
@@ -32,7 +72,8 @@ export default function ContactUsPage() {
     `
 
     const emailPayload = {
-      to: "info@axonichealth.com;sales@axonichealth.com",
+      // to: "info@axonichealth.com;sales@axonichealth.com",
+      to: 'dhruv.bhavsar@axonichealth.com',
       from: "info@axonichealth.com",
       subject: `New Contact Us Submission from ${name}`,
       data: htmlContent
@@ -64,6 +105,11 @@ export default function ContactUsPage() {
     setSubmitStatus('idle')
     
     const formData = new FormData(e.currentTarget)
+    // ensure geolocation fields are included even if JS Select isn't a native input
+    formData.set('dialCode', dialCode)
+    if (geo.countryName) formData.set('geoCountry', geo.countryName)
+    if (geo.countryCode) formData.set('geoCountryCode', geo.countryCode)
+    if (geo.ip) formData.set('ipAddress', geo.ip)
     
     try {
       await sendEmail(formData)
@@ -187,12 +233,40 @@ export default function ContactUsPage() {
               </div>
 
               <div>
-                <Input
-                  name="mobile"
-                  type="tel"
-                  placeholder="Mobile Number"
-                  className="w-full"
-                />
+                <div className="flex gap-2">
+                  <Select
+                    value={selectedIso2}
+                    onValueChange={(iso) => {
+                      setSelectedIso2(iso)
+                      const newDial = findDialCodeByIso2(iso) || dialCode
+                      setDialCode(newDial)
+                    }}
+                  >
+                    <SelectTrigger className="w-44">
+                      <SelectValue placeholder="Country" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {COUNTRY_CODES.map((c) => (
+                        <SelectItem key={c.code} value={c.code}>
+                          {iso2ToFlagEmoji(c.code)} {c.name} ({c.dialCode})
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  
+                  <Input
+                    name="mobile"
+                    type="tel"
+                    placeholder={`Mobile Number (${dialCode})`}
+                    className="w-full"
+                  />
+                </div>
+                {/* Hidden inputs to submit geo data */}
+                <input type="hidden" name="dialCode" value={dialCode} />
+                <input type="hidden" name="selectedCountryCode" value={selectedIso2} />
+                {geo.countryName ? <input type="hidden" name="geoCountry" value={geo.countryName} /> : null}
+                {geo.countryCode ? <input type="hidden" name="geoCountryCode" value={geo.countryCode} /> : null}
+                {geo.ip ? <input type="hidden" name="ipAddress" value={geo.ip} /> : null}
               </div>
 
               <div>
