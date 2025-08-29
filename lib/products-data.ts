@@ -145,7 +145,7 @@ export const products: Product[] = [
     ctaText: "Request Demo",
     ctaSubtext: "Join the AxonHIS Network and revolutionize your healthcare delivery with advanced clinical management solutions.",
     calendlyUrl: "https://calendly.com/axonichealth-info/axonhis",
-    shortPunchLine: "One Platform. Total Control."
+    shortPunchLine: "Total Hospital Intelligence in One Platform (50+ Modules)"
   },
   {
     id: 3,
@@ -203,7 +203,7 @@ export const products: Product[] = [
     ctaText: "Join our network",
     ctaSubtext: "Join the AxonMD Network and transform your clinic management with comprehensive digital solutions.",
     calendlyUrl: "https://calendly.com/axonichealth-info/axonmd",
-    shortPunchLine: "Total Hospital Intelligence in One Platform"
+    shortPunchLine: "Smart Autopilot for every doctor"
   },
   {
     id: 4,

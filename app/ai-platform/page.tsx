@@ -258,7 +258,7 @@ function AIPillCard({ product, align }: { product: Product; align: "left" | "rig
             />
           )}
           {product.shortDescription && (
-            <p className="mt-[clamp(0.25rem,1vw,0.5rem)] text-[clamp(0.85rem,1vw,1rem)] text-gray-800 line-clamp-3">
+            <p className="mt-[clamp(0.25rem,1vw,0.5rem)] text-sm text-gray-800">
               {product.shortPunchLine}
             </p>
           )}
