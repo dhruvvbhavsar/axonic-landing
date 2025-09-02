@@ -57,7 +57,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Dialog>
+                {/* <Dialog>
                   <DialogTrigger asChild>
                     <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-4 px-10 rounded-xl text-base transition-all duration-300 hover:scale-105 shadow-lg">
                       Schedule Demo
@@ -82,11 +82,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
                       </p>
                     </div>
                   </DialogContent>
-                </Dialog>
+                </Dialog> */}
                 
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button variant="outline" className="border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold py-4 px-10 rounded-xl text-base transition-all duration-300 hover:scale-105">
+                    <Button variant="outline" className="text-black bg-yellow-400 hover:bg-yellow-500 font-semibold py-4 px-10 rounded-xl text-base transition-all duration-300 hover:scale-105">
                       Learn More
                     </Button>
                   </DialogTrigger>
