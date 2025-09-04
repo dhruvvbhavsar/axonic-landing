@@ -144,7 +144,7 @@ export const products: Product[] = [
     ],
     ctaText: "Request Demo",
     ctaSubtext: "Join the AxonHIS Network and revolutionize your healthcare delivery with advanced clinical management solutions.",
-    calendlyUrl: "https://calendly.com/axonichealth-info/axonhis",
+    calendlyUrl: "https://zcal.co/i/6mWi0QPB?embed=1&embedType=iframe",
     shortPunchLine: "Total Hospital Intelligence in One Platform (50+ Modules)"
   },
   {
@@ -202,7 +202,7 @@ export const products: Product[] = [
     ],
     ctaText: "Join our network",
     ctaSubtext: "Join the AxonMD Network and transform your clinic management with comprehensive digital solutions.",
-    calendlyUrl: "https://calendly.com/axonichealth-info/axonmd",
+    calendlyUrl: "https://zcal.co/i/oQCFdJIS?embed=1&embedType=iframe",
     shortPunchLine: "Smart Autopilot for every doctor"
   },
   {
@@ -260,7 +260,7 @@ export const products: Product[] = [
     ],
     ctaText: "Request Demo",
     ctaSubtext: "Join the AxonHealthHub Network and provide your patients with round-the-clock access to quality healthcare services.",
-    calendlyUrl: "https://calendly.com/axonichealth-info/axonhealthhub",
+    calendlyUrl: "https://zcal.co/i/pooei9_f?embed=1&embedType=iframe",
     shortPunchLine: "Complete Healthcare in Your Community"
   },
   {
@@ -317,7 +317,7 @@ export const products: Product[] = [
     ],
     ctaText: "Request Demo",
     ctaSubtext: "Join the AxonLab Network and enhance your diagnostic capabilities with advanced laboratory management solutions.",
-    calendlyUrl: "https://calendly.com/axonichealth-info/axonlab",
+    calendlyUrl: "https://zcal.co/i/e42rVkXo?embed=1&embedType=iframe",
     shortPunchLine: "Empowering Doctors, Enhancing Care"
   },
   
@@ -375,7 +375,7 @@ export const products: Product[] = [
     ],
     ctaText: "Request Demo",
     ctaSubtext: "Transform your operating theatre management with AxonSurge's advanced surgical workflow solutions.",
-    calendlyUrl: "https://calendly.com/axonichealth-info/axonsurge",
+    calendlyUrl: "https://zcal.co/i/NB3chiD3?embed=1&embedType=iframe",
     shortPunchLine: "Transforming Operating Theatre Management"
   },
   {
@@ -432,7 +432,7 @@ export const products: Product[] = [
     ],
     ctaText: "Request Demo",
     ctaSubtext: "Join the AxonPharma Network and provide your patients with instant access to quality healthcare services.",
-    calendlyUrl: "https://calendly.com/axonichealth-info/axonpharma",
+    calendlyUrl: "https://zcal.co/i/JEV0gUEV?embed=1&embedType=iframe",
     shortPunchLine: "Smarter Pharmacy, Safer Patients"
   },
   
@@ -492,7 +492,7 @@ export const products: Product[] = [
   ],
   "ctaText": "Try AxonDoc",
   "ctaSubtext": "Experience the future of healthcare documentation today.",
-  "calendlyUrl": "https://calendly.com/axonichealth-info/axondoc",
+  "calendlyUrl": "https://zcal.co/i/0WuOFyzD?embed=1&embedType=iframe",
   "shortPunchLine": "Instant Expertise, Infinite Care"
 },
 {
@@ -550,7 +550,7 @@ export const products: Product[] = [
   ],
   "ctaText": "Download AxonBuddy",
   "ctaSubtext": "Stay on top of your health with your new digital buddy.",
-  "calendlyUrl": "https://calendly.com/axonichealth-info/axonbuddy",
+  "calendlyUrl": "https://zcal.co/i/Ne5KB8r1?embed=1&embedType=iframe",
   "shortPunchLine": "24/7 Health Wisdom at Your Service"
 },
 {
@@ -667,7 +667,7 @@ export const products: Product[] = [
   ],
   "ctaText": "Explore AxonA",
   "ctaSubtext": "Turn your data into action with healthcare intelligence.",
-  "calendlyUrl": "https://calendly.com/axonichealth-info/axona",
+  "calendlyUrl": "https://zcal.co/i/ij8u5mRT?embed=1&embedType=iframe",
   "shortPunchLine": "Your Intelligent Clinical Associate makes you a Superdoctor"
 },
 {
@@ -724,7 +724,7 @@ export const products: Product[] = [
   ],
   "ctaText": "Download AxonLife",
   "ctaSubtext": "Stay on top of your health with your new digital companion.",
-  "calendlyUrl": "https://calendly.com/axonichealth-info/axonlife",
+  "calendlyUrl": "https://zcal.co/i/OpaKY8_S?embed=1&embedType=iframe",
   "shortPunchLine": "Nurturing Dreams Into Reality"
 }
 ]

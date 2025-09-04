@@ -6,7 +6,6 @@ import { PageHeader } from "@/components/page-header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { CalendlyWidget } from "@/components/calendly-widget"
 import { ContactForm } from "@/components/contact-form"
 import { CallButtonTertiary } from "@/components/call-button-tertiary"
 import { ProductTestimonialsSection } from "@/components/product-testimonials-section"
@@ -57,36 +56,42 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
-                {/* <Dialog>
+                <Dialog>
                   <DialogTrigger asChild>
                     <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-4 px-10 rounded-xl text-base transition-all duration-300 hover:scale-105 shadow-lg">
                       Schedule Demo
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto">
-                    <DialogHeader>
-                      <DialogTitle className="text-2xl font-bold text-gray-900">
+                  <DialogContent className="sm:max-w-[95vw] max-h-[95vh] p-2">
+                    <DialogHeader className="pb-2">
+                      <DialogTitle className="text-xl font-bold text-gray-900">
                         Schedule Your {product.name} Demo
                       </DialogTitle>
                       <DialogDescription className="text-gray-600">
                         Choose a convenient time slot for your personalized demo
                       </DialogDescription>
                     </DialogHeader>
-                    <CalendlyWidget 
-                      productName={product.name}
-                      calendlyUrl={product.calendlyUrl}
-                    />
+                    <div className="h-[calc(95vh-120px)] w-full overflow-auto">
+                      <iframe
+                        src={product.calendlyUrl}
+                        loading="lazy"
+                        style={{ border: 'none', minWidth: 350, minHeight: 600, height: '100%', width: '100%' }}
+                        id="zcal-invite"
+                        scrolling="yes"
+                      />
+                    </div>
                     <div className="text-center pt-4 border-t border-gray-200">
                       <p className="text-sm text-gray-500">
                         You can reschedule or cancel your demo anytime before the meeting
                       </p>
                     </div>
                   </DialogContent>
-                </Dialog> */}
+                </Dialog>
                 
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button variant="outline" className="text-black bg-yellow-400 hover:bg-yellow-500 font-semibold py-4 px-10 rounded-xl text-base transition-all duration-300 hover:scale-105">
+                  <Button variant="outline" className="border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold py-4 px-10 rounded-xl text-base transition-all duration-300 hover:scale-105">
+
                       Learn More
                     </Button>
                   </DialogTrigger>
