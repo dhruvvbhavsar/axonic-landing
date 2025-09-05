@@ -609,7 +609,7 @@ export const products: Product[] = [
   "ctaText": "Book Demo",
   "ctaSubtext": "Revolutionize your consultation process with AxonScribe.",
   // "redirectUrl": "https://axonscribe.axonichealth.com",
-  "calendlyUrl": "https://calendly.com/axonichealth-info/axonscribe",
+  "calendlyUrl": "https://zcal.co/i/sea8eyUB?embed=1&embedType=iframe",
   "shortPunchLine": "Where Conversations Become Care Records"
 },
 {

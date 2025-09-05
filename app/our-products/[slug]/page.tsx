@@ -62,20 +62,20 @@ export default async function ProductPage({ params }: ProductPageProps) {
                       Schedule Demo
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="sm:max-w-[95vw] max-h-[95vh] p-2">
-                    <DialogHeader className="pb-2">
-                      <DialogTitle className="text-xl font-bold text-gray-900">
+                  <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle className="text-2xl font-bold text-gray-900">
                         Schedule Your {product.name} Demo
                       </DialogTitle>
                       <DialogDescription className="text-gray-600">
                         Choose a convenient time slot for your personalized demo
                       </DialogDescription>
                     </DialogHeader>
-                    <div className="h-[calc(95vh-120px)] w-full overflow-auto">
+                    <div className="h-[500px] w-full">
                       <iframe
                         src={product.calendlyUrl}
                         loading="lazy"
-                        style={{ border: 'none', minWidth: 350, minHeight: 600, height: '100%', width: '100%' }}
+                        style={{ border: 'none', minWidth: 350, minHeight: 500, height: 500, width: '100%' }}
                         id="zcal-invite"
                         scrolling="yes"
                       />
