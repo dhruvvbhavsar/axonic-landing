@@ -561,7 +561,7 @@ export const products: Product[] = [
   "image": "/assets/ourProducts/AxonaScribeImage.png",
   "platformImage": "/assets/platform-images/axonscribe.png",
   "aiImage": "/assets/ai-images/scribe.png",
-  "heroImage": "/assets/new-products-1/scribe/Scribe.png",
+  "heroImage": "/assets/new-products-1/scribe/SCRIBE.png",
   "videoUrl": "https://www.youtube.com/watch?v=PM9LlDn4S40",
   "testimonialUrl": "https://www.youtube.com/embed/abc123scribe",
   "description": "More time for meaningful interactions, shorter wait times, and improved satisfaction.",
