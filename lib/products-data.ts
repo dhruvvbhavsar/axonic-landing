@@ -561,54 +561,54 @@ export const products: Product[] = [
   "image": "/assets/ourProducts/AxonaScribeImage.png",
   "platformImage": "/assets/platform-images/axonscribe.png",
   "aiImage": "/assets/ai-images/scribe.png",
-  "heroImage": "/assets/new-products/AxonSurge.png",
+  "heroImage": "/assets/new-products-1/scribe/Scribe.png",
   "videoUrl": "https://www.youtube.com/watch?v=PM9LlDn4S40",
   "testimonialUrl": "https://www.youtube.com/embed/abc123scribe",
-  "description": "Where Conversations Become Care Records",
+  "description": "More time for meaningful interactions, shorter wait times, and improved satisfaction.",
   "shortDescription": "Where Conversations Become Care Records",
-  "subtitle": "Where Conversations Become Care Records",
+  "subtitle": "Patient-Centered Care",
   "features": [
     {
-      "title": "Accurate AI-powered transcription of doctor-patient conversations",
-      "description": "Transforms spoken interactions into clear, structured SOAP notes automatically.",
-      "image": "/assets/image1.png"
+      "title": "Voice-to-Text Transcription",
+      "description": "Capture consultations naturally with real-time speech-to-text that recognizes medical terminology.",
+      "image": "/assets/new-products-1/scribe/scribe-1.png"
     },
     {
-      "title": "Real-time editing with specialty-specific templates",
-      "description": "Customize notes on the go with templates tailored for different specialties, ensuring clinical relevance.",
-      "image": "/assets/image2.png"
+      "title": "Medical Terminology Recognition",
+      "description": "Ensure accuracy with AI-trained models built to understand healthcare-specific vocabulary.",
+      "image": "/assets/new-products-1/scribe/scribe-1.png"
     },
     {
-      "title": "Auto-sync with AxonMD & AxonDoc platforms",
-      "description": "Seamlessly integrates your notes into the broader Axonic ecosystem — no double entry, no data loss.",
-      "image": "/assets/image3.png"
+      "title": "Template Auto-Population",
+      "description": "Speed up documentation with smart templates for SOAP notes, referral letters, discharge summaries, procedure notes, and insurance forms.",
+      "image": "/assets/new-products-1/scribe/scribe-1.png"
     },
     {
-      "title": "Secure, compliant documentation",
-      "description": "Built-in data security, audit trails, and compliance-ready formats meet medico-legal and regulatory standards.",
-      "image": "/assets/image4.png"
+      "title": "EMR Integration & GDPR Compliance",
+      "description": "Securely connect with your existing EMR system while maintaining full compliance with GDPR standards.",
+      "image": "/assets/new-products-1/scribe/scribe-1.png"
     }
   ],
   "valuePropositions": [
     {
-      "title": "Massive reduction in admin burden",
-      "description": "Spend less time typing and more time focusing on patients.",
-      "image": "/assets/image1.png"
+      "title": "Streamlined Documentation & Efficiency",
+      "description": "One-click templates and AI transcription drastically cut admin time, so you can see more patients without feeling rushed.",
+      "image": "/assets/new-products-1/scribe/c-1.png"
     },
     {
-      "title": "Improved accuracy & consistency in records",
-      "description": "Standardized notes reduce errors and enhance communication across the care team.",
-      "image": "/assets/image2.png"
+      "title": "Reliable Accuracy in Clinical Notes",
+      "description": "Eliminate errors and standardize communication across SOAP notes, referrals, and insurance documentation, boosting trust with patients and referrers.",
+      "image": "/assets/new-products-1/scribe/c-2.png"
     },
     {
-      "title": "Supports faster, safer decision-making",
-      "description": "Structured, complete records at every consult help you provide better, safer care.",
-      "image": "/assets/image3.png"
+      "title": "Enhanced Patient Experience",
+      "description": "By streamlining workflows, reducing wait times, and enabling more focused doctor-patient interaction, AxonScribe helps you deliver care that patients truly value.",
+      "image": "/assets/new-products-1/scribe/c-3.png"
     }
   ],
   "ctaText": "Book Demo",
   "ctaSubtext": "Revolutionize your consultation process with AxonScribe.",
-  "redirectUrl": "https://axonscribe.axonichealth.com",
+  // "redirectUrl": "https://axonscribe.axonichealth.com",
   "calendlyUrl": "https://calendly.com/axonichealth-info/axonscribe",
   "shortPunchLine": "Where Conversations Become Care Records"
 },
