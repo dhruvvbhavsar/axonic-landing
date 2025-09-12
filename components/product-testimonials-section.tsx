@@ -22,21 +22,31 @@ declare global {
 interface ProductTestimonialsSectionProps {
   testimonialUrl: string
   productName: string
+  additionalVideos?: { id: number; videoId: string; title: string }[]
 }
 
-export function ProductTestimonialsSection({ testimonialUrl, productName }: ProductTestimonialsSectionProps) {
+export function ProductTestimonialsSection({ testimonialUrl, productName, additionalVideos = [] }: ProductTestimonialsSectionProps) {
   const [isSubdomain, setIsSubdomain] = React.useState(false)
   const [baseDomain, setBaseDomain] = React.useState('')
 
-  // All testimonials including the product-specific one
-  const testimonials = React.useMemo(() => [
-    { id: 1, videoId: "amo_RnMSuKY", title: "Patient Testimonial 1" },
-    { id: 2, videoId: "2OPJaJoi0Gs", title: "Patient Testimonial 2" },
-    { id: 3, videoId: "XalSjho8J5Q", title: "Patient Testimonial 3" },
-    { id: 4, videoId: "AQmvWNxE-XM", title: "Patient Testimonial 4" },
-    { id: 5, videoId: "xaVclNCE4BY", title: "Patient Testimonial 5" },
-    { id: 6, videoId: "qrCEQBEdrC4", title: "Patient Testimonial 6" },
-  ], [])
+  // All testimonials including the product-specific ones
+  const testimonials = React.useMemo(() => {
+    const baseTestimonials = [
+      { id: 1, videoId: "amo_RnMSuKY", title: "Patient Testimonial 1" },
+      { id: 2, videoId: "2OPJaJoi0Gs", title: "Patient Testimonial 2" },
+      { id: 3, videoId: "XalSjho8J5Q", title: "Patient Testimonial 3" },
+      { id: 4, videoId: "AQmvWNxE-XM", title: "Patient Testimonial 4" },
+      { id: 5, videoId: "xaVclNCE4BY", title: "Patient Testimonial 5" },
+      { id: 6, videoId: "qrCEQBEdrC4", title: "Patient Testimonial 6" },
+    ]
+    
+    // If we have additional videos, add them at the beginning
+    if (additionalVideos.length > 0) {
+      return [...additionalVideos, ...baseTestimonials]
+    }
+    
+    return baseTestimonials
+  }, [additionalVideos])
 
   // Hold onto every player so we can control them
   const playersRef = React.useRef<any[]>([])

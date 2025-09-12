@@ -11,6 +11,7 @@ import { CallButtonTertiary } from "@/components/call-button-tertiary"
 import { ProductTestimonialsSection } from "@/components/product-testimonials-section"
 import { getProductBySlug, getAllProductSlugs } from "@/lib/products-data"
 import { BackToProductsButton } from "@/components/back-to-products-button"
+import { StickyProductNav } from "@/components/sticky-product-nav"
 import ReactPlayerComponent from "./react-player"
 
 
@@ -27,6 +28,7 @@ export async function generateStaticParams() {
   }))
 }
 
+
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params
   const product = getProductBySlug(slug)
@@ -40,8 +42,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
       {/* Page Header */}
       <PageHeader title={product.name} />
 
+      {/* Sticky Product Navigation */}
+      <StickyProductNav />
+
       {/* Hero Section */}
-      <section className="py-10 px-4 sm:px-6 lg:px-8">
+      <section id="overview" className="py-10 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
@@ -133,8 +138,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </div>
       </section>
 
-      {/* Functions Section */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50/50">
+      {/* Features Section */}
+      <section id="features" className="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50/50">
         <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
@@ -182,7 +187,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       </section>
 
       {/* Value Proposition Section */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white">
+      <section id="why" className="py-12 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
@@ -253,10 +258,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
       </section> */}
 
       {/* Testimonials Section */}
-      <ProductTestimonialsSection 
-        testimonialUrl={product.testimonialUrl}
-        productName={product.name}
-      />
+      <section id="testimonials">
+        <ProductTestimonialsSection 
+          testimonialUrl={product.testimonialUrl}
+          productName={product.name}
+        />
+      </section>
 
       {/* Back to Products */}
       <section className="py-6 px-4 sm:px-6 lg:px-8 bg-gray-50/50">

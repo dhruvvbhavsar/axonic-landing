@@ -14,7 +14,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-import { cn, getBaseDomain, getConsultingSubdomainUrl, getPlatformSubdomainUrl } from "@/lib/utils"
+import { cn, getBaseDomain, getConsultingSubdomainUrl, getPlatformSubdomainUrl, getProductSubdomainUrl } from "@/lib/utils"
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = React.useState(false)
@@ -101,6 +101,22 @@ export function Navigation() {
         <div className="hidden lg:block">
           <NavigationMenu viewport={false}>
             <NavigationMenuList>
+              {/* Product shortcuts */}
+              {[{label:'AxonScribe', slug:'axonscribe'}, {label:'AxonMD', slug:'axonmd'}, {label:'AxonCare', slug:'axoncare'}, {label:'AxonHIS', slug:'axonhis'}, {label:'AxonHealthHub', slug:'axonhealthhub'}].map((item) => (
+                <NavigationMenuItem key={item.slug}>
+                  <NavigationMenuLink asChild className={cn(
+                    navigationMenuTriggerStyle(),
+                    "transition-colors duration-300",
+                    isScrolled 
+                      ? "text-gray-900 hover:text-yellow-500" 
+                      : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
+                  )}>
+                    <Link href={getProductSubdomainUrl(item.slug)}>{item.label}</Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              ))}
+
+              {/* Our Platform */}
               <NavigationMenuItem>
                 <NavigationMenuLink asChild className={cn(
                   navigationMenuTriggerStyle(),
@@ -109,10 +125,11 @@ export function Navigation() {
                     ? "text-gray-900 hover:text-yellow-500" 
                     : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
                 )}>
-                  <Link href={getNavUrl("/about-us")}>About Us</Link>
+                  <Link href={getPlatformSubdomainUrl()}>Our Platform</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
+              {/* About Us dropdown */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger className={cn(
                   "transition-colors duration-300",
@@ -120,21 +137,14 @@ export function Navigation() {
                     ? "text-gray-900 hover:text-yellow-500" 
                     : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
                 )}>
-                  Our Offerings
+                  About Us
                 </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid w-[200px] gap-2 p-2 bg-white">
+                <NavigationMenuContent className="left-auto right-0">
+                  <ul className="grid w-[220px] gap-2 p-2 bg-white">
                     <li>
                       <NavigationMenuLink asChild>
-                        <Link href={getPlatformSubdomainUrl()} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
-                          <div className="font-medium">Our Complete Platform</div>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link href="https://axoncare.axonichealth.com" className="block p-2 hover:bg-accent rounded-sm text-gray-900">
-                          <div className="font-medium">Our Services</div>
+                        <Link href={getNavUrl("/about-us#team")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                          <div className="font-medium">Team</div>
                         </Link>
                       </NavigationMenuLink>
                     </li>
@@ -147,75 +157,34 @@ export function Navigation() {
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <Link href={getConsultingSubdomainUrl()} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
-                          <div className="font-medium">Our Consulting Services</div>
+                        <Link href={getNavUrl("/blogs")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                          <div className="font-medium">Blog</div>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link href={getNavUrl("/#testimonials")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                          <div className="font-medium">Testimonials</div>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link href={getNavUrl("/careers")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                          <div className="font-medium">Careers</div>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link href={getNavUrl("/contact-us")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                          <div className="font-medium">Contact Us</div>
                         </Link>
                       </NavigationMenuLink>
                     </li>
                   </ul>
                 </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild className={cn(
-                  navigationMenuTriggerStyle(),
-                  "transition-colors duration-300",
-                  isScrolled 
-                    ? "text-gray-900 hover:text-yellow-500" 
-                    : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
-                )}>
-                  <Link href={getNavUrl("/ai-platform")}>AI Platform</Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-
-
-
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild className={cn(
-                  navigationMenuTriggerStyle(),
-                  "transition-colors duration-300",
-                  isScrolled 
-                    ? "text-gray-900 hover:text-yellow-500" 
-                    : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
-                )}>
-                  <Link href={getNavUrl("/blogs")}>Blogs</Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild className={cn(
-                  navigationMenuTriggerStyle(),
-                  "transition-colors duration-300",
-                  isScrolled 
-                    ? "text-gray-900 hover:text-yellow-500" 
-                    : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
-                )}>
-                  <Link href={getNavUrl("/#testimonials")}>Testimonials</Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild className={cn(
-                  navigationMenuTriggerStyle(),
-                  "transition-colors duration-300",
-                  isScrolled 
-                    ? "text-gray-900 hover:text-yellow-500" 
-                    : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
-                )}>
-                  <Link href={getNavUrl("/careers")}>Careers</Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild className={cn(
-                  navigationMenuTriggerStyle(),
-                  "transition-colors duration-300",
-                  isScrolled 
-                    ? "text-gray-900 hover:text-yellow-500" 
-                    : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
-                )}>
-                  <Link href={getNavUrl("/contact-us")}>Contact Us</Link>
-                </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
@@ -268,26 +237,37 @@ export function Navigation() {
 
               {/* Mobile menu items */}
               <nav className="flex-1 px-4 py-6 space-y-2">
+                {/* Product shortcuts */}
+                {[{label:'AxonScribe', slug:'axonscribe'}, {label:'AxonMD', slug:'axonmd'}, {label:'AxonCare', slug:'axoncare'}, {label:'AxonHIS', slug:'axonhis'}, {label:'AxonHealthHub', slug:'axonhealthhub'}].map((item) => (
+                  <Link
+                    key={item.slug}
+                    href={getProductSubdomainUrl(item.slug)}
+                    className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
+                    onClick={closeMobileMenu}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+
                 <Link
-                  href={getNavUrl("/about-us")}
+                  href={getPlatformSubdomainUrl()}
                   className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                   onClick={closeMobileMenu}
                 >
-                  About Us
+                  Our Platform
                 </Link>
-                
-                {/* Our Offerings submenu */}
+
+                {/* About Us submenu */}
                 <div className="space-y-1">
                   <div className="px-3 py-2 text-gray-900 font-medium">
-                    Our Offerings
+                    About Us
                   </div>
                   <Link
-                    href="https://axoncare.axonichealth.com"
-                    target="_blank"
+                    href={getNavUrl("/about-us#team")}
                     className="block px-6 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                     onClick={closeMobileMenu}
                   >
-                    Our Services
+                    Team
                   </Link>
                   <Link
                     href={getNavUrl("/our-products")}
@@ -296,49 +276,35 @@ export function Navigation() {
                   >
                     Our Products
                   </Link>
+                  <Link
+                    href={getNavUrl("/blogs")}
+                    className="block px-6 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
+                    onClick={closeMobileMenu}
+                  >
+                    Blog
+                  </Link>
+                  <Link
+                    href={getNavUrl("/#testimonials")}
+                    className="block px-6 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
+                    onClick={closeMobileMenu}
+                  >
+                    Testimonials
+                  </Link>
+                  <Link
+                    href={getNavUrl("/careers")}
+                    className="block px-6 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
+                    onClick={closeMobileMenu}
+                  >
+                    Careers
+                  </Link>
+                  <Link
+                    href={getNavUrl("/contact-us")}
+                    className="block px-6 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
+                    onClick={closeMobileMenu}
+                  >
+                    Contact Us
+                  </Link>
                 </div>
-
-                <Link
-                  href={getNavUrl("/ai-platform")}
-                  className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
-                  onClick={closeMobileMenu}
-                >
-                  AI Platform
-                </Link>
-                
-
-                
-                <Link
-                  href={getNavUrl("/blogs")}
-                  className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
-                  onClick={closeMobileMenu}
-                >
-                  Blogs
-                </Link>
-                
-                <Link
-                  href={getNavUrl("/#testimonials")}
-                  className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
-                  onClick={closeMobileMenu}
-                >
-                  Testimonials
-                </Link>
-
-                <Link
-                  href={getNavUrl("/careers")}
-                  className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
-                  onClick={closeMobileMenu}
-                >
-                  Careers
-                </Link>
-                
-                <Link
-                  href={getNavUrl("/contact-us")}
-                  className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
-                  onClick={closeMobileMenu}
-                >
-                  Contact Us
-                </Link>
               </nav>
             </div>
           </div>

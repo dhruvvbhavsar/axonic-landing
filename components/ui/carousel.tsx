@@ -54,7 +54,8 @@ function Carousel({
   const [carouselRef, api] = useEmblaCarousel(
     {
       ...opts,
-      slidesToScroll: 3,
+      // Allow consumers to override how many slides move per scroll
+      slidesToScroll: opts?.slidesToScroll ?? 3,
       axis: orientation === "horizontal" ? "x" : "y",
     },
     plugins

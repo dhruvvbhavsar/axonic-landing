@@ -5,9 +5,10 @@ import * as React from "react"
 interface PageHeaderProps {
   title: string
   backgroundImage?: string
+  navLinks?: { href: string; label: string }[]
 }
 
-export function PageHeader({ title, backgroundImage }: PageHeaderProps) {
+export function PageHeader({ title, backgroundImage, navLinks }: PageHeaderProps) {
   return (
     <section className="relative h-24 sm:h-28 md:h-32 lg:h-36 w-full overflow-hidden">
       {/* Background Image or Gradient */}
@@ -42,6 +43,20 @@ export function PageHeader({ title, backgroundImage }: PageHeaderProps) {
 
           {/* Decorative Line Below */}
           <div className="w-16 sm:w-20 md:w-24 h-px bg-gradient-to-r from-transparent via-yellow-400 to-transparent mx-auto mt-3 sm:mt-4 md:mt-6"></div>
+
+          {navLinks && navLinks.length > 0 && (
+            <nav className="mt-3 sm:mt-4 md:mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href + link.label}
+                  href={link.href}
+                  className="text-xs sm:text-sm md:text-base text-white/90 hover:text-yellow-300 bg-white/10 hover:bg-white/20 border border-white/20 px-2 sm:px-3 py-1 rounded-full transition-colors"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </nav>
+          )}
         </div>
       </div>
 
