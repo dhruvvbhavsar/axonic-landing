@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { getProductBySlug } from "@/lib/products-data"
 import { StructuredData } from "./structured-data"
-import { Breadcrumbs } from "./breadcrumbs"
 import { FAQSection } from "./faq-section"
 import { AxonScribeClientComponent } from "./axonscribe-client-component"
 
@@ -155,7 +154,6 @@ export default function AxonScribePage() {
   return (
     <div className="min-h-screen bg-white">
       <StructuredData product={product} />
-      <Breadcrumbs />
       <AxonScribeClientComponent 
         product={product}
         videoId={videoId}
