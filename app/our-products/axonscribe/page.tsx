@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { getProductBySlug } from "@/lib/products-data"
 import { StructuredData } from "./structured-data"
-import { FAQSection } from "./faq-section"
 import { AxonScribeClientComponent } from "./axonscribe-client-component"
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -96,58 +95,15 @@ function extractYouTubeId(url: string): string | null {
   return null
 }
 
-// Enhanced features with SEO-optimized content
-function getEnhancedFeatures() {
-  return [
-    {
-      title: "AI-Powered Medical Scribe",
-      description:
-        "Automatically transcribes doctor-patient conversations in real time with 95%+ accuracy. Advanced speech recognition technology understands medical terminology, procedures, and diagnoses. This allows healthcare providers to maintain natural eye contact and focus entirely on patient care while documentation happens seamlessly in the background.",
-      image: "/assets/new-products-1/scribe/1.jpg",
-    },
-    {
-      title: "Structured SOAP Notes & Specialty Templates",
-      description:
-        "Instantly generates well-formatted SOAP notes, visit summaries, and follow-up instructions from raw audio. Uses pre-trained templates for GP, dental, ortho, psych, and more — customizable to match your practice's documentation style. Reduces documentation time by up to 70% while ensuring consistent, professional formatting that meets clinical standards and billing requirements.",
-      image: "/assets/new-products-1/scribe/2.jpg",
-    },
-    {
-      title: "Multilingual Speech Recognition",
-      description:
-        "Captures spoken content in multiple languages, supporting local dialects and bridging communication gaps. Perfect for diverse patient populations, ensuring no conversation detail is lost regardless of language or accent. Automatically detects language switches mid-conversation and maintains accuracy across different linguistic patterns and cultural communication styles.",
-      image: "/assets/new-products-1/scribe/3.jpg",
-    },
-    {
-      title: "Professional Personalization",
-      description:
-        "Customize generated documents with your clinic letterhead, address, and registration number for polished, official records. Maintain your professional brand identity while streamlining documentation processes across your entire practice. Automatically applies your preferred formatting, terminology, and signature blocks to ensure every document reflects your practice's professional standards.",
-      image: "/assets/new-products-1/scribe/4.jpg",
-    },
-    {
-      title: "Comprehensive Patient History, Anywhere",
-      description:
-        "Securely access complete patient histories from any device — in clinic, on rounds, or remotely — for continuous, informed care. Cloud-based system ensures all patient data is synchronized and available whenever and wherever you need it most. Advanced search and filtering capabilities help you quickly locate specific patient interactions, treatment patterns, and historical trends for better clinical decision-making.",
-      image: "/assets/new-products-1/scribe/scribe-1.png",
-    },
-    {
-      title: "Offline Recording for Uninterrupted Care",
-      description:
-        "Record full consultations without internet. When back online, audio transcribes automatically and syncs securely. Never miss important patient interactions due to connectivity issues — your documentation workflow continues seamlessly. Smart queuing system prioritizes urgent transcriptions and provides real-time sync status updates so you always know when your documentation is complete.",
-      image: "/assets/new-products-1/scribe/scribe-1.png",
-    },
-  ]
-}
 
 export default function AxonScribePage() {
   const product = getProductBySlug("axonscribe")!
   const videoId = extractYouTubeId(product.videoUrl) || "PM9LlDn4S40"
-  const features = getEnhancedFeatures()
 
   const navItems = [
     { href: "#overview", label: "Overview" },
-    { href: "#features", label: "Features" },
     { href: "#tech-specs", label: "Why Us?" },
-    { href: "#faq", label: "FAQ" },
+    { href: "#pricing", label: "Pricing" },
     { href: "#schedule-demo", label: "Schedule Demo" },
   ]
 
@@ -157,10 +113,9 @@ export default function AxonScribePage() {
       <AxonScribeClientComponent 
         product={product}
         videoId={videoId}
-        features={features}
+        features={product.features}
         navItems={navItems}
       />
-      <FAQSection />
     </div>
   )
 }
