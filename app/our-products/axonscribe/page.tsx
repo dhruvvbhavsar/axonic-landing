@@ -1,11 +1,82 @@
-"use client"
-import * as React from "react"
-import { PageHeader } from "@/components/page-header"
-import { StickyProductNav } from "@/components/sticky-product-nav"
+import type { Metadata } from 'next'
 import { getProductBySlug } from "@/lib/products-data"
-import { OverviewSection } from "./overview-section"
-import { TechSpecsSection } from "./tech-specs-section"
-import { ScheduleDemoSection } from "./schedule-demo-section"
+import { StructuredData } from "./structured-data"
+import { Breadcrumbs } from "./breadcrumbs"
+import { FAQSection } from "./faq-section"
+import { AxonScribeClientComponent } from "./axonscribe-client-component"
+
+export async function generateMetadata(): Promise<Metadata> {
+  const product = getProductBySlug("axonscribe")
+  
+  if (!product) {
+    return {
+      title: 'Product Not Found',
+    }
+  }
+
+  return {
+    title: `${product.name} - AI Medical Scribe | Axonic Health`,
+    description: `${product.description} Transform your medical practice with AI-powered transcription, SOAP notes generation, and multilingual support. Reduce documentation time by 70%. Book a demo today.`,
+    keywords: [
+      'AI medical scribe',
+      'medical transcription software', 
+      'SOAP notes generator',
+      'healthcare documentation',
+      'medical AI assistant',
+      'clinical documentation',
+      'AxonScribe',
+      'Axonic Health',
+      'speech recognition',
+      'medical records',
+      'healthcare AI',
+      'patient documentation'
+    ],
+    authors: [{ name: 'Axonic Health' }],
+    creator: 'Axonic Health',
+    publisher: 'Axonic Health',
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
+    openGraph: {
+      type: 'website',
+      locale: 'en_US',
+      url: 'https://axonscribe.axonichealth.com',
+      title: `${product.name} - AI Medical Scribe`,
+      description: `${product.description} Transform your medical practice with AI-powered transcription that reduces documentation time by 70%.`,
+      siteName: 'Axonic Health',
+      images: [
+        {
+          url: product.heroImage,
+          width: 1200,
+          height: 630,
+          alt: `${product.name} - AI Medical Scribe Interface showing real-time transcription`,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${product.name} - AI Medical Scribe`,
+      description: `${product.description} 95% accuracy, multilingual support, offline recording.`,
+      images: [product.heroImage],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+    alternates: {
+      canonical: 'https://axonscribe.axonichealth.com',
+    },
+  }
+}
 
 function extractYouTubeId(url: string): string | null {
   try {
@@ -26,126 +97,72 @@ function extractYouTubeId(url: string): string | null {
   return null
 }
 
-export default function AxonScribePage() {
-  const product = getProductBySlug("axonscribe")!
-  const videoId = extractYouTubeId(product.videoUrl) || "PM9LlDn4S40"
-
-  const [activeTab, setActiveTab] = React.useState<'overview' | 'tech-specs' | 'pricing' | 'schedule-demo'>(() => {
-    if (typeof window !== 'undefined' && window.location.hash) {
-      const hash = window.location.hash.replace('#', '') as any
-      if (hash === 'tech-specs' || hash === 'pricing' || hash === 'schedule-demo') return hash
-    }
-    return 'overview'
-  })
-
-  const navItems = [
-    { href: "#overview", label: "Overview" },
-    { href: "#tech-specs", label: "Why Us?" },
-    { href: "#pricing", label: "Pricing" },
-    { href: "#schedule-demo", label: "Schedule Demo" },
-  ]
-
-  // Assumption: You want all six features listed below. If you prefer only four, tell me which to keep.
-  const features = [
+// Enhanced features with SEO-optimized content
+function getEnhancedFeatures() {
+  return [
     {
       title: "AI-Powered Medical Scribe",
       description:
-        "Automatically transcribes doctor-patient conversations in real time — capturing every detail accurately without manual note-taking. " +
-        "Advanced speech recognition technology understands medical terminology, procedures, and diagnoses with 95%+ accuracy. " +
-        "This allows healthcare providers to maintain natural eye contact and focus entirely on patient care while documentation happens seamlessly in the background.",
+        "Automatically transcribes doctor-patient conversations in real time with 95%+ accuracy. Advanced speech recognition technology understands medical terminology, procedures, and diagnoses. This allows healthcare providers to maintain natural eye contact and focus entirely on patient care while documentation happens seamlessly in the background.",
       image: "/assets/new-products-1/scribe/1.jpg",
     },
     {
       title: "Structured SOAP Notes & Specialty Templates",
       description:
-        "Instantly generates well-formatted SOAP notes, visit summaries, and follow-up instructions from raw audio. " +
-        "Uses pre-trained templates for GP, dental, ortho, psych, and more — customizable to match your practice's documentation style. " +
-        "Reduces documentation time by up to 70% while ensuring consistent, professional formatting that meets clinical standards and billing requirements.",
+        "Instantly generates well-formatted SOAP notes, visit summaries, and follow-up instructions from raw audio. Uses pre-trained templates for GP, dental, ortho, psych, and more — customizable to match your practice's documentation style. Reduces documentation time by up to 70% while ensuring consistent, professional formatting that meets clinical standards and billing requirements.",
       image: "/assets/new-products-1/scribe/2.jpg",
     },
     {
       title: "Multilingual Speech Recognition",
       description:
-        "Captures spoken content in multiple languages, supporting local dialects and bridging communication gaps. " +
-        "Perfect for diverse patient populations, ensuring no conversation detail is lost regardless of language or accent. " +
-        "Automatically detects language switches mid-conversation and maintains accuracy across different linguistic patterns and cultural communication styles.",
+        "Captures spoken content in multiple languages, supporting local dialects and bridging communication gaps. Perfect for diverse patient populations, ensuring no conversation detail is lost regardless of language or accent. Automatically detects language switches mid-conversation and maintains accuracy across different linguistic patterns and cultural communication styles.",
       image: "/assets/new-products-1/scribe/3.jpg",
     },
     {
       title: "Professional Personalization",
       description:
-        "Customize generated documents with your clinic letterhead, address, and registration number for polished, official records. " +
-        "Maintain your professional brand identity while streamlining documentation processes across your entire practice. " +
-        "Automatically applies your preferred formatting, terminology, and signature blocks to ensure every document reflects your practice's professional standards.",
+        "Customize generated documents with your clinic letterhead, address, and registration number for polished, official records. Maintain your professional brand identity while streamlining documentation processes across your entire practice. Automatically applies your preferred formatting, terminology, and signature blocks to ensure every document reflects your practice's professional standards.",
       image: "/assets/new-products-1/scribe/4.jpg",
     },
     {
       title: "Comprehensive Patient History, Anywhere",
       description:
-        "Securely access complete patient histories from any device — in clinic, on rounds, or remotely — for continuous, informed care. " +
-        "Cloud-based system ensures all patient data is synchronized and available whenever and wherever you need it most. " +
-        "Advanced search and filtering capabilities help you quickly locate specific patient interactions, treatment patterns, and historical trends for better clinical decision-making.",
+        "Securely access complete patient histories from any device — in clinic, on rounds, or remotely — for continuous, informed care. Cloud-based system ensures all patient data is synchronized and available whenever and wherever you need it most. Advanced search and filtering capabilities help you quickly locate specific patient interactions, treatment patterns, and historical trends for better clinical decision-making.",
       image: "/assets/new-products-1/scribe/scribe-1.png",
     },
     {
       title: "Offline Recording for Uninterrupted Care",
       description:
-        "Record full consultations without internet. When back online, audio transcribes automatically and syncs securely. " +
-        "Never miss important patient interactions due to connectivity issues — your documentation workflow continues seamlessly. " +
-        "Smart queuing system prioritizes urgent transcriptions and provides real-time sync status updates so you always know when your documentation is complete.",
+        "Record full consultations without internet. When back online, audio transcribes automatically and syncs securely. Never miss important patient interactions due to connectivity issues — your documentation workflow continues seamlessly. Smart queuing system prioritizes urgent transcriptions and provides real-time sync status updates so you always know when your documentation is complete.",
       image: "/assets/new-products-1/scribe/scribe-1.png",
     },
+  ]
+}
+
+export default function AxonScribePage() {
+  const product = getProductBySlug("axonscribe")!
+  const videoId = extractYouTubeId(product.videoUrl) || "PM9LlDn4S40"
+  const features = getEnhancedFeatures()
+
+  const navItems = [
+    { href: "#overview", label: "Overview" },
+    { href: "#features", label: "Features" },
+    { href: "#tech-specs", label: "Why Us?" },
+    { href: "#faq", label: "FAQ" },
+    { href: "#schedule-demo", label: "Schedule Demo" },
   ]
 
   return (
     <div className="min-h-screen bg-white">
-      <PageHeader title={product.name} />
-      <StickyProductNav
+      <StructuredData product={product} />
+      <Breadcrumbs />
+      <AxonScribeClientComponent 
+        product={product}
+        videoId={videoId}
+        features={features}
         navItems={navItems}
-        currentActive={activeTab}
-        onNavigate={(href) => {
-          const id = href.replace('#', '') as 'overview' | 'tech-specs' | 'pricing' | 'schedule-demo'
-          if (id === 'pricing') {
-            // For pricing, switch to overview and scroll to pricing section
-            setActiveTab('overview')
-            setTimeout(() => {
-              const element = document.getElementById('pricing')
-              if (element) {
-                const offsetTop = element.offsetTop - 140
-                window.scrollTo({
-                  top: offsetTop,
-                  behavior: 'smooth'
-                })
-              }
-            }, 100)
-          } else {
-            setActiveTab(id)
-          }
-          if (history.pushState) {
-            history.pushState(null, '', href)
-          } else {
-            window.location.hash = href
-          }
-        }}
       />
-
-
-      {activeTab === 'overview' && (
-        <>
-          <OverviewSection product={product} videoId={videoId} features={features} />
-        </>
-      )}
-      {activeTab === 'tech-specs' && (
-        <>
-          <TechSpecsSection />
-        </>
-      )}
-      {activeTab === 'schedule-demo' && (
-        <>
-          <ScheduleDemoSection product={product} />
-        </>
-      )}
+      <FAQSection />
     </div>
   )
 }
-

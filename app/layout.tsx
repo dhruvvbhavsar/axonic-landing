@@ -19,8 +19,45 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Axonic",
-  description: "Axonic Landing Page",
+  title: "Axonic Health - AI-Powered Healthcare Solutions",
+  description: "Transform healthcare with Axonic's AI-powered solutions including AxonScribe medical scribe, AxonMD diagnostic AI, and comprehensive healthcare management platforms. HIPAA compliant, 95% accuracy.",
+  keywords: [
+    'healthcare AI',
+    'medical AI',
+    'AI medical scribe',
+    'healthcare technology',
+    'medical software',
+    'clinical documentation',
+    'healthcare automation',
+    'Axonic Health'
+  ],
+  authors: [{ name: 'Axonic Health' }],
+  creator: 'Axonic Health',
+  publisher: 'Axonic Health',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://axonichealth.com',
+    title: 'Axonic Health - AI-Powered Healthcare Solutions',
+    description: 'Transform healthcare with AI-powered solutions for medical documentation, diagnostics, and healthcare management.',
+    siteName: 'Axonic Health',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Axonic Health - AI-Powered Healthcare Solutions',
+    description: 'Transform healthcare with AI-powered solutions for medical documentation, diagnostics, and healthcare management.',
+  },
 };
 
 export default function RootLayout({

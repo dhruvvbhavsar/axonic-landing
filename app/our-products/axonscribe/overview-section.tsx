@@ -170,7 +170,7 @@ export function OverviewSection({
                                     <div className="relative w-full h-60 sm:h-80 md:h-[448px] lg:h-[512px] xl:h-[576px]">
                                         <Image
                                             src={feature.image}
-                                            alt={feature.title}
+                                            alt={`${feature.title} - AxonScribe AI medical scribe feature showing ${feature.description.substring(0, 80)}...`}
                                             fill
                                             className="object-contain rounded-none"
                                             sizes="(max-width: 768px) 100vw, 40vw"
@@ -208,16 +208,16 @@ export function OverviewSection({
                     {/* Row 1: Badges (20% smaller) */}
                     <div className="grid grid-cols-1 sm:grid-cols-4 gap-8 items-center justify-items-center mb-12">
                         <div className="flex items-center justify-center">
-                            <Image src="/abdm/gdpr.png" alt="GDPR" width={208} height={208} className="h-24 sm:h-32 lg:h-40 w-auto object-contain" />
+                            <Image src="/abdm/gdpr.png" alt="GDPR Compliance - AxonScribe medical AI follows European data protection standards" width={208} height={208} className="h-24 sm:h-32 lg:h-40 w-auto object-contain" />
                         </div>
                         <div className="flex items-center justify-center">
-                            <Image src="/abdm/hippa.png" alt="HIPAA" width={208} height={208} className="h-24 sm:h-32 lg:h-40 w-auto object-contain" />
+                            <Image src="/abdm/hippa.png" alt="HIPAA Compliance - AxonScribe ensures healthcare data security and privacy" width={208} height={208} className="h-24 sm:h-32 lg:h-40 w-auto object-contain" />
                         </div>
                         <div className="flex items-center justify-center">
-                            <Image src="/abdm/soc-2.png" alt="SOC 2" width={208} height={208} className="h-24 sm:h-32 lg:h-40 w-auto object-contain" />
+                            <Image src="/abdm/soc-2.png" alt="SOC 2 Compliance - AxonScribe medical scribe meets enterprise security standards" width={208} height={208} className="h-24 sm:h-32 lg:h-40 w-auto object-contain" />
                         </div>
                         <div className="flex items-center justify-center">
-                            <Image src="/abdm/iso.png" alt="ISO 27001" width={208} height={208} className="h-24 sm:h-32 lg:h-40 w-auto object-contain" />
+                            <Image src="/abdm/iso.png" alt="ISO 27001 Certification - AxonScribe AI medical documentation security certification" width={208} height={208} className="h-24 sm:h-32 lg:h-40 w-auto object-contain" />
                         </div>
                     </div>
 
