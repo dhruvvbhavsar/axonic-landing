@@ -135,7 +135,7 @@ export default function AboutUsPage() {
                     src={missionImage}
                     alt="Mission - Global Healthcare Network"
                     fill
-                    className="object-cover"
+                    className="object-cover "
                   />
                 </div>
               </div>
