@@ -32,7 +32,14 @@ export function middleware(request: NextRequest) {
   
   // Check if the subdomain matches any product slug
   if (productSlugs.includes(subdomain)) {
-    // Rewrite to the product page with the slug
+    // Special handling for products with dedicated pages
+    if (subdomain === 'axonscribe') {
+      // Rewrite to the dedicated axonscribe page (no trailing slash to match the folder structure)
+      url.pathname = `/our-products/axonscribe/`
+      return NextResponse.rewrite(url)
+    }
+    
+    // For other products, rewrite to the slug-based route
     url.pathname = `/our-products/${subdomain}`
     return NextResponse.rewrite(url)
   }
