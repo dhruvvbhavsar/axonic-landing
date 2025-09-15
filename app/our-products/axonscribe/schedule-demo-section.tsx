@@ -1,12 +1,8 @@
 import * as React from "react"
 import Script from "next/script"
 
-// Global cache to persist widget state across tab switches
-let zcalWidgetLoaded = false
-let zcalWidgetContent: string | null = null
-
 export function ScheduleDemoSection({ product }: { product: any }) {
-  const [isLoading, setIsLoading] = React.useState(!zcalWidgetLoaded)
+  const [isLoading, setIsLoading] = React.useState(true)
   const widgetRef = React.useRef<HTMLDivElement>(null)
   
   const zcalUrl = React.useMemo(() => {
@@ -19,19 +15,10 @@ export function ScheduleDemoSection({ product }: { product: any }) {
   }, [product.calendlyUrl])
 
   React.useEffect(() => {
-    // If already cached, restore immediately
-    if (zcalWidgetLoaded && zcalWidgetContent && widgetRef.current) {
-      widgetRef.current.innerHTML = zcalWidgetContent
-      setIsLoading(false)
-      return
-    }
-
     // Check if widget has loaded content
     const checkWidget = () => {
       const widget = widgetRef.current
       if (widget && widget.querySelector('iframe')) {
-        zcalWidgetLoaded = true
-        zcalWidgetContent = widget.innerHTML
         setIsLoading(false)
         return true
       }
@@ -78,9 +65,9 @@ export function ScheduleDemoSection({ product }: { product: any }) {
         <div 
           ref={widgetRef}
           className={`zcal-inline-widget ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`}
-        >
-          <a href={zcalUrl}>Loading...</a>
-        </div>
+          data-url={zcalUrl}
+          style={{ minHeight: 700 }}
+        />
       </div>
     </section>
   )
