@@ -61,7 +61,7 @@ export function ScheduleDemoSection({ product }: { product: any }) {
   }, [])
 
   return (
-    <section id="schedule-demo" className="w-full bg-white py-12 px-4 sm:px-6 lg:px-8">
+    <section id="schedule-demo" className="w-full bg-white pb-12 px-4 sm:px-6 lg:px-8 h-full">
       <div className="w-full max-w-5xl mx-auto">
         <Script src="https://static.zcal.co/embed/v1/embed.js" strategy="afterInteractive" />
         
