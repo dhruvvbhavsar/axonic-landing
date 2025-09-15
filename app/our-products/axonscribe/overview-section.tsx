@@ -12,6 +12,26 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 type Feature = { title: string; description: string; image: string }
 
+async function getUserRegion(): Promise<'UK' | 'India'> {
+    try {
+        // Use a free IP geolocation service
+        const response = await fetch('https://ipapi.co/json/')
+        const data = await response.json()
+
+        // Check if user is from India or UK
+        if (data.country_code === 'IN') {
+            return 'India'
+        } else if (data.country_code === 'GB') {
+            return 'UK'
+        } else {
+            return 'UK' // Default to UK for all other countries
+        }
+    } catch (error) {
+        console.warn('Failed to detect user location, defaulting to UK:', error)
+        return 'UK'
+    }
+}
+
 export function OverviewSection({
     product,
     videoId,
@@ -24,6 +44,13 @@ export function OverviewSection({
     const [pricingRegion, setPricingRegion] = React.useState<'UK' | 'India'>("UK")
     const [billingCycle, setBillingCycle] = React.useState<'monthly' | 'yearly'>("monthly")
     const appRedirectUrl = product?.redirectUrl || "https://axonscribe.axonichealth.com"
+
+    // Set default pricing region based on user IP
+    React.useEffect(() => {
+        getUserRegion().then(region => {
+            setPricingRegion(region)
+        })
+    }, [])
     return (
         <div id="overview">
             {/* Overview Hero */}
@@ -58,8 +85,8 @@ export function OverviewSection({
                                     </DialogContent>
                                 </Dialog>
                             </div>
-                            {/* Store buttons */}
-                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                            {/* Store buttons (mobile/tablet) */}
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 lg:hidden">
                                 <div className="flex items-center gap-4">
                                     <a href="https://apps.apple.com/us/app/axonscribe/id6747614807" aria-label="Download on the App Store" className="transition hover:opacity-90" target="_blank" rel="noopener noreferrer">
                                         <Image src="/badges/download-apple.svg" alt="Download on the App Store" width={160} height={24} />
@@ -81,9 +108,53 @@ export function OverviewSection({
 
                         <div className="relative lg:col-span-7">
                             <div className="absolute -inset-8 -z-10 bg-[radial-gradient(circle_at_top_right,rgba(250,204,21,0.25),transparent_40%)]" />
+                            {/* Store buttons (desktop) */}
+                            <div className="hidden lg:flex items-center gap-4 mb-4">
+                                <a href="https://apps.apple.com/us/app/axonscribe/id6747614807" aria-label="Download on the App Store" className="transition hover:opacity-90" target="_blank" rel="noopener noreferrer">
+                                    <Image src="/badges/download-apple.svg" alt="Download on the App Store" width={200} height={30} />
+                                </a>
+                                <a href="https://play.google.com/store/apps/details?id=app.axonscribe.axonic" aria-label="Get it on Google Play" className="transition hover:opacity-90" target="_blank" rel="noopener noreferrer">
+                                    <Image src="/badges/download-google.svg" alt="Get it on Google Play" width={200} height={30} />
+                                </a>
+                                <a href="https://axonscribe.axonichealth.co.in/auth/" aria-label="Get it on Web" className="transition hover:opacity-90" target="_blank" rel="noopener noreferrer">
+                                    <Image src="/badges/download-web.svg" alt="Get it on Web" width={200} height={30} />
+                                </a>
+                            </div>
                             <div className="relative overflow-hidden rounded-3xl border-2 border-gray-200 shadow-xl ring-1 ring-black/5 w-full">
                                 <HeroYouTubePlayer videoId={videoId} title={`${product.name} Overview Video`} />
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* 3 Easy Steps */}
+            <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white overflow-x-hidden">
+                <div className="container mx-auto max-w-7xl">
+                    <div className="text-center mb-6">
+                        <h3 className="text-xl md:text-2xl font-bold text-gray-900">Get Started in 3 Steps</h3>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <div className="rounded-2xl border border-gray-200 p-6 flex flex-col items-center text-center bg-gray-50">
+                            <div className="w-14 h-14 rounded-full bg-yellow-100 text-yellow-700 flex items-center justify-center mb-4">
+                                <Download className="w-7 h-7" />
+                            </div>
+                            <h4 className="font-semibold text-gray-900 mb-2">Download the app</h4>
+                            <p className="text-sm text-gray-600">Install AxonScribe from the App Store or Google Play.</p>
+                        </div>
+                        <div className="rounded-2xl border border-gray-200 p-6 flex flex-col items-center text-center bg-gray-50">
+                            <div className="w-14 h-14 rounded-full bg-yellow-100 text-yellow-700 flex items-center justify-center mb-4">
+                                <Settings className="w-7 h-7" />
+                            </div>
+                            <h4 className="font-semibold text-gray-900 mb-2">Set up your account</h4>
+                            <p className="text-sm text-gray-600">Create your profile and choose your specialty templates.</p>
+                        </div>
+                        <div className="rounded-2xl border border-gray-200 p-6 flex flex-col items-center text-center bg-gray-50">
+                            <div className="w-14 h-14 rounded-full bg-yellow-100 text-yellow-700 flex items-center justify-center mb-4">
+                                <Pencil className="w-7 h-7" />
+                            </div>
+                            <h4 className="font-semibold text-gray-900 mb-2">Start scribing</h4>
+                            <p className="text-sm text-gray-600">Begin recording consultations and generate structured notes.</p>
                         </div>
                     </div>
                 </div>
@@ -146,7 +217,7 @@ export function OverviewSection({
             </section>
 
             {/* Key Features - Full-width Zig-Zag */}
-            <section className="py-10 sm:py-12 bg-gradient-to-b from-yellow-50 via-white to-yellow-50 overflow-x-hidden">
+            <section id="key-features" className="py-10 sm:py-12 bg-gradient-to-b from-yellow-50 via-white to-yellow-50 overflow-x-hidden">
                 <div className="px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-8">
                         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Key Features</h2>
@@ -197,7 +268,7 @@ export function OverviewSection({
                 </div>
             </section>
             {/* Compliance & Certifications + Getting Started */}
-            <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white overflow-x-hidden">
+            <section id="compliance" className="py-12 px-4 sm:px-6 lg:px-8 bg-white overflow-x-hidden">
                 <div className="container mx-auto max-w-7xl">
                     <div className="text-center mb-8">
                         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Compliance & Certifications</h2>
@@ -218,34 +289,6 @@ export function OverviewSection({
                         </div>
                         <div className="flex items-center justify-center">
                             <Image src="/abdm/iso.png" alt="ISO 27001 Certification - AxonScribe AI medical documentation security certification" width={208} height={208} className="h-24 sm:h-32 lg:h-40 w-auto object-contain" />
-                        </div>
-                    </div>
-
-                    {/* Row 2: Getting Started Steps */}
-                    <div className="text-center mb-6">
-                        <h3 className="text-xl md:text-2xl font-bold text-gray-900">Get Started in 3 Steps</h3>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                        <div className="rounded-2xl border border-gray-200 p-6 flex flex-col items-center text-center bg-gray-50">
-                            <div className="w-14 h-14 rounded-full bg-yellow-100 text-yellow-700 flex items-center justify-center mb-4">
-                                <Download className="w-7 h-7" />
-                            </div>
-                            <h4 className="font-semibold text-gray-900 mb-2">Download the app</h4>
-                            <p className="text-sm text-gray-600">Install AxonScribe from the App Store or Google Play.</p>
-                        </div>
-                        <div className="rounded-2xl border border-gray-200 p-6 flex flex-col items-center text-center bg-gray-50">
-                            <div className="w-14 h-14 rounded-full bg-yellow-100 text-yellow-700 flex items-center justify-center mb-4">
-                                <Settings className="w-7 h-7" />
-                            </div>
-                            <h4 className="font-semibold text-gray-900 mb-2">Set up your account</h4>
-                            <p className="text-sm text-gray-600">Create your profile and choose your specialty templates.</p>
-                        </div>
-                        <div className="rounded-2xl border border-gray-200 p-6 flex flex-col items-center text-center bg-gray-50">
-                            <div className="w-14 h-14 rounded-full bg-yellow-100 text-yellow-700 flex items-center justify-center mb-4">
-                                <Pencil className="w-7 h-7" />
-                            </div>
-                            <h4 className="font-semibold text-gray-900 mb-2">Start scribing</h4>
-                            <p className="text-sm text-gray-600">Begin recording consultations and generate structured notes.</p>
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 
 type NavItem = { href: string; label: string }
 
@@ -77,28 +78,31 @@ export function StickyProductNav({
   return (
     <section className="sticky top-[72px] z-30 py-4 px-4 sm:px-6 lg:px-8 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm w-full">
       <div className="w-full">
-        <nav className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-          {navItems.map((link) => (
+        <ScrollArea className="w-full">
+          <nav className="flex items-center justify-center gap-2 sm:gap-3 min-w-max px-2">
+            {navItems.map((link) => (
+              <button
+                key={link.href + link.label}
+                onClick={() => scrollToSection(link.href)}
+                className={`text-xs sm:text-sm md:text-base px-3 sm:px-4 py-2 rounded-full transition-all duration-200 font-medium whitespace-nowrap ${
+                  activeSection === link.href.substring(1)
+                    ? 'text-white bg-yellow-500 border border-yellow-500'
+                    : 'text-gray-700 hover:text-yellow-600 bg-white hover:bg-yellow-50 border border-gray-300 hover:border-yellow-400'
+                }`}
+              >
+                {link.label}
+              </button>
+            ))}
+            {/* Call Us Button */}
             <button
-              key={link.href + link.label}
-              onClick={() => scrollToSection(link.href)}
-              className={`text-xs sm:text-sm md:text-base px-3 sm:px-4 py-2 rounded-full transition-all duration-200 font-medium ${
-                activeSection === link.href.substring(1)
-                  ? 'text-white bg-yellow-500 border border-yellow-500'
-                  : 'text-gray-700 hover:text-yellow-600 bg-white hover:bg-yellow-50 border border-gray-300 hover:border-yellow-400'
-              }`}
+              onClick={() => window.open(`tel:+18002101999`, '_self')}
+              className="text-xs sm:text-sm md:text-base px-3 sm:px-4 py-2 rounded-full transition-all duration-200 font-medium whitespace-nowrap text-gray-700 hover:text-yellow-600 bg-white hover:bg-yellow-50 border border-gray-300 hover:border-yellow-400"
             >
-              {link.label}
+              Call Us
             </button>
-          ))}
-          {/* Call Us Button */}
-          <button
-            onClick={() => window.open(`tel:+18002101999`, '_self')}
-            className="text-xs sm:text-sm md:text-base px-3 sm:px-4 py-2 rounded-full transition-all duration-200 font-medium text-gray-700 hover:text-yellow-600 bg-white hover:bg-yellow-50 border border-gray-300 hover:border-yellow-400"
-          >
-            Call Us
-          </button>
-        </nav>
+          </nav>
+          <ScrollBar orientation="horizontal" className="opacity-0 sm:opacity-100" />
+        </ScrollArea>
       </div>
     </section>
   )

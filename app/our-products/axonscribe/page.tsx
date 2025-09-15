@@ -144,6 +144,8 @@ export default function AxonScribePage() {
 
   const navItems = [
     { href: "#overview", label: "Overview" },
+    { href: "#key-features", label: "Key Features" },
+    { href: "#compliance", label: "Compliances" },
     { href: "#tech-specs", label: "Why Us?" },
     { href: "#pricing", label: "Pricing" },
     { href: "#schedule-demo", label: "Schedule Demo" },

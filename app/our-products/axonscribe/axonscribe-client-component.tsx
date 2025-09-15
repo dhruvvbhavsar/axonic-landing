@@ -13,27 +13,29 @@ interface AxonScribeClientComponentProps {
   navItems: any[]
 }
 
-export function AxonScribeClientComponent({ 
-  product, 
-  videoId, 
-  features, 
-  navItems 
+export function AxonScribeClientComponent({
+  product,
+  videoId,
+  features,
+  navItems
 }: AxonScribeClientComponentProps) {
-  const [activeTab, setActiveTab] = React.useState<'overview' | 'tech-specs' | 'pricing' | 'schedule-demo'>(() => {
+  const [activeTab, setActiveTab] = React.useState<'overview' | 'tech-specs' | 'schedule-demo'>(() => {
     if (typeof window !== 'undefined' && window.location.hash) {
       const hash = window.location.hash.replace('#', '') as any
-      if (hash === 'tech-specs' || hash === 'pricing' || hash === 'schedule-demo') return hash
+      if (hash === 'tech-specs' || hash === 'schedule-demo') return hash
+      // For overview sections, let the scroll detection handle active state
+      if (hash === 'overview' || hash === 'pricing' || hash === 'key-features' || hash === 'compliance') return 'overview'
     }
     return 'overview'
   })
 
   const handleNavigate = (href: string) => {
-    const id = href.replace('#', '') as 'overview' | 'tech-specs' | 'pricing' | 'schedule-demo'
-    if (id === 'pricing') {
-      // For pricing, switch to overview and scroll to pricing section
+    const id = href.replace('#', '')
+    if (id === 'pricing' || id === 'key-features' || id === 'compliance') {
+      // For pricing, key-features, and compliance, switch to overview and scroll to respective section
       setActiveTab('overview')
       setTimeout(() => {
-        const element = document.getElementById('pricing')
+        const element = document.getElementById(id)
         if (element) {
           const offsetTop = element.offsetTop - 140
           window.scrollTo({
@@ -43,7 +45,7 @@ export function AxonScribeClientComponent({
         }
       }, 100)
     } else {
-      setActiveTab(id)
+      setActiveTab(id as 'overview' | 'tech-specs' | 'schedule-demo')
     }
     if (history.pushState) {
       history.pushState(null, '', href)
@@ -57,7 +59,7 @@ export function AxonScribeClientComponent({
       <PageHeader title={product.name} />
       <StickyProductNav
         navItems={navItems}
-        currentActive={activeTab}
+        currentActive={activeTab === 'overview' ? undefined : activeTab}
         onNavigate={handleNavigate}
       />
 
