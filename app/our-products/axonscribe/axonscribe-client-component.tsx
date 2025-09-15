@@ -31,22 +31,31 @@ export function AxonScribeClientComponent({
 
   const handleNavigate = (href: string) => {
     const id = href.replace('#', '')
-    if (id === 'pricing' || id === 'key-features' || id === 'compliance') {
-      // For pricing, key-features, and compliance, switch to overview and scroll to respective section
-      setActiveTab('overview')
-      setTimeout(() => {
-        const element = document.getElementById(id)
-        if (element) {
-          const offsetTop = element.offsetTop - 140
-          window.scrollTo({
-            top: offsetTop,
-            behavior: 'smooth'
-          })
-        }
-      }, 100)
-    } else {
-      setActiveTab(id as 'overview' | 'tech-specs' | 'schedule-demo')
+
+    const scrollToWithRetry = (targetId: string, attempts = 10) => {
+      if (attempts <= 0) return
+      const element = document.getElementById(targetId)
+      if (element) {
+        const offsetTop = element.offsetTop - 140
+        window.scrollTo({ top: offsetTop, behavior: 'smooth' })
+      } else {
+        setTimeout(() => scrollToWithRetry(targetId, attempts - 1), 100)
+      }
     }
+
+    if (id === 'pricing' || id === 'key-features' || id === 'compliance') {
+      // Switch to overview, then scroll to section with retry to ensure content is mounted
+      setActiveTab('overview')
+      setTimeout(() => scrollToWithRetry(id), 150)
+    } else if (id === 'tech-specs' || id === 'schedule-demo') {
+      // Switch tab and scroll to top for non-overview tabs
+      setActiveTab(id as 'tech-specs' | 'schedule-demo')
+      setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 0)
+    } else {
+      setActiveTab('overview')
+      setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 0)
+    }
+
     if (history.pushState) {
       history.pushState(null, '', href)
     } else {

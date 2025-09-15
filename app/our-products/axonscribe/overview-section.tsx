@@ -386,7 +386,7 @@ export function OverviewSection({
                     </div>
 
                     {/* Region and Billing Switcher */}
-                    <div className="flex justify-center mb-6">
+                    {/* <div className="flex justify-center mb-6">
                         <div className="inline-flex items-center gap-2 rounded-full border bg-white p-1 shadow-sm">
                             <Button
                                 variant={pricingRegion === 'UK' ? 'default' : 'ghost'}
@@ -403,7 +403,7 @@ export function OverviewSection({
                                 India
                             </Button>
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className="flex justify-center mb-6">
                         <div className="inline-flex items-center gap-2 rounded-full border bg-white p-1 shadow-sm">

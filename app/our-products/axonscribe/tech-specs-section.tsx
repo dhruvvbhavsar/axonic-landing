@@ -5,7 +5,7 @@ import { Brain, Zap, Shield, Database, WifiOff, Award, Sparkles, Clock, Target, 
 
 export function TechSpecsSection() {
   return (
-    <section id="tech-specs" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 via-white to-yellow-50/30">
+    <section id="tech-specs" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 via-white to-yellow-50/30 scroll-mt-[120px]">
       <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-semibold mb-6 border border-yellow-200">
