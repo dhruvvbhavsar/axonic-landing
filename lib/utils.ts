@@ -35,6 +35,15 @@ export function getBaseDomain(): string {
 
 // Utility function to generate subdomain URL for products
 export function getProductSubdomainUrl(productSlug: string): string {
+  // Check if we're on Amplify or Vercel preview domains (client-side)
+  if (typeof window !== 'undefined') {
+    const hostname = window.location.hostname
+    if (hostname.includes('.amplifyapp.com') || hostname.includes('.vercel.app')) {
+      // Use path-based routing for preview/dev environments
+      return `/our-products/${productSlug}`
+    }
+  }
+  
   // For production domains, always use subdomain routing
   const baseDomain = process.env.NEXT_PUBLIC_BASE_DOMAIN || 'localhost:3000'
   
@@ -66,6 +75,15 @@ export function getProductSubdomainUrl(productSlug: string): string {
 
 // Utility function to generate platform subdomain URL
 export function getPlatformSubdomainUrl(): string {
+  // Check if we're on Amplify or Vercel preview domains (client-side)
+  if (typeof window !== 'undefined') {
+    const hostname = window.location.hostname
+    if (hostname.includes('.amplifyapp.com') || hostname.includes('.vercel.app')) {
+      // Use path-based routing for preview/dev environments
+      return `/platform`
+    }
+  }
+  
   // For production domains, always use subdomain routing
   const baseDomain = process.env.NEXT_PUBLIC_BASE_DOMAIN || 'localhost:3000'
   
@@ -97,6 +115,15 @@ export function getPlatformSubdomainUrl(): string {
 
 // Utility function to generate consulting subdomain URL
 export function getConsultingSubdomainUrl(): string {
+  // Check if we're on Amplify or Vercel preview domains (client-side)
+  if (typeof window !== 'undefined') {
+    const hostname = window.location.hostname
+    if (hostname.includes('.amplifyapp.com') || hostname.includes('.vercel.app')) {
+      // Use path-based routing for preview/dev environments
+      return `/consulting`
+    }
+  }
+  
   // For production domains, always use subdomain routing
   const baseDomain = process.env.NEXT_PUBLIC_BASE_DOMAIN || 'localhost:3000'
   

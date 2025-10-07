@@ -11,8 +11,12 @@ export function middleware(request: NextRequest) {
   // Extract subdomain from hostname
   const subdomain = hostname.split('.')[0]
   
-  // Skip subdomain routing only for plain localhost (without subdomain)
-  if ((hostname === 'localhost:3000' || hostname === '127.0.0.1:3000' || hostname === 'localhost' || hostname === '127.0.0.1') && !productSlugs.includes(subdomain) && subdomain !== 'platform' && subdomain !== 'consulting') {
+  // Skip subdomain routing for localhost, Amplify preview/dev domains, and Vercel preview domains
+  const isLocalhost = hostname === 'localhost:3000' || hostname === '127.0.0.1:3000' || hostname === 'localhost' || hostname === '127.0.0.1'
+  const isAmplifyDomain = hostname.includes('.amplifyapp.com')
+  const isVercelPreview = hostname.includes('.vercel.app')
+  
+  if (isLocalhost || isAmplifyDomain || isVercelPreview) {
     return NextResponse.next()
   }
   
