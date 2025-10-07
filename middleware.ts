@@ -38,8 +38,12 @@ export function middleware(request: NextRequest) {
   if (productSlugs.includes(subdomain)) {
     // Special handling for products with dedicated pages
     if (subdomain === 'axonscribe') {
-      // Rewrite to the dedicated axonscribe page (no trailing slash to match the folder structure)
       url.pathname = `/our-products/axonscribe/`
+      return NextResponse.rewrite(url)
+    }
+    
+    if (subdomain === 'axonmd') {
+      url.pathname = `/our-products/axonmd/`
       return NextResponse.rewrite(url)
     }
     
