@@ -514,7 +514,7 @@ function OverviewSectionInner({
                                     disabled={loadingPlan === 'professional'}
                                     onClick={() => { setDoctorPlan('professional'); setDoctorDialogOpen(true) }}
                                 >
-                                    {loadingPlan === 'professional' ? 'Redirecting…' : 'Start 90‑day Trial'}
+                                    {loadingPlan === 'professional' ? 'Redirecting…' : 'Start 90 Day Free Trial'}
                                 </Button>
                             </CardContent>
                         </Card>
@@ -547,7 +547,7 @@ function OverviewSectionInner({
                                 <p className="text-gray-600 mt-2">Everything in Professional, plus add‑ons</p>
                                 <ul className="mt-6 space-y-3 text-sm text-gray-700">
                                     <li>✅ All Professional features</li>
-                                    <li>➕ Add‑on: Patient app with Clinic/Doctor branding</li>
+                                    <li>Patient app with Clinic/Doctor branding</li>
                                 </ul>
                                 <Button
                                     variant="outline"
@@ -555,7 +555,7 @@ function OverviewSectionInner({
                                     disabled={loadingPlan === 'advanced'}
                                     onClick={() => { setDoctorPlan('advanced'); setDoctorDialogOpen(true) }}
                                 >
-                                    {loadingPlan === 'advanced' ? 'Redirecting…' : 'Start 90‑day Trial'}
+                                    {loadingPlan === 'advanced' ? 'Redirecting…' : 'Start 90 Day Free Trial'}
                                 </Button>
                             </CardContent>
                         </Card>
@@ -599,30 +599,42 @@ function OverviewSectionInner({
                 setDoctorDialogOpen(open)
                 if (!open) setDoctorError(null)
             }}>
-                <DialogContent className="sm:max-w-[560px] max-h-[90vh] overflow-y-auto">
+                <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
-                        <DialogTitle className="text-xl font-bold text-gray-900">Doctor details</DialogTitle>
-                        <DialogDescription className="text-gray-600">Enter your details to start your 90‑day trial</DialogDescription>
+                        <DialogTitle className="text-2xl font-bold text-gray-900">Start Your 90 Day Free Trial</DialogTitle>
+                        <DialogDescription className="text-gray-600">Enter your details to get started with AxonMD</DialogDescription>
                     </DialogHeader>
                     {doctorError && (
                         <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-                            <p className="text-red-800 text-sm">{doctorError}</p>
+                            <p className="text-red-800 text-sm font-medium">{doctorError}</p>
                         </div>
                     )}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <Label htmlFor="firstName">First name</Label>
-                            <Input id="firstName" value={doctor.firstName} onChange={(e) => setDoctor(d => ({ ...d, firstName: e.target.value }))} />
+                            <Label htmlFor="firstName" className="text-sm font-medium text-gray-700">First name <span className="text-red-500">*</span></Label>
+                            <Input 
+                                id="firstName" 
+                                value={doctor.firstName} 
+                                onChange={(e) => setDoctor(d => ({ ...d, firstName: e.target.value }))} 
+                                className="mt-1"
+                                placeholder="Enter first name"
+                            />
                         </div>
                         <div>
-                            <Label htmlFor="lastName">Last name</Label>
-                            <Input id="lastName" value={doctor.lastName} onChange={(e) => setDoctor(d => ({ ...d, lastName: e.target.value }))} />
+                            <Label htmlFor="lastName" className="text-sm font-medium text-gray-700">Last name <span className="text-red-500">*</span></Label>
+                            <Input 
+                                id="lastName" 
+                                value={doctor.lastName} 
+                                onChange={(e) => setDoctor(d => ({ ...d, lastName: e.target.value }))} 
+                                className="mt-1"
+                                placeholder="Enter last name"
+                            />
                         </div>
                         <div>
-                            <Label>Gender</Label>
+                            <Label className="text-sm font-medium text-gray-700">Gender <span className="text-red-500">*</span></Label>
                             <Select value={doctor.gender} onValueChange={(v) => setDoctor(d => ({ ...d, gender: v }))}>
-                                <SelectTrigger className="w-full">
-                                    <SelectValue placeholder="Select" />
+                                <SelectTrigger className="w-full mt-1">
+                                    <SelectValue placeholder="Select gender" />
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="Male">Male</SelectItem>
@@ -632,10 +644,10 @@ function OverviewSectionInner({
                             </Select>
                         </div>
                         <div>
-                            <Label>Doctor Speciality</Label>
+                            <Label className="text-sm font-medium text-gray-700">Speciality <span className="text-red-500">*</span></Label>
                             <Select value={doctor.speciality} onValueChange={(v) => setDoctor(d => ({ ...d, speciality: v }))}>
-                                <SelectTrigger className="w-full">
-                                    <SelectValue placeholder={loadingSpecialities ? 'Loading…' : 'Select'} />
+                                <SelectTrigger className="w-full mt-1">
+                                    <SelectValue placeholder={loadingSpecialities ? 'Loading…' : 'Select speciality'} />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {specialities.map((s) => (
@@ -645,18 +657,31 @@ function OverviewSectionInner({
                             </Select>
                         </div>
                         <div className="sm:col-span-2">
-                            <Label htmlFor="regNo">GMC / Medical Registration No.</Label>
-                            <Input id="regNo" value={doctor.registrationNumber} onChange={(e) => setDoctor(d => ({ ...d, registrationNumber: e.target.value }))} />
+                            <Label htmlFor="regNo" className="text-sm font-medium text-gray-700">GMC / Medical Registration No. <span className="text-red-500">*</span></Label>
+                            <Input 
+                                id="regNo" 
+                                value={doctor.registrationNumber} 
+                                onChange={(e) => setDoctor(d => ({ ...d, registrationNumber: e.target.value }))} 
+                                className="mt-1"
+                                placeholder="Enter registration number"
+                            />
                         </div>
                         <div className="sm:col-span-2">
-                            <Label htmlFor="email">Email ID (Unique)</Label>
-                            <Input id="email" type="email" value={doctor.email} onChange={(e) => setDoctor(d => ({ ...d, email: e.target.value }))} />
+                            <Label htmlFor="email" className="text-sm font-medium text-gray-700">Email Address <span className="text-red-500">*</span></Label>
+                            <Input 
+                                id="email" 
+                                type="email" 
+                                value={doctor.email} 
+                                onChange={(e) => setDoctor(d => ({ ...d, email: e.target.value }))} 
+                                className="mt-1"
+                                placeholder="Enter your email"
+                            />
                         </div>
                         <div>
-                            <Label>Country</Label>
+                            <Label className="text-sm font-medium text-gray-700">Country <span className="text-red-500">*</span></Label>
                             <Select value={doctor.country} onValueChange={(v) => setDoctor(d => ({ ...d, country: v }))}>
-                                <SelectTrigger className="w-full">
-                                    <SelectValue placeholder="Select" />
+                                <SelectTrigger className="w-full mt-1">
+                                    <SelectValue placeholder="Select country" />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {COUNTRY_CODES.map(cc => (
@@ -666,10 +691,10 @@ function OverviewSectionInner({
                             </Select>
                         </div>
                         <div>
-                            <Label>Country code</Label>
+                            <Label className="text-sm font-medium text-gray-700">Country code <span className="text-red-500">*</span></Label>
                             <Select value={doctor.countryCode} onValueChange={(v) => setDoctor(d => ({ ...d, countryCode: v }))}>
-                                <SelectTrigger className="w-full">
-                                    <SelectValue placeholder="Select" />
+                                <SelectTrigger className="w-full mt-1">
+                                    <SelectValue placeholder="Select code" />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {COUNTRY_CODES.map(cc => (
@@ -678,25 +703,80 @@ function OverviewSectionInner({
                                 </SelectContent>
                             </Select>
                         </div>
-                        <div>
-                            <Label htmlFor="phone">Mobile Number</Label>
-                            <Input id="phone" inputMode="numeric" value={doctor.phone} onChange={(e) => setDoctor(d => ({ ...d, phone: e.target.value }))} />
+                        <div className="sm:col-span-2">
+                            <Label htmlFor="phone" className="text-sm font-medium text-gray-700">Mobile Number <span className="text-red-500">*</span></Label>
+                            <Input 
+                                id="phone" 
+                                inputMode="numeric" 
+                                value={doctor.phone} 
+                                onChange={(e) => setDoctor(d => ({ ...d, phone: e.target.value.replace(/\D/g, '') }))} 
+                                className="mt-1"
+                                placeholder="Enter mobile number"
+                            />
                         </div>
                     </div>
-                    <div className="flex gap-3 justify-end pt-2">
-                        <Button variant="outline" onClick={() => setDoctorDialogOpen(false)}>Cancel</Button>
+                    <div className="flex flex-col sm:flex-row gap-3 justify-end pt-4 border-t border-gray-200">
+                        <Button 
+                            variant="outline" 
+                            onClick={() => setDoctorDialogOpen(false)}
+                            className="border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold rounded-xl transition-all duration-300"
+                        >
+                            Cancel
+                        </Button>
                         <Button
                             onClick={async () => {
                                 if (!doctorPlan) return
                                 setDoctorError(null)
+                                
+                                // Validate all required fields
+                                if (!doctor.firstName.trim()) {
+                                    setDoctorError('Please enter your first name')
+                                    return
+                                }
+                                if (!doctor.lastName.trim()) {
+                                    setDoctorError('Please enter your last name')
+                                    return
+                                }
+                                if (!doctor.gender) {
+                                    setDoctorError('Please select your gender')
+                                    return
+                                }
+                                if (!doctor.speciality) {
+                                    setDoctorError('Please select your speciality')
+                                    return
+                                }
+                                if (!doctor.registrationNumber.trim()) {
+                                    setDoctorError('Please enter your medical registration number')
+                                    return
+                                }
+                                if (!doctor.email.trim()) {
+                                    setDoctorError('Please enter your email address')
+                                    return
+                                }
+                                if (!validateEmail(doctor.email)) {
+                                    setDoctorError('Please enter a valid email address')
+                                    return
+                                }
+                                if (!doctor.country) {
+                                    setDoctorError('Please select your country')
+                                    return
+                                }
+                                if (!doctor.countryCode) {
+                                    setDoctorError('Please select your country code')
+                                    return
+                                }
+                                if (!doctor.phone.trim()) {
+                                    setDoctorError('Please enter your mobile number')
+                                    return
+                                }
+                                if (doctor.phone.length < 8 || doctor.phone.length > 15) {
+                                    setDoctorError('Please enter a valid mobile number')
+                                    return
+                                }
+                                
                                 try {
                                     setLoadingPlan(doctorPlan)
-                                    // Check external email existence first
-                                    if (!doctor.email) {
-                                        setDoctorError('Please enter your Email ID (Unique)')
-                                        setLoadingPlan(null)
-                                        return
-                                    }
+                                    // Check external email existence
                                     const checkRes = await fetch('/api/external/check-email', {
                                         method: 'POST',
                                         headers: { 'Content-Type': 'application/json' },
@@ -735,8 +815,9 @@ function OverviewSectionInner({
                                 }
                             }}
                             disabled={loadingPlan !== null}
+                            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-xl transition-all duration-300"
                         >
-                            {loadingPlan ? 'Redirecting…' : 'Continue to payment'}
+                            {loadingPlan ? 'Processing…' : 'Submit'}
                         </Button>
                     </div>
                 </DialogContent>

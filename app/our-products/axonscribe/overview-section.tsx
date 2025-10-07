@@ -505,7 +505,7 @@ export function OverviewSection({
                                     <li>GDPR compliance</li>
                                 </ul>
                                 <a href="https://axonscribe.axonichealth.co.in/auth/" target="_blank" rel="noopener noreferrer" className="block">
-                                    <Button className="w-full mt-8 bg-yellow-500 hover:bg-yellow-600 text-white">Start Beta Trial</Button>
+                                    <Button className="w-full mt-8 bg-yellow-500 hover:bg-yellow-600 text-white">Start Free Trial</Button>
                                 </a>
                             </CardContent>
                         </Card>

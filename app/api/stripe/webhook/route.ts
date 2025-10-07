@@ -288,10 +288,14 @@ export async function POST(request: NextRequest) {
           console.log('[doctor-update][subscription.updated] skip initial cancellation_requested')
           return NextResponse.json({ received: true })
         }
+        // Use next cycle start/end: prefer cancel_at, then current_period_end, then trial_end, then billing_cycle_anchor
+        const nextCycleIso = toIso(
+          sub?.cancel_at || sub?.current_period_end || sub?.trial_end || sub?.billing_cycle_anchor || null
+        )
         const payload = {
           emailId,
-          // Per spec: send today's date for cancellations
-          subscriptionEndDate: formatDdMmYyyy(new Date().toISOString()),
+          // Send end-of-current-cycle date (next cycle start)
+          subscriptionEndDate: formatDdMmYyyy(nextCycleIso),
           cancellationReason: reason || 'cancellation_requested',
         }
         console.log('[doctor-update][subscription.updated] payload', payload)
@@ -344,10 +348,14 @@ export async function POST(request: NextRequest) {
         } catch {}
       }
 
+      // For final deletion, send end-of-cycle date: prefer cancel_at, then current_period_end, then trial_end, then ended_at
+      const finalEndIso = toIso(
+        sub?.cancel_at || sub?.current_period_end || sub?.trial_end || sub?.ended_at || null
+      )
       const payload = {
         emailId,
-        // Per spec: send today's date for cancellations
-        subscriptionEndDate: formatDdMmYyyy(new Date().toISOString()),
+        // Send end-of-current-cycle date
+        subscriptionEndDate: formatDdMmYyyy(finalEndIso),
         cancellationReason: sub?.cancellation_details?.feedback || sub?.cancellation_details?.reason || 'subscription_deleted',
       }
       const updateUrl = buildExternalUrl(ExternalApiEndpoints.updateDoctor)
