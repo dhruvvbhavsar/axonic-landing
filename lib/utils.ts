@@ -35,6 +35,12 @@ export function getBaseDomain(): string {
 
 // Utility function to generate subdomain URL for products
 export function getProductSubdomainUrl(productSlug: string): string {
+  // Check for explicit disable flag (useful for preview environments)
+  const disableSubdomains = process.env.NEXT_PUBLIC_DISABLE_SUBDOMAIN_ROUTING === 'true'
+  if (disableSubdomains) {
+    return `/our-products/${productSlug}`
+  }
+  
   // Check if we're on Amplify or Vercel preview domains (client-side)
   if (typeof window !== 'undefined') {
     const hostname = window.location.hostname
@@ -48,7 +54,11 @@ export function getProductSubdomainUrl(productSlug: string): string {
   const baseDomain = process.env.NEXT_PUBLIC_BASE_DOMAIN || 'localhost:3000'
   
   // If we have a production domain set, use subdomain routing
-  if (baseDomain !== 'localhost:3000' && !baseDomain.includes('localhost')) {
+  // But skip if baseDomain looks like an Amplify or Vercel domain
+  if (baseDomain !== 'localhost:3000' && 
+      !baseDomain.includes('localhost') && 
+      !baseDomain.includes('.amplifyapp.com') && 
+      !baseDomain.includes('.vercel.app')) {
     return `https://${productSlug}.${baseDomain}`
   }
   
@@ -75,6 +85,12 @@ export function getProductSubdomainUrl(productSlug: string): string {
 
 // Utility function to generate platform subdomain URL
 export function getPlatformSubdomainUrl(): string {
+  // Check for explicit disable flag (useful for preview environments)
+  const disableSubdomains = process.env.NEXT_PUBLIC_DISABLE_SUBDOMAIN_ROUTING === 'true'
+  if (disableSubdomains) {
+    return `/platform`
+  }
+  
   // Check if we're on Amplify or Vercel preview domains (client-side)
   if (typeof window !== 'undefined') {
     const hostname = window.location.hostname
@@ -88,7 +104,11 @@ export function getPlatformSubdomainUrl(): string {
   const baseDomain = process.env.NEXT_PUBLIC_BASE_DOMAIN || 'localhost:3000'
   
   // If we have a production domain set, use subdomain routing
-  if (baseDomain !== 'localhost:3000' && !baseDomain.includes('localhost')) {
+  // But skip if baseDomain looks like an Amplify or Vercel domain
+  if (baseDomain !== 'localhost:3000' && 
+      !baseDomain.includes('localhost') && 
+      !baseDomain.includes('.amplifyapp.com') && 
+      !baseDomain.includes('.vercel.app')) {
     return `https://platform.${baseDomain}`
   }
   
@@ -115,6 +135,12 @@ export function getPlatformSubdomainUrl(): string {
 
 // Utility function to generate consulting subdomain URL
 export function getConsultingSubdomainUrl(): string {
+  // Check for explicit disable flag (useful for preview environments)
+  const disableSubdomains = process.env.NEXT_PUBLIC_DISABLE_SUBDOMAIN_ROUTING === 'true'
+  if (disableSubdomains) {
+    return `/consulting`
+  }
+  
   // Check if we're on Amplify or Vercel preview domains (client-side)
   if (typeof window !== 'undefined') {
     const hostname = window.location.hostname
@@ -128,7 +154,11 @@ export function getConsultingSubdomainUrl(): string {
   const baseDomain = process.env.NEXT_PUBLIC_BASE_DOMAIN || 'localhost:3000'
   
   // If we have a production domain set, use subdomain routing
-  if (baseDomain !== 'localhost:3000' && !baseDomain.includes('localhost')) {
+  // But skip if baseDomain looks like an Amplify or Vercel domain
+  if (baseDomain !== 'localhost:3000' && 
+      !baseDomain.includes('localhost') && 
+      !baseDomain.includes('.amplifyapp.com') && 
+      !baseDomain.includes('.vercel.app')) {
     return `https://consulting.${baseDomain}`
   }
   
