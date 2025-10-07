@@ -426,7 +426,7 @@ export function OverviewSection({
 
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         {/* Starter */}
-                        <Card className="rounded-3xl border-0 shadow-lg">
+                        <Card className="rounded-3xl border-0 shadow-lg h-full">
                             <CardContent className="p-8">
                                 <h3 className="text-xl font-bold text-gray-900 mb-2">Starter</h3>
                                 <div className="text-4xl font-extrabold text-gray-900">{pricingRegion === 'UK' ? '£0' : '₹0'}<span className="text-base font-medium text-gray-600">/month</span></div>
@@ -446,7 +446,7 @@ export function OverviewSection({
                         </Card>
 
                         {/* Professional */}
-                        <Card className="rounded-3xl border-2 border-yellow-400 shadow-2xl relative">
+                        <Card className="rounded-3xl border-2 border-yellow-400 shadow-2xl relative h-full">
                             <CardContent className="p-8">
                                 <div className="absolute -top-4 left-6 bg-gradient-to-r from-green-500 to-green-600 text-white text-sm font-bold px-3 py-2 rounded-full shadow-lg border-2 border-white">Most Popular</div>
                                 <div className="absolute -top-4 right-6 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black text-sm font-bold px-3 py-2 rounded-full shadow-lg border-2 border-white">First 3 months free</div>
@@ -511,7 +511,7 @@ export function OverviewSection({
                         </Card>
 
                         {/* Enterprise */}
-                        <Card className="rounded-3xl border-0 shadow-lg">
+                        <Card className="rounded-3xl border-0 shadow-lg h-full">
                             <CardContent className="p-8">
                                 <h3 className="text-xl font-bold text-gray-900 mb-2">Enterprise</h3>
                                 {pricingRegion === 'UK' ? (

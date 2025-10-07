@@ -156,54 +156,74 @@ export const products: Product[] = [
     heroImage: "/assets/new-products/AxonMD.png",
     platformImage: "/assets/platform-images/axonmd.png",
     aiImage: "/assets/ai-images/md.png",
-    videoUrl: "https://youtube.com/shorts/KUNycXG36fA?si=QBT7IDLq7Fi_QRDD",
+    videoUrl: "https://www.youtube.com/watch?v=PM9LlDn4S40", // Using scribe video temporarily
     testimonialUrl: "https://www.youtube.com/embed/AQmvWNxE-XM",
-    description: "Comprehensive clinic management solution with integrated patient scheduling and records.",
-    shortDescription: "Comprehensive clinic management solution with integrated patient scheduling and records.",
-    subtitle: "Complete Clinic Management Made Simple",
+    description: "Clinic Management Made Simple - Unify your in-clinic and virtual practice with a complete, ABDM-compliant EMR. Cut documentation time with powerful voice AI and smart tools.",
+    shortDescription: "Complete clinic management solution with integrated patient scheduling and records.",
+    subtitle: "Clinic Management Made Simple",
     features: [
       {
-        title: "One Platform, Total Care",
-        description: "Run in-clinic and virtual care together with a single, secure EMR + video consult hub — no extra tools, no patient drop-offs.",
-        image: "/assets/new-products-1/md/md-1.png"
+        title: "Comprehensive EMR",
+        description: "AxonMD is more than just a casesheet; it's a complete clinical operating system. Manage the entire patient journey from appointment scheduling and billing to prescriptions and secure digital health records. Run your entire practice on one powerful, integrated platform.",
+        image: "/assets/new-products-1/scribe/1.jpg"
       },
       {
-        title: "Smart Casesheet with Time-Saving Features",
-        description: "Smart buttons, guided flows, and voice notes make documenting fast, error-free, and almost touchless.",
-        image: "/assets/new-products-1/md/md-2.png"
+        title: "Axona: Voice AI Assistant",
+        description: "Experience a truly hands-free clinic with Axona. Dictate case notes, write prescriptions, and navigate the entire platform using simple voice commands. From scheduling to referrals, your voice is now your most powerful tool for clinical efficiency.",
+        image: "/assets/new-products-1/scribe/2.jpg"
       },
       {
-        title: "Medication Compliance",
-        description: "Automatic dose alerts for patients. Real-time tracking for doctors. Better results, no guesswork.",
-        image: "/assets/new-products-1/md/md-3.png"
+        title: "CliniTalk - Unified & Multilingual Consultations",
+        description: "Manage your practice from one dashboard for both in-clinic and virtual care. Break language barriers with CliniTalk, offering real-time multilingual assistance during secure video calls. Deliver seamless, accessible care to every patient, regardless of location or language.",
+        image: "/assets/new-products-1/scribe/3.jpg"
       },
       {
-        title: "Multilingual Global Reach",
-        description: "Break barriers with multilingual casesheets, and video calls through AI-assisted clinitalk. One clinic, any region.",
-        image: "/assets/new-products-1/md/md-4.png"
+        title: "Smart Buttons",
+        description: "Smart History, Smart order set, smart examinations - intelligent shortcuts that populate forms automatically, reducing documentation time by 70% while ensuring comprehensive and accurate records.",
+        image: "/assets/new-products-1/scribe/4.jpg"
+      },
+      {
+        title: "Advanced Medication Management",
+        description: "Enhance patient safety and adherence with intelligent prescription tools. The system automatically checks for drug-drug interactions and sends automated refill reminders to patients. Improve treatment outcomes through superior medication compliance.",
+        image: "/assets/new-products-1/scribe/scribe-1.png"
+      },
+      {
+        title: "Health ATM Integration",
+        description: "Instantly access patient vitals captured from integrated health kiosks. Key metrics like BP, SpO2, and temperature are auto-synced to your dashboard and the patient's record. Make data-driven decisions with zero manual entry.",
+        image: "/assets/new-products-1/scribe/scribe-1.png"
+      },
+      {
+        title: "Seamless Specialist Referrals",
+        description: "Easily refer patients to specialists within your network directly from the EMR. The system allows you to track the reason for referral and receive feedback from the consulting provider. Build a collaborative and efficient care ecosystem.",
+        image: "/assets/new-products-1/scribe/scribe-1.png"
+      },
+      {
+        title: "Personalization",
+        description: "Personalize the platform to match your workflow. Create custom-branded patient reports, build pre-defined 'Order Sets' for common conditions, and save favourite prescriptions. Work faster and more consistently with tools designed for you.",
+        image: "/assets/new-products-1/scribe/scribe-1.png"
       }
     ],
     valuePropositions: [
       {
-        title: "More Time for Patients",
-        description: "Spend less time typing, more time caring.",
-        image: "/assets/new-products-1/md/c-1.png"
+        title: "50% Time Savings",
+        description: "Cut documentation time by 50% with voice AI and smart automation tools, giving you more time to focus on patient care.",
+        image: "/assets/new-products-1/scribe/c-1.png"
       },
       {
-        title: "Safer, Smarter Practice",
-        description: "Better compliance + smart notes = fewer errors, better outcomes.",
-        image: "/assets/new-products-1/md/c-2.png"
+        title: "2x Patient Capacity",
+        description: "Scale up your practice and serve twice as many patients without compromising on care quality or work-life balance.",
+        image: "/assets/new-products-1/scribe/c-2.png"
       },
       {
-        title: "Grow Without Borders",
-        description: "Reach new communities — no language or location limits.",
-        image: "/assets/new-products-1/md/c-3.png"
+        title: "25% Cost Reduction",
+        description: "Reduce operational costs by 25% through streamlined workflows, reduced errors, and efficient resource utilization.",
+        image: "/assets/new-products-1/scribe/c-3.png"
       }
     ],
-    ctaText: "Join our network",
-    ctaSubtext: "Join the AxonMD Network and transform your clinic management with comprehensive digital solutions.",
+    ctaText: "Start Your Journey",
+    ctaSubtext: "Join thousands of doctors who have transformed their practice with AxonMD.",
     calendlyUrl: "https://zcal.co/i/oQCFdJIS?embed=1&embedType=iframe",
-    shortPunchLine: "Smart Autopilot for every doctor"
+    shortPunchLine: "Clinic Management Made Simple"
   },
   {
     id: 4,

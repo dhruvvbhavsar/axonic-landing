@@ -57,8 +57,8 @@ export function TechSpecsSection() {
         {/* Main Feature Cards */}
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 mb-16">
           {/* AI Architecture */}
-          <div className="group relative">
-            <div className="relative bg-white rounded-3xl p-8 shadow-xl ring-1 ring-gray-200 hover:shadow-2xl transition-all duration-300">
+          <div className="group relative h-full">
+            <div className="relative bg-white rounded-3xl p-8 shadow-xl ring-1 ring-gray-200 hover:shadow-2xl transition-all duration-300 h-full">
               <div className="flex items-start gap-6 mb-8">
                 <div className="relative">
                   <div className="relative w-16 h-16 bg-yellow-500 rounded-2xl flex items-center justify-center shadow-lg">
@@ -97,8 +97,8 @@ export function TechSpecsSection() {
           </div>
 
           {/* Performance Metrics */}
-          <div className="group relative">
-            <div className="relative bg-white rounded-3xl p-8 shadow-xl ring-1 ring-gray-200 hover:shadow-2xl transition-all duration-300">
+          <div className="group relative h-full">
+            <div className="relative bg-white rounded-3xl p-8 shadow-xl ring-1 ring-gray-200 hover:shadow-2xl transition-all duration-300 h-full">
               <div className="flex items-start gap-6 mb-8">
                 <div className="relative">
                   <div className="relative w-16 h-16 bg-yellow-500 rounded-2xl flex items-center justify-center shadow-lg">
@@ -141,8 +141,8 @@ export function TechSpecsSection() {
         {/* Bottom Feature Cards */}
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
           {/* Medical Intelligence */}
-          <div className="group relative">
-            <div className="relative bg-white rounded-3xl p-8 shadow-xl ring-1 ring-gray-200 hover:shadow-2xl transition-all duration-300">
+          <div className="group relative h-full">
+            <div className="relative bg-white rounded-3xl p-8 shadow-xl ring-1 ring-gray-200 hover:shadow-2xl transition-all duration-300 h-full">
               <div className="flex items-start gap-6 mb-8">
                 <div className="relative">
                   <div className="relative w-16 h-16 bg-yellow-500 rounded-2xl flex items-center justify-center shadow-lg">
@@ -176,8 +176,8 @@ export function TechSpecsSection() {
           </div>
 
           {/* Offline Reliability */}
-          <div className="group relative">
-            <div className="relative bg-white rounded-3xl p-8 shadow-xl ring-1 ring-gray-200 hover:shadow-2xl transition-all duration-300">
+          <div className="group relative h-full">
+            <div className="relative bg-white rounded-3xl p-8 shadow-xl ring-1 ring-gray-200 hover:shadow-2xl transition-all duration-300 h-full">
               <div className="flex items-start gap-6 mb-8">
                 <div className="relative">
                   <div className="relative w-16 h-16 bg-yellow-500 rounded-2xl flex items-center justify-center shadow-lg">
