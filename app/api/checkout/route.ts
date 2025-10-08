@@ -11,6 +11,9 @@ type DoctorDetails = {
   email?: string
   countryCode?: string
   phone?: string
+  speciality?: string
+  gender?: string
+  country?: string
 }
 
 function getCurrencyForRegion(region: Region): 'inr' | 'gbp' {
@@ -124,6 +127,9 @@ export async function POST(request: NextRequest) {
         doctor_registration_number: body.doctor?.registrationNumber || '',
         doctor_country_code: body.doctor?.countryCode || '',
         doctor_phone: body.doctor?.phone || '',
+        doctor_speciality: body.doctor?.speciality || '',
+        doctor_gender: body.doctor?.gender || '',
+        doctor_country: body.doctor?.country || '',
         plan,
         billingCycle,
         region,
@@ -159,6 +165,9 @@ export async function POST(request: NextRequest) {
           doctor_registration_number: body.doctor?.registrationNumber || '',
           doctor_country_code: body.doctor?.countryCode || '',
           doctor_phone: body.doctor?.phone || '',
+          doctor_speciality: body.doctor?.speciality || '',
+          doctor_gender: body.doctor?.gender || '',
+          doctor_country: body.doctor?.country || '',
           plan,
           billingCycle,
           region,
