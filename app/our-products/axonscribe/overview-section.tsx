@@ -427,7 +427,8 @@ export function OverviewSection({
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         {/* Starter */}
                         <Card className="rounded-3xl border-0 shadow-lg h-full">
-                            <CardContent className="p-8">
+                            <CardContent className="p-8 flex flex-col h-full">
+                                <div className="flex-grow">
                                 <h3 className="text-xl font-bold text-gray-900 mb-2">Starter</h3>
                                 <div className="text-4xl font-extrabold text-gray-900">{pricingRegion === 'UK' ? '£0' : '₹0'}<span className="text-base font-medium text-gray-600">/month</span></div>
                                 <p className="text-gray-600 mt-2">Perfect for getting started with AI documentation</p>
@@ -439,17 +440,19 @@ export function OverviewSection({
                                     <li>GDPR compliant</li>
                                     <li>{pricingRegion === 'UK' ? 'UK data centers' : 'India data centers'}</li>
                                 </ul>
+                                </div>
                                 <a href="https://axonscribe.axonichealth.co.in/auth/" target="_blank" rel="noopener noreferrer" className="block">
-                                    <Button className="w-full mt-8 bg-white text-gray-800 border border-gray-300 hover:bg-gray-50">Start Free</Button>
+                                    <Button className="w-full mt-8 bg-blue-500 hover:bg-blue-600 text-white">Start Free</Button>
                                 </a>
                             </CardContent>
                         </Card>
 
                         {/* Professional */}
                         <Card className="rounded-3xl border-2 border-yellow-400 shadow-2xl relative h-full">
-                            <CardContent className="p-8">
+                            <CardContent className="p-8 flex flex-col h-full">
                                 <div className="absolute -top-4 left-6 bg-gradient-to-r from-green-500 to-green-600 text-white text-sm font-bold px-3 py-2 rounded-full shadow-lg border-2 border-white">Most Popular</div>
                                 <div className="absolute -top-4 right-6 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black text-sm font-bold px-3 py-2 rounded-full shadow-lg border-2 border-white">First 3 months free</div>
+                                <div className="flex-grow">
                                 <div className="flex items-center justify-between mb-2">
                                     <h3 className="text-xl font-bold text-gray-900">Professional</h3>
                                     {billingCycle === 'yearly' && (
@@ -504,15 +507,17 @@ export function OverviewSection({
                                     <li>Custom templates</li>
                                     <li>GDPR compliance</li>
                                 </ul>
+                                </div>
                                 <a href="https://axonscribe.axonichealth.co.in/auth/" target="_blank" rel="noopener noreferrer" className="block">
-                                    <Button className="w-full mt-8 bg-yellow-500 hover:bg-yellow-600 text-white">Start Free Trial</Button>
+                                    <Button className="w-full mt-8 bg-blue-500 hover:bg-blue-600 text-white">Start Free Trial</Button>
                                 </a>
                             </CardContent>
                         </Card>
 
                         {/* Enterprise */}
                         <Card className="rounded-3xl border-0 shadow-lg h-full">
-                            <CardContent className="p-8">
+                            <CardContent className="p-8 flex flex-col h-full">
+                                <div className="flex-grow">
                                 <h3 className="text-xl font-bold text-gray-900 mb-2">Enterprise</h3>
                                 {pricingRegion === 'UK' ? (
                                     <div className="text-4xl font-extrabold text-gray-900">Custom<span className="text-base font-medium text-gray-600"> pricing</span></div>
@@ -532,9 +537,10 @@ export function OverviewSection({
                                     <li>Priority phone support</li>
                                     <li>Training & onboarding</li>
                                 </ul>
+                                </div>
                                 <Dialog>
                                     <DialogTrigger asChild>
-                                        <Button variant="outline" className="w-full mt-8">Contact Us</Button>
+                                        <Button className="w-full mt-8 bg-blue-500 hover:bg-blue-600 text-white">Contact Us</Button>
                                     </DialogTrigger>
                                     <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
                                         <DialogHeader>

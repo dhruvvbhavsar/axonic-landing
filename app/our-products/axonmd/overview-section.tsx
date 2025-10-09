@@ -457,21 +457,10 @@ function OverviewSectionInner({
 
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         {/* Professional Plan */}
-                        <Card className="rounded-3xl border-2 border-blue-400 shadow-2xl relative h-full">
-                            <CardContent className="p-8">
-                                <div className="absolute -top-4 left-6 bg-gradient-to-r from-green-500 to-green-600 text-white text-sm font-bold px-3 py-2 rounded-full shadow-lg border-2 border-white">Most Popular</div>
-                                <div className="flex items-center justify-between mb-2">
-                                    <h3 className="text-xl font-bold text-gray-900">Professional</h3>
-                                    {billingCycle === 'yearly' && (
-                                        <span className="relative inline-block">
-                                            <span className="absolute -inset-1 rounded-lg bg-blue-300 opacity-60 animate-pulse rotate-3 z-0"></span>
-                                            <span className="relative inline-block px-3 py-1 rounded-lg text-white text-2xl font-extrabold bg-red-600 border-2 border-blue-400 shadow-[3px_3px_0px_rgba(0,0,0,0.3)] -rotate-3 z-10">
-                                                40% OFF
-                                            </span>
-                                            <span className="absolute inset-0 rounded-lg border-2 border-dashed border-white animate-pulse -rotate-3 z-20 pointer-events-none"></span>
-                                        </span>
-                                    )}
-                                </div>
+                        <Card className="rounded-3xl border-0 shadow-lg h-full">
+                            <CardContent className="p-8 flex flex-col h-full">
+                                <div className="flex-grow">
+                                <h3 className="text-xl font-bold text-gray-900 mb-2">Professional</h3>
                                 {pricingRegion === 'UK' ? (
                                     billingCycle === 'monthly' ? (
                                         <>
@@ -509,6 +498,7 @@ function OverviewSectionInner({
                                     <li>✅ Customizable template engine</li>
                                     <li>✅ Billing service</li>
                                 </ul>
+                                </div>
                                 <Button
                                     className="w-full mt-8 bg-blue-500 hover:bg-blue-600 text-white"
                                     disabled={loadingPlan === 'professional'}
@@ -520,9 +510,20 @@ function OverviewSectionInner({
                         </Card>
 
                         {/* Advanced Plan */}
-                        <Card className="rounded-3xl border-0 shadow-lg h-full">
-                            <CardContent className="p-8">
-                                <h3 className="text-xl font-bold text-gray-900 mb-2">Advanced</h3>
+                        <Card className="rounded-3xl border-2 border-blue-400 shadow-2xl relative h-full">
+                            <CardContent className="p-8 flex flex-col h-full">
+                                <div className="absolute -top-4 left-6 bg-gradient-to-r from-green-500 to-green-600 text-white text-sm font-bold px-3 py-2 rounded-full shadow-lg border-2 border-white">Most Popular</div>
+                                <div className="flex-grow">
+                                <div className="flex items-center justify-between mb-2">
+                                    <h3 className="text-xl font-bold text-gray-900">Advanced</h3>
+                                    <span className="relative inline-block">
+                                        <span className="absolute -inset-1 rounded-lg bg-blue-300 opacity-60 animate-pulse rotate-3 z-0"></span>
+                                        <span className="relative inline-block px-3 py-1 rounded-lg text-white text-2xl font-extrabold bg-red-600 border-2 border-blue-400 shadow-[3px_3px_0px_rgba(0,0,0,0.3)] -rotate-3 z-10">
+                                            40% OFF
+                                        </span>
+                                        <span className="absolute inset-0 rounded-lg border-2 border-dashed border-white animate-pulse -rotate-3 z-20 pointer-events-none"></span>
+                                    </span>
+                                </div>
                                 {pricingRegion === 'UK' ? (
                                     billingCycle === 'monthly' ? (
                                         <div className="text-4xl font-extrabold text-gray-900">£125<span className="text-base font-medium text-gray-600">/month</span></div>
@@ -549,9 +550,9 @@ function OverviewSectionInner({
                                     <li>✅ All Professional features</li>
                                     <li>Patient app with Clinic/Doctor branding</li>
                                 </ul>
+                                </div>
                                 <Button
-                                    variant="outline"
-                                    className="w-full mt-8"
+                                    className="w-full mt-8 bg-blue-500 hover:bg-blue-600 text-white"
                                     disabled={loadingPlan === 'advanced'}
                                     onClick={() => { setDoctorPlan('advanced'); setDoctorDialogOpen(true) }}
                                 >
@@ -562,7 +563,8 @@ function OverviewSectionInner({
 
                         {/* Enterprise Plan */}
                         <Card className="rounded-3xl border-0 shadow-lg h-full">
-                            <CardContent className="p-8">
+                            <CardContent className="p-8 flex flex-col h-full">
+                                <div className="flex-grow">
                                 <h3 className="text-xl font-bold text-gray-900 mb-2">Enterprise</h3>
                                 <div className="text-4xl font-extrabold text-gray-900">Contact Us</div>
                                 <p className="text-gray-600 mt-2">Advanced features for hospitals and multi‑clinic networks</p>
@@ -576,9 +578,10 @@ function OverviewSectionInner({
                                     <li>➕ Integration with Pharmacy through API</li>
                                     <li>➕ Integration with Lab through API</li>
                                 </ul>
+                                </div>
                                 <Dialog>
                                     <DialogTrigger asChild>
-                                        <Button variant="outline" className="w-full mt-8">Contact Sales</Button>
+                                        <Button className="w-full mt-8 bg-blue-500 hover:bg-blue-600 text-white">Contact Sales</Button>
                                     </DialogTrigger>
                                     <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
                                         <DialogHeader>
