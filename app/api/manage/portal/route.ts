@@ -38,7 +38,8 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'customer not found' }, { status: 404 })
     }
 
-    const returnUrl = `${request.headers.get('origin') || 'http://localhost:3000'}/our-products/axonmd/`
+    const origin = request.nextUrl.origin
+    const returnUrl = `${origin}/our-products/axonmd/`
     const session = await stripe.billingPortal.sessions.create({
       customer: customer.id,
       return_url: returnUrl,
