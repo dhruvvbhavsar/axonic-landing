@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { jwtVerify } from 'jose'
 import Stripe from 'stripe'
+import { getExternalApiBase } from '@/lib/external-api'
 
 function getEnv(name: string, fallback?: string): string {
   const v = process.env[name] || fallback
@@ -38,8 +39,18 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'customer not found' }, { status: 404 })
     }
 
-    const origin = request.nextUrl.origin
-    const returnUrl = `${origin}/our-products/axonmd/`
+
+    // Determine return URL based on environment
+    let returnUrl: string
+    const externalApiBase = getExternalApiBase()
+
+    if (process.env.NODE_ENV === 'development') {
+      returnUrl = 'http://localhost:3000/our-products/axonmd/'
+    } else if (externalApiBase.includes('ocipmsqa')) {
+      returnUrl = `https://dev.dg3ym85ijwwvm.amplifyapp.com/our-products/axonmd/`
+    } else {
+      returnUrl = `https://axonmd.axonichealth.com/`
+    }
     const session = await stripe.billingPortal.sessions.create({
       customer: customer.id,
       return_url: returnUrl,
