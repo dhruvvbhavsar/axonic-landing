@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
 
     if (process.env.NODE_ENV === 'development') {
       returnUrl = 'http://localhost:3000/our-products/axonmd/'
-    } else if (externalApiBase.includes('ocipmsqa')) {
+    } else if (externalApiBase.includes('oci')) {
       returnUrl = `https://dev.dg3ym85ijwwvm.amplifyapp.com/our-products/axonmd/`
     } else {
       returnUrl = `https://axonmd.axonichealth.com/`
