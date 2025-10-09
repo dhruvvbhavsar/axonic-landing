@@ -156,7 +156,7 @@ export const products: Product[] = [
     heroImage: "/assets/new-products/AxonMD.png",
     platformImage: "/assets/platform-images/axonmd.png",
     aiImage: "/assets/ai-images/md.png",
-    videoUrl: "https://www.youtube.com/watch?v=PM9LlDn4S40", // Using scribe video temporarily
+    videoUrl: "https://www.youtube.com/shorts/KUNycXG36fA", 
     testimonialUrl: "https://www.youtube.com/embed/AQmvWNxE-XM",
     description: "Clinic Management Made Simple - Unify your in-clinic and virtual practice with a complete, ABDM-compliant EMR. Cut documentation time with powerful voice AI and smart tools.",
     shortDescription: "Complete clinic management solution with integrated patient scheduling and records.",
