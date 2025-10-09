@@ -221,7 +221,7 @@ function OverviewSectionInner({
                                 <a href="https://play.google.com/store/apps/details?id=com.doctormobileapp" aria-label="Get it on Google Play" className="transition hover:opacity-90" target="_blank" rel="noopener noreferrer">
                                     <Image src="/badges/download-google.svg" alt="Get it on Google Play" width={200} height={30} />
                                 </a>
-                                <a href="https://axonmd.axonichealth.co.in/auth/" aria-label="Get it on Web" className="transition hover:opacity-90" target="_blank" rel="noopener noreferrer">
+                                <a href="https://axonmd.axonichealth.co.in/" aria-label="Get it on Web" className="transition hover:opacity-90" target="_blank" rel="noopener noreferrer">
                                     <Image src="/badges/download-web.svg" alt="Get it on Web" width={200} height={30} />
                                 </a>
                             </div>
