@@ -70,6 +70,18 @@ export function OverviewSection({
                                 Transform your clinical workflow with AxonScribe AI, the intelligent medical scribe that automates documentation, streamlines patient management, and gives you back valuable time.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4">
+                                <Button 
+                                    onClick={() => {
+                                        const element = document.getElementById('pricing')
+                                        if (element) {
+                                            const offsetTop = element.offsetTop - 140
+                                            window.scrollTo({ top: offsetTop, behavior: 'smooth' })
+                                        }
+                                    }}
+                                    className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-4 px-8 rounded-xl text-base transition-all duration-200 shadow-lg"
+                                >
+                                    Start Now
+                                </Button>
                                 <Dialog>
                                     <DialogTrigger asChild>
                                         <Button variant="outline" className="border-2 border-gray-300 text-gray-800 hover:bg-gray-50 font-semibold py-4 px-8 rounded-xl text-base transition-all duration-200">
