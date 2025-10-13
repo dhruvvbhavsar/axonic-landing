@@ -29,11 +29,11 @@ async function getUserRegion(): Promise<'UK' | 'India'> {
         } else if (data.country_code === 'GB') {
             return 'UK'
         } else {
-            return 'UK' 
+            return 'India' // Default to India for AxonMD
         }
     } catch (error) {
         console.warn('Failed to detect user location, defaulting to India:', error)
-        return 'UK'
+        return 'India'
     }
 }
 
@@ -49,115 +49,110 @@ function OverviewSectionInner({
     const [pricingRegion, setPricingRegion] = React.useState<'UK' | 'India'>("India")
     const [billingCycle, setBillingCycle] = React.useState<'monthly' | 'yearly'>("monthly")
     const appRedirectUrl = product?.redirectUrl || "https://axonmd.axonichealth.com"
-    // Doctor dialog state - commented out as requested
-    // const [loadingPlan, setLoadingPlan] = React.useState<string | null>(null)
-    // const [doctorDialogOpen, setDoctorDialogOpen] = React.useState(false)
-    // const [doctorPlan, setDoctorPlan] = React.useState<'professional' | 'advanced' | null>(null)
-    // const [doctorError, setDoctorError] = React.useState<string | null>(null)
-    // const [doctor, setDoctor] = React.useState({
-    //     firstName: "",
-    //     lastName: "",
-    //     gender: "",
-    //     speciality: "",
-    //     country: "IN",
-    //     registrationNumber: "",
-    //     email: "",
-    //     countryCode: "+91",
-    //     phone: "",
-    // })
-    // Specialities state - commented out as requested
-    // const [specialities, setSpecialities] = React.useState<string[]>([])
-    // const [loadingSpecialities, setLoadingSpecialities] = React.useState(false)
-    // Manage subscription state - commented out as requested
-    // const [manageOpen, setManageOpen] = React.useState(false)
-    // const [manageEmail, setManageEmail] = React.useState("")
-    // const [manageSubmitting, setManageSubmitting] = React.useState(false)
-    // const [manageError, setManageError] = React.useState<string | null>(null)
-    // const [manageSuccess, setManageSuccess] = React.useState(false)
+    const [loadingPlan, setLoadingPlan] = React.useState<string | null>(null)
+    const [doctorDialogOpen, setDoctorDialogOpen] = React.useState(false)
+    const [doctorPlan, setDoctorPlan] = React.useState<'professional' | 'advanced' | null>(null)
+    const [doctorError, setDoctorError] = React.useState<string | null>(null)
+    const [doctor, setDoctor] = React.useState({
+        firstName: "",
+        lastName: "",
+        gender: "",
+        speciality: "",
+        country: "IN",
+        registrationNumber: "",
+        email: "",
+        countryCode: "+91",
+        phone: "",
+    })
+    const [specialities, setSpecialities] = React.useState<string[]>([])
+    const [loadingSpecialities, setLoadingSpecialities] = React.useState(false)
+    const [manageOpen, setManageOpen] = React.useState(false)
+    const [manageEmail, setManageEmail] = React.useState("")
+    const [manageSubmitting, setManageSubmitting] = React.useState(false)
+    const [manageError, setManageError] = React.useState<string | null>(null)
+    const [manageSuccess, setManageSuccess] = React.useState(false)
 
     const validateEmail = React.useCallback((email: string): boolean => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
     }, [])
 
-    // Manage subscription functions - commented out as requested
-    // const handleManageSubmit = React.useCallback(async () => {
-    //     if (!manageEmail.trim()) {
-    //         setManageError('Please enter your email address')
-    //         return
-    //     }
-    //     if (!validateEmail(manageEmail)) {
-    //         setManageError('Please enter a valid email address')
-    //         return
-    //     }
+    const handleManageSubmit = React.useCallback(async () => {
+        if (!manageEmail.trim()) {
+            setManageError('Please enter your email address')
+            return
+        }
+        if (!validateEmail(manageEmail)) {
+            setManageError('Please enter a valid email address')
+            return
+        }
 
-    //     setManageSubmitting(true)
-    //     setManageError(null)
-    //     setManageSuccess(false)
+        setManageSubmitting(true)
+        setManageError(null)
+        setManageSuccess(false)
 
-    //     try {
-    //         // Check if email exists in system
-    //         const checkRes = await fetch('/api/external/check-email', {
-    //             method: 'POST',
-    //             headers: { 'Content-Type': 'application/json' },
-    //             body: JSON.stringify({ emailId: manageEmail })
-    //         })
-    //         const checkData = await checkRes.json()
+        try {
+            // Check if email exists in system
+            const checkRes = await fetch('/api/external/check-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ emailId: manageEmail })
+            })
+            const checkData = await checkRes.json()
+            
+            if (checkData?.code === 'noData') {
+                setManageError('No account found with this email. Please start a trial first or contact support.')
+                return
+            }
 
-    //         if (checkData?.code === 'noData') {
-    //             setManageError('No account found with this email. Please start a trial first or contact support.')
-    //             return
-    //         }
+            // Send magic link
+            const response = await fetch('/api/manage/request', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: manageEmail, registrationNumber: doctor.registrationNumber })
+            })
+            
+            if (!response.ok) {
+                throw new Error('Failed to send link')
+            }
+            
+            setManageSuccess(true)
+            setManageEmail('')
+        } catch (e) {
+            console.error(e)
+            setManageError('Failed to send link. Please try again later.')
+        } finally {
+            setManageSubmitting(false)
+        }
+    }, [manageEmail, validateEmail])
 
-    //         // Send magic link
-    //         const response = await fetch('/api/manage/request', {
-    //             method: 'POST',
-    //             headers: { 'Content-Type': 'application/json' },
-    //             body: JSON.stringify({ email: manageEmail, registrationNumber: doctor.registrationNumber })
-    //         })
+    const resetManageDialog = React.useCallback(() => {
+        setManageEmail('')
+        setManageError(null)
+        setManageSuccess(false)
+        setManageSubmitting(false)
+    }, [])
 
-    //         if (!response.ok) {
-    //             throw new Error('Failed to send link')
-    //         }
-
-    //         setManageSuccess(true)
-    //         setManageEmail('')
-    //     } catch (e) {
-    //         console.error(e)
-    //         setManageError('Failed to send link. Please try again later.')
-    //     } finally {
-    //         setManageSubmitting(false)
-    //     }
-    // }, [manageEmail, validateEmail])
-
-    // const resetManageDialog = React.useCallback(() => {
-    //     setManageEmail('')
-    //     setManageError(null)
-    //     setManageSuccess(false)
-    //     setManageSubmitting(false)
-    // }, [])
-
-    // Specialities loading effect - commented out as requested
-    // React.useEffect(() => {
-    //     if (!doctorDialogOpen) return
-    //     let cancelled = false
-    //     const fetchSpecialities = async () => {
-    //         setLoadingSpecialities(true)
-    //         try {
-    //             const res = await fetch('/api/specialties')
-    //             if (!res.ok) throw new Error('Failed to load specialities')
-    //             const data = await res.json()
-    //             const list = Array.isArray(data?.list) ? data.list as string[] : []
-    //             if (!cancelled) setSpecialities(list)
-    //         } catch (e) {
-    //             console.warn('Failed to fetch specialities', e)
-    //             if (!cancelled) setSpecialities([])
-    //         } finally {
-    //             if (!cancelled) setLoadingSpecialities(false)
-    //         }
-    //     }
-    //     fetchSpecialities()
-    //     return () => { cancelled = true }
-    // }, [doctorDialogOpen])
+    React.useEffect(() => {
+        if (!doctorDialogOpen) return
+        let cancelled = false
+        const fetchSpecialities = async () => {
+            setLoadingSpecialities(true)
+            try {
+                const res = await fetch('/api/specialties')
+                if (!res.ok) throw new Error('Failed to load specialities')
+                const data = await res.json()
+                const list = Array.isArray(data?.list) ? data.list as string[] : []
+                if (!cancelled) setSpecialities(list)
+            } catch (e) {
+                console.warn('Failed to fetch specialities', e)
+                if (!cancelled) setSpecialities([])
+            } finally {
+                if (!cancelled) setLoadingSpecialities(false)
+            }
+        }
+        fetchSpecialities()
+        return () => { cancelled = true }
+    }, [doctorDialogOpen])
 
     // Set default pricing region based on user IP
     React.useEffect(() => {
@@ -442,16 +437,15 @@ function OverviewSectionInner({
             {/* Pricing */}
             <section id="pricing" className="py-10 px-4 sm:px-6 lg:px-8 bg-gray-50 overflow-x-hidden">
                 <div className="container mx-auto max-w-7xl">
-                        <div className="text-center mb-8">
+                    <div className="text-center mb-8">
                         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Simple Pricing</h2>
                         <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">Get started with our comprehensive clinic management platform.</p>
                         <div className="w-20 h-1 bg-blue-400 mx-auto mt-4"></div>
-                        {/* Manage subscriptions UI - commented out as requested */}
-                        {/* <div className="mt-3">
+                        <div className="mt-3">
                             <button className="text-sm underline text-blue-600" onClick={() => setManageOpen(true)}>
                                 Manage subscriptions
                             </button>
-                        </div> */}
+                        </div>
                     </div>
 
                     <div className="flex justify-center mb-6">
@@ -517,20 +511,13 @@ function OverviewSectionInner({
                                     <li>✅ Billing service</li>
                                 </ul>
                                 </div>
-                                <Dialog>
-                                    <DialogTrigger asChild>
-                                        <Button className="w-full mt-8 bg-blue-500 hover:bg-blue-600 text-white">
-                                            Start 90 Day Free Trial
-                                        </Button>
-                                    </DialogTrigger>
-                                    <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
-                                        <DialogHeader>
-                                            <DialogTitle className="text-2xl font-bold text-gray-900">Start Your Professional Plan Trial</DialogTitle>
-                                            <DialogDescription className="text-gray-600">Get started with AxonMD Professional plan</DialogDescription>
-                                        </DialogHeader>
-                                        <ContactForm productName={product.name} />
-                                    </DialogContent>
-                                </Dialog>
+                                <Button
+                                    className="w-full mt-8 bg-blue-500 hover:bg-blue-600 text-white"
+                                    disabled={loadingPlan === 'professional'}
+                                    onClick={() => { setDoctorPlan('professional'); setDoctorDialogOpen(true) }}
+                                >
+                                    {loadingPlan === 'professional' ? 'Redirecting…' : 'Start 90 Day Free Trial'}
+                                </Button>
                             </CardContent>
                         </Card>
 
@@ -576,20 +563,13 @@ function OverviewSectionInner({
                                     <li>Patient app with Clinic/Doctor branding</li>
                                 </ul>
                                 </div>
-                                <Dialog>
-                                    <DialogTrigger asChild>
-                                        <Button className="w-full mt-8 bg-blue-500 hover:bg-blue-600 text-white">
-                                            Start 90 Day Free Trial
-                                        </Button>
-                                    </DialogTrigger>
-                                    <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
-                                        <DialogHeader>
-                                            <DialogTitle className="text-2xl font-bold text-gray-900">Start Your Advanced Plan Trial</DialogTitle>
-                                            <DialogDescription className="text-gray-600">Get started with AxonMD Advanced plan</DialogDescription>
-                                        </DialogHeader>
-                                        <ContactForm productName={product.name} />
-                                    </DialogContent>
-                                </Dialog>
+                                <Button
+                                    className="w-full mt-8 bg-blue-500 hover:bg-blue-600 text-white"
+                                    disabled={loadingPlan === 'advanced'}
+                                    onClick={() => { setDoctorPlan('advanced'); setDoctorDialogOpen(true) }}
+                                >
+                                    {loadingPlan === 'advanced' ? 'Redirecting…' : 'Start 90 Day Free Trial'}
+                                </Button>
                             </CardContent>
                         </Card>
 
@@ -629,8 +609,8 @@ function OverviewSectionInner({
                 </div>
             </section>
 
-            {/* Doctor Details Dialog - commented out as requested */}
-            {/* <Dialog open={doctorDialogOpen} onOpenChange={(open) => {
+            {/* Doctor Details Dialog */}
+            <Dialog open={doctorDialogOpen} onOpenChange={(open) => {
                 setDoctorDialogOpen(open)
                 if (!open) setDoctorError(null)
             }}>
@@ -647,20 +627,20 @@ function OverviewSectionInner({
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <Label htmlFor="firstName" className="text-sm font-medium text-gray-700">First name <span className="text-red-500">*</span></Label>
-                            <Input
-                                id="firstName"
-                                value={doctor.firstName}
-                                onChange={(e) => setDoctor(d => ({ ...d, firstName: e.target.value }))}
+                            <Input 
+                                id="firstName" 
+                                value={doctor.firstName} 
+                                onChange={(e) => setDoctor(d => ({ ...d, firstName: e.target.value }))} 
                                 className="mt-1"
                                 placeholder="Enter first name"
                             />
                         </div>
                         <div>
                             <Label htmlFor="lastName" className="text-sm font-medium text-gray-700">Last name <span className="text-red-500">*</span></Label>
-                            <Input
-                                id="lastName"
-                                value={doctor.lastName}
-                                onChange={(e) => setDoctor(d => ({ ...d, lastName: e.target.value }))}
+                            <Input 
+                                id="lastName" 
+                                value={doctor.lastName} 
+                                onChange={(e) => setDoctor(d => ({ ...d, lastName: e.target.value }))} 
                                 className="mt-1"
                                 placeholder="Enter last name"
                             />
@@ -693,21 +673,21 @@ function OverviewSectionInner({
                         </div>
                         <div className="sm:col-span-2">
                             <Label htmlFor="regNo" className="text-sm font-medium text-gray-700">GMC / Medical Registration No. <span className="text-red-500">*</span></Label>
-                            <Input
-                                id="regNo"
-                                value={doctor.registrationNumber}
-                                onChange={(e) => setDoctor(d => ({ ...d, registrationNumber: e.target.value }))}
+                            <Input 
+                                id="regNo" 
+                                value={doctor.registrationNumber} 
+                                onChange={(e) => setDoctor(d => ({ ...d, registrationNumber: e.target.value }))} 
                                 className="mt-1"
                                 placeholder="Enter registration number"
                             />
                         </div>
                         <div className="sm:col-span-2">
                             <Label htmlFor="email" className="text-sm font-medium text-gray-700">Email Address <span className="text-red-500">*</span></Label>
-                            <Input
-                                id="email"
-                                type="email"
-                                value={doctor.email}
-                                onChange={(e) => setDoctor(d => ({ ...d, email: e.target.value }))}
+                            <Input 
+                                id="email" 
+                                type="email" 
+                                value={doctor.email} 
+                                onChange={(e) => setDoctor(d => ({ ...d, email: e.target.value }))} 
                                 className="mt-1"
                                 placeholder="Enter your email"
                             />
@@ -740,19 +720,19 @@ function OverviewSectionInner({
                         </div>
                         <div className="sm:col-span-2">
                             <Label htmlFor="phone" className="text-sm font-medium text-gray-700">Mobile Number <span className="text-red-500">*</span></Label>
-                            <Input
-                                id="phone"
-                                inputMode="numeric"
-                                value={doctor.phone}
-                                onChange={(e) => setDoctor(d => ({ ...d, phone: e.target.value.replace(/\D/g, '') }))}
+                            <Input 
+                                id="phone" 
+                                inputMode="numeric" 
+                                value={doctor.phone} 
+                                onChange={(e) => setDoctor(d => ({ ...d, phone: e.target.value.replace(/\D/g, '') }))} 
                                 className="mt-1"
                                 placeholder="Enter mobile number"
                             />
                         </div>
                     </div>
                     <div className="flex flex-col sm:flex-row gap-3 justify-end pt-4 border-t border-gray-200">
-                        <Button
-                            variant="outline"
+                        <Button 
+                            variant="outline" 
                             onClick={() => setDoctorDialogOpen(false)}
                             className="border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold rounded-xl transition-all duration-300"
                         >
@@ -762,7 +742,7 @@ function OverviewSectionInner({
                             onClick={async () => {
                                 if (!doctorPlan) return
                                 setDoctorError(null)
-
+                                
                                 // Validate all required fields
                                 if (!doctor.firstName.trim()) {
                                     setDoctorError('Please enter your first name')
@@ -808,7 +788,7 @@ function OverviewSectionInner({
                                     setDoctorError('Please enter a valid mobile number')
                                     return
                                 }
-
+                                
                                 try {
                                     setLoadingPlan(doctorPlan)
                                     // Check external email existence
@@ -856,10 +836,10 @@ function OverviewSectionInner({
                         </Button>
                     </div>
                 </DialogContent>
-            </Dialog> */}
+            </Dialog>
 
-            {/* Manage Subscriptions Dialog - commented out as requested */}
-            {/* <Dialog open={manageOpen} onOpenChange={(open) => {
+            {/* Manage Subscriptions Dialog */}
+            <Dialog open={manageOpen} onOpenChange={(open) => {
                 setManageOpen(open)
                 if (!open) resetManageDialog()
             }}>
@@ -870,7 +850,7 @@ function OverviewSectionInner({
                             Enter your email address and we'll send you a secure link to manage your AxonMD subscription
                         </DialogDescription>
                     </DialogHeader>
-
+                    
                     {manageSuccess ? (
                         <div className="space-y-6">
                             <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
@@ -887,10 +867,10 @@ function OverviewSectionInner({
                         <div className="space-y-6">
                             <div className="space-y-2">
                                 <Label htmlFor="manageEmail">Email Address</Label>
-                                <Input
-                                    id="manageEmail"
-                                    type="email"
-                                    value={manageEmail}
+                                <Input 
+                                    id="manageEmail" 
+                                    type="email" 
+                                    value={manageEmail} 
                                     onChange={(e) => setManageEmail(e.target.value)}
                                     placeholder="Enter your registered email"
                                     className="w-full"
@@ -900,16 +880,16 @@ function OverviewSectionInner({
                                     <p className="text-sm text-red-600">{manageError}</p>
                                 )}
                             </div>
-
+                            
                             <div className="flex gap-3 justify-end">
-                                <Button
-                                    variant="outline"
+                                <Button 
+                                    variant="outline" 
                                     onClick={() => setManageOpen(false)}
                                     disabled={manageSubmitting}
                                 >
                                     Cancel
                                 </Button>
-                                <Button
+                                <Button 
                                     onClick={handleManageSubmit}
                                     disabled={manageSubmitting}
                                     className="bg-blue-500 hover:bg-blue-600 text-white"
@@ -920,7 +900,7 @@ function OverviewSectionInner({
                         </div>
                     )}
                 </DialogContent>
-            </Dialog> */}
+            </Dialog>
 
             {/* Testimonials */}
             <section className="py-10 overflow-x-hidden px-4 sm:px-6 lg:px-8">
