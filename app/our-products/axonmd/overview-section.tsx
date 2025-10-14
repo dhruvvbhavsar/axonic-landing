@@ -529,6 +529,9 @@ function OverviewSectionInner({
                                             <DialogDescription className="text-gray-600">Get started with AxonMD Professional plan</DialogDescription>
                                         </DialogHeader>
                                         <ContactForm productName={product.name} />
+                                        <div className="text-center text-sm text-gray-600 pt-4 border-t">
+                                            Please write us at <a href="mailto:info@axonichealth.com" className="text-blue-600 hover:underline">info@axonichealth.com</a> for more queries.
+                                        </div>
                                     </DialogContent>
                                 </Dialog>
                             </CardContent>
@@ -588,6 +591,9 @@ function OverviewSectionInner({
                                             <DialogDescription className="text-gray-600">Get started with AxonMD Advanced plan</DialogDescription>
                                         </DialogHeader>
                                         <ContactForm productName={product.name} />
+                                        <div className="text-center text-sm text-gray-600 pt-4 border-t">
+                                            Please write us at <a href="mailto:info@axonichealth.com" className="text-blue-600 hover:underline">info@axonichealth.com</a> for more queries.
+                                        </div>
                                     </DialogContent>
                                 </Dialog>
                             </CardContent>
@@ -621,6 +627,9 @@ function OverviewSectionInner({
                                             <DialogDescription className="text-gray-600">Get in touch with our enterprise team for custom pricing and solutions</DialogDescription>
                                         </DialogHeader>
                                         <ContactForm productName={product.name} />
+                                        <div className="text-center text-sm text-gray-600 pt-4 border-t">
+                                            Please write us at <a href="mailto:info@axonichealth.com" className="text-blue-600 hover:underline">info@axonichealth.com</a> for more queries.
+                                        </div>
                                     </DialogContent>
                                 </Dialog>
                             </CardContent>
