@@ -131,7 +131,10 @@ export async function POST(request: NextRequest) {
         : addMonths(subscriptionStartIso, 1)
 
       const countryName = getCountryNameFromCode(md.doctor_country || session?.customer_details?.address?.country) || 'India'
-      const payload = {
+      const privateNetwork = md.private_network === 'true'
+      
+      const payload: any = {
+        privateNetwork,
         firstName: md.doctor_first_name || '',
         lastName: md.doctor_last_name || '',
         specialty: md.doctor_speciality || '',
@@ -166,6 +169,23 @@ export async function POST(request: NextRequest) {
           billingCycle,
           region: md.region || '',
         }),
+      }
+      
+      // Add unitMasterDto if private network
+      if (privateNetwork) {
+        const countryId = parseInt(md.unit_country_id || '0')
+        const stateId = parseInt(md.unit_state_id || '0')
+        const cityId = parseInt(md.unit_city_id || '0')
+        const zoneId = parseInt(md.unit_zone_id || '0')
+        
+        if (countryId && stateId && cityId && zoneId) {
+          payload.unitMasterDto = {
+            countryId,
+            stateId,
+            cityId,
+            zoneId,
+          }
+        }
       }
 
       // Placeholder endpoint; backend will provide actual URL

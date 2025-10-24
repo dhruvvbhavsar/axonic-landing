@@ -16,6 +16,13 @@ type DoctorDetails = {
   country?: string
 }
 
+type UnitMasterDto = {
+  countryId?: number
+  stateId?: number
+  cityId?: number
+  zoneId?: number
+}
+
 function getCurrencyForRegion(region: Region): 'inr' | 'gbp' {
   return region === 'UK' ? 'gbp' : 'inr'
 }
@@ -48,6 +55,8 @@ export async function POST(request: NextRequest) {
       region?: Region
       customerEmail?: string
       doctor?: DoctorDetails
+      privateNetwork?: boolean
+      unitMasterDto?: UnitMasterDto
       successUrl?: string
       cancelUrl?: string
     }
@@ -133,6 +142,11 @@ export async function POST(request: NextRequest) {
         plan,
         billingCycle,
         region,
+        private_network: body.privateNetwork ? 'true' : 'false',
+        unit_country_id: body.unitMasterDto?.countryId?.toString() || '',
+        unit_state_id: body.unitMasterDto?.stateId?.toString() || '',
+        unit_city_id: body.unitMasterDto?.cityId?.toString() || '',
+        unit_zone_id: body.unitMasterDto?.zoneId?.toString() || '',
       },
       line_items: mappedPriceId
         ? [
@@ -171,6 +185,11 @@ export async function POST(request: NextRequest) {
           plan,
           billingCycle,
           region,
+          private_network: body.privateNetwork ? 'true' : 'false',
+          unit_country_id: body.unitMasterDto?.countryId?.toString() || '',
+          unit_state_id: body.unitMasterDto?.stateId?.toString() || '',
+          unit_city_id: body.unitMasterDto?.cityId?.toString() || '',
+          unit_zone_id: body.unitMasterDto?.zoneId?.toString() || '',
         },
       },
       billing_address_collection: 'required',

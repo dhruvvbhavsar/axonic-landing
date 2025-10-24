@@ -25,7 +25,7 @@ interface ProductTestimonialsSectionProps {
   additionalVideos?: { id: number; videoId: string; title: string }[]
 }
 
-export function ProductTestimonialsSection({ testimonialUrl, productName, additionalVideos = [] }: ProductTestimonialsSectionProps) {
+function ProductTestimonialsSectionInner({ testimonialUrl, productName, additionalVideos = [] }: ProductTestimonialsSectionProps) {
   const [isSubdomain, setIsSubdomain] = React.useState(false)
   const [baseDomain, setBaseDomain] = React.useState('')
 
@@ -206,4 +206,6 @@ export function ProductTestimonialsSection({ testimonialUrl, productName, additi
       </div>
     </section>
   )
-} 
+}
+
+export const ProductTestimonialsSection = React.memo(ProductTestimonialsSectionInner)

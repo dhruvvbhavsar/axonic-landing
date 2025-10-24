@@ -53,6 +53,7 @@ function OverviewSectionInner({
     const [doctorDialogOpen, setDoctorDialogOpen] = React.useState(false)
     const [doctorPlan, setDoctorPlan] = React.useState<'professional' | 'advanced' | null>(null)
     const [doctorError, setDoctorError] = React.useState<string | null>(null)
+    const [privateNetwork, setPrivateNetwork] = React.useState<boolean | null>(null)
     const [doctor, setDoctor] = React.useState({
         firstName: "",
         lastName: "",
@@ -64,6 +65,18 @@ function OverviewSectionInner({
         countryCode: "+91",
         phone: "",
     })
+    const [apiCountries, setApiCountries] = React.useState<any[]>([])
+    const [apiStates, setApiStates] = React.useState<any[]>([])
+    const [apiCities, setApiCities] = React.useState<any[]>([])
+    const [apiZones, setApiZones] = React.useState<any[]>([])
+    const [selectedCountryId, setSelectedCountryId] = React.useState<number | null>(null)
+    const [selectedStateId, setSelectedStateId] = React.useState<number | null>(null)
+    const [selectedCityId, setSelectedCityId] = React.useState<number | null>(null)
+    const [selectedZoneId, setSelectedZoneId] = React.useState<number | null>(null)
+    const [loadingCountries, setLoadingCountries] = React.useState(false)
+    const [loadingStates, setLoadingStates] = React.useState(false)
+    const [loadingCities, setLoadingCities] = React.useState(false)
+    const [loadingZones, setLoadingZones] = React.useState(false)
     const [specialities, setSpecialities] = React.useState<string[]>([])
     const [loadingSpecialities, setLoadingSpecialities] = React.useState(false)
     const [manageOpen, setManageOpen] = React.useState(false)
@@ -73,6 +86,10 @@ function OverviewSectionInner({
     const [manageSuccess, setManageSuccess] = React.useState(false)
 
     const validateEmail = React.useCallback((email: string): boolean => {
+        // Disallow '+' in local part (before @)
+        const parts = email.split('@')
+        if (parts.length !== 2) return false
+        if (parts[0].includes('+')) return false
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
     }, [])
 
@@ -153,6 +170,108 @@ function OverviewSectionInner({
         fetchSpecialities()
         return () => { cancelled = true }
     }, [doctorDialogOpen])
+
+    // Fetch countries when private network is selected
+    React.useEffect(() => {
+        if (privateNetwork !== true) return
+        let cancelled = false
+        const fetchCountries = async () => {
+            setLoadingCountries(true)
+            try {
+                const res = await fetch('/api/address/countries')
+                if (!res.ok) throw new Error('Failed to load countries')
+                const data = await res.json()
+                const list = Array.isArray(data?.list) ? data.list : []
+                if (!cancelled) setApiCountries(list)
+            } catch (e) {
+                console.warn('Failed to fetch countries', e)
+                if (!cancelled) setApiCountries([])
+            } finally {
+                if (!cancelled) setLoadingCountries(false)
+            }
+        }
+        fetchCountries()
+        return () => { cancelled = true }
+    }, [privateNetwork])
+
+    // Fetch zones when private network is selected
+    React.useEffect(() => {
+        if (privateNetwork !== true) return
+        let cancelled = false
+        const fetchZones = async () => {
+            setLoadingZones(true)
+            try {
+                const res = await fetch('/api/zones')
+                if (!res.ok) throw new Error('Failed to load zones')
+                const data = await res.json()
+                const list = Array.isArray(data?.list) ? data.list : []
+                if (!cancelled) setApiZones(list)
+            } catch (e) {
+                console.warn('Failed to fetch zones', e)
+                if (!cancelled) setApiZones([])
+            } finally {
+                if (!cancelled) setLoadingZones(false)
+            }
+        }
+        fetchZones()
+        return () => { cancelled = true }
+    }, [privateNetwork])
+
+    // Fetch states when country is selected
+    React.useEffect(() => {
+        if (!selectedCountryId) {
+            setApiStates([])
+            setSelectedStateId(null)
+            setApiCities([])
+            setSelectedCityId(null)
+            return
+        }
+        let cancelled = false
+        const fetchStates = async () => {
+            setLoadingStates(true)
+            try {
+                const res = await fetch(`/api/address/states?countryId=${selectedCountryId}`)
+                if (!res.ok) throw new Error('Failed to load states')
+                const data = await res.json()
+                const list = Array.isArray(data?.list) ? data.list : []
+                if (!cancelled) setApiStates(list)
+            } catch (e) {
+                console.warn('Failed to fetch states', e)
+                if (!cancelled) setApiStates([])
+            } finally {
+                if (!cancelled) setLoadingStates(false)
+            }
+        }
+        fetchStates()
+        return () => { cancelled = true }
+    }, [selectedCountryId])
+
+    // Fetch cities when state is selected
+    React.useEffect(() => {
+        if (!selectedStateId) {
+            setApiCities([])
+            setSelectedCityId(null)
+            return
+        }
+        let cancelled = false
+        const fetchCities = async () => {
+            setLoadingCities(true)
+            try {
+                const res = await fetch(`/api/address/cities?stateId=${selectedStateId}`)
+                if (!res.ok) throw new Error('Failed to load cities')
+                const data = await res.json()
+                const list = Array.isArray(data?.list) ? data.list : []
+                if (!cancelled) setApiCities(list)
+            } catch (e) {
+                console.warn('Failed to fetch cities', e)
+                if (!cancelled) setApiCities([])
+            } finally {
+                if (!cancelled) setLoadingCities(false)
+            }
+        }
+        fetchCities()
+        return () => { cancelled = true }
+    }, [selectedStateId])
 
     // Set default pricing region based on user IP
     React.useEffect(() => {
@@ -612,19 +731,58 @@ function OverviewSectionInner({
             {/* Doctor Details Dialog */}
             <Dialog open={doctorDialogOpen} onOpenChange={(open) => {
                 setDoctorDialogOpen(open)
-                if (!open) setDoctorError(null)
+                if (!open) {
+                    setDoctorError(null)
+                    setPrivateNetwork(null)
+                    setSelectedCountryId(null)
+                    setSelectedStateId(null)
+                    setSelectedCityId(null)
+                    setSelectedZoneId(null)
+                }
             }}>
                 <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
                         <DialogTitle className="text-2xl font-bold text-gray-900">Start Your 90 Day Free Trial</DialogTitle>
-                        <DialogDescription className="text-gray-600">Enter your details to get started with AxonMD</DialogDescription>
+                        <DialogDescription className="text-gray-600">
+                            {privateNetwork === null ? 'Choose your network preference' : 'Enter your details to get started with AxonMD'}
+                        </DialogDescription>
                     </DialogHeader>
                     {doctorError && (
                         <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
                             <p className="text-red-800 text-sm font-medium">{doctorError}</p>
                         </div>
                     )}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                    {/* Private Network Selection */}
+                    {privateNetwork === null ? (
+                        <div className="space-y-6 py-6">
+                            <div className="text-center">
+                                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                                    Do you want to go with a private network or axoncare network?
+                                </h3>
+                                <p className="text-sm text-gray-600 mb-6">
+                                    Private network allows you to manage your clinic within a dedicated network infrastructure
+                                </p>
+                            </div>
+                            <div className="flex gap-4 justify-center">
+                                <Button
+                                    onClick={() => setPrivateNetwork(true)}
+                                    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-6 px-12 rounded-xl text-lg"
+                                >
+                                    Yes
+                                </Button>
+                                <Button
+                                    onClick={() => setPrivateNetwork(false)}
+                                    variant="outline"
+                                    className="border-2 border-gray-300 text-gray-800 hover:bg-gray-50 font-semibold py-6 px-12 rounded-xl text-lg"
+                                >
+                                    No
+                                </Button>
+                            </div>
+                        </div>
+                    ) : (
+                        <>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <Label htmlFor="firstName" className="text-sm font-medium text-gray-700">First name <span className="text-red-500">*</span></Label>
                             <Input 
@@ -687,24 +845,114 @@ function OverviewSectionInner({
                                 id="email" 
                                 type="email" 
                                 value={doctor.email} 
-                                onChange={(e) => setDoctor(d => ({ ...d, email: e.target.value }))} 
+                                onChange={(e) => {
+                                    const value = e.target.value
+                                    const [local, domain] = value.split('@')
+                                    if (local && local.includes('+')) return
+                                    setDoctor(d => ({ ...d, email: value }))
+                                }} 
                                 className="mt-1"
                                 placeholder="Enter your email"
                             />
                         </div>
                         <div>
                             <Label className="text-sm font-medium text-gray-700">Country <span className="text-red-500">*</span></Label>
-                            <Select value={doctor.country} onValueChange={(v) => setDoctor(d => ({ ...d, country: v }))}>
-                                <SelectTrigger className="w-full mt-1">
-                                    <SelectValue placeholder="Select country" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {COUNTRY_CODES.map(cc => (
-                                        <SelectItem key={cc.code} value={cc.code}>{cc.name}</SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
+                            {privateNetwork ? (
+                                <Select 
+                                    value={selectedCountryId?.toString() || ""} 
+                                    onValueChange={(v) => {
+                                        const countryId = parseInt(v)
+                                        setSelectedCountryId(countryId)
+                                        const country = apiCountries.find(c => c.countryId === countryId)
+                                        if (country) {
+                                            setDoctor(d => ({ ...d, country: country.countryName }))
+                                        }
+                                    }}
+                                >
+                                    <SelectTrigger className="w-full mt-1">
+                                        <SelectValue placeholder={loadingCountries ? "Loading..." : "Select country"} />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {apiCountries.map(country => (
+                                            <SelectItem key={country.countryId} value={country.countryId.toString()}>
+                                                {country.countryName}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            ) : (
+                                <Select value={doctor.country} onValueChange={(v) => setDoctor(d => ({ ...d, country: v }))}>
+                                    <SelectTrigger className="w-full mt-1">
+                                        <SelectValue placeholder="Select country" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {COUNTRY_CODES.map(cc => (
+                                            <SelectItem key={cc.code} value={cc.code}>{cc.name}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            )}
                         </div>
+                        {privateNetwork && selectedCountryId && (
+                            <>
+                                <div>
+                                    <Label className="text-sm font-medium text-gray-700">Zone <span className="text-red-500">*</span></Label>
+                                    <Select 
+                                        value={selectedZoneId?.toString() || ""} 
+                                        onValueChange={(v) => setSelectedZoneId(parseInt(v))}
+                                    >
+                                        <SelectTrigger className="w-full mt-1">
+                                            <SelectValue placeholder={loadingZones ? "Loading..." : "Select zone"} />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {apiZones.map(zone => (
+                                                <SelectItem key={zone.zoneMasterId} value={zone.zoneMasterId.toString()}>
+                                                    {zone.zoneDesc}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div>
+                                    <Label className="text-sm font-medium text-gray-700">State <span className="text-red-500">*</span></Label>
+                                    <Select 
+                                        value={selectedStateId?.toString() || ""} 
+                                        onValueChange={(v) => setSelectedStateId(parseInt(v))}
+                                    >
+                                        <SelectTrigger className="w-full mt-1">
+                                            <SelectValue placeholder={loadingStates ? "Loading..." : "Select state"} />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {apiStates.map(state => (
+                                                <SelectItem key={state.stateId} value={state.stateId.toString()}>
+                                                    {state.stateName}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            </>
+                        )}
+                        {privateNetwork && selectedStateId && (
+                            <div className="sm:col-span-2">
+                                <Label className="text-sm font-medium text-gray-700">City <span className="text-red-500">*</span></Label>
+                                <Select 
+                                    value={selectedCityId?.toString() || ""} 
+                                    onValueChange={(v) => setSelectedCityId(parseInt(v))}
+                                >
+                                    <SelectTrigger className="w-full mt-1">
+                                        <SelectValue placeholder={loadingCities ? "Loading..." : "Select city"} />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {apiCities.map(city => (
+                                            <SelectItem key={city.cityId} value={city.cityId.toString()}>
+                                                {city.cityName}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        )}
                         <div>
                             <Label className="text-sm font-medium text-gray-700">Country code <span className="text-red-500">*</span></Label>
                             <Select value={doctor.countryCode} onValueChange={(v) => setDoctor(d => ({ ...d, countryCode: v }))}>
@@ -789,6 +1037,26 @@ function OverviewSectionInner({
                                     return
                                 }
                                 
+                                // Validate private network fields
+                                if (privateNetwork) {
+                                    if (!selectedCountryId) {
+                                        setDoctorError('Please select your country')
+                                        return
+                                    }
+                                    if (!selectedZoneId) {
+                                        setDoctorError('Please select your zone')
+                                        return
+                                    }
+                                    if (!selectedStateId) {
+                                        setDoctorError('Please select your state')
+                                        return
+                                    }
+                                    if (!selectedCityId) {
+                                        setDoctorError('Please select your city')
+                                        return
+                                    }
+                                }
+                                
                                 try {
                                     setLoadingPlan(doctorPlan)
                                     // Check external email existence
@@ -803,17 +1071,32 @@ function OverviewSectionInner({
                                         setLoadingPlan(null)
                                         return
                                     }
+                                    
+                                    // Prepare payload
+                                    const payload: any = {
+                                        plan: doctorPlan,
+                                        billingCycle,
+                                        region: pricingRegion,
+                                        doctor,
+                                        privateNetwork: privateNetwork || false,
+                                        successUrl: `${window.location.origin}/our-products/axonmd/success/`,
+                                        cancelUrl: `${window.location.origin}/our-products/axonmd/`,
+                                    }
+                                    
+                                    // Add unitMasterDto if private network
+                                    if (privateNetwork && selectedCountryId && selectedStateId && selectedCityId && selectedZoneId) {
+                                        payload.unitMasterDto = {
+                                            countryId: selectedCountryId,
+                                            stateId: selectedStateId,
+                                            cityId: selectedCityId,
+                                            zoneId: selectedZoneId
+                                        }
+                                    }
+                                    
                                     const response = await fetch('/api/checkout', {
                                         method: 'POST',
                                         headers: { 'Content-Type': 'application/json' },
-                                        body: JSON.stringify({
-                                            plan: doctorPlan,
-                                            billingCycle,
-                                            region: pricingRegion,
-                                            doctor,
-                                            successUrl: `${window.location.origin}/our-products/axonmd/success/`,
-                                            cancelUrl: `${window.location.origin}/our-products/axonmd/`,
-                                        }),
+                                        body: JSON.stringify(payload),
                                     })
                                     const data = await response.json()
                                     if (!response.ok) throw new Error(data?.error || 'Checkout failed')
@@ -835,6 +1118,8 @@ function OverviewSectionInner({
                             {loadingPlan ? 'Processing…' : 'Submit'}
                         </Button>
                     </div>
+                    </>
+                    )}
                 </DialogContent>
             </Dialog>
 
@@ -871,7 +1156,12 @@ function OverviewSectionInner({
                                     id="manageEmail" 
                                     type="email" 
                                     value={manageEmail} 
-                                    onChange={(e) => setManageEmail(e.target.value)}
+                                    onChange={(e) => {
+                                        const value = e.target.value
+                                        const [local] = value.split('@')
+                                        if (local && local.includes('+')) return
+                                        setManageEmail(value)
+                                    }}
                                     placeholder="Enter your registered email"
                                     className="w-full"
                                     disabled={manageSubmitting}
