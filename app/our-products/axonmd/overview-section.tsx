@@ -37,6 +37,24 @@ async function getUserRegion(): Promise<'UK' | 'India'> {
     }
 }
 
+async function getUserLocation() {
+    try {
+        const response = await fetch('https://ipapi.co/json/')
+        const data = await response.json()
+        return {
+            country: data.country_name || data.country || '',
+            countryCode: data.country_code || '',
+            state: data.region || '',
+            city: data.city || '',
+            timezone: data.timezone || '',
+            region_code: data.region_code || '',
+        }
+    } catch (error) {
+        console.warn('Failed to detect user location:', error)
+        return null
+    }
+}
+
 function OverviewSectionInner({
     product,
     videoId,
@@ -53,7 +71,7 @@ function OverviewSectionInner({
     const [doctorDialogOpen, setDoctorDialogOpen] = React.useState(false)
     const [doctorPlan, setDoctorPlan] = React.useState<'professional' | 'advanced' | null>(null)
     const [doctorError, setDoctorError] = React.useState<string | null>(null)
-    const [privateNetwork, setPrivateNetwork] = React.useState<boolean | null>(null)
+    const [privateNetwork, setPrivateNetwork] = React.useState<boolean>(true)
     const [doctor, setDoctor] = React.useState({
         firstName: "",
         lastName: "",
@@ -79,6 +97,8 @@ function OverviewSectionInner({
     const [loadingZones, setLoadingZones] = React.useState(false)
     const [specialities, setSpecialities] = React.useState<string[]>([])
     const [loadingSpecialities, setLoadingSpecialities] = React.useState(false)
+    const [loadingLocation, setLoadingLocation] = React.useState(false)
+    const [countryLocked, setCountryLocked] = React.useState(false)
     const [manageOpen, setManageOpen] = React.useState(false)
     const [manageEmail, setManageEmail] = React.useState("")
     const [manageSubmitting, setManageSubmitting] = React.useState(false)
@@ -171,10 +191,11 @@ function OverviewSectionInner({
         return () => { cancelled = true }
     }, [doctorDialogOpen])
 
-    // Fetch countries when private network is selected
+    // Fetch countries and zones when dialog opens
     React.useEffect(() => {
-        if (privateNetwork !== true) return
+        if (!doctorDialogOpen) return
         let cancelled = false
+        
         const fetchCountries = async () => {
             setLoadingCountries(true)
             try {
@@ -183,21 +204,16 @@ function OverviewSectionInner({
                 const data = await res.json()
                 const list = Array.isArray(data?.list) ? data.list : []
                 if (!cancelled) setApiCountries(list)
+                return list
             } catch (e) {
                 console.warn('Failed to fetch countries', e)
                 if (!cancelled) setApiCountries([])
+                return []
             } finally {
                 if (!cancelled) setLoadingCountries(false)
             }
         }
-        fetchCountries()
-        return () => { cancelled = true }
-    }, [privateNetwork])
-
-    // Fetch zones when private network is selected
-    React.useEffect(() => {
-        if (privateNetwork !== true) return
-        let cancelled = false
+        
         const fetchZones = async () => {
             setLoadingZones(true)
             try {
@@ -206,16 +222,72 @@ function OverviewSectionInner({
                 const data = await res.json()
                 const list = Array.isArray(data?.list) ? data.list : []
                 if (!cancelled) setApiZones(list)
+                return list
             } catch (e) {
                 console.warn('Failed to fetch zones', e)
                 if (!cancelled) setApiZones([])
+                return []
             } finally {
                 if (!cancelled) setLoadingZones(false)
             }
         }
-        fetchZones()
+        
+        // Fetch IP location and auto-populate
+        const fetchAndPopulateLocation = async () => {
+            setLoadingLocation(true)
+            try {
+                const [countries, zones, ipLocation] = await Promise.all([
+                    fetchCountries(),
+                    fetchZones(),
+                    getUserLocation()
+                ])
+                
+                if (cancelled || !ipLocation) {
+                    // Even without IP location, select first zone as default
+                    if (zones.length > 0 && !cancelled) {
+                        setSelectedZoneId(zones[0].zoneMasterId)
+                    }
+                    return
+                }
+                
+                // Match and lock country
+                const matchedCountry = countries.find((c: any) => 
+                    c.countryCode === ipLocation.countryCode || 
+                    c.countryName?.toLowerCase() === ipLocation.country?.toLowerCase()
+                )
+                
+                if (matchedCountry && !cancelled) {
+                    setSelectedCountryId(matchedCountry.countryId)
+                    setDoctor(d => ({ ...d, country: matchedCountry.countryName }))
+                    setCountryLocked(true)
+                }
+                
+                // Match zone based on timezone from IP
+                if (zones.length > 0 && !cancelled) {
+                    let matchedZone = null
+                    
+                    // Try to find exact timezone match
+                    if (ipLocation.timezone) {
+                        matchedZone = zones.find((z: any) => 
+                            z.zoneDesc === ipLocation.timezone
+                        )
+                    }
+                    
+                    // Use matched zone or default to first zone
+                    const zoneToSelect = matchedZone || zones[0]
+                    console.log('Auto-selecting zone:', zoneToSelect.zoneDesc, 'from IP timezone:', ipLocation.timezone)
+                    setSelectedZoneId(zoneToSelect.zoneMasterId)
+                }
+            } catch (e) {
+                console.warn('Failed to populate location', e)
+            } finally {
+                if (!cancelled) setLoadingLocation(false)
+            }
+        }
+        
+        fetchAndPopulateLocation()
         return () => { cancelled = true }
-    }, [privateNetwork])
+    }, [doctorDialogOpen])
 
     // Fetch states when country is selected
     React.useEffect(() => {
@@ -234,7 +306,26 @@ function OverviewSectionInner({
                 if (!res.ok) throw new Error('Failed to load states')
                 const data = await res.json()
                 const list = Array.isArray(data?.list) ? data.list : []
-                if (!cancelled) setApiStates(list)
+                if (!cancelled) {
+                    setApiStates(list)
+                    
+                    // Auto-select state based on IP if we're just loading for the first time
+                    if (list.length > 0 && !selectedStateId) {
+                        getUserLocation().then(ipLocation => {
+                            if (!cancelled && ipLocation && ipLocation.state) {
+                                const matchedState = list.find((s: any) => 
+                                    s.stateName?.toLowerCase() === ipLocation.state?.toLowerCase() ||
+                                    s.stateName?.toLowerCase().includes(ipLocation.state?.toLowerCase()) ||
+                                    ipLocation.state?.toLowerCase().includes(s.stateName?.toLowerCase())
+                                )
+                                if (matchedState) {
+                                    console.log('Auto-selecting state:', matchedState.stateName, 'for IP location:', ipLocation.state)
+                                    setSelectedStateId(matchedState.stateId)
+                                }
+                            }
+                        }).catch(err => console.warn('State auto-select failed:', err))
+                    }
+                }
             } catch (e) {
                 console.warn('Failed to fetch states', e)
                 if (!cancelled) setApiStates([])
@@ -261,7 +352,26 @@ function OverviewSectionInner({
                 if (!res.ok) throw new Error('Failed to load cities')
                 const data = await res.json()
                 const list = Array.isArray(data?.list) ? data.list : []
-                if (!cancelled) setApiCities(list)
+                if (!cancelled) {
+                    setApiCities(list)
+                    
+                    // Auto-select city based on IP if we're just loading for the first time
+                    if (list.length > 0 && !selectedCityId) {
+                        getUserLocation().then(ipLocation => {
+                            if (!cancelled && ipLocation && ipLocation.city) {
+                                const matchedCity = list.find((c: any) => 
+                                    c.cityName?.toLowerCase() === ipLocation.city?.toLowerCase() ||
+                                    c.cityName?.toLowerCase().includes(ipLocation.city?.toLowerCase()) ||
+                                    ipLocation.city?.toLowerCase().includes(c.cityName?.toLowerCase())
+                                )
+                                if (matchedCity) {
+                                    console.log('Auto-selecting city:', matchedCity.cityName, 'for IP location:', ipLocation.city)
+                                    setSelectedCityId(matchedCity.cityId)
+                                }
+                            }
+                        }).catch(err => console.warn('City auto-select failed:', err))
+                    }
+                }
             } catch (e) {
                 console.warn('Failed to fetch cities', e)
                 if (!cancelled) setApiCities([])
@@ -733,18 +843,18 @@ function OverviewSectionInner({
                 setDoctorDialogOpen(open)
                 if (!open) {
                     setDoctorError(null)
-                    setPrivateNetwork(null)
                     setSelectedCountryId(null)
                     setSelectedStateId(null)
                     setSelectedCityId(null)
                     setSelectedZoneId(null)
+                    setCountryLocked(false)
                 }
             }}>
                 <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
                         <DialogTitle className="text-2xl font-bold text-gray-900">Start Your 90 Day Free Trial</DialogTitle>
                         <DialogDescription className="text-gray-600">
-                            {privateNetwork === null ? 'Choose your network preference' : 'Enter your details to get started with AxonMD'}
+                            Enter your details to get started with AxonMD
                         </DialogDescription>
                     </DialogHeader>
                     {doctorError && (
@@ -753,36 +863,7 @@ function OverviewSectionInner({
                         </div>
                     )}
 
-                    {/* Private Network Selection */}
-                    {privateNetwork === null ? (
-                        <div className="space-y-6 py-6">
-                            <div className="text-center">
-                                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                                    Do you want to go with a private network or axoncare network?
-                                </h3>
-                                <p className="text-sm text-gray-600 mb-6">
-                                    Private network allows you to manage your clinic within a dedicated network infrastructure
-                                </p>
-                            </div>
-                            <div className="flex gap-4 justify-center">
-                                <Button
-                                    onClick={() => setPrivateNetwork(true)}
-                                    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-6 px-12 rounded-xl text-lg"
-                                >
-                                    Yes
-                                </Button>
-                                <Button
-                                    onClick={() => setPrivateNetwork(false)}
-                                    variant="outline"
-                                    className="border-2 border-gray-300 text-gray-800 hover:bg-gray-50 font-semibold py-6 px-12 rounded-xl text-lg"
-                                >
-                                    No
-                                </Button>
-                            </div>
-                        </div>
-                    ) : (
-                        <>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <Label htmlFor="firstName" className="text-sm font-medium text-gray-700">First name <span className="text-red-500">*</span></Label>
                             <Input 
@@ -857,49 +938,39 @@ function OverviewSectionInner({
                         </div>
                         <div>
                             <Label className="text-sm font-medium text-gray-700">Country <span className="text-red-500">*</span></Label>
-                            {privateNetwork ? (
-                                <Select 
-                                    value={selectedCountryId?.toString() || ""} 
-                                    onValueChange={(v) => {
-                                        const countryId = parseInt(v)
-                                        setSelectedCountryId(countryId)
-                                        const country = apiCountries.find(c => c.countryId === countryId)
-                                        if (country) {
-                                            setDoctor(d => ({ ...d, country: country.countryName }))
-                                        }
-                                    }}
-                                >
-                                    <SelectTrigger className="w-full mt-1">
-                                        <SelectValue placeholder={loadingCountries ? "Loading..." : "Select country"} />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {apiCountries.map(country => (
-                                            <SelectItem key={country.countryId} value={country.countryId.toString()}>
-                                                {country.countryName}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            ) : (
-                                <Select value={doctor.country} onValueChange={(v) => setDoctor(d => ({ ...d, country: v }))}>
-                                    <SelectTrigger className="w-full mt-1">
-                                        <SelectValue placeholder="Select country" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {COUNTRY_CODES.map(cc => (
-                                            <SelectItem key={cc.code} value={cc.code}>{cc.name}</SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            )}
+                            <Select 
+                                value={selectedCountryId?.toString() || ""} 
+                                onValueChange={(v) => {
+                                    if (countryLocked) return
+                                    const countryId = parseInt(v)
+                                    setSelectedCountryId(countryId)
+                                    const country = apiCountries.find(c => c.countryId === countryId)
+                                    if (country) {
+                                        setDoctor(d => ({ ...d, country: country.countryName }))
+                                    }
+                                }}
+                                disabled={countryLocked || loadingCountries}
+                            >
+                                <SelectTrigger className="w-full mt-1">
+                                    <SelectValue placeholder={loadingCountries ? "Loading..." : "Select country"} />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {apiCountries.map(country => (
+                                        <SelectItem key={country.countryId} value={country.countryId.toString()}>
+                                            {country.countryName}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
                         </div>
-                        {privateNetwork && selectedCountryId && (
+                        {selectedCountryId && (
                             <>
                                 <div>
                                     <Label className="text-sm font-medium text-gray-700">Zone <span className="text-red-500">*</span></Label>
                                     <Select 
                                         value={selectedZoneId?.toString() || ""} 
                                         onValueChange={(v) => setSelectedZoneId(parseInt(v))}
+                                        disabled={loadingZones}
                                     >
                                         <SelectTrigger className="w-full mt-1">
                                             <SelectValue placeholder={loadingZones ? "Loading..." : "Select zone"} />
@@ -918,6 +989,7 @@ function OverviewSectionInner({
                                     <Select 
                                         value={selectedStateId?.toString() || ""} 
                                         onValueChange={(v) => setSelectedStateId(parseInt(v))}
+                                        disabled={loadingStates}
                                     >
                                         <SelectTrigger className="w-full mt-1">
                                             <SelectValue placeholder={loadingStates ? "Loading..." : "Select state"} />
@@ -933,12 +1005,13 @@ function OverviewSectionInner({
                                 </div>
                             </>
                         )}
-                        {privateNetwork && selectedStateId && (
+                        {selectedStateId && (
                             <div className="sm:col-span-2">
                                 <Label className="text-sm font-medium text-gray-700">City <span className="text-red-500">*</span></Label>
                                 <Select 
                                     value={selectedCityId?.toString() || ""} 
                                     onValueChange={(v) => setSelectedCityId(parseInt(v))}
+                                    disabled={loadingCities}
                                 >
                                     <SelectTrigger className="w-full mt-1">
                                         <SelectValue placeholder={loadingCities ? "Loading..." : "Select city"} />
@@ -1037,24 +1110,22 @@ function OverviewSectionInner({
                                     return
                                 }
                                 
-                                // Validate private network fields
-                                if (privateNetwork) {
-                                    if (!selectedCountryId) {
-                                        setDoctorError('Please select your country')
-                                        return
-                                    }
-                                    if (!selectedZoneId) {
-                                        setDoctorError('Please select your zone')
-                                        return
-                                    }
-                                    if (!selectedStateId) {
-                                        setDoctorError('Please select your state')
-                                        return
-                                    }
-                                    if (!selectedCityId) {
-                                        setDoctorError('Please select your city')
-                                        return
-                                    }
+                                // Validate location fields
+                                if (!selectedCountryId) {
+                                    setDoctorError('Please select your country')
+                                    return
+                                }
+                                if (!selectedZoneId) {
+                                    setDoctorError('Please select your zone')
+                                    return
+                                }
+                                if (!selectedStateId) {
+                                    setDoctorError('Please select your state')
+                                    return
+                                }
+                                if (!selectedCityId) {
+                                    setDoctorError('Please select your city')
+                                    return
                                 }
                                 
                                 try {
@@ -1078,14 +1149,10 @@ function OverviewSectionInner({
                                         billingCycle,
                                         region: pricingRegion,
                                         doctor,
-                                        privateNetwork: privateNetwork || false,
+                                        privateNetwork: true,
                                         successUrl: `${window.location.origin}/our-products/axonmd/success/`,
                                         cancelUrl: `${window.location.origin}/our-products/axonmd/`,
-                                    }
-                                    
-                                    // Add unitMasterDto if private network
-                                    if (privateNetwork && selectedCountryId && selectedStateId && selectedCityId && selectedZoneId) {
-                                        payload.unitMasterDto = {
+                                        unitMasterDto: {
                                             countryId: selectedCountryId,
                                             stateId: selectedStateId,
                                             cityId: selectedCityId,
@@ -1118,8 +1185,6 @@ function OverviewSectionInner({
                             {loadingPlan ? 'Processing…' : 'Submit'}
                         </Button>
                     </div>
-                    </>
-                    )}
                 </DialogContent>
             </Dialog>
 
