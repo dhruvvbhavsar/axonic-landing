@@ -1130,7 +1130,38 @@ function OverviewSectionInner({
                                 
                                 try {
                                     setLoadingPlan(doctorPlan)
-                                    // Check external email existence
+                                    
+                                    // Check if email already exists
+                                    const emailCheckRes = await fetch('/api/external/check-email-exists', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({ emailId: doctor.email })
+                                    })
+                                    const emailCheck = await emailCheckRes.json()
+                                    
+                                    // If listObject array length > 0, email already exists
+                                    if (Array.isArray(emailCheck?.listObject) && emailCheck.listObject.length > 0) {
+                                        setDoctorError('This email address is already registered. Please use a different email or contact support.')
+                                        setLoadingPlan(null)
+                                        return
+                                    }
+                                    
+                                    // Check if registration number already exists
+                                    const regCheckRes = await fetch('/api/external/check-registration-exists', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({ registrationNumber: doctor.registrationNumber })
+                                    })
+                                    const regCheck = await regCheckRes.json()
+                                    
+                                    // If listObject array length > 0, registration number already exists
+                                    if (Array.isArray(regCheck?.listObject) && regCheck.listObject.length > 0) {
+                                        setDoctorError('This GMC/Medical Registration Number is already registered. Please verify your registration number or contact support.')
+                                        setLoadingPlan(null)
+                                        return
+                                    }
+                                    
+                                    // Check external email existence (existing check)
                                     const checkRes = await fetch('/api/external/check-email', {
                                         method: 'POST',
                                         headers: { 'Content-Type': 'application/json' },

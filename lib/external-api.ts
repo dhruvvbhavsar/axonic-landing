@@ -9,6 +9,8 @@ export const ExternalApiEndpoints = {
   updateDoctor: '/api/v01/updateExternalDoctorFromAI',
   addressData: '/api/v01/addressDataWithId',
   zones: '/api/v01/getAllZones',
+  checkEmailExists: '/api/v01/getAlreadyExistsEmailIds',
+  checkRegistrationExists: '/api/v01/getAlreadyExistsGMCNumber',
 }
 
 export function buildExternalUrl(path: string): string {
