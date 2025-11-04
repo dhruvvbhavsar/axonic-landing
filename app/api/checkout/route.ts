@@ -29,19 +29,18 @@ function getCurrencyForRegion(region: Region): 'inr' | 'gbp' {
 
 function getUnitAmountCents(plan: Plan, billingCycle: BillingCycle, region: Region): number {
   // All amounts are in the smallest currency unit (paise or pence)
-  // Ensuring minimum £1 for GBP and ₹1 for INR to meet Stripe's minimum charge requirements
   if (plan === 'professional') {
     if (region === 'UK') {
-      return billingCycle === 'monthly' ? Math.max(100, 10000) : Math.max(100, 72000) // £100/mo or £720/year (min £1)
+      return billingCycle === 'monthly' ? 10000 : 72000 // £100/mo or £720/year
     }
-    return billingCycle === 'monthly' ? Math.max(100, 200000) : Math.max(100, 1500000) // ₹2000/mo or ₹15000/year (min ₹1)
+    return billingCycle === 'monthly' ? 200000 : 1500000 // ₹2000/mo or ₹15000/year
   }
 
   // advanced
   if (region === 'UK') {
-    return billingCycle === 'monthly' ? Math.max(100, 12500) : Math.max(100, 90000) // £125/mo or £900/year (min £1)
+    return billingCycle === 'monthly' ? 12500 : 90000 // £125/mo or £900/year
   }
-  return billingCycle === 'monthly' ? Math.max(100, 250000) : Math.max(100, 1800000) // ₹2500/mo or ₹18000/year (min ₹1)
+  return billingCycle === 'monthly' ? 250000 : 1800000 // ₹2500/mo or ₹18000/year
 }
 
 function getInterval(billingCycle: BillingCycle): 'month' | 'year' {
@@ -161,29 +160,45 @@ export async function POST(request: NextRequest) {
         unit_city_id: body.unitMasterDto?.cityId?.toString() || '',
         unit_zone_id: body.unitMasterDto?.zoneId?.toString() || '',
       },
-      line_items: mappedPriceId
-        ? [
-            {
-              price: mappedPriceId,
-              quantity: 1,
+      line_items: [
+        // Immediate one-time charge of ₹1 or £1 to ensure email receipt is sent
+        // This can be refunded immediately after checkout
+        {
+          price_data: {
+            currency,
+            product_data: {
+              name: 'AxonMD Setup Fee',
+              description: 'One-time setup and onboarding fee (refundable)',
             },
-          ]
-        : [
-            {
-              price_data: {
-                currency,
-                product_data: {
-                  name: `Axon MD ${plan === 'professional' ? 'Professional' : 'Advanced'} (${region}, ${billingCycle})`,
-                },
-                unit_amount: unitAmount,
-                recurring: {
-                  interval,
-                  interval_count: 1,
-                },
+            unit_amount: 100, // ₹1 or £1 (100 paise/pence)
+          },
+          quantity: 1,
+        },
+        // Add the subscription line item
+        ...(mappedPriceId
+          ? [
+              {
+                price: mappedPriceId,
+                quantity: 1,
               },
-              quantity: 1,
-            },
-          ],
+            ]
+          : [
+              {
+                price_data: {
+                  currency,
+                  product_data: {
+                    name: `Axon MD ${plan === 'professional' ? 'Professional' : 'Advanced'} (${region}, ${billingCycle})`,
+                  },
+                  unit_amount: unitAmount,
+                  recurring: {
+                    interval,
+                    interval_count: 1,
+                  },
+                },
+                quantity: 1,
+              },
+            ]),
+      ],
       subscription_data: {
         trial_period_days: 90,
         metadata: {

@@ -199,6 +199,51 @@ export async function POST(request: NextRequest) {
         console.error('[doctor-save] network error', e)
       })
       console.log('[doctor-save] response', await response?.json())
+
+      // Automatically refund the ₹1/£1 setup fee
+      try {
+        const paymentIntentId = session?.payment_intent
+        if (paymentIntentId && typeof paymentIntentId === 'string') {
+          // Retrieve the payment intent to get charge details
+          const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId)
+          const chargeId = paymentIntent?.latest_charge
+          
+          if (chargeId && typeof chargeId === 'string') {
+            // Retrieve charge to check line items
+            const charge = await stripe.charges.retrieve(chargeId)
+            
+            // Refund only the setup fee amount (100 paise/pence = ₹1/£1)
+            // The setup fee is 100 in smallest currency unit
+            const setupFeeAmount = 100
+            
+            const refund = await stripe.refunds.create({
+              charge: chargeId,
+              amount: setupFeeAmount,
+              reason: 'requested_by_customer',
+              metadata: {
+                reason: 'Automatic refund of AxonMD setup fee',
+                session_id: session?.id || '',
+                customer_email: (session?.customer_details?.email || session?.customer_email || '').toString(),
+              },
+            })
+            
+            console.log('[auto-refund] Setup fee refunded successfully', {
+              refund_id: refund.id,
+              amount: setupFeeAmount,
+              currency: charge.currency,
+              charge_id: chargeId,
+              session_id: session?.id,
+            })
+          } else {
+            console.log('[auto-refund] No charge found for payment intent:', paymentIntentId)
+          }
+        } else {
+          console.log('[auto-refund] No payment intent found in session')
+        }
+      } catch (refundError: any) {
+        console.error('[auto-refund] Failed to refund setup fee:', refundError?.message || refundError)
+        // Don't throw - we still want the webhook to succeed even if refund fails
+      }
     } catch (e) {
       console.error('[doctor-save] transform error', e)
     }
