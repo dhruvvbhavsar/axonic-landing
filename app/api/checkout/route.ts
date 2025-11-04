@@ -194,6 +194,19 @@ export async function POST(request: NextRequest) {
       },
       billing_address_collection: 'required',
       automatic_tax: { enabled: false },
+      invoice_creation: {
+        enabled: true,
+        invoice_data: {
+          description: `AxonMD ${plan === 'professional' ? 'Professional' : 'Advanced'} Plan - 90 Day Free Trial`,
+          metadata: {
+            doctor_name: `${body.doctor?.firstName || ''} ${body.doctor?.lastName || ''}`.trim(),
+            plan,
+            billingCycle,
+            region,
+          },
+          footer: 'Thank you for choosing AxonMD. For support, contact us at support@axonichealth.com',
+        },
+      },
     })
 
     return NextResponse.json({ url: session.url })
