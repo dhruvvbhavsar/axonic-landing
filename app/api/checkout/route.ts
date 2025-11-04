@@ -89,22 +89,34 @@ export async function POST(request: NextRequest) {
     const SANDBOX_PRICE_IDS: Record<Region, Record<Plan, Record<BillingCycle, string>>> = {
       UK: {
         professional: {
-          monthly: 'price_1SDLP003TVi4FRa6kCJYA869',
-          yearly: 'price_1SDLP003TVi4FRa6mwYKp0GM',
+          // monthly: 'price_1SDLP003TVi4FRa6kCJYA869',
+          // yearly: 'price_1SDLP003TVi4FRa6mwYKp0GM',
+
+          monthly: 'price_1SPcZqP10jvuKxaDFladS0Un',
+          yearly: 'price_1SPcZqP10jvuKxaDQlmDZatE',
         },
         advanced: {
-          monthly: 'price_1SDLRG03TVi4FRa6owv5oN7F',
-          yearly: 'price_1SDLRG03TVi4FRa6VV0GCe0j',
+          // monthly: 'price_1SDLRG03TVi4FRa6owv5oN7F',
+          // yearly: 'price_1SDLRG03TVi4FRa6VV0GCe0j',
+
+          monthly: 'price_1SPcZmP10jvuKxaD1wG0AJc6',
+          yearly: 'price_1SPcZmP10jvuKxaDMVwdvrYh',
         },
       },
       India: {
         professional: {
-          monthly: 'price_1SDLP003TVi4FRa6pHsl7y9f',
-          yearly: 'price_1SDLP003TVi4FRa65Y1vyh80',
+          // monthly: 'price_1SDLP003TVi4FRa6pHsl7y9f',
+          // yearly: 'price_1SDLP003TVi4FRa65Y1vyh80',
+
+          monthly: 'price_1SPcZqP10jvuKxaDGDQ075i4',
+          yearly: 'price_1SPcZqP10jvuKxaDnqLu4IwG',
         },
         advanced: {
-          monthly: 'price_1SDLRG03TVi4FRa6bPT3CHU0',
-          yearly: 'price_1SDLRG03TVi4FRa6C7jF9sfq',
+          // monthly: 'price_1SDLRG03TVi4FRa6bPT3CHU0',
+          // yearly: 'price_1SDLRG03TVi4FRa6C7jF9sfq',
+
+          monthly: 'price_1SPcZmP10jvuKxaD4Xne3ZxR',
+          yearly: 'price_1SPcZmP10jvuKxaDCknV0mNV',
         },
       },
     }
