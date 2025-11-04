@@ -29,18 +29,19 @@ function getCurrencyForRegion(region: Region): 'inr' | 'gbp' {
 
 function getUnitAmountCents(plan: Plan, billingCycle: BillingCycle, region: Region): number {
   // All amounts are in the smallest currency unit (paise or pence)
+  // Ensuring minimum £1 for GBP and ₹1 for INR to meet Stripe's minimum charge requirements
   if (plan === 'professional') {
     if (region === 'UK') {
-      return billingCycle === 'monthly' ? 10000 : 72000 // £100/mo or £720/year
+      return billingCycle === 'monthly' ? Math.max(100, 10000) : Math.max(100, 72000) // £100/mo or £720/year (min £1)
     }
-    return billingCycle === 'monthly' ? 200000 : 1500000 // ₹2000/mo or ₹15000/year
+    return billingCycle === 'monthly' ? Math.max(100, 200000) : Math.max(100, 1500000) // ₹2000/mo or ₹15000/year (min ₹1)
   }
 
   // advanced
   if (region === 'UK') {
-    return billingCycle === 'monthly' ? 12500 : 90000 // £125/mo or £900/year
+    return billingCycle === 'monthly' ? Math.max(100, 12500) : Math.max(100, 90000) // £125/mo or £900/year (min £1)
   }
-  return billingCycle === 'monthly' ? 250000 : 1800000 // ₹2500/mo or ₹18000/year
+  return billingCycle === 'monthly' ? Math.max(100, 250000) : Math.max(100, 1800000) // ₹2500/mo or ₹18000/year (min ₹1)
 }
 
 function getInterval(billingCycle: BillingCycle): 'month' | 'year' {
