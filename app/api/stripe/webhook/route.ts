@@ -211,45 +211,8 @@ export async function POST(request: NextRequest) {
       const session = (event as any).data?.object as Stripe.Checkout.Session
       const md = (session?.metadata || {}) as Record<string, string>
 
-      // Send receipt email for the invoice if it exists using our email service
-      try {
-        const invoiceId = session?.invoice
-        const customerEmail = (session?.customer_details?.email || session?.customer_email || '').toString()
-        
-        if (invoiceId && typeof invoiceId === 'string' && customerEmail) {
-          const invoice = await stripe.invoices.retrieve(invoiceId)
-          const plan = md.plan || 'professional'
-          const billingCycle = md.billingCycle || 'monthly'
-          const region = md.region || 'India'
-          
-          // For trial subscriptions, finalize draft invoices first
-          if (invoice.status === 'draft') {
-            try {
-              const finalizedInvoice = await stripe.invoices.finalizeInvoice(invoiceId)
-              if (finalizedInvoice.status === 'open' && finalizedInvoice.amount_due > 0) {
-                await stripe.invoices.pay(invoiceId)
-              }
-              // Retrieve updated invoice after finalization
-              const updatedInvoice = await stripe.invoices.retrieve(invoiceId)
-              await sendReceiptEmail(updatedInvoice, customerEmail, plan, billingCycle, region)
-            } catch (finalizeError: any) {
-              // If finalization fails, try sending with draft invoice anyway
-              console.log('[receipt-email] Finalization note:', finalizeError?.message)
-              await sendReceiptEmail(invoice, customerEmail, plan, billingCycle, region)
-            }
-          } else if (invoice.status === 'paid' || invoice.status === 'open') {
-            // Send receipt for paid or open invoices
-            await sendReceiptEmail(invoice, customerEmail, plan, billingCycle, region)
-          }
-        } else {
-          // No invoice yet - Stripe will create one automatically for subscriptions
-          // We'll handle it in invoice.payment_succeeded event
-          console.log('[receipt-email] No invoice or email found in session, will send on invoice.payment_succeeded')
-        }
-      } catch (receiptError: any) {
-        console.error('[receipt-email] Failed to send receipt email:', receiptError?.message || receiptError)
-        // Don't throw - continue with webhook processing
-      }
+      // Note: Receipt emails are sent via invoice.payment_succeeded event to avoid duplicates
+      // Only handle doctor registration here, not email sending
 
       const plan = md.plan || ''
       const billingCycle = md.billingCycle || 'monthly'
@@ -393,10 +356,26 @@ export async function POST(request: NextRequest) {
       }
 
       // Send receipt email for successful payment using our email service
+      // This is the single source of truth for receipt emails to avoid duplicates
       try {
         const invoiceId = invoice?.id
         if (invoiceId && typeof invoiceId === 'string') {
-          const invoiceObj = await stripe.invoices.retrieve(invoiceId)
+          let invoiceObj = await stripe.invoices.retrieve(invoiceId)
+          
+          // For draft invoices (common with trial signups), finalize first
+          if (invoiceObj.status === 'draft') {
+            try {
+              const finalizedInvoice = await stripe.invoices.finalizeInvoice(invoiceId)
+              if (finalizedInvoice.status === 'open' && finalizedInvoice.amount_due > 0) {
+                await stripe.invoices.pay(invoiceId)
+              }
+              // Retrieve updated invoice after finalization
+              invoiceObj = await stripe.invoices.retrieve(invoiceId)
+            } catch (finalizeError: any) {
+              console.log('[receipt-email] Finalization note:', finalizeError?.message)
+              // Continue with draft invoice if finalization fails
+            }
+          }
           
           // Get customer email
           let customerEmail = (invoiceObj.customer_email || '') as string
@@ -414,8 +393,8 @@ export async function POST(request: NextRequest) {
           const billingCycle = (subscription as any)?.metadata?.billingCycle || ''
           const region = (subscription as any)?.metadata?.region || ''
           
-          // Send receipt email if invoice is paid and we have customer email
-          if (invoiceObj.status === 'paid' && customerEmail) {
+          // Send receipt email if invoice is paid (or open for $0 trial invoices) and we have customer email
+          if ((invoiceObj.status === 'paid' || (invoiceObj.status === 'open' && invoiceObj.amount_paid === 0)) && customerEmail) {
             await sendReceiptEmail(invoiceObj, customerEmail, plan, billingCycle, region)
           }
         }
