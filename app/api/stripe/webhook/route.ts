@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { COUNTRY_CODES } from '@/lib/country-codes'
-import { buildExternalUrl, ExternalApiEndpoints } from '@/lib/external-api'
+import { buildExternalUrlFromRequest, ExternalApiEndpoints } from '@/lib/external-api'
 
 function getCountryNameFromCode(code?: string | null): string | undefined {
   if (!code) return undefined
@@ -282,7 +282,7 @@ export async function POST(request: NextRequest) {
       }
 
       // Placeholder endpoint; backend will provide actual URL
-      const backendUrl = buildExternalUrl(ExternalApiEndpoints.saveDoctor)
+      const backendUrl = buildExternalUrlFromRequest(request, ExternalApiEndpoints.saveDoctor)
       console.log('[doctor-save] payload', payload)
       const response = await fetch(backendUrl, {
         method: 'POST',
@@ -449,7 +449,7 @@ export async function POST(request: NextRequest) {
         subscriptionPaymentDetails: JSON.stringify(paymentDetails),
       }
 
-      const updateUrl = buildExternalUrl(ExternalApiEndpoints.updateDoctor)
+      const updateUrl = buildExternalUrlFromRequest(request, ExternalApiEndpoints.updateDoctor)
       console.log('[doctor-update] payload', payload)
       const response = await fetch(updateUrl, {
         method: 'POST',
@@ -486,7 +486,7 @@ export async function POST(request: NextRequest) {
       const cancelRemoved = previous?.cancel_at_period_end === true && sub?.cancel_at_period_end === false
 
       // Build payload per spec
-      const updateUrl = buildExternalUrl(ExternalApiEndpoints.updateDoctor)
+      const updateUrl = buildExternalUrlFromRequest(request, ExternalApiEndpoints.updateDoctor)
       if (cancelScheduled) {
         // Skip initial toggle events that only mark cancellation_requested
         const reason = sub?.cancellation_details?.feedback || sub?.cancellation_details?.reason
@@ -564,7 +564,7 @@ export async function POST(request: NextRequest) {
         subscriptionEndDate: formatDdMmYyyy(finalEndIso),
         cancellationReason: sub?.cancellation_details?.feedback || sub?.cancellation_details?.reason || 'subscription_deleted',
       }
-      const updateUrl = buildExternalUrl(ExternalApiEndpoints.updateDoctor)
+      const updateUrl = buildExternalUrlFromRequest(request, ExternalApiEndpoints.updateDoctor)
       console.log('[doctor-update][subscription.deleted] payload', payload)
       try {
         const resp = await fetch(updateUrl, {

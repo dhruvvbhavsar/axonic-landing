@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { COUNTRY_CODES } from "@/lib/country-codes"
 import Link from "next/link"
+import { useExternalApiHeader } from "@/components/external-api-switcher"
 
 type Feature = { title: string; description: string; image: string }
 
@@ -105,6 +106,8 @@ function OverviewSectionInner({
     const [manageError, setManageError] = React.useState<string | null>(null)
     const [manageSuccess, setManageSuccess] = React.useState(false)
 
+    const apiHeader = useExternalApiHeader()
+
     const validateEmail = React.useCallback((email: string): boolean => {
         // Disallow '+' in local part (before @)
         const parts = email.split('@')
@@ -131,7 +134,7 @@ function OverviewSectionInner({
             // Check if email exists in system
             const checkRes = await fetch('/api/external/check-email-exists', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', ...apiHeader },
                 body: JSON.stringify({ emailId: manageEmail })
             })
             const checkData = await checkRes.json()
@@ -161,7 +164,7 @@ function OverviewSectionInner({
         } finally {
             setManageSubmitting(false)
         }
-    }, [manageEmail, validateEmail])
+    }, [manageEmail, validateEmail, apiHeader])
 
     const resetManageDialog = React.useCallback(() => {
         setManageEmail('')
@@ -176,7 +179,9 @@ function OverviewSectionInner({
         const fetchSpecialities = async () => {
             setLoadingSpecialities(true)
             try {
-                const res = await fetch('/api/specialties')
+                const res = await fetch('/api/specialties', {
+                    headers: apiHeader
+                })
                 if (!res.ok) throw new Error('Failed to load specialities')
                 const data = await res.json()
                 const list = Array.isArray(data?.list) ? data.list as string[] : []
@@ -190,7 +195,7 @@ function OverviewSectionInner({
         }
         fetchSpecialities()
         return () => { cancelled = true }
-    }, [doctorDialogOpen])
+    }, [doctorDialogOpen, apiHeader])
 
     // Fetch countries and zones when dialog opens
     React.useEffect(() => {
@@ -200,7 +205,9 @@ function OverviewSectionInner({
         const fetchCountries = async () => {
             setLoadingCountries(true)
             try {
-                const res = await fetch('/api/address/countries')
+                const res = await fetch('/api/address/countries', {
+                    headers: apiHeader
+                })
                 if (!res.ok) throw new Error('Failed to load countries')
                 const data = await res.json()
                 const list = Array.isArray(data?.list) ? data.list : []
@@ -218,7 +225,9 @@ function OverviewSectionInner({
         const fetchZones = async () => {
             setLoadingZones(true)
             try {
-                const res = await fetch('/api/zones')
+                const res = await fetch('/api/zones', {
+                    headers: apiHeader
+                })
                 if (!res.ok) throw new Error('Failed to load zones')
                 const data = await res.json()
                 const list = Array.isArray(data?.list) ? data.list : []
@@ -288,7 +297,7 @@ function OverviewSectionInner({
         
         fetchAndPopulateLocation()
         return () => { cancelled = true }
-    }, [doctorDialogOpen])
+    }, [doctorDialogOpen, apiHeader])
 
     // Fetch states when country is selected
     React.useEffect(() => {
@@ -303,7 +312,9 @@ function OverviewSectionInner({
         const fetchStates = async () => {
             setLoadingStates(true)
             try {
-                const res = await fetch(`/api/address/states?countryId=${selectedCountryId}`)
+                const res = await fetch(`/api/address/states?countryId=${selectedCountryId}`, {
+                    headers: apiHeader
+                })
                 if (!res.ok) throw new Error('Failed to load states')
                 const data = await res.json()
                 const list = Array.isArray(data?.list) ? data.list : []
@@ -336,7 +347,7 @@ function OverviewSectionInner({
         }
         fetchStates()
         return () => { cancelled = true }
-    }, [selectedCountryId])
+    }, [selectedCountryId, apiHeader])
 
     // Fetch cities when state is selected
     React.useEffect(() => {
@@ -349,7 +360,9 @@ function OverviewSectionInner({
         const fetchCities = async () => {
             setLoadingCities(true)
             try {
-                const res = await fetch(`/api/address/cities?stateId=${selectedStateId}`)
+                const res = await fetch(`/api/address/cities?stateId=${selectedStateId}`, {
+                    headers: apiHeader
+                })
                 if (!res.ok) throw new Error('Failed to load cities')
                 const data = await res.json()
                 const list = Array.isArray(data?.list) ? data.list : []
@@ -382,7 +395,7 @@ function OverviewSectionInner({
         }
         fetchCities()
         return () => { cancelled = true }
-    }, [selectedStateId])
+    }, [selectedStateId, apiHeader])
 
     // Set default pricing region based on user IP
     React.useEffect(() => {
@@ -1135,7 +1148,7 @@ function OverviewSectionInner({
                                     // Check if email already exists
                                     const emailCheckRes = await fetch('/api/external/check-email-exists', {
                                         method: 'POST',
-                                        headers: { 'Content-Type': 'application/json' },
+                                        headers: { 'Content-Type': 'application/json', ...apiHeader },
                                         body: JSON.stringify({ emailId: doctor.email })
                                     })
                                     const emailCheck = await emailCheckRes.json()
@@ -1150,7 +1163,7 @@ function OverviewSectionInner({
                                     // Check if registration number already exists
                                     const regCheckRes = await fetch('/api/external/check-registration-exists', {
                                         method: 'POST',
-                                        headers: { 'Content-Type': 'application/json' },
+                                        headers: { 'Content-Type': 'application/json', ...apiHeader },
                                         body: JSON.stringify({ registrationNumber: doctor.registrationNumber })
                                     })
                                     const regCheck = await regCheckRes.json()

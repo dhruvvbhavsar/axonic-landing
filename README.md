@@ -38,3 +38,43 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## External API Base Switcher (Development Only)
+
+The application includes a runtime API base switcher that allows developers to switch between different external API endpoints without redeploying the application. This feature is only available in development and local environments.
+
+### Environment Variables
+
+The switcher visibility is controlled by the `NEXT_PUBLIC_RUNTIME_ENV` environment variable:
+
+- `NEXT_PUBLIC_RUNTIME_ENV=dev` - Enables the switcher and allows switching between QA and PP endpoints
+- `NEXT_PUBLIC_RUNTIME_ENV=local` - Enables the switcher and allows switching between QA and PP endpoints
+- Any other value or unset - Switcher is hidden and all requests use the production endpoint (`https://axonmd.axonichealth.co.in`)
+
+### Available API Bases
+
+The switcher allows switching between three external API endpoints:
+
+1. **AxonMD (Production)**: `https://axonmd.axonichealth.co.in` - Default production endpoint
+2. **OCIPMS QA**: `https://ocipmsqa.axonichealth.com` - QA/testing endpoint
+3. **OCICliniq PP**: `https://ocicliniqpp.cliniq.in` - Pre-production endpoint
+
+### How It Works
+
+1. In development/local environments, a floating button appears in the bottom-right corner of the page.
+2. Clicking the button opens a dropdown to select the desired API base.
+3. The selection is stored in `localStorage` and persists across page reloads.
+4. All API requests from the client include an `x-external-api` header with the selected alias.
+5. Server-side API routes read this header and route requests to the corresponding external API base.
+6. In production (when `NEXT_PUBLIC_RUNTIME_ENV` is not set to `dev` or `local`), the switcher is hidden and all requests automatically use the AxonMD production endpoint.
+
+### Usage
+
+To enable the switcher in a production build for testing:
+
+```bash
+NEXT_PUBLIC_RUNTIME_ENV=dev npm run build
+NEXT_PUBLIC_RUNTIME_ENV=dev npm start
+```
+
+The switcher will appear and allow runtime switching between API bases without redeployment.

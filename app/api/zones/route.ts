@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { buildExternalUrl, ExternalApiEndpoints } from '@/lib/external-api'
+import { buildExternalUrlFromRequest, ExternalApiEndpoints } from '@/lib/external-api'
 
-export async function GET(_request: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
-    const url = buildExternalUrl(ExternalApiEndpoints.zones)
+    const url = buildExternalUrlFromRequest(request, ExternalApiEndpoints.zones)
     const upstream = await fetch(url, {
       method: 'GET',
       cache: 'no-store',
