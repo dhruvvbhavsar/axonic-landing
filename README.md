@@ -53,11 +53,14 @@ The switcher visibility is controlled by the `NEXT_PUBLIC_RUNTIME_ENV` environme
 
 ### Available API Bases
 
-The switcher allows switching between three external API endpoints:
+The switcher allows switching between five external API endpoints (in dev/local only):
 
-1. **AxonMD (Production)**: `https://axonmd.axonichealth.co.in` - Default production endpoint
-2. **OCIPMS QA**: `https://ocipmsqa.axonichealth.com` - QA/testing endpoint
-3. **OCICliniq PP**: `https://ocicliniqpp.cliniq.in` - Pre-production endpoint
+1. **OCIPMS QA**: `https://ocipmsqa.axonichealth.com` - QA/testing endpoint
+2. **OCICliniq PP**: `https://ocicliniqpp.cliniq.in` - Pre-production endpoint
+3. **Staging**: `https://pmstest.axonichealth.co.in` - Staging environment
+4. **Hotfix**: `https://ocipmsqahf.axonichealth.com` - Hotfix environment
+
+Production always uses: **`https://axonmd.axonichealth.co.in`** (not accessible via switcher)
 
 ### How It Works
 

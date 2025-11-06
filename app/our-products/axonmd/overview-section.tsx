@@ -107,6 +107,7 @@ function OverviewSectionInner({
     const [manageSuccess, setManageSuccess] = React.useState(false)
 
     const apiHeader = useExternalApiHeader()
+    const apiHeaderString = JSON.stringify(apiHeader)
 
     const validateEmail = React.useCallback((email: string): boolean => {
         // Disallow '+' in local part (before @)
@@ -164,7 +165,7 @@ function OverviewSectionInner({
         } finally {
             setManageSubmitting(false)
         }
-    }, [manageEmail, validateEmail, apiHeader])
+    }, [manageEmail, validateEmail, apiHeaderString])
 
     const resetManageDialog = React.useCallback(() => {
         setManageEmail('')
@@ -195,7 +196,7 @@ function OverviewSectionInner({
         }
         fetchSpecialities()
         return () => { cancelled = true }
-    }, [doctorDialogOpen, apiHeader])
+    }, [doctorDialogOpen, apiHeaderString])
 
     // Fetch countries and zones when dialog opens
     React.useEffect(() => {
@@ -297,7 +298,7 @@ function OverviewSectionInner({
         
         fetchAndPopulateLocation()
         return () => { cancelled = true }
-    }, [doctorDialogOpen, apiHeader])
+    }, [doctorDialogOpen, apiHeaderString])
 
     // Fetch states when country is selected
     React.useEffect(() => {
@@ -347,7 +348,7 @@ function OverviewSectionInner({
         }
         fetchStates()
         return () => { cancelled = true }
-    }, [selectedCountryId, apiHeader])
+    }, [selectedCountryId, apiHeaderString])
 
     // Fetch cities when state is selected
     React.useEffect(() => {
@@ -395,7 +396,7 @@ function OverviewSectionInner({
         }
         fetchCities()
         return () => { cancelled = true }
-    }, [selectedStateId, apiHeader])
+    }, [selectedStateId, apiHeaderString])
 
     // Set default pricing region based on user IP
     React.useEffect(() => {

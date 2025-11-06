@@ -12,10 +12,12 @@ const STORAGE_KEY = 'external-api-alias'
 const DEV_EXTERNAL_API_LABELS: Record<Exclude<ExternalApiAlias, 'axonmd'>, string> = {
   ocipmsqa: 'OCIPMS QA',
   ocicliniqpp: 'OCICliniq PP',
+  staging: 'Staging',
+  hotfix: 'Hotfix',
 }
 
 const EXTERNAL_API_LABELS: Record<ExternalApiAlias, string> = {
-  axonmd: 'AxonMD (Production)',
+  axonmd: 'Production',
   ...DEV_EXTERNAL_API_LABELS,
 }
 
@@ -69,8 +71,14 @@ export function useExternalApiHeader(): Record<string, string> {
 export function ExternalApiSwitcher() {
   const { alias, setAlias } = React.useContext(ExternalApiContext)
   const [isOpen, setIsOpen] = React.useState(false)
+  const [mounted, setMounted] = React.useState(false)
 
-  if (!isDevLikeEnv()) {
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  // Don't render anything until mounted to avoid hydration mismatch
+  if (!mounted || !isDevLikeEnv()) {
     return null
   }
 

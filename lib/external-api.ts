@@ -1,11 +1,13 @@
 import { NextRequest } from 'next/server'
 
-export type ExternalApiAlias = 'axonmd' | 'ocipmsqa' | 'ocicliniqpp'
+export type ExternalApiAlias = 'axonmd' | 'ocipmsqa' | 'ocicliniqpp' | 'staging' | 'hotfix'
 
 const EXTERNAL_BASES: Record<ExternalApiAlias, string> = {
   axonmd: 'https://axonmd.axonichealth.co.in',
   ocipmsqa: 'https://ocipmsqa.axonichealth.com',
   ocicliniqpp: 'https://ocicliniqpp.cliniq.in',
+  staging: 'https://pmstest.axonichealth.co.in',
+  hotfix: 'https://ocipmsqahf.axonichealth.com',
 }
 
 function isDevLikeEnv(): boolean {

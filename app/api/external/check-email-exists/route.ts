@@ -8,6 +8,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'emailId is required' }, { status: 400 })
     }
     const url = buildExternalUrlFromRequest(request, ExternalApiEndpoints.checkEmailExists)
+    console.log('url', url)
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
