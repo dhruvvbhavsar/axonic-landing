@@ -129,14 +129,15 @@ function OverviewSectionInner({
 
         try {
             // Check if email exists in system
-            const checkRes = await fetch('/api/external/check-email', {
+            const checkRes = await fetch('/api/external/check-email-exists', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ emailId: manageEmail })
             })
             const checkData = await checkRes.json()
             
-            if (checkData?.code === 'noData') {
+            // If listObject array is empty or doesn't exist, email is not found
+            if (!Array.isArray(checkData?.listObject) || checkData.listObject.length === 0) {
                 setManageError('No account found with this email. Please start a trial first or contact support.')
                 return
             }
@@ -1160,19 +1161,6 @@ function OverviewSectionInner({
                                     // If listObject array length > 0, registration number already exists
                                     if (Array.isArray(regCheck?.listObject) && regCheck.listObject.length > 0) {
                                         setDoctorError('This GMC/Medical Registration Number is already registered. Please verify your registration number or contact support.')
-                                        setLoadingPlan(null)
-                                        return
-                                    }
-                                    
-                                    // Check external email existence (existing check)
-                                    const checkRes = await fetch('/api/external/check-email', {
-                                        method: 'POST',
-                                        headers: { 'Content-Type': 'application/json' },
-                                        body: JSON.stringify({ emailId: doctor.email, registrationNumber: doctor.registrationNumber })
-                                    })
-                                    const check = await checkRes.json()
-                                    if (check?.code !== 'noData') {
-                                        setDoctorError('An account with this email already exists. Please use "Manage subscriptions" to update your plan or contact support.')
                                         setLoadingPlan(null)
                                         return
                                     }
