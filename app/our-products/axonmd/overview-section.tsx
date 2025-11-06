@@ -29,11 +29,29 @@ async function getUserRegion(): Promise<'UK' | 'India'> {
         } else if (data.country_code === 'GB') {
             return 'UK'
         } else {
-            return 'UK' 
+            return 'India' // Default to India for AxonMD
         }
     } catch (error) {
         console.warn('Failed to detect user location, defaulting to India:', error)
-        return 'UK'
+        return 'India'
+    }
+}
+
+async function getUserLocation() {
+    try {
+        const response = await fetch('https://ipapi.co/json/')
+        const data = await response.json()
+        return {
+            country: data.country_name || data.country || '',
+            countryCode: data.country_code || '',
+            state: data.region || '',
+            city: data.city || '',
+            timezone: data.timezone || '',
+            region_code: data.region_code || '',
+        }
+    } catch (error) {
+        console.warn('Failed to detect user location:', error)
+        return null
     }
 }
 
@@ -49,115 +67,321 @@ function OverviewSectionInner({
     const [pricingRegion, setPricingRegion] = React.useState<'UK' | 'India'>("India")
     const [billingCycle, setBillingCycle] = React.useState<'monthly' | 'yearly'>("monthly")
     const appRedirectUrl = product?.redirectUrl || "https://axonmd.axonichealth.com"
-    // Doctor dialog state - commented out as requested
-    // const [loadingPlan, setLoadingPlan] = React.useState<string | null>(null)
-    // const [doctorDialogOpen, setDoctorDialogOpen] = React.useState(false)
-    // const [doctorPlan, setDoctorPlan] = React.useState<'professional' | 'advanced' | null>(null)
-    // const [doctorError, setDoctorError] = React.useState<string | null>(null)
-    // const [doctor, setDoctor] = React.useState({
-    //     firstName: "",
-    //     lastName: "",
-    //     gender: "",
-    //     speciality: "",
-    //     country: "IN",
-    //     registrationNumber: "",
-    //     email: "",
-    //     countryCode: "+91",
-    //     phone: "",
-    // })
-    // Specialities state - commented out as requested
-    // const [specialities, setSpecialities] = React.useState<string[]>([])
-    // const [loadingSpecialities, setLoadingSpecialities] = React.useState(false)
-    // Manage subscription state - commented out as requested
-    // const [manageOpen, setManageOpen] = React.useState(false)
-    // const [manageEmail, setManageEmail] = React.useState("")
-    // const [manageSubmitting, setManageSubmitting] = React.useState(false)
-    // const [manageError, setManageError] = React.useState<string | null>(null)
-    // const [manageSuccess, setManageSuccess] = React.useState(false)
+    const [loadingPlan, setLoadingPlan] = React.useState<string | null>(null)
+    const [doctorDialogOpen, setDoctorDialogOpen] = React.useState(false)
+    const [doctorPlan, setDoctorPlan] = React.useState<'professional' | 'advanced' | null>(null)
+    const [doctorError, setDoctorError] = React.useState<string | null>(null)
+    const [privateNetwork, setPrivateNetwork] = React.useState<boolean>(true)
+    const [doctor, setDoctor] = React.useState({
+        firstName: "",
+        lastName: "",
+        gender: "",
+        speciality: "",
+        country: "IN",
+        registrationNumber: "",
+        email: "",
+        countryCode: "+91",
+        phone: "",
+    })
+    const [apiCountries, setApiCountries] = React.useState<any[]>([])
+    const [apiStates, setApiStates] = React.useState<any[]>([])
+    const [apiCities, setApiCities] = React.useState<any[]>([])
+    const [apiZones, setApiZones] = React.useState<any[]>([])
+    const [selectedCountryId, setSelectedCountryId] = React.useState<number | null>(null)
+    const [selectedStateId, setSelectedStateId] = React.useState<number | null>(null)
+    const [selectedCityId, setSelectedCityId] = React.useState<number | null>(null)
+    const [selectedZoneId, setSelectedZoneId] = React.useState<number | null>(null)
+    const [loadingCountries, setLoadingCountries] = React.useState(false)
+    const [loadingStates, setLoadingStates] = React.useState(false)
+    const [loadingCities, setLoadingCities] = React.useState(false)
+    const [loadingZones, setLoadingZones] = React.useState(false)
+    const [specialities, setSpecialities] = React.useState<string[]>([])
+    const [loadingSpecialities, setLoadingSpecialities] = React.useState(false)
+    const [loadingLocation, setLoadingLocation] = React.useState(false)
+    const [countryLocked, setCountryLocked] = React.useState(false)
+    const [manageOpen, setManageOpen] = React.useState(false)
+    const [manageEmail, setManageEmail] = React.useState("")
+    const [manageSubmitting, setManageSubmitting] = React.useState(false)
+    const [manageError, setManageError] = React.useState<string | null>(null)
+    const [manageSuccess, setManageSuccess] = React.useState(false)
 
     const validateEmail = React.useCallback((email: string): boolean => {
+        // Disallow '+' in local part (before @)
+        const parts = email.split('@')
+        if (parts.length !== 2) return false
+        if (parts[0].includes('+')) return false
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
     }, [])
 
-    // Manage subscription functions - commented out as requested
-    // const handleManageSubmit = React.useCallback(async () => {
-    //     if (!manageEmail.trim()) {
-    //         setManageError('Please enter your email address')
-    //         return
-    //     }
-    //     if (!validateEmail(manageEmail)) {
-    //         setManageError('Please enter a valid email address')
-    //         return
-    //     }
+    const handleManageSubmit = React.useCallback(async () => {
+        if (!manageEmail.trim()) {
+            setManageError('Please enter your email address')
+            return
+        }
+        if (!validateEmail(manageEmail)) {
+            setManageError('Please enter a valid email address')
+            return
+        }
 
-    //     setManageSubmitting(true)
-    //     setManageError(null)
-    //     setManageSuccess(false)
+        setManageSubmitting(true)
+        setManageError(null)
+        setManageSuccess(false)
 
-    //     try {
-    //         // Check if email exists in system
-    //         const checkRes = await fetch('/api/external/check-email', {
-    //             method: 'POST',
-    //             headers: { 'Content-Type': 'application/json' },
-    //             body: JSON.stringify({ emailId: manageEmail })
-    //         })
-    //         const checkData = await checkRes.json()
+        try {
+            // Check if email exists in system
+            const checkRes = await fetch('/api/external/check-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ emailId: manageEmail })
+            })
+            const checkData = await checkRes.json()
+            
+            if (checkData?.code === 'noData') {
+                setManageError('No account found with this email. Please start a trial first or contact support.')
+                return
+            }
 
-    //         if (checkData?.code === 'noData') {
-    //             setManageError('No account found with this email. Please start a trial first or contact support.')
-    //             return
-    //         }
+            // Send magic link
+            const response = await fetch('/api/manage/request', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: manageEmail, registrationNumber: doctor.registrationNumber })
+            })
+            
+            if (!response.ok) {
+                throw new Error('Failed to send link')
+            }
+            
+            setManageSuccess(true)
+            setManageEmail('')
+        } catch (e) {
+            console.error(e)
+            setManageError('Failed to send link. Please try again later.')
+        } finally {
+            setManageSubmitting(false)
+        }
+    }, [manageEmail, validateEmail])
 
-    //         // Send magic link
-    //         const response = await fetch('/api/manage/request', {
-    //             method: 'POST',
-    //             headers: { 'Content-Type': 'application/json' },
-    //             body: JSON.stringify({ email: manageEmail, registrationNumber: doctor.registrationNumber })
-    //         })
+    const resetManageDialog = React.useCallback(() => {
+        setManageEmail('')
+        setManageError(null)
+        setManageSuccess(false)
+        setManageSubmitting(false)
+    }, [])
 
-    //         if (!response.ok) {
-    //             throw new Error('Failed to send link')
-    //         }
+    React.useEffect(() => {
+        if (!doctorDialogOpen) return
+        let cancelled = false
+        const fetchSpecialities = async () => {
+            setLoadingSpecialities(true)
+            try {
+                const res = await fetch('/api/specialties')
+                if (!res.ok) throw new Error('Failed to load specialities')
+                const data = await res.json()
+                const list = Array.isArray(data?.list) ? data.list as string[] : []
+                if (!cancelled) setSpecialities(list)
+            } catch (e) {
+                console.warn('Failed to fetch specialities', e)
+                if (!cancelled) setSpecialities([])
+            } finally {
+                if (!cancelled) setLoadingSpecialities(false)
+            }
+        }
+        fetchSpecialities()
+        return () => { cancelled = true }
+    }, [doctorDialogOpen])
 
-    //         setManageSuccess(true)
-    //         setManageEmail('')
-    //     } catch (e) {
-    //         console.error(e)
-    //         setManageError('Failed to send link. Please try again later.')
-    //     } finally {
-    //         setManageSubmitting(false)
-    //     }
-    // }, [manageEmail, validateEmail])
+    // Fetch countries and zones when dialog opens
+    React.useEffect(() => {
+        if (!doctorDialogOpen) return
+        let cancelled = false
+        
+        const fetchCountries = async () => {
+            setLoadingCountries(true)
+            try {
+                const res = await fetch('/api/address/countries')
+                if (!res.ok) throw new Error('Failed to load countries')
+                const data = await res.json()
+                const list = Array.isArray(data?.list) ? data.list : []
+                if (!cancelled) setApiCountries(list)
+                return list
+            } catch (e) {
+                console.warn('Failed to fetch countries', e)
+                if (!cancelled) setApiCountries([])
+                return []
+            } finally {
+                if (!cancelled) setLoadingCountries(false)
+            }
+        }
+        
+        const fetchZones = async () => {
+            setLoadingZones(true)
+            try {
+                const res = await fetch('/api/zones')
+                if (!res.ok) throw new Error('Failed to load zones')
+                const data = await res.json()
+                const list = Array.isArray(data?.list) ? data.list : []
+                if (!cancelled) setApiZones(list)
+                return list
+            } catch (e) {
+                console.warn('Failed to fetch zones', e)
+                if (!cancelled) setApiZones([])
+                return []
+            } finally {
+                if (!cancelled) setLoadingZones(false)
+            }
+        }
+        
+        // Fetch IP location and auto-populate
+        const fetchAndPopulateLocation = async () => {
+            setLoadingLocation(true)
+            try {
+                const [countries, zones, ipLocation] = await Promise.all([
+                    fetchCountries(),
+                    fetchZones(),
+                    getUserLocation()
+                ])
+                
+                if (cancelled || !ipLocation) {
+                    // Even without IP location, select first zone as default
+                    if (zones.length > 0 && !cancelled) {
+                        setSelectedZoneId(zones[0].zoneMasterId)
+                    }
+                    return
+                }
+                
+                // Match and lock country
+                const matchedCountry = countries.find((c: any) => 
+                    c.countryCode === ipLocation.countryCode || 
+                    c.countryName?.toLowerCase() === ipLocation.country?.toLowerCase()
+                )
+                
+                if (matchedCountry && !cancelled) {
+                    setSelectedCountryId(matchedCountry.countryId)
+                    setDoctor(d => ({ ...d, country: matchedCountry.countryName }))
+                    setCountryLocked(true)
+                }
+                
+                // Match zone based on timezone from IP
+                if (zones.length > 0 && !cancelled) {
+                    let matchedZone = null
+                    
+                    // Try to find exact timezone match
+                    if (ipLocation.timezone) {
+                        matchedZone = zones.find((z: any) => 
+                            z.zoneDesc === ipLocation.timezone
+                        )
+                    }
+                    
+                    // Use matched zone or default to first zone
+                    const zoneToSelect = matchedZone || zones[0]
+                    console.log('Auto-selecting zone:', zoneToSelect.zoneDesc, 'from IP timezone:', ipLocation.timezone)
+                    setSelectedZoneId(zoneToSelect.zoneMasterId)
+                }
+            } catch (e) {
+                console.warn('Failed to populate location', e)
+            } finally {
+                if (!cancelled) setLoadingLocation(false)
+            }
+        }
+        
+        fetchAndPopulateLocation()
+        return () => { cancelled = true }
+    }, [doctorDialogOpen])
 
-    // const resetManageDialog = React.useCallback(() => {
-    //     setManageEmail('')
-    //     setManageError(null)
-    //     setManageSuccess(false)
-    //     setManageSubmitting(false)
-    // }, [])
+    // Fetch states when country is selected
+    React.useEffect(() => {
+        if (!selectedCountryId) {
+            setApiStates([])
+            setSelectedStateId(null)
+            setApiCities([])
+            setSelectedCityId(null)
+            return
+        }
+        let cancelled = false
+        const fetchStates = async () => {
+            setLoadingStates(true)
+            try {
+                const res = await fetch(`/api/address/states?countryId=${selectedCountryId}`)
+                if (!res.ok) throw new Error('Failed to load states')
+                const data = await res.json()
+                const list = Array.isArray(data?.list) ? data.list : []
+                if (!cancelled) {
+                    setApiStates(list)
+                    
+                    // Auto-select state based on IP if we're just loading for the first time
+                    if (list.length > 0 && !selectedStateId) {
+                        getUserLocation().then(ipLocation => {
+                            if (!cancelled && ipLocation && ipLocation.state) {
+                                const matchedState = list.find((s: any) => 
+                                    s.stateName?.toLowerCase() === ipLocation.state?.toLowerCase() ||
+                                    s.stateName?.toLowerCase().includes(ipLocation.state?.toLowerCase()) ||
+                                    ipLocation.state?.toLowerCase().includes(s.stateName?.toLowerCase())
+                                )
+                                if (matchedState) {
+                                    console.log('Auto-selecting state:', matchedState.stateName, 'for IP location:', ipLocation.state)
+                                    setSelectedStateId(matchedState.stateId)
+                                }
+                            }
+                        }).catch(err => console.warn('State auto-select failed:', err))
+                    }
+                }
+            } catch (e) {
+                console.warn('Failed to fetch states', e)
+                if (!cancelled) setApiStates([])
+            } finally {
+                if (!cancelled) setLoadingStates(false)
+            }
+        }
+        fetchStates()
+        return () => { cancelled = true }
+    }, [selectedCountryId])
 
-    // Specialities loading effect - commented out as requested
-    // React.useEffect(() => {
-    //     if (!doctorDialogOpen) return
-    //     let cancelled = false
-    //     const fetchSpecialities = async () => {
-    //         setLoadingSpecialities(true)
-    //         try {
-    //             const res = await fetch('/api/specialties')
-    //             if (!res.ok) throw new Error('Failed to load specialities')
-    //             const data = await res.json()
-    //             const list = Array.isArray(data?.list) ? data.list as string[] : []
-    //             if (!cancelled) setSpecialities(list)
-    //         } catch (e) {
-    //             console.warn('Failed to fetch specialities', e)
-    //             if (!cancelled) setSpecialities([])
-    //         } finally {
-    //             if (!cancelled) setLoadingSpecialities(false)
-    //         }
-    //     }
-    //     fetchSpecialities()
-    //     return () => { cancelled = true }
-    // }, [doctorDialogOpen])
+    // Fetch cities when state is selected
+    React.useEffect(() => {
+        if (!selectedStateId) {
+            setApiCities([])
+            setSelectedCityId(null)
+            return
+        }
+        let cancelled = false
+        const fetchCities = async () => {
+            setLoadingCities(true)
+            try {
+                const res = await fetch(`/api/address/cities?stateId=${selectedStateId}`)
+                if (!res.ok) throw new Error('Failed to load cities')
+                const data = await res.json()
+                const list = Array.isArray(data?.list) ? data.list : []
+                if (!cancelled) {
+                    setApiCities(list)
+                    
+                    // Auto-select city based on IP if we're just loading for the first time
+                    if (list.length > 0 && !selectedCityId) {
+                        getUserLocation().then(ipLocation => {
+                            if (!cancelled && ipLocation && ipLocation.city) {
+                                const matchedCity = list.find((c: any) => 
+                                    c.cityName?.toLowerCase() === ipLocation.city?.toLowerCase() ||
+                                    c.cityName?.toLowerCase().includes(ipLocation.city?.toLowerCase()) ||
+                                    ipLocation.city?.toLowerCase().includes(c.cityName?.toLowerCase())
+                                )
+                                if (matchedCity) {
+                                    console.log('Auto-selecting city:', matchedCity.cityName, 'for IP location:', ipLocation.city)
+                                    setSelectedCityId(matchedCity.cityId)
+                                }
+                            }
+                        }).catch(err => console.warn('City auto-select failed:', err))
+                    }
+                }
+            } catch (e) {
+                console.warn('Failed to fetch cities', e)
+                if (!cancelled) setApiCities([])
+            } finally {
+                if (!cancelled) setLoadingCities(false)
+            }
+        }
+        fetchCities()
+        return () => { cancelled = true }
+    }, [selectedStateId])
 
     // Set default pricing region based on user IP
     React.useEffect(() => {
@@ -442,16 +666,15 @@ function OverviewSectionInner({
             {/* Pricing */}
             <section id="pricing" className="py-10 px-4 sm:px-6 lg:px-8 bg-gray-50 overflow-x-hidden">
                 <div className="container mx-auto max-w-7xl">
-                        <div className="text-center mb-8">
+                    <div className="text-center mb-8">
                         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Simple Pricing</h2>
                         <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">Get started with our comprehensive clinic management platform.</p>
                         <div className="w-20 h-1 bg-blue-400 mx-auto mt-4"></div>
-                        {/* Manage subscriptions UI - commented out as requested */}
-                        {/* <div className="mt-3">
+                        <div className="mt-3">
                             <button className="text-sm underline text-blue-600" onClick={() => setManageOpen(true)}>
                                 Manage subscriptions
                             </button>
-                        </div> */}
+                        </div>
                     </div>
 
                     <div className="flex justify-center mb-6">
@@ -517,23 +740,13 @@ function OverviewSectionInner({
                                     <li>✅ Billing service</li>
                                 </ul>
                                 </div>
-                                <Dialog>
-                                    <DialogTrigger asChild>
-                                        <Button className="w-full mt-8 bg-blue-500 hover:bg-blue-600 text-white">
-                                            Start 90 Day Free Trial
-                                        </Button>
-                                    </DialogTrigger>
-                                    <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
-                                        <DialogHeader>
-                                            <DialogTitle className="text-2xl font-bold text-gray-900">Start Your Professional Plan Trial</DialogTitle>
-                                            <DialogDescription className="text-gray-600">Get started with AxonMD Professional plan</DialogDescription>
-                                        </DialogHeader>
-                                        <ContactForm productName={product.name} />
-                                        <div className="text-center text-sm text-gray-600 pt-4 border-t">
-                                            Please write us at <a href="mailto:info@axonichealth.com" className="text-blue-600 hover:underline">info@axonichealth.com</a> for more queries.
-                                        </div>
-                                    </DialogContent>
-                                </Dialog>
+                                <Button
+                                    className="w-full mt-8 bg-blue-500 hover:bg-blue-600 text-white"
+                                    disabled={loadingPlan === 'professional'}
+                                    onClick={() => { setDoctorPlan('professional'); setDoctorDialogOpen(true) }}
+                                >
+                                    {loadingPlan === 'professional' ? 'Redirecting…' : 'Start 90 Day Free Trial'}
+                                </Button>
                             </CardContent>
                         </Card>
 
@@ -579,23 +792,13 @@ function OverviewSectionInner({
                                     <li>Patient app with Clinic/Doctor branding</li>
                                 </ul>
                                 </div>
-                                <Dialog>
-                                    <DialogTrigger asChild>
-                                        <Button className="w-full mt-8 bg-blue-500 hover:bg-blue-600 text-white">
-                                            Start 90 Day Free Trial
-                                        </Button>
-                                    </DialogTrigger>
-                                    <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
-                                        <DialogHeader>
-                                            <DialogTitle className="text-2xl font-bold text-gray-900">Start Your Advanced Plan Trial</DialogTitle>
-                                            <DialogDescription className="text-gray-600">Get started with AxonMD Advanced plan</DialogDescription>
-                                        </DialogHeader>
-                                        <ContactForm productName={product.name} />
-                                        <div className="text-center text-sm text-gray-600 pt-4 border-t">
-                                            Please write us at <a href="mailto:info@axonichealth.com" className="text-blue-600 hover:underline">info@axonichealth.com</a> for more queries.
-                                        </div>
-                                    </DialogContent>
-                                </Dialog>
+                                <Button
+                                    className="w-full mt-8 bg-blue-500 hover:bg-blue-600 text-white"
+                                    disabled={loadingPlan === 'advanced'}
+                                    onClick={() => { setDoctorPlan('advanced'); setDoctorDialogOpen(true) }}
+                                >
+                                    {loadingPlan === 'advanced' ? 'Redirecting…' : 'Start 90 Day Free Trial'}
+                                </Button>
                             </CardContent>
                         </Card>
 
@@ -638,38 +841,48 @@ function OverviewSectionInner({
                 </div>
             </section>
 
-            {/* Doctor Details Dialog - commented out as requested */}
-            {/* <Dialog open={doctorDialogOpen} onOpenChange={(open) => {
+            {/* Doctor Details Dialog */}
+            <Dialog open={doctorDialogOpen} onOpenChange={(open) => {
                 setDoctorDialogOpen(open)
-                if (!open) setDoctorError(null)
+                if (!open) {
+                    setDoctorError(null)
+                    setSelectedCountryId(null)
+                    setSelectedStateId(null)
+                    setSelectedCityId(null)
+                    setSelectedZoneId(null)
+                    setCountryLocked(false)
+                }
             }}>
                 <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
                         <DialogTitle className="text-2xl font-bold text-gray-900">Start Your 90 Day Free Trial</DialogTitle>
-                        <DialogDescription className="text-gray-600">Enter your details to get started with AxonMD</DialogDescription>
+                        <DialogDescription className="text-gray-600">
+                            Enter your details to get started with AxonMD
+                        </DialogDescription>
                     </DialogHeader>
                     {doctorError && (
                         <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
                             <p className="text-red-800 text-sm font-medium">{doctorError}</p>
                         </div>
                     )}
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <Label htmlFor="firstName" className="text-sm font-medium text-gray-700">First name <span className="text-red-500">*</span></Label>
-                            <Input
-                                id="firstName"
-                                value={doctor.firstName}
-                                onChange={(e) => setDoctor(d => ({ ...d, firstName: e.target.value }))}
+                            <Input 
+                                id="firstName" 
+                                value={doctor.firstName} 
+                                onChange={(e) => setDoctor(d => ({ ...d, firstName: e.target.value }))} 
                                 className="mt-1"
                                 placeholder="Enter first name"
                             />
                         </div>
                         <div>
                             <Label htmlFor="lastName" className="text-sm font-medium text-gray-700">Last name <span className="text-red-500">*</span></Label>
-                            <Input
-                                id="lastName"
-                                value={doctor.lastName}
-                                onChange={(e) => setDoctor(d => ({ ...d, lastName: e.target.value }))}
+                            <Input 
+                                id="lastName" 
+                                value={doctor.lastName} 
+                                onChange={(e) => setDoctor(d => ({ ...d, lastName: e.target.value }))} 
                                 className="mt-1"
                                 placeholder="Enter last name"
                             />
@@ -702,38 +915,120 @@ function OverviewSectionInner({
                         </div>
                         <div className="sm:col-span-2">
                             <Label htmlFor="regNo" className="text-sm font-medium text-gray-700">GMC / Medical Registration No. <span className="text-red-500">*</span></Label>
-                            <Input
-                                id="regNo"
-                                value={doctor.registrationNumber}
-                                onChange={(e) => setDoctor(d => ({ ...d, registrationNumber: e.target.value }))}
+                            <Input 
+                                id="regNo" 
+                                value={doctor.registrationNumber} 
+                                onChange={(e) => setDoctor(d => ({ ...d, registrationNumber: e.target.value }))} 
                                 className="mt-1"
                                 placeholder="Enter registration number"
                             />
                         </div>
                         <div className="sm:col-span-2">
                             <Label htmlFor="email" className="text-sm font-medium text-gray-700">Email Address <span className="text-red-500">*</span></Label>
-                            <Input
-                                id="email"
-                                type="email"
-                                value={doctor.email}
-                                onChange={(e) => setDoctor(d => ({ ...d, email: e.target.value }))}
+                            <Input 
+                                id="email" 
+                                type="email" 
+                                value={doctor.email} 
+                                onChange={(e) => {
+                                    const value = e.target.value
+                                    const [local, domain] = value.split('@')
+                                    if (local && local.includes('+')) return
+                                    setDoctor(d => ({ ...d, email: value }))
+                                }} 
                                 className="mt-1"
                                 placeholder="Enter your email"
                             />
                         </div>
                         <div>
                             <Label className="text-sm font-medium text-gray-700">Country <span className="text-red-500">*</span></Label>
-                            <Select value={doctor.country} onValueChange={(v) => setDoctor(d => ({ ...d, country: v }))}>
+                            <Select 
+                                value={selectedCountryId?.toString() || ""} 
+                                onValueChange={(v) => {
+                                    if (countryLocked) return
+                                    const countryId = parseInt(v)
+                                    setSelectedCountryId(countryId)
+                                    const country = apiCountries.find(c => c.countryId === countryId)
+                                    if (country) {
+                                        setDoctor(d => ({ ...d, country: country.countryName }))
+                                    }
+                                }}
+                                disabled={countryLocked || loadingCountries}
+                            >
                                 <SelectTrigger className="w-full mt-1">
-                                    <SelectValue placeholder="Select country" />
+                                    <SelectValue placeholder={loadingCountries ? "Loading..." : "Select country"} />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {COUNTRY_CODES.map(cc => (
-                                        <SelectItem key={cc.code} value={cc.code}>{cc.name}</SelectItem>
+                                    {apiCountries.map(country => (
+                                        <SelectItem key={country.countryId} value={country.countryId.toString()}>
+                                            {country.countryName}
+                                        </SelectItem>
                                     ))}
                                 </SelectContent>
                             </Select>
                         </div>
+                        {selectedCountryId && (
+                            <>
+                                <div>
+                                    <Label className="text-sm font-medium text-gray-700">Zone <span className="text-red-500">*</span></Label>
+                                    <Select 
+                                        value={selectedZoneId?.toString() || ""} 
+                                        onValueChange={(v) => setSelectedZoneId(parseInt(v))}
+                                        disabled={loadingZones}
+                                    >
+                                        <SelectTrigger className="w-full mt-1">
+                                            <SelectValue placeholder={loadingZones ? "Loading..." : "Select zone"} />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {apiZones.map(zone => (
+                                                <SelectItem key={zone.zoneMasterId} value={zone.zoneMasterId.toString()}>
+                                                    {zone.zoneDesc}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div>
+                                    <Label className="text-sm font-medium text-gray-700">State <span className="text-red-500">*</span></Label>
+                                    <Select 
+                                        value={selectedStateId?.toString() || ""} 
+                                        onValueChange={(v) => setSelectedStateId(parseInt(v))}
+                                        disabled={loadingStates}
+                                    >
+                                        <SelectTrigger className="w-full mt-1">
+                                            <SelectValue placeholder={loadingStates ? "Loading..." : "Select state"} />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {apiStates.map(state => (
+                                                <SelectItem key={state.stateId} value={state.stateId.toString()}>
+                                                    {state.stateName}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            </>
+                        )}
+                        {selectedStateId && (
+                            <div className="sm:col-span-2">
+                                <Label className="text-sm font-medium text-gray-700">City <span className="text-red-500">*</span></Label>
+                                <Select 
+                                    value={selectedCityId?.toString() || ""} 
+                                    onValueChange={(v) => setSelectedCityId(parseInt(v))}
+                                    disabled={loadingCities}
+                                >
+                                    <SelectTrigger className="w-full mt-1">
+                                        <SelectValue placeholder={loadingCities ? "Loading..." : "Select city"} />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {apiCities.map(city => (
+                                            <SelectItem key={city.cityId} value={city.cityId.toString()}>
+                                                {city.cityName}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        )}
                         <div>
                             <Label className="text-sm font-medium text-gray-700">Country code <span className="text-red-500">*</span></Label>
                             <Select value={doctor.countryCode} onValueChange={(v) => setDoctor(d => ({ ...d, countryCode: v }))}>
@@ -749,19 +1044,19 @@ function OverviewSectionInner({
                         </div>
                         <div className="sm:col-span-2">
                             <Label htmlFor="phone" className="text-sm font-medium text-gray-700">Mobile Number <span className="text-red-500">*</span></Label>
-                            <Input
-                                id="phone"
-                                inputMode="numeric"
-                                value={doctor.phone}
-                                onChange={(e) => setDoctor(d => ({ ...d, phone: e.target.value.replace(/\D/g, '') }))}
+                            <Input 
+                                id="phone" 
+                                inputMode="numeric" 
+                                value={doctor.phone} 
+                                onChange={(e) => setDoctor(d => ({ ...d, phone: e.target.value.replace(/\D/g, '') }))} 
                                 className="mt-1"
                                 placeholder="Enter mobile number"
                             />
                         </div>
                     </div>
                     <div className="flex flex-col sm:flex-row gap-3 justify-end pt-4 border-t border-gray-200">
-                        <Button
-                            variant="outline"
+                        <Button 
+                            variant="outline" 
                             onClick={() => setDoctorDialogOpen(false)}
                             className="border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold rounded-xl transition-all duration-300"
                         >
@@ -771,7 +1066,7 @@ function OverviewSectionInner({
                             onClick={async () => {
                                 if (!doctorPlan) return
                                 setDoctorError(null)
-
+                                
                                 // Validate all required fields
                                 if (!doctor.firstName.trim()) {
                                     setDoctorError('Please enter your first name')
@@ -817,10 +1112,59 @@ function OverviewSectionInner({
                                     setDoctorError('Please enter a valid mobile number')
                                     return
                                 }
-
+                                
+                                // Validate location fields
+                                if (!selectedCountryId) {
+                                    setDoctorError('Please select your country')
+                                    return
+                                }
+                                if (!selectedZoneId) {
+                                    setDoctorError('Please select your zone')
+                                    return
+                                }
+                                if (!selectedStateId) {
+                                    setDoctorError('Please select your state')
+                                    return
+                                }
+                                if (!selectedCityId) {
+                                    setDoctorError('Please select your city')
+                                    return
+                                }
+                                
                                 try {
                                     setLoadingPlan(doctorPlan)
-                                    // Check external email existence
+                                    
+                                    // Check if email already exists
+                                    const emailCheckRes = await fetch('/api/external/check-email-exists', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({ emailId: doctor.email })
+                                    })
+                                    const emailCheck = await emailCheckRes.json()
+                                    
+                                    // If listObject array length > 0, email already exists
+                                    if (Array.isArray(emailCheck?.listObject) && emailCheck.listObject.length > 0) {
+                                        setDoctorError('This email address is already registered. Please use a different email or contact support.')
+                                        setLoadingPlan(null)
+                                        return
+                                    }
+                                    
+                                    // Check if registration number already exists
+                                    const regCheckRes = await fetch('/api/external/check-registration-exists', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({ registrationNumber: doctor.registrationNumber })
+                                    })
+                                    const regCheck = await regCheckRes.json()
+                                    
+                                    // If listObject array length > 0, registration number already exists
+                                    if (Array.isArray(regCheck?.listObject) && regCheck.listObject.length > 0) {
+                                        setDoctorError('This GMC/Medical Registration Number is already registered. Please verify your registration number or contact support.')
+                                        setLoadingPlan(null)
+                                        return
+                                    }
+                                    
+                                    // Check external email existence (existing check)
                                     const checkRes = await fetch('/api/external/check-email', {
                                         method: 'POST',
                                         headers: { 'Content-Type': 'application/json' },
@@ -832,17 +1176,28 @@ function OverviewSectionInner({
                                         setLoadingPlan(null)
                                         return
                                     }
+                                    
+                                    // Prepare payload
+                                    const payload: any = {
+                                        plan: doctorPlan,
+                                        billingCycle,
+                                        region: pricingRegion,
+                                        doctor,
+                                        privateNetwork: true,
+                                        successUrl: `${window.location.origin}/our-products/axonmd/success/`,
+                                        cancelUrl: `${window.location.origin}/our-products/axonmd/`,
+                                        unitMasterDto: {
+                                            countryId: selectedCountryId,
+                                            stateId: selectedStateId,
+                                            cityId: selectedCityId,
+                                            zoneId: selectedZoneId
+                                        }
+                                    }
+                                    
                                     const response = await fetch('/api/checkout', {
                                         method: 'POST',
                                         headers: { 'Content-Type': 'application/json' },
-                                        body: JSON.stringify({
-                                            plan: doctorPlan,
-                                            billingCycle,
-                                            region: pricingRegion,
-                                            doctor,
-                                            successUrl: `${window.location.origin}/our-products/axonmd/success/`,
-                                            cancelUrl: `${window.location.origin}/our-products/axonmd/`,
-                                        }),
+                                        body: JSON.stringify(payload),
                                     })
                                     const data = await response.json()
                                     if (!response.ok) throw new Error(data?.error || 'Checkout failed')
@@ -865,10 +1220,10 @@ function OverviewSectionInner({
                         </Button>
                     </div>
                 </DialogContent>
-            </Dialog> */}
+            </Dialog>
 
-            {/* Manage Subscriptions Dialog - commented out as requested */}
-            {/* <Dialog open={manageOpen} onOpenChange={(open) => {
+            {/* Manage Subscriptions Dialog */}
+            <Dialog open={manageOpen} onOpenChange={(open) => {
                 setManageOpen(open)
                 if (!open) resetManageDialog()
             }}>
@@ -879,7 +1234,7 @@ function OverviewSectionInner({
                             Enter your email address and we'll send you a secure link to manage your AxonMD subscription
                         </DialogDescription>
                     </DialogHeader>
-
+                    
                     {manageSuccess ? (
                         <div className="space-y-6">
                             <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
@@ -896,11 +1251,16 @@ function OverviewSectionInner({
                         <div className="space-y-6">
                             <div className="space-y-2">
                                 <Label htmlFor="manageEmail">Email Address</Label>
-                                <Input
-                                    id="manageEmail"
-                                    type="email"
-                                    value={manageEmail}
-                                    onChange={(e) => setManageEmail(e.target.value)}
+                                <Input 
+                                    id="manageEmail" 
+                                    type="email" 
+                                    value={manageEmail} 
+                                    onChange={(e) => {
+                                        const value = e.target.value
+                                        const [local] = value.split('@')
+                                        if (local && local.includes('+')) return
+                                        setManageEmail(value)
+                                    }}
                                     placeholder="Enter your registered email"
                                     className="w-full"
                                     disabled={manageSubmitting}
@@ -909,16 +1269,16 @@ function OverviewSectionInner({
                                     <p className="text-sm text-red-600">{manageError}</p>
                                 )}
                             </div>
-
+                            
                             <div className="flex gap-3 justify-end">
-                                <Button
-                                    variant="outline"
+                                <Button 
+                                    variant="outline" 
                                     onClick={() => setManageOpen(false)}
                                     disabled={manageSubmitting}
                                 >
                                     Cancel
                                 </Button>
-                                <Button
+                                <Button 
                                     onClick={handleManageSubmit}
                                     disabled={manageSubmitting}
                                     className="bg-blue-500 hover:bg-blue-600 text-white"
@@ -929,7 +1289,7 @@ function OverviewSectionInner({
                         </div>
                     )}
                 </DialogContent>
-            </Dialog> */}
+            </Dialog>
 
             {/* Testimonials */}
             <section className="py-10 overflow-x-hidden px-4 sm:px-6 lg:px-8">
