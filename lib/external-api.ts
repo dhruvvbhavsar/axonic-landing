@@ -1,6 +1,7 @@
 export function getExternalApiBase(): string {
   // return 'https://ocipmsqa.axonichealth.com'
-  return 'https://ocicliniqpp.cliniq.in'
+  // return 'https://ocicliniqpp.cliniq.in'
+  return 'https://axonmd.axonichealth.co.in'
 }
 
 export const ExternalApiEndpoints = {
