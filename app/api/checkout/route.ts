@@ -84,6 +84,20 @@ export async function POST(request: NextRequest) {
     const unitAmount = getUnitAmountCents(plan, billingCycle, region)
     const interval = getInterval(billingCycle)
 
+    // Fetch dynamic trial days from internal proxy (fallback to 90)
+    const runtimeEnv = process.env.NEXT_PUBLIC_RUNTIME_ENV || 'dev'
+    let trialDays = 90
+    try {
+      const trialsResp = await fetch(`${origin}/api/trials/axonmd?env=${runtimeEnv}`, { cache: 'no-store' })
+      if (trialsResp.ok) {
+        const json = await trialsResp.json().catch(() => ({}))
+        const parsed = Number(json?.data?.trialDays)
+        if (Number.isFinite(parsed) && parsed > 0) {
+          trialDays = parsed
+        }
+      }
+    } catch {}
+
     // Prefer using provided Stripe Price IDs when available (SANDBOX)
     // Region-specific prices: UK -> GBP, India -> INR
     const SANDBOX_PRICE_IDS: Record<Region, Record<Plan, Record<BillingCycle, string>>> = {
@@ -159,6 +173,7 @@ export async function POST(request: NextRequest) {
         unit_state_id: body.unitMasterDto?.stateId?.toString() || '',
         unit_city_id: body.unitMasterDto?.cityId?.toString() || '',
         unit_zone_id: body.unitMasterDto?.zoneId?.toString() || '',
+        trial_days: String(trialDays),
       },
       line_items: mappedPriceId
         ? [
@@ -184,7 +199,7 @@ export async function POST(request: NextRequest) {
             },
           ],
       subscription_data: {
-        trial_period_days: 90,
+        trial_period_days: trialDays,
         metadata: {
           doctor_first_name: body.doctor?.firstName || '',
           doctor_last_name: body.doctor?.lastName || '',
@@ -202,6 +217,7 @@ export async function POST(request: NextRequest) {
           unit_state_id: body.unitMasterDto?.stateId?.toString() || '',
           unit_city_id: body.unitMasterDto?.cityId?.toString() || '',
           unit_zone_id: body.unitMasterDto?.zoneId?.toString() || '',
+          trial_days: String(trialDays),
         },
       },
       billing_address_collection: 'required',

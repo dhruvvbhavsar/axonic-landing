@@ -105,9 +105,23 @@ function OverviewSectionInner({
     const [manageSubmitting, setManageSubmitting] = React.useState(false)
     const [manageError, setManageError] = React.useState<string | null>(null)
     const [manageSuccess, setManageSuccess] = React.useState(false)
+    const [trialDays, setTrialDays] = React.useState(90)
 
     const apiHeader = useExternalApiHeader()
     const apiHeaderString = JSON.stringify(apiHeader)
+
+    React.useEffect(() => {
+        try {
+            const env = process.env.NEXT_PUBLIC_RUNTIME_ENV || 'dev'
+            fetch(`/api/trials/axonmd?env=${env}`)
+                .then(r => r.json())
+                .then(j => {
+                    const d = Number(j?.data?.trialDays)
+                    if (Number.isFinite(d) && d > 0) setTrialDays(d)
+                })
+                .catch(() => {})
+        } catch {}
+    }, [])
 
     const validateEmail = React.useCallback((email: string): boolean => {
         // Disallow '+' in local part (before @)
@@ -760,7 +774,7 @@ function OverviewSectionInner({
                                     disabled={loadingPlan === 'professional'}
                                     onClick={() => { setDoctorPlan('professional'); setDoctorDialogOpen(true) }}
                                 >
-                                    {loadingPlan === 'professional' ? 'Redirecting…' : 'Start 90 Day Free Trial'}
+                                    {loadingPlan === 'professional' ? 'Redirecting…' : `Start ${trialDays} Day Free Trial`}
                                 </Button>
                             </CardContent>
                         </Card>
@@ -812,7 +826,7 @@ function OverviewSectionInner({
                                     disabled={loadingPlan === 'advanced'}
                                     onClick={() => { setDoctorPlan('advanced'); setDoctorDialogOpen(true) }}
                                 >
-                                    {loadingPlan === 'advanced' ? 'Redirecting…' : 'Start 90 Day Free Trial'}
+                                    {loadingPlan === 'advanced' ? 'Redirecting…' : `Start ${trialDays} Day Free Trial`}
                                 </Button>
                             </CardContent>
                         </Card>
@@ -867,7 +881,7 @@ function OverviewSectionInner({
             }}>
                 <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
-                        <DialogTitle className="text-2xl font-bold text-gray-900">Start Your 90 Day Free Trial</DialogTitle>
+                        <DialogTitle className="text-2xl font-bold text-gray-900">Start Your {trialDays} Day Free Trial</DialogTitle>
                         <DialogDescription className="text-gray-600">
                             Enter your details to get started with AxonMD
                         </DialogDescription>

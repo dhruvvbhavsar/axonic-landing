@@ -36,6 +36,13 @@ function addYears(iso: string, years: number): string {
   return nd.toISOString()
 }
 
+function addDays(iso: string, days: number): string {
+  const d = new Date(iso)
+  const nd = new Date(d)
+  nd.setDate(d.getDate() + days)
+  return nd.toISOString()
+}
+
 function formatDdMmYyyy(iso: string | undefined): string {
   try {
     if (!iso) return ''
@@ -54,7 +61,8 @@ async function sendReceiptEmail(
   customerEmail: string,
   plan: string,
   billingCycle: string,
-  region: string
+  region: string,
+  trialDays?: number
 ): Promise<void> {
   try {
     // Get invoice link - prefer hosted_invoice_url, fallback to invoice PDF
@@ -75,6 +83,7 @@ async function sendReceiptEmail(
     const regionName = region || ''
     
     // Create HTML email content
+    const displayTrialDays = Number.isFinite(trialDays as any) && (trialDays as any) > 0 ? (trialDays as any) : 90
     const htmlContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #1a1a1a;">Receipt from Axonic Health</h2>
@@ -91,7 +100,7 @@ async function sendReceiptEmail(
         </div>
         
         ${invoice.status === 'paid' && invoice.amount_paid === 0 ? `
-          <p style="color: #28a745; font-weight: bold;">✓ You're currently on a 90-day free trial. Your subscription will begin after the trial period.</p>
+          <p style="color: #28a745; font-weight: bold;">✓ You're currently on a ${displayTrialDays}-day free trial. Your subscription will begin after the trial period.</p>
         ` : ''}
         
         <p style="margin-top: 30px;">
@@ -216,9 +225,10 @@ export async function POST(request: NextRequest) {
 
       const plan = md.plan || ''
       const billingCycle = md.billingCycle || 'monthly'
-      // Trial end is session.created + 90 days
+      // Trial end is session.created + trialDays
+      const trialDays = parseInt(md.trial_days || '90', 10)
       const trialStartIso = toIso(session?.created) || new Date().toISOString()
-      let subscriptionStartIso = addMonths(trialStartIso, 3) // 90 days ~ 3 months
+      let subscriptionStartIso = addDays(trialStartIso, Number.isFinite(trialDays) && trialDays > 0 ? trialDays : 90)
       let subscriptionEndIso = billingCycle === 'yearly'
         ? addYears(subscriptionStartIso, 1)
         : addMonths(subscriptionStartIso, 1)
@@ -392,10 +402,12 @@ export async function POST(request: NextRequest) {
           const plan = (subscription as any)?.metadata?.plan || ''
           const billingCycle = (subscription as any)?.metadata?.billingCycle || ''
           const region = (subscription as any)?.metadata?.region || ''
+          const trialDaysMeta = (subscription as any)?.metadata?.trial_days
+          const trialDays = parseInt(trialDaysMeta || '90', 10)
           
           // Send receipt email if invoice is paid (or open for $0 trial invoices) and we have customer email
           if ((invoiceObj.status === 'paid' || (invoiceObj.status === 'open' && invoiceObj.amount_paid === 0)) && customerEmail) {
-            await sendReceiptEmail(invoiceObj, customerEmail, plan, billingCycle, region)
+            await sendReceiptEmail(invoiceObj, customerEmail, plan, billingCycle, region, (Number.isFinite(trialDays) && trialDays > 0) ? trialDays : 90)
           }
         }
       } catch (receiptError: any) {
