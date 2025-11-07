@@ -148,6 +148,55 @@ async function sendReceiptEmail(
   }
 }
 
+async function sendPartialRegistrationEmail(
+  customerEmail: string,
+  firstName: string,
+  lastName: string,
+  resumeUrl: string
+): Promise<void> {
+  try {
+    const htmlContent = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #1a1a1a;">Complete your AxonMD registration</h2>
+        <p>Hi ${firstName || ''} ${lastName || ''},</p>
+        <p>Your partial registration is done. Click the button below to complete your profile and finish setup.</p>
+        <p style="margin-top: 24px;">
+          <a href="${resumeUrl}" style="background-color: #2563eb; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block; font-weight: bold;">Resume Registration</a>
+        </p>
+        <p style="color: #666; font-size: 14px; margin-top: 24px;">If the button doesn't work, copy and paste this link into your browser:<br />
+        <span style="color:#111">${resumeUrl}</span></p>
+        <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 30px 0;">
+        <p style="color: #999; font-size: 12px; margin-top: 20px;">
+          <em>This is an automated email from Axonic Health.</em>
+        </p>
+      </div>
+    `
+    const emailPayload = {
+      to: customerEmail,
+      from: 'info@axonichealth.com',
+      subject: 'AxonMD – Complete your registration',
+      data: htmlContent,
+    }
+    const response = await fetch('https://ojw0jjra11.execute-api.ap-south-1.amazonaws.com/prod/sendEmail', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(emailPayload),
+    })
+    if (!response.ok) {
+      throw new Error(`Email API error! status: ${response.status}`)
+    }
+    console.log('[partial-email] Partial registration email sent:', customerEmail)
+  } catch (error: any) {
+    console.error('[partial-email] Failed to send partial registration email:', error?.message || error)
+  }
+}
+
+function getRequestOrigin(request: NextRequest): string {
+  const proto = request.headers.get('x-forwarded-proto') || 'http'
+  const host = request.headers.get('host') || 'localhost:3000'
+  return `${proto}://${host}`
+}
+
 export async function GET() {
   return NextResponse.json({ ok: true })
 }
@@ -214,94 +263,70 @@ export async function POST(request: NextRequest) {
     console.error('[stripe] log error', e)
   }
 
-  // Transform and forward on checkout.session.completed
+  // On checkout completion: save partial registration and email resume link
   if (event.type === 'checkout.session.completed') {
     try {
       const session = (event as any).data?.object as Stripe.Checkout.Session
       const md = (session?.metadata || {}) as Record<string, string>
-
-      // Note: Receipt emails are sent via invoice.payment_succeeded event to avoid duplicates
-      // Only handle doctor registration here, not email sending
-
       const plan = md.plan || ''
       const billingCycle = md.billingCycle || 'monthly'
-      // Trial end is session.created + trialDays
-      const trialDays = parseInt(md.trial_days || '90', 10)
-      const trialStartIso = toIso(session?.created) || new Date().toISOString()
-      let subscriptionStartIso = addDays(trialStartIso, Number.isFinite(trialDays) && trialDays > 0 ? trialDays : 90)
-      let subscriptionEndIso = billingCycle === 'yearly'
-        ? addYears(subscriptionStartIso, 1)
-        : addMonths(subscriptionStartIso, 1)
+      const paymentDetails = {
+        eventId: event.id,
+        sessionId: session?.id,
+        subscriptionId: session?.subscription,
+        customerId: session?.customer,
+        invoiceId: session?.invoice,
+        currency: session?.currency,
+        amountSubtotal: session?.amount_subtotal,
+        amountTotal: session?.amount_total,
+        paymentStatus: session?.payment_status,
+        mode: session?.mode,
+        plan,
+        billingCycle,
+        region: md.region || '',
+      }
 
-      const countryName = getCountryNameFromCode(md.doctor_country || session?.customer_details?.address?.country) || 'India'
-      const privateNetwork = md.private_network === 'true'
-      
-      const payload: any = {
-        privateNetwork,
+      const partialPayload = {
+        emailId: (session?.customer_details?.email || session?.customer_email || '').toString(),
         firstName: md.doctor_first_name || '',
         lastName: md.doctor_last_name || '',
-        specialty: md.doctor_speciality || '',
-        gender: normalizeGender(md.doctor_gender) || 'O',
-        countryName,
-        mobileNumber: md.doctor_phone || '',
-        registrationNumber: md.doctor_registration_number || '',
-        emailId: (session?.customer_details?.email || session?.customer_email || '').toString(),
-        classificationName: md.doctor_speciality || '',
-        sessionObject: {
-          unitId: 4,
-          hospitalId: 1,
-          channelId: 1,
-          roleMasterId: 2,
-          bucketName: "gastrosurgery--uk/",
-        },
-        subscriptionStartDate: formatDdMmYyyy(subscriptionStartIso),
-        subscriptionEndDate: formatDdMmYyyy(subscriptionEndIso),
-        subscriptionPaymentDetails: JSON.stringify({
-          eventId: event.id,
-          sessionId: session?.id,
-          subscriptionId: session?.subscription,
-          customerId: session?.customer,
-          invoiceId: session?.invoice,
-          currency: session?.currency,
-          amountSubtotal: session?.amount_subtotal,
-          amountTotal: session?.amount_total,
-          paymentStatus: session?.payment_status,
-          mode: session?.mode,
-          lineItems: undefined,
-          plan,
-          billingCycle,
-          region: md.region || '',
-        }),
-      }
-      
-      // Add unitMasterDto if private network
-      if (privateNetwork) {
-        const countryId = parseInt(md.unit_country_id || '0')
-        const stateId = parseInt(md.unit_state_id || '0')
-        const cityId = parseInt(md.unit_city_id || '0')
-        const zoneId = parseInt(md.unit_zone_id || '0')
-        
-        if (countryId && stateId && cityId && zoneId) {
-          payload.unitMasterDto = {
-            countryId,
-            stateId,
-            cityId,
-            zoneId,
-          }
-        }
+        subscriptionPaymentDetails: JSON.stringify(paymentDetails),
       }
 
-      // Placeholder endpoint; backend will provide actual URL
-      const backendUrl = buildExternalUrlFromRequest(request, ExternalApiEndpoints.saveDoctor)
-      console.log('[doctor-save] payload', payload)
-      const response = await fetch(backendUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      }).catch((e) => {
-        console.error('[doctor-save] network error', e)
-      })
-      console.log('[doctor-save] response', await response?.json())
+      const savePartialUrl = buildExternalUrlFromRequest(request, ExternalApiEndpoints.saveDoctorPartial)
+      console.log('[doctor-partial-save] payload', partialPayload)
+      let partialId: number | null = null
+      try {
+        const resp = await fetch(savePartialUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(partialPayload),
+        })
+        const json = await resp.json().catch(() => ({}))
+        partialId = json?.object?.doctorPartialRegId ?? null
+        console.log('[doctor-partial-save] response', json)
+      } catch (e) {
+        console.error('[doctor-partial-save] network error', e)
+      }
+
+      // Email resume link
+      try {
+        const origin = getRequestOrigin(request)
+        const resumeUrl = partialId
+          ? `${origin}/our-products/axonmd/resume/${encodeURIComponent(partialId)}`
+          : `${origin}/our-products/axonmd/`
+        const customerEmail = (session?.customer_details?.email || session?.customer_email || '').toString()
+        if (customerEmail) {
+          await sendPartialRegistrationEmail(
+            customerEmail,
+            md.doctor_first_name || '',
+            md.doctor_last_name || '',
+            resumeUrl
+          )
+        }
+      } catch (e) {
+        console.error('[doctor-partial-email] error', e)
+      }
 
       // Automatically refund the ₹1/£1 setup fee
       try {
@@ -348,7 +373,7 @@ export async function POST(request: NextRequest) {
         // Don't throw - we still want the webhook to succeed even if refund fails
       }
     } catch (e) {
-      console.error('[doctor-save] transform error', e)
+      console.error('[doctor-partial] transform error', e)
     }
   }
 
@@ -415,64 +440,8 @@ export async function POST(request: NextRequest) {
         // Don't throw - continue with webhook processing
       }
 
-      // Determine email
-      let emailId = (invoice?.customer_email || '') as string
-      if (!emailId && customerId) {
-        try {
-          const customer = await stripe.customers.retrieve(customerId)
-          emailId = (customer as any)?.email || ''
-        } catch {
-          // ignore
-        }
-      }
-
-      // Compute period start/end from subscription
-      const periodStartIso = toIso((subscription as any)?.current_period_start || null)
-      const periodEndIso = toIso((subscription as any)?.current_period_end || null)
-      const subscriptionStartDate = formatDdMmYyyy(periodStartIso)
-      const subscriptionEndDate = formatDdMmYyyy(periodEndIso)
-
-      // Derive metadata
-      const plan = (subscription as any)?.metadata?.plan || ''
-      const region = (subscription as any)?.metadata?.region || ''
-      const interval = (subscription as any)?.items?.data?.[0]?.price?.recurring?.interval
-      const billingCycle = interval === 'year' ? 'yearly' : 'monthly'
-
-      const paymentDetails = {
-        eventId: event.id,
-        sessionId: undefined,
-        subscriptionId: subId,
-        customerId,
-        invoiceId: invoice?.id,
-        currency: invoice?.currency,
-        amountSubtotal: invoice?.amount_subtotal ?? 0,
-        amountTotal: invoice?.amount_paid ?? invoice?.amount_total ?? 0,
-        paymentStatus: invoice?.status || 'paid',
-        mode: 'subscription',
-        plan,
-        billingCycle,
-        region,
-      }
-
-      const payload = {
-        emailId,
-        subscriptionStartDate,
-        subscriptionEndDate,
-        subscriptionPaymentDetails: JSON.stringify(paymentDetails),
-      }
-
-      const updateUrl = buildExternalUrlFromRequest(request, ExternalApiEndpoints.updateDoctor)
-      console.log('[doctor-update] payload', payload)
-      const response = await fetch(updateUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      }).catch((e) => {
-        console.error('[doctor-update] network error', e)
-      })
-      try {
-        console.log('[doctor-update] response', await response?.json())
-      } catch {}
+      // Per new flow: do not call external update here; perform update after resume save.
+      console.log('[doctor-update] skipped in webhook; handled after resume save')
     } catch (e) {
       console.error('[doctor-update] transform error', e)
     }

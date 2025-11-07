@@ -38,6 +38,9 @@ export const ExternalApiEndpoints = {
   zones: '/api/v01/getAllZones',
   checkEmailExists: '/api/v01/getAlreadyExistsEmailIds',
   checkRegistrationExists: '/api/v01/getAlreadyExistsGMCNumber',
+  // Partial registration endpoints
+  saveDoctorPartial: '/api/v01/saveDoctorPartialRegData',
+  getDoctorPartial: '/api/v01/getDoctorPartialRegData',
 }
 
 export function buildExternalUrlFromRequest(req: NextRequest, path: string): string {
