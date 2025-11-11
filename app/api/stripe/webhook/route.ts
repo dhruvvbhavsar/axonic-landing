@@ -62,6 +62,7 @@ async function sendReceiptEmail(
   plan: string,
   billingCycle: string,
   region: string,
+  product: 'axonmd' | 'axonhis' = 'axonmd',
   trialDays?: number
 ): Promise<void> {
   try {
@@ -77,9 +78,24 @@ async function sendReceiptEmail(
     // Format date
     const invoiceDate = invoice.created ? new Date(invoice.created * 1000).toLocaleDateString() : new Date().toLocaleDateString()
     
-    // Format plan name
-    const planName = plan ? (plan === 'professional' ? 'Professional' : 'Advanced') : 'AxonMD'
-    const billingCycleName = billingCycle ? (billingCycle === 'monthly' ? 'Monthly' : 'Yearly') : ''
+    // Format plan name and product name
+    let productName = 'AxonMD'
+    let planName = ''
+    
+    if (product === 'axonhis') {
+      productName = 'AxonHIS'
+      planName = plan === 'Lite' ? 'Lite' : plan === 'Pro' ? 'Pro' : plan === 'Advance' ? 'Advance' : plan
+    } else {
+      planName = plan ? (plan === 'professional' ? 'Professional' : 'Advanced') : ''
+    }
+    
+    const billingCycleName = billingCycle 
+      ? (billingCycle === 'monthly' ? 'Monthly' 
+        : billingCycle === 'yearly' ? 'Yearly'
+        : billingCycle === 'annual' ? 'Annual'
+        : billingCycle === 'semi-annual' ? 'Semi-Annual'
+        : billingCycle)
+      : ''
     const regionName = region || ''
     
     // Create HTML email content
@@ -89,7 +105,7 @@ async function sendReceiptEmail(
         <h2 style="color: #1a1a1a;">Receipt from Axonic Health</h2>
         <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 20px 0;">
         
-        <p>Thank you for your subscription to <strong>AxonMD ${planName}</strong>!</p>
+        <p>Thank you for your subscription to <strong>${productName}${planName ? ` ${planName}` : ''}</strong>!</p>
         
         <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin: 20px 0;">
           <p style="margin: 5px 0;"><strong>Invoice Number:</strong> ${invoice.number || invoice.id}</p>
@@ -99,7 +115,7 @@ async function sendReceiptEmail(
           ${regionName ? `<p style="margin: 5px 0;"><strong>Region:</strong> ${regionName}</p>` : ''}
         </div>
         
-        ${invoice.status === 'paid' && invoice.amount_paid === 0 ? `
+        ${product === 'axonmd' && invoice.status === 'paid' && invoice.amount_paid === 0 ? `
           <p style="color: #28a745; font-weight: bold;">✓ You're currently on a ${displayTrialDays}-day free trial. Your subscription will begin after the trial period.</p>
         ` : ''}
         
@@ -141,7 +157,7 @@ async function sendReceiptEmail(
       throw new Error(`Email API error! status: ${response.status}`)
     }
     
-    console.log('[receipt-email] Receipt email sent via our service:', customerEmail, 'invoice:', invoice.id)
+    console.log('[receipt-email] Receipt email sent via our service:', customerEmail, 'invoice:', invoice.id, 'product:', product)
   } catch (error: any) {
     console.error('[receipt-email] Failed to send receipt email via our service:', error?.message || error)
     throw error
@@ -268,6 +284,108 @@ export async function POST(request: NextRequest) {
     try {
       const session = (event as any).data?.object as Stripe.Checkout.Session
       const md = (session?.metadata || {}) as Record<string, string>
+      const product = md.product || 'axonmd' // Default to axonmd for backward compatibility
+
+      // Bifurcate by product type
+      if (product === 'axonhis') {
+        // Handle AxonHIS organization registration
+        const plan = md.plan || ''
+        const billingCycle = md.billingCycle || 'monthly'
+        const region = md.region || 'India'
+        
+        // No trial period - immediate start
+        const subscriptionStartIso = toIso(session?.created) || new Date().toISOString()
+        let subscriptionEndIso: string
+        
+        if (billingCycle === 'annual') {
+          subscriptionEndIso = addYears(subscriptionStartIso, 1)
+        } else if (billingCycle === 'semi-annual') {
+          subscriptionEndIso = addMonths(subscriptionStartIso, 6)
+        } else {
+          subscriptionEndIso = addMonths(subscriptionStartIso, 1) // monthly
+        }
+
+        // Format dates as YYYY-MM-DD for paymentDetails
+        const formatYyyyMmDd = (iso: string): string => {
+          try {
+            const d = new Date(iso)
+            const year = d.getUTCFullYear()
+            const month = String(d.getUTCMonth() + 1).padStart(2, '0')
+            const day = String(d.getUTCDate()).padStart(2, '0')
+            return `${year}-${month}-${day}`
+          } catch {
+            return ''
+          }
+        }
+        
+        const startDate = formatYyyyMmDd(subscriptionStartIso)
+        const endDate = formatYyyyMmDd(subscriptionEndIso)
+
+        const countryName = getCountryNameFromCode(session?.customer_details?.address?.country) || region
+        
+        // Build contact number with country code
+        const contactNumber = md.contact_person_country_code && md.contact_person_phone
+          ? `${md.contact_person_country_code}${md.contact_person_phone}`
+          : md.contact_person_phone || ''
+        
+        // Build payment details matching ACE format
+        const planType = billingCycle === 'monthly' ? '1 month'
+          : billingCycle === 'semi-annual' ? '6 months'
+          : billingCycle === 'annual' ? '12 months'
+          : ''
+        
+        // Calculate amounts (amount_total is in cents)
+        const totalAmount = session?.amount_total ? session.amount_total : 0
+        const amount = totalAmount // Same as totalAmount in cents
+        const taxAmount = 0
+        const subscriptionDiscount = 0
+        
+        // Prepare payload matching exact format
+        const payload = {
+          organizationName: md.organization_name || '',
+          unitName: md.organization_name || '',
+          contactPerson: md.contact_person_name || '',
+          organizationEmailId: md.organization_email || '',
+          contactNumber: contactNumber,
+          emailId: md.contact_person_email || '',
+          address: md.address || '',
+          postalCode: md.postal_code || '',
+          countryId: md.unit_country_id || '',
+          stateId: md.unit_state_id || '',
+          cityId: md.unit_city_id || '',
+          districtId: md.unit_zone_id || '',
+          areaId: md.unit_zone_id || '',
+          appUrl: md.app_url || (md.subdomain ? `${md.subdomain}.${region === 'India' ? 'his.axonichealth.co.in' : 'his.axonichealth.uk'}` : ''),
+          subDomain: md.subdomain || '',
+          appId: plan === 'lite' ? 1 : plan === 'pro' ? 2 : 3,
+          paymentDetails: JSON.stringify({
+            amount: amount,
+            TransactionId: session?.payment_intent || session?.id || '',
+            planType: planType,
+            totalAmount: totalAmount,
+            taxAmount: taxAmount,
+            subscriptionDiscount: subscriptionDiscount,
+            startDate: startDate,
+            endDate: endDate,
+          }),
+        }
+
+        console.log('[organization-save] AxonHIS organization payload', payload)
+        // TODO: Uncomment when backend endpoint is ready
+        const backendUrl = region === 'India' 
+          ? 'https://subscription.axonichealth.co.in/api/createOrganizationFromWeb'
+          : 'https://uk.his.axonichealth.uk/api/createOrganizationFromWeb'
+        const response = await fetch(backendUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        })
+        console.log('[organization-save] response', await response?.json())
+
+        return NextResponse.json({ received: true })
+      }
+
+      // Existing AxonMD flow (unchanged)
       const plan = md.plan || ''
       const billingCycle = md.billingCycle || 'monthly'
       const paymentDetails = {
@@ -327,51 +445,6 @@ export async function POST(request: NextRequest) {
       } catch (e) {
         console.error('[doctor-partial-email] error', e)
       }
-
-      // Automatically refund the ₹1/£1 setup fee
-      try {
-        const paymentIntentId = session?.payment_intent
-        if (paymentIntentId && typeof paymentIntentId === 'string') {
-          // Retrieve the payment intent to get charge details
-          const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId)
-          const chargeId = paymentIntent?.latest_charge
-          
-          if (chargeId && typeof chargeId === 'string') {
-            // Retrieve charge to check line items
-            const charge = await stripe.charges.retrieve(chargeId)
-            
-            // Refund only the setup fee amount (100 paise/pence = ₹1/£1)
-            // The setup fee is 100 in smallest currency unit
-            const setupFeeAmount = 100
-            
-            const refund = await stripe.refunds.create({
-              charge: chargeId,
-              amount: setupFeeAmount,
-              reason: 'requested_by_customer',
-              metadata: {
-                reason: 'Automatic refund of AxonMD setup fee',
-                session_id: session?.id || '',
-                customer_email: (session?.customer_details?.email || session?.customer_email || '').toString(),
-              },
-            })
-            
-            console.log('[auto-refund] Setup fee refunded successfully', {
-              refund_id: refund.id,
-              amount: setupFeeAmount,
-              currency: charge.currency,
-              charge_id: chargeId,
-              session_id: session?.id,
-            })
-          } else {
-            console.log('[auto-refund] No charge found for payment intent:', paymentIntentId)
-          }
-        } else {
-          console.log('[auto-refund] No payment intent found in session')
-        }
-      } catch (refundError: any) {
-        console.error('[auto-refund] Failed to refund setup fee:', refundError?.message || refundError)
-        // Don't throw - we still want the webhook to succeed even if refund fails
-      }
     } catch (e) {
       console.error('[doctor-partial] transform error', e)
     }
@@ -389,6 +462,65 @@ export async function POST(request: NextRequest) {
       if (subId) {
         subscription = await stripe.subscriptions.retrieve(subId)
       }
+
+      // Bifurcate by product type from subscription metadata
+      const subMetadata = (subscription as any)?.metadata || {}
+      const product = subMetadata.product || 'axonmd' // Default to axonmd
+
+      if (product === 'axonhis') {
+        // Handle AxonHIS organization subscription update
+        // No update calls - only send receipt email
+        
+        const plan = subMetadata.plan || ''
+        const region = subMetadata.region || ''
+        const interval = (subscription as any)?.items?.data?.[0]?.price?.recurring?.interval
+        const intervalCount = (subscription as any)?.items?.data?.[0]?.price?.recurring?.interval_count || 1
+        const billingCycle = interval === 'year' ? 'annual' 
+          : interval === 'month' && intervalCount === 6 ? 'semi-annual'
+          : 'monthly'
+
+        // Get customer email
+        let emailId = (invoice?.customer_email || '') as string
+        if (!emailId && customerId) {
+          try {
+            const customer = await stripe.customers.retrieve(customerId)
+            emailId = (customer as any)?.email || ''
+          } catch {
+            // ignore
+          }
+        }
+
+        // Send receipt email for AxonHIS
+        try {
+          const invoiceId = invoice?.id
+          if (invoiceId && typeof invoiceId === 'string') {
+            let invoiceObj = await stripe.invoices.retrieve(invoiceId)
+            
+            if (invoiceObj.status === 'draft') {
+              try {
+                const finalizedInvoice = await stripe.invoices.finalizeInvoice(invoiceId)
+                if (finalizedInvoice.status === 'open' && finalizedInvoice.amount_due > 0) {
+                  await stripe.invoices.pay(invoiceId)
+                }
+                invoiceObj = await stripe.invoices.retrieve(invoiceId)
+              } catch (finalizeError: any) {
+                console.log('[receipt-email] Finalization note:', finalizeError?.message)
+              }
+            }
+            
+            if (emailId && (invoiceObj.status === 'paid' || (invoiceObj.status === 'open' && invoiceObj.amount_paid === 0))) {
+              const planName = plan === 'lite' ? 'Lite' : plan === 'pro' ? 'Pro' : 'Advance'
+              await sendReceiptEmail(invoiceObj, emailId, planName, billingCycle, region, 'axonhis')
+            }
+          }
+        } catch (receiptError: any) {
+          console.error('[receipt-email] Failed to send receipt email for AxonHIS:', receiptError?.message || receiptError)
+        }
+
+        return NextResponse.json({ received: true })
+      }
+
+      // Existing AxonMD flow (unchanged)
 
       // Send receipt email for successful payment using our email service
       // This is the single source of truth for receipt emails to avoid duplicates
@@ -432,7 +564,7 @@ export async function POST(request: NextRequest) {
           
           // Send receipt email if invoice is paid (or open for $0 trial invoices) and we have customer email
           if ((invoiceObj.status === 'paid' || (invoiceObj.status === 'open' && invoiceObj.amount_paid === 0)) && customerEmail) {
-            await sendReceiptEmail(invoiceObj, customerEmail, plan, billingCycle, region, (Number.isFinite(trialDays) && trialDays > 0) ? trialDays : 90)
+            await sendReceiptEmail(invoiceObj, customerEmail, plan, billingCycle, region, 'axonmd', (Number.isFinite(trialDays) && trialDays > 0) ? trialDays : 90)
           }
         }
       } catch (receiptError: any) {
@@ -453,6 +585,10 @@ export async function POST(request: NextRequest) {
       const sub = (event as any).data?.object as any
       const previous = (event as any).data?.previous_attributes as any
 
+      // Bifurcate by product type
+      const subMetadata = sub?.metadata || {}
+      const product = subMetadata.product || 'axonmd'
+
       const customerId = typeof sub?.customer === 'string' ? sub.customer : sub?.customer?.id
       let emailId = ''
       if (customerId) {
@@ -466,6 +602,13 @@ export async function POST(request: NextRequest) {
       const cancelScheduled = sub?.cancel_at_period_end === true
       const cancelRemoved = previous?.cancel_at_period_end === true && sub?.cancel_at_period_end === false
 
+      if (product === 'axonhis') {
+        // Handle AxonHIS organization subscription updates
+        // No update calls - just return success
+        return NextResponse.json({ received: true })
+      }
+
+      // Existing AxonMD flow (unchanged)
       // Build payload per spec
       const updateUrl = buildExternalUrlFromRequest(request, ExternalApiEndpoints.updateDoctor)
       if (cancelScheduled) {
@@ -526,6 +669,11 @@ export async function POST(request: NextRequest) {
   if (event.type === 'customer.subscription.deleted') {
     try {
       const sub = (event as any).data?.object as any
+
+      // Bifurcate by product type
+      const subMetadata = sub?.metadata || {}
+      const product = subMetadata.product || 'axonmd'
+
       const customerId = typeof sub?.customer === 'string' ? sub.customer : sub?.customer?.id
       let emailId = ''
       if (customerId) {
@@ -535,6 +683,13 @@ export async function POST(request: NextRequest) {
         } catch {}
       }
 
+      if (product === 'axonhis') {
+        // Handle AxonHIS organization subscription deletion
+        // No update calls - just return success
+        return NextResponse.json({ received: true })
+      }
+
+      // Existing AxonMD flow (unchanged)
       // For final deletion, send end-of-cycle date: prefer cancel_at, then current_period_end, then trial_end, then ended_at
       const finalEndIso = toIso(
         sub?.cancel_at || sub?.current_period_end || sub?.trial_end || sub?.ended_at || null

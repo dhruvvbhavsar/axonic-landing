@@ -8,6 +8,10 @@ import { ProductTestimonialsSection } from "@/components/product-testimonials-se
 import HeroYouTubePlayer from "./hero-video"
 import { Building2, TrendingUp, Shield } from "lucide-react"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { COUNTRY_CODES } from "@/lib/country-codes"
 
 type Feature = { title: string; description: string; image: string }
 
@@ -29,6 +33,122 @@ async function getUserRegion(): Promise<'UK' | 'India'> {
     }
 }
 
+async function getUserLocation() {
+    try {
+        const response = await fetch('https://ipapi.co/json/')
+        const data = await response.json()
+        return {
+            country: data.country_name || data.country || '',
+            countryCode: data.country_code || '',
+            state: data.region || '',
+            city: data.city || '',
+            timezone: data.timezone || '',
+            region_code: data.region_code || '',
+        }
+    } catch (error) {
+        console.warn('Failed to detect user location:', error)
+        return null
+    }
+}
+
+async function checkSubdomainAvailability(subdomain: string, baseDomain: string): Promise<boolean> {
+    try {
+        const fullUrl = `${subdomain}.${baseDomain}`
+        const response = await fetch(`https://dns.google/resolve?name=${fullUrl}`)
+        const data = await response.json()
+        
+        // If no Answer, subdomain is available (not registered)
+        return !data.Answer || data.Answer.length === 0
+    } catch (error) {
+        console.warn('DNS check failed:', error)
+        // On error, assume available (don't block user)
+        return true
+    }
+}
+
+async function generateSubdomainSuggestions(organizationName: string, baseDomain: string): Promise<string[]> {
+    const suggestions: string[] = []
+    
+    // Sanitize organization name for subdomain (alphanumeric only, lowercase)
+    const sanitized = organizationName
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, '')
+        .trim()
+    
+    if (!sanitized || sanitized.length < 2) {
+        return []
+    }
+    
+    // Base suggestions
+    const baseSuggestions = [
+        sanitized,
+        sanitized.slice(0, 4),
+        sanitized.slice(0, 3),
+    ].filter(Boolean)
+    
+    // Suffixes to try if base is unavailable
+    const suffixes = ['new', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    
+    // Generate numeric suggestions
+    for (let i = 0; i < 5; i++) {
+        const randomNum = Math.floor(Math.random() * 900) + 100 // 100-999
+        suggestions.push(randomNum.toString())
+    }
+    
+    // Check availability for base suggestions
+    for (const base of baseSuggestions) {
+        if (suggestions.length >= 10) break
+        
+        const isAvailable = await checkSubdomainAvailability(base, baseDomain)
+        if (isAvailable) {
+            suggestions.push(base)
+        } else {
+            // Try with suffixes
+            for (const suffix of suffixes) {
+                if (suggestions.length >= 10) break
+                const withSuffix = `${base}${suffix}`
+                const suffixAvailable = await checkSubdomainAvailability(withSuffix, baseDomain)
+                if (suffixAvailable) {
+                    suggestions.push(withSuffix)
+                    break
+                }
+            }
+        }
+    }
+    
+    // Generate full URLs
+    return suggestions.map(sub => `${sub}.${baseDomain}`).slice(0, 10)
+}
+
+function getPlanPrice(plan: 'lite' | 'pro' | 'advance', billingCycle: 'semi-annual' | 'annual', region: 'UK' | 'India'): { base: number, tax: number, total: number, currency: string } {
+    // All prices in base currency units (INR or GBP)
+    const prices: Record<'lite' | 'pro' | 'advance', Record<'semi-annual' | 'annual', Record<'India' | 'UK', number>>> = {
+        lite: {
+            'semi-annual': { India: 38500, UK: 1175 },
+            annual: { India: 115000, UK: 2350 },
+        },
+        pro: {
+            'semi-annual': { India: 225000, UK: 2650 },
+            annual: { India: 650000, UK: 5300 },
+        },
+        advance: {
+            'semi-annual': { India: 450000, UK: 7650 },
+        },
+    }
+
+    const base = prices[plan][billingCycle][region]
+    const taxRate = region === 'India' ? 0.18 : 0.20 // GST 18% or VAT 20%
+    const tax = base * taxRate
+    const total = base + tax
+    
+    return {
+        base,
+        tax,
+        total,
+        currency: region === 'India' ? 'INR' : 'GBP',
+    }
+}
+
 export function OverviewSection({
     product,
     videoId,
@@ -39,12 +159,326 @@ export function OverviewSection({
     features: Feature[]
 }) {
     const [pricingRegion, setPricingRegion] = React.useState<'UK' | 'India'>("UK")
+    const [billingCycle, setBillingCycle] = React.useState<'semi-annual' | 'annual'>("semi-annual")
     const appRedirectUrl = product?.redirectUrl || "https://axonhis.axonichealth.com"
+    const [loadingPlan, setLoadingPlan] = React.useState<string | null>(null)
+    const [organizationDialogOpen, setOrganizationDialogOpen] = React.useState(false)
+    const [selectedPlan, setSelectedPlan] = React.useState<'lite' | 'pro' | 'advance' | null>(null)
+    const [organizationError, setOrganizationError] = React.useState<string | null>(null)
+    const [organization, setOrganization] = React.useState({
+        organizationName: "",
+        contactPerson: "",
+        organizationEmail: "",
+        email: "",
+        phone: "",
+        countryCode: "+44",
+        beds: undefined as number | undefined,
+        address: "",
+        postalCode: "",
+        appUrl: "",
+    })
+    const [apiCountries, setApiCountries] = React.useState<any[]>([])
+    const [apiStates, setApiStates] = React.useState<any[]>([])
+    const [apiCities, setApiCities] = React.useState<any[]>([])
+    const [apiZones, setApiZones] = React.useState<any[]>([])
+    const [selectedCountryId, setSelectedCountryId] = React.useState<number | null>(null)
+    const [selectedStateId, setSelectedStateId] = React.useState<number | null>(null)
+    const [selectedCityId, setSelectedCityId] = React.useState<number | null>(null)
+    const [selectedZoneId, setSelectedZoneId] = React.useState<number | null>(null)
+    const [loadingCountries, setLoadingCountries] = React.useState(false)
+    const [loadingStates, setLoadingStates] = React.useState(false)
+    const [loadingCities, setLoadingCities] = React.useState(false)
+    const [loadingZones, setLoadingZones] = React.useState(false)
+    const [loadingLocation, setLoadingLocation] = React.useState(false)
+    const [countryLocked, setCountryLocked] = React.useState(false)
+    const [subdomainInput, setSubdomainInput] = React.useState("")
+    const [subdomainSuggestions, setSubdomainSuggestions] = React.useState<string[]>([])
+    const [showSubdomainDropdown, setShowSubdomainDropdown] = React.useState(false)
+    const [loadingSubdomainSuggestions, setLoadingSubdomainSuggestions] = React.useState(false)
+    const [selectedSubdomain, setSelectedSubdomain] = React.useState("")
+
+    const validateEmail = React.useCallback((email: string): boolean => {
+        const parts = email.split('@')
+        if (parts.length !== 2) return false
+        if (parts[0].includes('+')) return false
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    }, [])
+
+    // Fetch countries and zones when dialog opens, and auto-populate location
+    React.useEffect(() => {
+        if (!organizationDialogOpen) return
+        let cancelled = false
+        
+        const fetchCountries = async () => {
+            setLoadingCountries(true)
+            try {
+                const res = await fetch('/api/address/countries')
+                if (!res.ok) throw new Error('Failed to load countries')
+                const data = await res.json()
+                const list = Array.isArray(data?.list) ? data.list : []
+                if (!cancelled) setApiCountries(list)
+                return list
+            } catch (e) {
+                console.warn('Failed to fetch countries', e)
+                if (!cancelled) setApiCountries([])
+                return []
+            } finally {
+                if (!cancelled) setLoadingCountries(false)
+            }
+        }
+
+        const fetchZones = async () => {
+            try {
+                const res = await fetch('/api/zones')
+                if (!res.ok) throw new Error('Failed to load zones')
+                const data = await res.json()
+                const list = Array.isArray(data?.list) ? data.list : []
+                if (!cancelled) setApiZones(list)
+                return list
+            } catch (e) {
+                console.warn('Failed to fetch zones', e)
+                if (!cancelled) setApiZones([])
+                return []
+            }
+        }
+
+        // Fetch IP location and auto-populate
+        const fetchAndPopulateLocation = async () => {
+            setLoadingLocation(true)
+            try {
+                const [countries, zones, ipLocation] = await Promise.all([
+                    fetchCountries(),
+                    fetchZones(),
+                    getUserLocation()
+                ])
+                
+                if (cancelled || !ipLocation) {
+                    // Even without IP location, select first zone as default
+                    if (zones.length > 0 && !cancelled) {
+                        setSelectedZoneId(zones[0].zoneMasterId)
+                    }
+                    return
+                }
+                
+                // Match and lock country
+                const matchedCountry = countries.find((c: any) => 
+                    c.countryCode === ipLocation.countryCode || 
+                    c.countryName?.toLowerCase() === ipLocation.country?.toLowerCase()
+                )
+                
+                if (matchedCountry && !cancelled) {
+                    setSelectedCountryId(matchedCountry.countryId)
+                    setCountryLocked(true)
+                }
+                
+                // Match zone based on timezone from IP
+                if (zones.length > 0 && !cancelled) {
+                    let matchedZone = null
+                    
+                    // Try to find exact timezone match
+                    if (ipLocation.timezone) {
+                        matchedZone = zones.find((z: any) => 
+                            z.zoneDesc === ipLocation.timezone
+                        )
+                    }
+                    
+                    // Use matched zone or default to first zone
+                    const zoneToSelect = matchedZone || zones[0]
+                    console.log('Auto-selecting zone:', zoneToSelect.zoneDesc, 'from IP timezone:', ipLocation.timezone)
+                    setSelectedZoneId(zoneToSelect.zoneMasterId)
+                }
+            } catch (e) {
+                console.warn('Failed to populate location', e)
+            } finally {
+                if (!cancelled) setLoadingLocation(false)
+            }
+        }
+        
+        fetchAndPopulateLocation()
+        return () => { cancelled = true }
+    }, [organizationDialogOpen])
+
+    // Fetch states when country changes
+    React.useEffect(() => {
+        if (!organizationDialogOpen || !selectedCountryId) {
+            setApiStates([])
+            setSelectedStateId(null)
+            return
+        }
+        let cancelled = false
+        
+        const fetchStates = async () => {
+            setLoadingStates(true)
+            try {
+                const res = await fetch(`/api/address/states?countryId=${selectedCountryId}`)
+                if (!res.ok) throw new Error('Failed to load states')
+                const data = await res.json()
+                const list = Array.isArray(data?.list) ? data.list : []
+                if (!cancelled) {
+                    setApiStates(list)
+                    
+                    // Auto-select state based on IP if we're just loading for the first time
+                    if (list.length > 0 && !selectedStateId) {
+                        getUserLocation().then(ipLocation => {
+                            if (!cancelled && ipLocation && ipLocation.state) {
+                                const matchedState = list.find((s: any) => 
+                                    s.stateName?.toLowerCase() === ipLocation.state?.toLowerCase() ||
+                                    s.stateName?.toLowerCase().includes(ipLocation.state?.toLowerCase()) ||
+                                    ipLocation.state?.toLowerCase().includes(s.stateName?.toLowerCase())
+                                )
+                                if (matchedState) {
+                                    console.log('Auto-selecting state:', matchedState.stateName, 'for IP location:', ipLocation.state)
+                                    setSelectedStateId(matchedState.stateId)
+                                }
+                            }
+                        }).catch(err => console.warn('State auto-select failed:', err))
+                    }
+                }
+            } catch (e) {
+                console.warn('Failed to fetch states', e)
+                if (!cancelled) setApiStates([])
+            } finally {
+                if (!cancelled) setLoadingStates(false)
+            }
+        }
+
+        fetchStates()
+        return () => { cancelled = true }
+    }, [selectedCountryId, organizationDialogOpen])
+
+    // Fetch cities when state changes
+    React.useEffect(() => {
+        if (!organizationDialogOpen || !selectedStateId) {
+            setApiCities([])
+            setSelectedCityId(null)
+            return
+        }
+        let cancelled = false
+        
+        const fetchCities = async () => {
+            setLoadingCities(true)
+            try {
+                const res = await fetch(`/api/address/cities?stateId=${selectedStateId}`)
+                if (!res.ok) throw new Error('Failed to load cities')
+                const data = await res.json()
+                const list = Array.isArray(data?.list) ? data.list : []
+                if (!cancelled) {
+                    setApiCities(list)
+                    
+                    // Auto-select city based on IP if we're just loading for the first time
+                    if (list.length > 0 && !selectedCityId) {
+                        getUserLocation().then(ipLocation => {
+                            if (!cancelled && ipLocation && ipLocation.city) {
+                                const matchedCity = list.find((c: any) => 
+                                    c.cityName?.toLowerCase() === ipLocation.city?.toLowerCase() ||
+                                    c.cityName?.toLowerCase().includes(ipLocation.city?.toLowerCase()) ||
+                                    ipLocation.city?.toLowerCase().includes(c.cityName?.toLowerCase())
+                                )
+                                if (matchedCity) {
+                                    console.log('Auto-selecting city:', matchedCity.cityName, 'for IP location:', ipLocation.city)
+                                    setSelectedCityId(matchedCity.cityId)
+                                }
+                            }
+                        }).catch(err => console.warn('City auto-select failed:', err))
+                    }
+                }
+            } catch (e) {
+                console.warn('Failed to fetch cities', e)
+                if (!cancelled) setApiCities([])
+            } finally {
+                if (!cancelled) setLoadingCities(false)
+            }
+        }
+
+        fetchCities()
+        return () => { cancelled = true }
+    }, [selectedStateId, organizationDialogOpen])
+
+    // Generate subdomain suggestions when organization name changes or subdomain input changes
+    React.useEffect(() => {
+        const source = subdomainInput || organization.organizationName
+        if (!source || source.length < 2) {
+            setSubdomainSuggestions([])
+            setShowSubdomainDropdown(false)
+            return
+        }
+
+        const timeoutId = setTimeout(async () => {
+            setLoadingSubdomainSuggestions(true)
+            const baseDomain = pricingRegion === 'India' ? 'his.axonichealth.co.in' : 'his.axonichealth.uk'
+            const suggestions = await generateSubdomainSuggestions(source, baseDomain)
+            setSubdomainSuggestions(suggestions)
+            setShowSubdomainDropdown(suggestions.length > 0)
+            setLoadingSubdomainSuggestions(false)
+        }, 1000) // Debounce 1 second
+
+        return () => clearTimeout(timeoutId)
+    }, [organization.organizationName, subdomainInput, pricingRegion])
+
+    // Close dropdown when clicking outside
+    React.useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            const target = event.target as HTMLElement
+            if (!target.closest('[data-app-url-container]')) {
+                setShowSubdomainDropdown(false)
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mousedown', handleClickOutside)
+    }, [])
+
+    // Auto-populate subdomain input when organization name changes
+    React.useEffect(() => {
+        if (organization.organizationName && !subdomainInput) {
+            const sanitized = organization.organizationName
+                .toLowerCase()
+                .replace(/[^a-z0-9]/g, '')
+                .trim()
+            if (sanitized.length >= 2) {
+                setSubdomainInput(sanitized)
+            }
+        }
+    }, [organization.organizationName])
+
+    // Reset form when dialog closes
+    React.useEffect(() => {
+        if (!organizationDialogOpen) {
+            setOrganization({
+                organizationName: "",
+                contactPerson: "",
+                organizationEmail: "",
+                email: "",
+                phone: "",
+                countryCode: pricingRegion === 'India' ? "+91" : "+44",
+                beds: undefined,
+                address: "",
+                postalCode: "",
+                appUrl: "",
+            })
+            setSubdomainInput("")
+            setSelectedSubdomain("")
+            setSubdomainSuggestions([])
+            setShowSubdomainDropdown(false)
+            setSelectedCountryId(null)
+            setSelectedStateId(null)
+            setSelectedCityId(null)
+            setSelectedZoneId(null)
+            setCountryLocked(false)
+            setOrganizationError(null)
+        }
+    }, [organizationDialogOpen, pricingRegion])
 
     // Set default pricing region based on user IP
     React.useEffect(() => {
         getUserRegion().then(region => {
             setPricingRegion(region)
+            // Set default country code based on region
+            if (region === 'India') {
+                setOrganization(prev => ({ ...prev, countryCode: "+91" }))
+            } else {
+                setOrganization(prev => ({ ...prev, countryCode: "+44" }))
+            }
         })
     }, [])
 
@@ -380,141 +814,580 @@ export function OverviewSection({
             <section id="pricing" className="py-10 px-4 sm:px-6 lg:px-8 bg-gray-50 overflow-x-hidden">
                 <div className="container mx-auto max-w-7xl">
                     <div className="text-center mb-8">
-                        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Flexible Pricing</h2>
-                        <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
-                            Modular pricing sized by bed-strength and modules. Custom solutions for hospitals of all sizes.
-                        </p>
+                        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Simple Pricing</h2>
+                        <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">Choose the plan that fits your hospital size and needs.</p>
                         <div className="w-20 h-1 bg-blue-400 mx-auto mt-4"></div>
+                        {/* Billing Cycle Selector */}
+                        <div className="mt-6 flex justify-center">
+                            <div className="inline-flex items-center gap-2 rounded-full border bg-white p-1 shadow-sm">
+                                <Button
+                                    variant={billingCycle === 'semi-annual' ? 'default' : 'ghost'}
+                                    className={`${billingCycle === 'semi-annual' ? 'bg-blue-500 text-white hover:bg-blue-600' : ''} rounded-full h-9 px-4`}
+                                    onClick={() => setBillingCycle('semi-annual')}
+                                >
+                                    6 Months
+                                </Button>
+                                <Button
+                                    variant={billingCycle === 'annual' ? 'default' : 'ghost'}
+                                    className={`${billingCycle === 'annual' ? 'bg-blue-500 text-white hover:bg-blue-600' : ''} rounded-full h-9 px-4`}
+                                    onClick={() => setBillingCycle('annual')}
+                                >
+                                    Annual
+                                </Button>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        {/* Small Hospitals */}
+                        {/* Lite Plan */}
+                        {(() => {
+                            const price = getPlanPrice('lite', billingCycle, pricingRegion)
+                            const currencySymbol = pricingRegion === 'India' ? '₹' : '£'
+                            return (
                         <Card className="rounded-3xl border-0 shadow-lg h-full">
                             <CardContent className="p-8 flex flex-col h-full">
                                 <div className="flex-grow">
-                                    <h3 className="text-xl font-bold text-gray-900 mb-2">Small Hospitals</h3>
-                                    <div className="text-4xl font-extrabold text-gray-900 mb-2">Custom</div>
-                                    <p className="text-gray-600 mb-2">Up to 100 beds</p>
-                                    <p className="text-gray-600 text-sm mb-6">Perfect for nursing homes and small hospitals</p>
-                                    <ul className="space-y-3 text-sm text-gray-700">
-                                        <li>• Core EMR (OPD, IPD, ER)</li>
-                                        <li>• Basic billing & pharmacy</li>
-                                        <li>• Lab & radiology integration</li>
-                                        <li>• Role-based access</li>
-                                        <li>• Standard reports</li>
-                                        <li>• Email support</li>
-                                        <li>• Cloud deployment</li>
+                                            <h3 className="text-xl font-bold text-gray-900 mb-2">Lite</h3>
+                                            <p className="text-gray-600 mb-2 text-sm">5-10 Beds, Up to 5 Users</p>
+                                            <div className="text-4xl font-extrabold text-gray-900">{currencySymbol}{price.base.toLocaleString()}</div>
+                                            <div className="text-xs text-gray-500 mt-1">
+                                                +{currencySymbol}{Math.round(price.tax).toLocaleString()} {pricingRegion === 'India' ? 'GST' : 'VAT'} = {currencySymbol}{Math.round(price.total).toLocaleString()}
+                                            </div>
+                                            <p className="text-gray-600 text-sm mt-2">
+                                                {billingCycle === 'semi-annual' ? 'for 6 months' : 'per year'}
+                                            </p>
+                                            <div className="mt-4 text-xs text-blue-600 font-semibold mb-4">✓ 4 hours virtual training included</div>
+                                            <ul className="space-y-2 text-sm text-gray-700">
+                                                <li>✓ Patient Registration</li>
+                                                <li>✓ Appointment Scheduling</li>
+                                                <li>✓ Patient Admission/Discharge</li>
+                                                <li>✓ EMR (Outpatient & Inpatient)</li>
+                                                <li>✓ OPD & IPD Billing</li>
+                                                <li>✓ Fund Management</li>
+                                                <li>✓ WhatsApp Integration</li>
+                                                <li>✓ NABH Quality Indicators</li>
                                     </ul>
                                 </div>
-                                <Dialog>
-                                    <DialogTrigger asChild>
-                                        <Button className="w-full mt-8 bg-blue-500 hover:bg-blue-600 text-white">Contact Sales</Button>
-                                    </DialogTrigger>
-                                    <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
-                                        <DialogHeader>
-                                            <DialogTitle className="text-2xl font-bold text-gray-900">Get Custom Pricing</DialogTitle>
-                                            <DialogDescription className="text-gray-600">Tell us about your hospital and we'll create a tailored solution</DialogDescription>
-                                        </DialogHeader>
-                                        <ContactForm productName={product.name} />
-                                    </DialogContent>
-                                </Dialog>
+                                        <Button
+                                            className="w-full mt-8 bg-blue-500 hover:bg-blue-600 text-white"
+                                            disabled={loadingPlan === 'lite'}
+                                            onClick={() => { setSelectedPlan('lite'); setOrganizationDialogOpen(true) }}
+                                        >
+                                            {loadingPlan === 'lite' ? 'Processing…' : 'Subscribe Now'}
+                                        </Button>
                             </CardContent>
                         </Card>
+                            )
+                        })()}
 
-                        {/* Medium Hospitals */}
+                        {/* Pro Plan */}
+                        {(() => {
+                            const price = getPlanPrice('pro', billingCycle, pricingRegion)
+                            const currencySymbol = pricingRegion === 'India' ? '₹' : '£'
+                            const savings = billingCycle === 'annual' ? (pricingRegion === 'India' ? 43.6 : 1.9) : 0
+                            return (
                         <Card className="rounded-3xl border-2 border-blue-400 shadow-2xl relative h-full">
                             <CardContent className="p-8 flex flex-col h-full">
-                                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg border-2 border-white">Most Popular</div>
+                                        {billingCycle === 'annual' && savings > 0 && (
+                                            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-green-500 to-green-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg border-2 border-white">
+                                                Save {savings}%
+                                            </div>
+                                        )}
                                 <div className="flex-grow">
-                                    <h3 className="text-xl font-bold text-gray-900 mb-2">Medium Hospitals</h3>
-                                    <div className="text-4xl font-extrabold text-gray-900 mb-2">Custom</div>
-                                    <p className="text-gray-600 mb-2">100-300 beds</p>
-                                    <p className="text-gray-600 text-sm mb-6">Complete solution for multi-specialty hospitals</p>
-                                    <ul className="space-y-3 text-sm text-gray-700">
-                                        <li>• Everything in Small plan</li>
-                                        <li>• OT & ICU management</li>
-                                        <li>• Advanced billing with charge capture</li>
-                                        <li>• LIS, RIS/PACS, CSSD integration</li>
-                                        <li>• Inventory & asset management</li>
-                                        <li>• Real-time BI dashboards</li>
-                                        <li>• Priority support</li>
-                                        <li>• Custom templates</li>
-                                        <li>• Cloud or on-premise</li>
+                                            <h3 className="text-xl font-bold text-gray-900 mb-2">Pro</h3>
+                                            <p className="text-gray-600 mb-2 text-sm">10-50 Beds, Up to 10 Users</p>
+                                            <div className="text-4xl font-extrabold text-gray-900">{currencySymbol}{price.base.toLocaleString()}</div>
+                                            <div className="text-xs text-gray-500 mt-1">
+                                                +{currencySymbol}{Math.round(price.tax).toLocaleString()} {pricingRegion === 'India' ? 'GST' : 'VAT'} = {currencySymbol}{Math.round(price.total).toLocaleString()}
+                                            </div>
+                                            <p className="text-gray-600 text-sm mt-2">
+                                                {billingCycle === 'semi-annual' ? 'for 6 months' : 'per year'}
+                                            </p>
+                                            <div className="mt-4 text-xs text-blue-600 font-semibold mb-4">✓ 20 hours virtual training included</div>
+                                            <ul className="space-y-2 text-sm text-gray-700">
+                                                <li>✓ All Lite Plan Features</li>
+                                                <li>✓ Nursing Module</li>
+                                                <li>✓ Inventory Module</li>
+                                                <li>✓ Pharmacy Module</li>
+                                                <li>✓ Lab Information System</li>
+                                                <li>✓ Insurance & Corporate Billing</li>
+                                                <li>✓ Package Creation</li>
                                     </ul>
                                 </div>
-                                <Dialog>
-                                    <DialogTrigger asChild>
-                                        <Button className="w-full mt-8 bg-blue-500 hover:bg-blue-600 text-white">Contact Sales</Button>
-                                    </DialogTrigger>
-                                    <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
-                                        <DialogHeader>
-                                            <DialogTitle className="text-2xl font-bold text-gray-900">Get Custom Pricing</DialogTitle>
-                                            <DialogDescription className="text-gray-600">Tell us about your hospital and we'll create a tailored solution</DialogDescription>
-                                        </DialogHeader>
-                                        <ContactForm productName={product.name} />
-                                    </DialogContent>
-                                </Dialog>
+                                        <Button
+                                            className="w-full mt-8 bg-blue-500 hover:bg-blue-600 text-white"
+                                            disabled={loadingPlan === 'pro'}
+                                            onClick={() => { setSelectedPlan('pro'); setOrganizationDialogOpen(true) }}
+                                        >
+                                            {loadingPlan === 'pro' ? 'Processing…' : 'Subscribe Now'}
+                                        </Button>
                             </CardContent>
                         </Card>
+                            )
+                        })()}
 
-                        {/* Large Hospitals & Networks */}
+                        {/* Advance Plan */}
+                        {(() => {
+                            // Advance plan only has semi-annual pricing, so fallback if annual is selected
+                            const effectiveBillingCycle = billingCycle === 'annual' ? 'semi-annual' : billingCycle
+                            const price = getPlanPrice('advance', effectiveBillingCycle, pricingRegion)
+                            const currencySymbol = pricingRegion === 'India' ? '₹' : '£'
+                            const savings = 0 // No annual plan for advance
+                            return (
                         <Card className="rounded-3xl border-0 shadow-lg h-full">
                             <CardContent className="p-8 flex flex-col h-full">
+                                        {billingCycle === 'annual' && savings > 0 && (
+                                            <div className="absolute -top-4 left-6 bg-gradient-to-r from-green-500 to-green-600 text-white text-sm font-bold px-3 py-2 rounded-full shadow-lg border-2 border-white">
+                                                Save {savings}%
+                                            </div>
+                                        )}
                                 <div className="flex-grow">
-                                    <h3 className="text-xl font-bold text-gray-900 mb-2">Large Hospitals & Networks</h3>
-                                    <div className="text-4xl font-extrabold text-gray-900 mb-2">Enterprise</div>
-                                    <p className="text-gray-600 mb-2">300+ beds or multi-site</p>
-                                    <p className="text-gray-600 text-sm mb-6">Advanced features for health systems</p>
-                                    <ul className="space-y-3 text-sm text-gray-700">
-                                        <li>• Everything in Medium plan</li>
-                                        <li>• Multi-site management</li>
-                                        <li>• Custom integrations & API</li>
-                                        <li>• Advanced analytics & reporting</li>
-                                        <li>• Dedicated success manager</li>
-                                        <li>• White-labeling options</li>
-                                        <li>• Priority phone support</li>
-                                        <li>• Training & onboarding</li>
-                                        <li>• Custom SLA</li>
-                                        <li>• Global network opportunity</li>
+                                            <h3 className="text-xl font-bold text-gray-900 mb-2">Advance</h3>
+                                            <p className="text-gray-600 mb-2 text-sm">50+ Beds, Up to 25 Users</p>
+                                            <div className="text-4xl font-extrabold text-gray-900">{currencySymbol}{price.base.toLocaleString()}</div>
+                                            <div className="text-xs text-gray-500 mt-1">
+                                                +{currencySymbol}{Math.round(price.tax).toLocaleString()} {pricingRegion === 'India' ? 'GST' : 'VAT'} = {currencySymbol}{Math.round(price.total).toLocaleString()}
+                                            </div>
+                                            <p className="text-gray-600 text-sm mt-2">
+                                                for 6 months
+                                            </p>
+                                            {billingCycle === 'annual' && (
+                                                <p className="text-xs text-orange-600 mt-2 font-semibold">⚠ Annual plan not available for this tier</p>
+                                            )}
+                                            <div className="mt-4 text-xs text-blue-600 font-semibold mb-4">✓ 40 hours virtual training included</div>
+                                            <ul className="space-y-2 text-sm text-gray-700">
+                                                <li>✓ All Pro Plan Features</li>
+                                                <li>✓ Procurement Module</li>
+                                                <li>✓ Blood Bank</li>
+                                                <li>✓ CSSD</li>
+                                                <li>✓ Linen & Laundry</li>
+                                                <li>✓ Diet & Kitchen</li>
+                                                <li>✓ Mortuary</li>
+                                                <li>✓ Comprehensive EMR</li>
+                                                <li>✓ Operation Theatre Management</li>
+                                                <li>✓ AI-Enabled Features</li>
                                     </ul>
                                 </div>
-                                <Dialog>
-                                    <DialogTrigger asChild>
-                                        <Button className="w-full mt-8 bg-blue-500 hover:bg-blue-600 text-white">Contact Enterprise</Button>
-                                    </DialogTrigger>
-                                    <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
-                                        <DialogHeader>
-                                            <DialogTitle className="text-2xl font-bold text-gray-900">Enterprise Solutions</DialogTitle>
-                                            <DialogDescription className="text-gray-600">Let's discuss your multi-site healthcare system requirements</DialogDescription>
-                                        </DialogHeader>
-                                        <ContactForm productName={product.name} />
-                                    </DialogContent>
-                                </Dialog>
+                                        <Button
+                                            className="w-full mt-8 bg-blue-500 hover:bg-blue-600 text-white"
+                                            disabled={loadingPlan === 'advance'}
+                                            onClick={() => { setSelectedPlan('advance'); setOrganizationDialogOpen(true) }}
+                                        >
+                                            {loadingPlan === 'advance' ? 'Processing…' : 'Subscribe Now'}
+                                        </Button>
                             </CardContent>
                         </Card>
+                            )
+                        })()}
                     </div>
 
-                    {/* Global Network CTA */}
-                    <div className="mt-12 p-8 bg-gradient-to-r from-blue-50 to-blue-100 rounded-3xl text-center border border-blue-200">
-                        <h3 className="text-2xl font-bold text-gray-900 mb-3">Join the Axon Provider Ecosystem</h3>
-                        <p className="text-gray-700 mb-6 max-w-2xl mx-auto">
-                            Be part of a global network of healthcare providers. Share best practices, benchmark performance, and access collaborative opportunities.
-                        </p>
-                        <Dialog>
-                            <DialogTrigger asChild>
-                                <Button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-8 rounded-xl">
-                                    Learn More
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+                    {/* Organization Registration Dialog */}
+                    <Dialog open={organizationDialogOpen} onOpenChange={(open) => {
+                        setOrganizationDialogOpen(open)
+                        if (!open) {
+                            setSelectedPlan(null)
+                            setOrganizationError(null)
+                            setSelectedCountryId(null)
+                            setSelectedStateId(null)
+                            setSelectedCityId(null)
+                            setSelectedZoneId(null)
+                        }
+                    }}>
+                        <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
                                 <DialogHeader>
-                                    <DialogTitle className="text-2xl font-bold text-gray-900">Join Our Network</DialogTitle>
-                                    <DialogDescription className="text-gray-600">Discover the benefits of the Axon provider ecosystem</DialogDescription>
+                                <DialogTitle className="text-2xl font-bold text-gray-900">Hospital Registration</DialogTitle>
+                                <DialogDescription className="text-gray-600">
+                                    Complete your organization details to subscribe to AxonHIS {selectedPlan && selectedPlan.charAt(0).toUpperCase() + selectedPlan.slice(1)} Plan
+                                </DialogDescription>
                                 </DialogHeader>
-                                <ContactForm productName={product.name} />
+                            
+                            <div className="space-y-6 mt-4">
+                                {/* Organization Name */}
+                                <div className="space-y-2">
+                                    <Label htmlFor="orgName">Organization Name *</Label>
+                                    <Input
+                                        id="orgName"
+                                        value={organization.organizationName}
+                                        onChange={(e) => setOrganization(prev => ({ ...prev, organizationName: e.target.value }))}
+                                        placeholder="Enter your hospital/organization name"
+                                        required
+                                    />
+                                </div>
+
+                                {/* Contact Person */}
+                                <div className="space-y-2">
+                                    <Label htmlFor="contactPerson">Contact Person Name *</Label>
+                                    <Input
+                                        id="contactPerson"
+                                        value={organization.contactPerson}
+                                        onChange={(e) => setOrganization(prev => ({ ...prev, contactPerson: e.target.value }))}
+                                        placeholder="Full name of primary contact"
+                                        required
+                                    />
+                                </div>
+
+                                {/* Organization Email */}
+                                <div className="space-y-2">
+                                    <Label htmlFor="orgEmail">Organization Email *</Label>
+                                    <Input
+                                        id="orgEmail"
+                                        type="email"
+                                        value={organization.organizationEmail}
+                                        onChange={(e) => {
+                                            const value = e.target.value
+                                            const [local] = value.split('@')
+                                            if (local && local.includes('+')) return
+                                            setOrganization(prev => ({ ...prev, organizationEmail: value }))
+                                        }}
+                                        placeholder="admin@hospital.com"
+                                        required
+                                    />
+                                </div>
+
+                                {/* Application URL */}
+                                <div className="space-y-2">
+                                    <Label htmlFor="appUrl">Application URL *</Label>
+                                    <div className="relative" data-app-url-container>
+                                        <div className="flex items-center border rounded-md">
+                                            <Input
+                                                id="appUrl"
+                                                type="text"
+                                                value={subdomainInput}
+                                                onChange={(e) => {
+                                                    const value = e.target.value.replace(/[^a-z0-9]/gi, '').toLowerCase()
+                                                    setSubdomainInput(value)
+                                                    setSelectedSubdomain("") // Clear selection when typing
+                                                    if (value.length >= 2) {
+                                                        setShowSubdomainDropdown(true)
+                                                    }
+                                                }}
+                                                onFocus={() => {
+                                                    if (subdomainSuggestions.length > 0 || subdomainInput.length >= 2) {
+                                                        setShowSubdomainDropdown(true)
+                                                    }
+                                                }}
+                                                placeholder="Enter organization name to view available URLs"
+                                                className="rounded-r-none border-r-0"
+                                                required
+                                            />
+                                            <div className="px-3 py-2 bg-gray-100 text-gray-600 text-sm border-l flex items-center whitespace-nowrap">
+                                                {pricingRegion === 'India' ? 'his.axonichealth.co.in' : 'his.axonichealth.uk'}
+                                            </div>
+                                        </div>
+                                        
+                                        {showSubdomainDropdown && (
+                                            <div className="absolute z-50 w-full mt-1 bg-white border rounded-md shadow-lg max-h-60 overflow-auto">
+                                                {loadingSubdomainSuggestions ? (
+                                                    <div className="p-3 text-sm text-gray-500">Checking availability...</div>
+                                                ) : subdomainSuggestions.length > 0 ? (
+                                                    <>
+                                                        {subdomainSuggestions.map((suggestion, idx) => (
+                                                            <div
+                                                                key={idx}
+                                                                onClick={() => {
+                                                                    const subdomain = suggestion.split('.')[0]
+                                                                    setSubdomainInput(subdomain)
+                                                                    setSelectedSubdomain(suggestion)
+                                                                    setOrganization(prev => ({ ...prev, appUrl: suggestion }))
+                                                                    setShowSubdomainDropdown(false)
+                                                                }}
+                                                                className="p-3 hover:bg-gray-100 cursor-pointer text-sm border-b last:border-b-0"
+                                                            >
+                                                                {suggestion}
+                                                            </div>
+                                                        ))}
+                                                    </>
+                                                ) : (
+                                                    <div className="p-3 text-sm text-gray-500">Enter organization name to view available URLs</div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                    <p className="text-xs text-gray-500 mt-1">
+                                        {selectedSubdomain ? (
+                                            `Selected: ${selectedSubdomain}`
+                                        ) : subdomainInput ? (
+                                            `Preview: ${subdomainInput}.${pricingRegion === 'India' ? 'his.axonichealth.co.in' : 'his.axonichealth.uk'}`
+                                        ) : (
+                                            'Choose your preferred URL from the dropdown'
+                                        )}
+                                    </p>
+                                </div>
+
+                                {/* Contact Person Email */}
+                                <div className="space-y-2">
+                                    <Label htmlFor="contactEmail">Contact Person Email *</Label>
+                                    <Input
+                                        id="contactEmail"
+                                        type="email"
+                                        value={organization.email}
+                                        onChange={(e) => {
+                                            const value = e.target.value
+                                            const [local] = value.split('@')
+                                            if (local && local.includes('+')) return
+                                            setOrganization(prev => ({ ...prev, email: value }))
+                                        }}
+                                        placeholder="contact@email.com"
+                                        required
+                                    />
+                                </div>
+
+                                {/* Phone Number */}
+                                <div className="space-y-2">
+                                    <Label htmlFor="phone">Contact Number *</Label>
+                                    <div className="flex gap-2">
+                                        <Select value={organization.countryCode} onValueChange={(value) => setOrganization(prev => ({ ...prev, countryCode: value }))}>
+                                            <SelectTrigger className="w-[120px]">
+                                                <SelectValue />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="+91">+91 (IN)</SelectItem>
+                                                <SelectItem value="+44">+44 (UK)</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                        <Input
+                                            id="phone"
+                                            type="tel"
+                                            value={organization.phone}
+                                            onChange={(e) => {
+                                                const value = e.target.value.replace(/\D/g, '')
+                                                const maxLength = organization.countryCode === '+91' ? 10 : 15
+                                                if (value.length <= maxLength) {
+                                                    setOrganization(prev => ({ ...prev, phone: value }))
+                                                }
+                                            }}
+                                            placeholder={organization.countryCode === '+91' ? "9876543210" : "7712345678"}
+                                            required
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Number of Beds */}
+                                <div className="space-y-2">
+                                    <Label htmlFor="beds">Number of Beds (Optional)</Label>
+                                    <Input
+                                        id="beds"
+                                        type="number"
+                                        value={organization.beds || ''}
+                                        onChange={(e) => setOrganization(prev => ({ ...prev, beds: e.target.value ? parseInt(e.target.value) : undefined }))}
+                                        placeholder="e.g., 50"
+                                        min="1"
+                                    />
+                                </div>
+
+                                {/* Address */}
+                                <div className="space-y-2">
+                                    <Label htmlFor="address">Full Address *</Label>
+                                    <Input
+                                        id="address"
+                                        value={organization.address}
+                                        onChange={(e) => setOrganization(prev => ({ ...prev, address: e.target.value }))}
+                                        placeholder="Street address"
+                                        required
+                                    />
+                                </div>
+
+                                {/* Country, State, City, Zone */}
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="space-y-2">
+                                        <Label htmlFor="country">Country *</Label>
+                                        {countryLocked && (
+                                            <p className="text-xs text-gray-500 mb-1">Auto-detected from your location</p>
+                                        )}
+                                        <Select
+                                            value={selectedCountryId?.toString() || ''}
+                                            onValueChange={(value) => setSelectedCountryId(parseInt(value))}
+                                            disabled={loadingCountries || countryLocked}
+                                        >
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select country" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {apiCountries.map((country: any) => (
+                                                    <SelectItem key={country.countryId} value={country.countryId?.toString() || ''}>
+                                                        {country.countryName}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <Label htmlFor="state">State/Region *</Label>
+                                        <Select
+                                            value={selectedStateId?.toString() || ''}
+                                            onValueChange={(value) => setSelectedStateId(parseInt(value))}
+                                            disabled={loadingStates || !selectedCountryId}
+                                        >
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select state" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {apiStates.map((state: any) => (
+                                                    <SelectItem key={state.stateId} value={state.stateId?.toString() || ''}>
+                                                        {state.stateName}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <Label htmlFor="city">City *</Label>
+                                        <Select
+                                            value={selectedCityId?.toString() || ''}
+                                            onValueChange={(value) => setSelectedCityId(parseInt(value))}
+                                            disabled={loadingCities || !selectedStateId}
+                                        >
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select city" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {apiCities.map((city: any) => (
+                                                    <SelectItem key={city.cityId} value={city.cityId?.toString() || ''}>
+                                                        {city.cityName}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <Label htmlFor="zone">Area/Zone *</Label>
+                                        <Select
+                                            value={selectedZoneId?.toString() || ''}
+                                            onValueChange={(value) => setSelectedZoneId(parseInt(value))}
+                                            disabled={loadingZones}
+                                        >
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select area" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {apiZones.map((zone: any) => (
+                                                    <SelectItem key={zone.zoneMasterId || zone.zoneId} value={(zone.zoneMasterId || zone.zoneId)?.toString() || ''}>
+                                                        {zone.zoneDesc || zone.zoneName}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                </div>
+
+                                {/* Postal Code */}
+                                <div className="space-y-2">
+                                    <Label htmlFor="postalCode">Postal Code *</Label>
+                                    <Input
+                                        id="postalCode"
+                                        value={organization.postalCode}
+                                        onChange={(e) => {
+                                            const value = e.target.value
+                                            const maxLength = pricingRegion === 'India' ? 6 : 10
+                                            const pattern = pricingRegion === 'India' ? /^\d*$/ : /^[A-Za-z0-9\s]*$/
+                                            if (value.length <= maxLength && pattern.test(value)) {
+                                                setOrganization(prev => ({ ...prev, postalCode: value }))
+                                            }
+                                        }}
+                                        placeholder={pricingRegion === 'India' ? "123456" : "SW1A 1AA"}
+                                        required
+                                    />
+                                </div>
+
+                                {organizationError && (
+                                    <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+                                        <p className="text-sm text-red-600">{organizationError}</p>
+                                    </div>
+                                )}
+
+                                <div className="flex gap-3 justify-end pt-4">
+                                    <Button
+                                        variant="outline"
+                                        onClick={() => setOrganizationDialogOpen(false)}
+                                        disabled={loadingPlan !== null}
+                                    >
+                                        Cancel
+                                    </Button>
+                                    <Button
+                                        onClick={async () => {
+                                            if (!organization.organizationName || organization.organizationName.length < 3) {
+                                                setOrganizationError('Please enter a valid organization name (min 3 characters)')
+                                                return
+                                            }
+                                            if (!organization.contactPerson) {
+                                                setOrganizationError('Please enter contact person name')
+                                                return
+                                            }
+                                            if (!validateEmail(organization.organizationEmail)) {
+                                                setOrganizationError('Please enter a valid organization email')
+                                                return
+                                            }
+                                            if (!organization.appUrl || !selectedSubdomain) {
+                                                setOrganizationError('Please select an Application URL from the dropdown')
+                                                return
+                                            }
+                                            if (!validateEmail(organization.email)) {
+                                                setOrganizationError('Please enter a valid contact person email')
+                                                return
+                                            }
+                                            if (!organization.phone || (organization.countryCode === '+91' && organization.phone.length !== 10) || (organization.countryCode === '+44' && organization.phone.length < 8)) {
+                                                setOrganizationError('Please enter a valid phone number')
+                                                return
+                                            }
+                                            if (!selectedCountryId || !selectedStateId || !selectedCityId || !selectedZoneId) {
+                                                setOrganizationError('Please select all location fields')
+                                                return
+                                            }
+                                            if (!organization.address || !organization.postalCode) {
+                                                setOrganizationError('Please enter address and postal code')
+                                                return
+                                            }
+
+                                            setOrganizationError(null)
+                                            setLoadingPlan(selectedPlan || null)
+
+                                            try {
+                                                const payload = {
+                                                    product: 'axonhis',
+                                                    plan: selectedPlan,
+                                                    billingCycle,
+                                                    region: pricingRegion,
+                                                    organization: {
+                                                        ...organization,
+                                                        contactNumber: `${organization.countryCode}${organization.phone}`,
+                                                        subDomain: selectedSubdomain.split('.')[0], // Extract subdomain part
+                                                    },
+                                                    successUrl: `${window.location.origin}/our-products/axonhis/success/`,
+                                                    cancelUrl: `${window.location.origin}/our-products/axonhis/`,
+                                                    unitMasterDto: {
+                                                        countryId: selectedCountryId,
+                                                        stateId: selectedStateId,
+                                                        cityId: selectedCityId,
+                                                        zoneId: selectedZoneId,
+                                                    },
+                                                }
+
+                                                const response = await fetch('/api/checkout', {
+                                                    method: 'POST',
+                                                    headers: { 'Content-Type': 'application/json' },
+                                                    body: JSON.stringify(payload),
+                                                })
+                                                const data = await response.json()
+                                                if (!response.ok) throw new Error(data?.error || 'Checkout failed')
+                                                if (data?.url) window.location.href = data.url
+                                            } catch (e) {
+                                                console.error(e)
+                                                setOrganizationError('Failed to start checkout. Please try again later.')
+                                                setLoadingPlan(null)
+                                            }
+                                        }}
+                                        disabled={loadingPlan !== null}
+                                        className="bg-blue-500 hover:bg-blue-600 text-white"
+                                    >
+                                        {loadingPlan ? 'Processing…' : 'Proceed to Payment'}
+                                    </Button>
+                                </div>
+                            </div>
                             </DialogContent>
                         </Dialog>
-                    </div>
                 </div>
             </section>
 
