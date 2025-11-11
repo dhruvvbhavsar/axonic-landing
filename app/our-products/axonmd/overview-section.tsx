@@ -70,7 +70,7 @@ function OverviewSectionInner({
     const appRedirectUrl = product?.redirectUrl || "https://axonmd.axonichealth.com"
     const [loadingPlan, setLoadingPlan] = React.useState<string | null>(null)
     const [doctorDialogOpen, setDoctorDialogOpen] = React.useState(false)
-    const [doctorPlan, setDoctorPlan] = React.useState<'professional' | 'advanced' | null>(null)
+    const [doctorPlan, setDoctorPlan] = React.useState<'basic' | 'professional' | 'advanced' | null>(null)
     const [doctorError, setDoctorError] = React.useState<string | null>(null)
     const [privateNetwork] = React.useState<boolean>(false)
     const [doctor, setDoctor] = React.useState({
@@ -481,7 +481,59 @@ function OverviewSectionInner({
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                        {/* Basic Plan */}
+                        <Card className="rounded-3xl border-0 shadow-lg h-full">
+                            <CardContent className="p-8 flex flex-col h-full">
+                                <div className="flex-grow">
+                                <h3 className="text-xl font-bold text-gray-900 mb-2">Basic</h3>
+                                {pricingRegion === 'UK' ? (
+                                    billingCycle === 'monthly' ? (
+                                        <>
+                                            <div className="text-4xl font-extrabold text-gray-900">£75<span className="text-base font-medium text-gray-600">/month</span></div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <div className="text-sm line-through text-gray-400">£75/month</div>
+                                            <div className="text-4xl font-extrabold text-gray-900">£45<span className="text-base font-medium text-gray-600">/month (billed yearly)</span></div>
+                                            <div className="text-xs text-gray-500">Equivalent to £540/year</div>
+                                        </>
+                                    )
+                                ) : (
+                                    billingCycle === 'monthly' ? (
+                                        <>
+                                            <div className="text-4xl font-extrabold text-gray-900">₹1,500<span className="text-base font-medium text-gray-600">/month</span></div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <div className="text-sm line-through text-gray-400">₹1,500/month</div>
+                                            <div className="text-4xl font-extrabold text-gray-900">₹900<span className="text-base font-medium text-gray-600">/month (billed yearly)</span></div>
+                                            <div className="text-xs text-gray-500">Equivalent to ₹10,800/year</div>
+                                        </>
+                                    )
+                                )}
+                                <p className="text-gray-600 mt-2">Essential clinic management features</p>
+                                <ul className="mt-6 space-y-3 text-sm text-gray-700">
+                                    <li>✅ Cloud EMR</li>
+                                    <li>✅ Appointment management & Scheduling</li>
+                                    <li>✅ E-prescription</li>
+                                    <li>✅ Video Consultation</li>
+                                    <li>✅ Billing</li>
+                                    <li>✅ Axoncare Patient App</li>
+                                    <li>✅ Integration with Doctor's Payment gateway</li>
+                                    <li>✅ Standard Templates</li>
+                                </ul>
+                                </div>
+                                <Button
+                                    className="w-full mt-8 bg-blue-500 hover:bg-blue-600 text-white"
+                                    disabled={loadingPlan === 'basic'}
+                                    onClick={() => { setDoctorPlan('basic'); setDoctorDialogOpen(true) }}
+                                >
+                                    {loadingPlan === 'basic' ? 'Redirecting…' : `Start ${trialDays} Day Free Trial`}
+                                </Button>
+                            </CardContent>
+                        </Card>
+
                         {/* Professional Plan */}
                         <Card className="rounded-3xl border-0 shadow-lg h-full">
                             <CardContent className="p-8 flex flex-col h-full">
@@ -515,14 +567,14 @@ function OverviewSectionInner({
                                 <p className="text-gray-600 mt-2">Complete clinic management solution</p>
                                 <ul className="mt-6 space-y-3 text-sm text-gray-700">
                                     <li>✅ Cloud EMR</li>
-                                    <li>✅ Appointment management & scheduling</li>
-                                    <li>✅ E‑prescriptions</li>
-                                    <li>✅ Patient portal</li>
-                                    <li>✅ Video consultation via CliniTalk</li>
-                                    <li>✅ Smart AI buttons</li>
-                                    <li>✅ Axona – Ambient Scribe</li>
-                                    <li>✅ Customizable template engine</li>
-                                    <li>✅ Billing service</li>
+                                    <li>✅ Appointment management & Scheduling</li>
+                                    <li>✅ E-prescription</li>
+                                    <li>✅ Video Consultation</li>
+                                    <li>✅ Billing Service</li>
+                                    <li>✅ Axoncare Patient App</li>
+                                    <li>✅ Integration with Doctor's Payment gateway</li>
+                                    <li>✅ Standard Templates</li>
+                                    <li className="bg-yellow-50 px-2 py-1 rounded">✅ Smart AI assistance</li>
                                 </ul>
                                 </div>
                                 <Button
@@ -571,10 +623,13 @@ function OverviewSectionInner({
                                         </>
                                     )
                                 )}
-                                <p className="text-gray-600 mt-2">Everything in Professional, plus add‑ons</p>
+                                <p className="text-gray-600 mt-2">Everything in Professional, plus advanced features</p>
                                 <ul className="mt-6 space-y-3 text-sm text-gray-700">
                                     <li>✅ All Professional features</li>
-                                    <li>Patient app with Clinic/Doctor branding</li>
+                                    <li className="bg-green-50 px-2 py-1 rounded">✅ Patient Portal</li>
+                                    <li className="bg-green-50 px-2 py-1 rounded">✅ Axona (Ambient Scribe)</li>
+                                    <li className="bg-green-50 px-2 py-1 rounded">✅ Custom Templates</li>
+                                    <li className="bg-green-50 px-2 py-1 rounded">✅ Advanced Analytics</li>
                                 </ul>
                                 </div>
                                 <Button

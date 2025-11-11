@@ -4,7 +4,7 @@ import Stripe from 'stripe'
 type BillingCycle = 'monthly' | 'yearly'
 type BillingCycleHIS = 'monthly' | 'semi-annual' | 'annual'
 type Region = 'UK' | 'India'
-type Plan = 'professional' | 'advanced'
+type Plan = 'basic' | 'professional' | 'advanced'
 type PlanHIS = 'lite' | 'pro' | 'advance'
 type Product = 'axonmd' | 'axonhis'
 
@@ -48,6 +48,13 @@ function getCurrencyForRegion(region: Region): 'inr' | 'gbp' {
 
 function getUnitAmountCents(plan: Plan, billingCycle: BillingCycle, region: Region): number {
   // All amounts are in the smallest currency unit (paise or pence)
+  if (plan === 'basic') {
+    if (region === 'UK') {
+      return billingCycle === 'monthly' ? 7500 : 54000 // £75/mo or £540/year
+    }
+    return billingCycle === 'monthly' ? 150000 : 1080000 // ₹1500/mo or ₹10800/year
+  }
+
   if (plan === 'professional') {
     if (region === 'UK') {
       return billingCycle === 'monthly' ? 10000 : 72000 // £100/mo or £720/year
@@ -178,6 +185,10 @@ export async function POST(request: NextRequest) {
     // Region-specific prices: UK -> GBP, India -> INR
     const SANDBOX_PRICE_IDS: Record<Region, Record<Plan, Record<BillingCycle, string>>> = {
       UK: {
+        basic: {
+          monthly: '', // TODO: Add Stripe Price ID for Basic plan (UK, monthly)
+          yearly: '', // TODO: Add Stripe Price ID for Basic plan (UK, yearly)
+        },
         professional: {
           monthly: 'price_1SDLP003TVi4FRa6kCJYA869',
           yearly: 'price_1SDLP003TVi4FRa6mwYKp0GM',
@@ -194,6 +205,10 @@ export async function POST(request: NextRequest) {
         },
       },
       India: {
+        basic: {
+          monthly: '', // TODO: Add Stripe Price ID for Basic plan (India, monthly)
+          yearly: '', // TODO: Add Stripe Price ID for Basic plan (India, yearly)
+        },
         professional: {
           monthly: 'price_1SDLP003TVi4FRa6pHsl7y9f',
           yearly: 'price_1SDLP003TVi4FRa65Y1vyh80',
@@ -264,7 +279,7 @@ export async function POST(request: NextRequest) {
             price_data: {
               currency,
               product_data: {
-                name: `Axon MD ${plan === 'professional' ? 'Professional' : 'Advanced'} (${region}, ${billingCycle})`,
+                name: `Axon MD ${plan === 'basic' ? 'Basic' : plan === 'professional' ? 'Professional' : 'Advanced'} (${region}, ${billingCycle})`,
               },
               unit_amount: unitAmount,
               recurring: {
