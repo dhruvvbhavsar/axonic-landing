@@ -122,7 +122,9 @@ async function generateSubdomainSuggestions(organizationName: string, baseDomain
 
 function getPlanPrice(plan: 'lite' | 'pro' | 'advance', billingCycle: 'semi-annual' | 'annual', region: 'UK' | 'India'): { base: number, tax: number, total: number, currency: string } {
     // All prices in base currency units (INR or GBP)
-    const prices: Record<'lite' | 'pro' | 'advance', Record<'semi-annual' | 'annual', Record<'India' | 'UK', number>>> = {
+    const prices: Record<'lite' | 'pro', Record<'semi-annual' | 'annual', Record<'India' | 'UK', number>>> & {
+        advance: Record<'semi-annual', Record<'India' | 'UK', number>>
+    } = {
         lite: {
             'semi-annual': { India: 38500, UK: 1175 },
             annual: { India: 115000, UK: 2350 },
@@ -136,7 +138,14 @@ function getPlanPrice(plan: 'lite' | 'pro' | 'advance', billingCycle: 'semi-annu
         },
     }
 
-    const base = prices[plan][billingCycle][region]
+    // For advance plan, only semi-annual is available
+    let base: number
+    if (plan === 'advance') {
+        base = prices.advance['semi-annual'][region]
+    } else {
+        base = prices[plan][billingCycle][region]
+    }
+    
     const taxRate = region === 'India' ? 0.18 : 0.20 // GST 18% or VAT 20%
     const tax = base * taxRate
     const total = base + tax
