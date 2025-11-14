@@ -76,6 +76,28 @@ export function Navigation() {
 
   const closeMobileMenu = () => setIsMobileMenuOpen(false)
 
+  // Helper component to handle both relative and absolute URLs
+  const SmartLink = React.forwardRef<HTMLAnchorElement, { href: string; children: React.ReactNode; className?: string; onClick?: () => void; [key: string]: any }>(
+    ({ href, children, className, onClick, ...props }, ref) => {
+      const isFullUrl = href.startsWith('http://') || href.startsWith('https://')
+      
+      if (isFullUrl) {
+        return (
+          <a ref={ref} href={href} className={className} onClick={onClick} {...props}>
+            {children}
+          </a>
+        )
+      }
+      
+      return (
+        <Link href={href} className={className} onClick={onClick} {...props}>
+          {children}
+        </Link>
+      )
+    }
+  )
+  SmartLink.displayName = "SmartLink"
+
   return (
     <>
       <div className={cn(
@@ -86,7 +108,7 @@ export function Navigation() {
       )}>
         {/* Logo */}
         <div className="flex items-center">
-          <Link href={getNavUrl("/")} className="flex items-center space-x-2">
+          <SmartLink href={getNavUrl("/")} className="flex items-center space-x-2">
             <Image
               src={isScrolled ? "/logos/logo-black.png" : "/logos/logo-white.png"}
               alt="Axonic Logo"
@@ -94,7 +116,7 @@ export function Navigation() {
               height={50}
               className="h-10 w-auto"
             />
-          </Link>
+          </SmartLink>
         </div>
 
         {/* Desktop Navigation Menu - Hidden on mobile */}
@@ -111,7 +133,7 @@ export function Navigation() {
                       ? "text-gray-900 hover:text-yellow-500" 
                       : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
                   )}>
-                    <Link href={getProductSubdomainUrl(item.slug)}>{item.label}</Link>
+                    <SmartLink href={getProductSubdomainUrl(item.slug)}>{item.label}</SmartLink>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               ))}
@@ -125,7 +147,7 @@ export function Navigation() {
                     ? "text-gray-900 hover:text-yellow-500" 
                     : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
                 )}>
-                  <Link href={getPlatformSubdomainUrl()}>Our Platform</Link>
+                  <SmartLink href={getPlatformSubdomainUrl()}>Our Platform</SmartLink>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
@@ -143,44 +165,44 @@ export function Navigation() {
                   <ul className="grid w-[220px] gap-2 p-2 bg-white">
                     <li>
                       <NavigationMenuLink asChild>
-                        <Link href={getNavUrl("/about-us#team")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                        <SmartLink href={getNavUrl("/about-us#team")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
                           <div className="font-medium">Team</div>
-                        </Link>
+                        </SmartLink>
                       </NavigationMenuLink>
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <Link href={getNavUrl("/our-products")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                        <SmartLink href={getNavUrl("/our-products")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
                           <div className="font-medium">Our Products</div>
-                        </Link>
+                        </SmartLink>
                       </NavigationMenuLink>
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <Link href={getNavUrl("/blogs")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                        <SmartLink href={getNavUrl("/blogs")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
                           <div className="font-medium">Blog</div>
-                        </Link>
+                        </SmartLink>
                       </NavigationMenuLink>
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <Link href={getNavUrl("/#testimonials")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                        <SmartLink href={getNavUrl("/#testimonials")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
                           <div className="font-medium">Testimonials</div>
-                        </Link>
+                        </SmartLink>
                       </NavigationMenuLink>
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <Link href={getNavUrl("/careers")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                        <SmartLink href={getNavUrl("/careers")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
                           <div className="font-medium">Careers</div>
-                        </Link>
+                        </SmartLink>
                       </NavigationMenuLink>
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <Link href={getNavUrl("/contact-us")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                        <SmartLink href={getNavUrl("/contact-us")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
                           <div className="font-medium">Contact Us</div>
-                        </Link>
+                        </SmartLink>
                       </NavigationMenuLink>
                     </li>
                   </ul>
@@ -239,71 +261,71 @@ export function Navigation() {
               <nav className="flex-1 px-4 py-6 space-y-2">
                 {/* Product shortcuts */}
                 {[{label:'AxonScribe', slug:'axonscribe'}, {label:'AxonMD', slug:'axonmd'}, {label:'AxonCare', slug:'axoncare'}, {label:'AxonHIS', slug:'axonhis'}, {label:'AxonHealthHub', slug:'axonhealthhub'}].map((item) => (
-                  <Link
+                  <SmartLink
                     key={item.slug}
                     href={getProductSubdomainUrl(item.slug)}
                     className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                     onClick={closeMobileMenu}
                   >
                     {item.label}
-                  </Link>
+                  </SmartLink>
                 ))}
 
-                <Link
+                <SmartLink
                   href={getPlatformSubdomainUrl()}
                   className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                   onClick={closeMobileMenu}
                 >
                   Our Platform
-                </Link>
+                </SmartLink>
 
                 {/* About Us submenu */}
                 <div className="space-y-1">
                   <div className="px-3 py-2 text-gray-900 font-medium">
                     About Us
                   </div>
-                  <Link
+                  <SmartLink
                     href={getNavUrl("/about-us#team")}
                     className="block px-6 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                     onClick={closeMobileMenu}
                   >
                     Team
-                  </Link>
-                  <Link
+                  </SmartLink>
+                  <SmartLink
                     href={getNavUrl("/our-products")}
                     className="block px-6 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                     onClick={closeMobileMenu}
                   >
                     Our Products
-                  </Link>
-                  <Link
+                  </SmartLink>
+                  <SmartLink
                     href={getNavUrl("/blogs")}
                     className="block px-6 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                     onClick={closeMobileMenu}
                   >
                     Blog
-                  </Link>
-                  <Link
+                  </SmartLink>
+                  <SmartLink
                     href={getNavUrl("/#testimonials")}
                     className="block px-6 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                     onClick={closeMobileMenu}
                   >
                     Testimonials
-                  </Link>
-                  <Link
+                  </SmartLink>
+                  <SmartLink
                     href={getNavUrl("/careers")}
                     className="block px-6 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                     onClick={closeMobileMenu}
                   >
                     Careers
-                  </Link>
-                  <Link
+                  </SmartLink>
+                  <SmartLink
                     href={getNavUrl("/contact-us")}
                     className="block px-6 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                     onClick={closeMobileMenu}
                   >
                     Contact Us
-                  </Link>
+                  </SmartLink>
                 </div>
               </nav>
             </div>

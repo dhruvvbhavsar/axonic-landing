@@ -29,6 +29,29 @@ export function Footer() {
     // If we're on the main domain or during SSR, use relative paths
     return path
   }
+
+  // Helper component to handle both relative and absolute URLs
+  const SmartLink = React.forwardRef<HTMLAnchorElement, { href: string; children: React.ReactNode; className?: string; [key: string]: any }>(
+    ({ href, children, className, ...props }, ref) => {
+      const isFullUrl = href.startsWith('http://') || href.startsWith('https://')
+      
+      if (isFullUrl) {
+        return (
+          <a ref={ref} href={href} className={className} {...props}>
+            {children}
+          </a>
+        )
+      }
+      
+      return (
+        <Link href={href} className={className} {...props}>
+          {children}
+        </Link>
+      )
+    }
+  )
+  SmartLink.displayName = "SmartLink"
+
   return (
     <footer className="bg-[#1a1a2e] text-white">
       {/* Main Footer Content */}
@@ -92,29 +115,29 @@ export function Footer() {
             <h3 className="text-lg font-semibold mb-4 text-yellow-500">Pages</h3>
             <ul className="space-y-2">
               <li>
-                <Link href={getNavUrl("/about-us")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
+                <SmartLink href={getNavUrl("/about-us")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
                   About Us
-                </Link>
+                </SmartLink>
               </li>
               <li>
-                <Link href={"/ai-platform"} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
+                <SmartLink href={"/ai-platform"} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
                   AI Platform
-                </Link>
+                </SmartLink>
               </li>
               <li>
-                <Link href={getNavUrl("/careers")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
+                <SmartLink href={getNavUrl("/careers")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
                   Careers
-                </Link>
+                </SmartLink>
               </li>
               <li>
-                <Link href={getNavUrl("/blogs")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
+                <SmartLink href={getNavUrl("/blogs")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
                   Blogs
-                </Link>
+                </SmartLink>
               </li>
               <li>
-                <Link href={getNavUrl("/contact-us")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
+                <SmartLink href={getNavUrl("/contact-us")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
                   Contact Us
-                </Link>
+                </SmartLink>
               </li>
             </ul>
           </div>
@@ -124,14 +147,14 @@ export function Footer() {
             <h3 className="text-lg font-semibold mb-4 text-yellow-500">Our Offerings</h3>
             <ul className="space-y-2">
               <li>
-                <Link href={getNavUrl("/our-products")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
+                <SmartLink href={getNavUrl("/our-products")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
                   Our Products
-                </Link>
+                </SmartLink>
               </li>
               <li>
-                <Link href={getNavUrl("/our-services")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
+                <SmartLink href={getNavUrl("/our-services")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
                   Our Services
-                </Link>
+                </SmartLink>
               </li>
             </ul>
           </div>
@@ -146,18 +169,18 @@ export function Footer() {
               Copyright © 2024 Axonic All rights reserved
             </div>
             <div className="flex flex-wrap items-center space-x-6 text-sm">
-              <Link href={getNavUrl("/refund-policy")} className="text-gray-400 hover:text-yellow-500 transition-colors flex items-center">
+              <SmartLink href={getNavUrl("/refund-policy")} className="text-gray-400 hover:text-yellow-500 transition-colors flex items-center">
                 <span className="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span>
                 Refund Policy
-              </Link>
-              <Link href={getNavUrl("/privacy-policy")} className="text-gray-400 hover:text-yellow-500 transition-colors flex items-center">
+              </SmartLink>
+              <SmartLink href={getNavUrl("/privacy-policy")} className="text-gray-400 hover:text-yellow-500 transition-colors flex items-center">
                 <span className="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span>
                 Privacy Policy
-              </Link>
-              <Link href={getNavUrl("/terms-conditions")} className="text-gray-400 hover:text-yellow-500 transition-colors flex items-center">
+              </SmartLink>
+              <SmartLink href={getNavUrl("/terms-conditions")} className="text-gray-400 hover:text-yellow-500 transition-colors flex items-center">
                 <span className="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span>
                 Term and Conditions
-              </Link>
+              </SmartLink>
             </div>
             
             {/* Back to Top Button */}
