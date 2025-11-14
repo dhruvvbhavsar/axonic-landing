@@ -214,24 +214,24 @@ export function TechSpecsSection() {
         {/* Setup Process Section */}
         <div className="mt-16 p-10 bg-gradient-to-br from-blue-50 to-blue-100 rounded-3xl border border-blue-200">
           <div className="text-center mb-8">
-            <h3 className="text-3xl font-extrabold text-gray-900 mb-4">Quick Setup Process</h3>
-            <p className="text-lg text-gray-700 max-w-3xl mx-auto">Get up and running with AxonHealthHub in just a few steps</p>
+            <h3 className="text-3xl font-extrabold text-gray-900 mb-4">Setup Process</h3>
+            <p className="text-lg text-gray-700 max-w-3xl mx-auto">Get up and running with AxonHealthHub quickly and efficiently</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">1</div>
-              <h4 className="font-bold text-gray-900 mb-2">Share Profile</h4>
-              <p className="text-gray-700 text-sm">Organization profile and program objectives</p>
+              <h4 className="font-bold text-gray-900 mb-2">Share Organization Profile</h4>
+              <p className="text-gray-700 text-sm">Share organization profile, device map, and program objectives</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">2</div>
-              <h4 className="font-bold text-gray-900 mb-2">Environment Setup</h4>
-              <p className="text-gray-700 text-sm">Provisioning, connector setup within 72 hours</p>
+              <h4 className="font-bold text-gray-900 mb-2">Provisioning & Connector Setup</h4>
+              <p className="text-gray-700 text-sm">Provisioning and connector setup (devices/EMR) within 72 hours for standard setups</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">3</div>
-              <h4 className="font-bold text-gray-900 mb-2">Go Live</h4>
-              <p className="text-gray-700 text-sm">Staff onboarding, device validation, and support</p>
+              <h4 className="font-bold text-gray-900 mb-2">AI Calibration & Go Live</h4>
+              <p className="text-gray-700 text-sm">AI calibration, staff onboarding, device validation, and go-live support</p>
             </div>
           </div>
         </div>
@@ -268,5 +268,6 @@ export function TechSpecsSection() {
     </section>
   )
 }
+
 
 

@@ -29,13 +29,13 @@ function OverviewSectionInner({
                         <div className="space-y-5 lg:col-span-5">
                             <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm md:text-base font-semibold">
                                 <span className="w-2 h-2 rounded-full bg-blue-500" />
-                                Care, Anywhere — Instantly
+                                AI-Enabled Care, Anywhere — Instantly
                             </div>
                             <h1 className="text-3xl md:text-5xl font-extrabold leading-tight text-gray-900">
-                                AxonHealthHub — Unified Healthcare Platform
+                                AxonHealthHub (AI‑Enabled Health Kiosk)
                             </h1>
                             <p className="text-base md:text-lg text-gray-700 leading-relaxed max-w-xl">
-                                Connect patients to doctors, diagnostics, and follow-ups on a unified, compliant platform. Reduce wait times, eliminate data silos, and deliver continuous, coordinated care around the clock.
+                                Deploy AxonHealthHub as an AI-powered health kiosk that connects patients to triage, diagnostics, and clinicians on a unified, compliant platform. Reduce wait times, eliminate data silos, and deliver continuous, coordinated care around the clock.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4">
                                 <Button 
@@ -81,7 +81,7 @@ function OverviewSectionInner({
             <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white overflow-x-hidden">
                 <div className="container mx-auto max-w-7xl">
                     <div className="text-center mb-6">
-                        <h3 className="text-xl md:text-2xl font-bold text-gray-900">Transform Healthcare Delivery</h3>
+                        <h3 className="text-xl md:text-2xl font-bold text-gray-900">Reduce Diagnostic TAT from hours to minutes with AI-assisted workflows</h3>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                         <div className="rounded-2xl border border-gray-200 p-6 flex flex-col items-center text-center bg-gray-50">
@@ -89,21 +89,21 @@ function OverviewSectionInner({
                                 <Activity className="w-7 h-7" />
                             </div>
                             <h4 className="font-semibold text-gray-900 mb-2">Reduce Diagnostic TAT</h4>
-                            <p className="text-sm text-gray-600">From hours to minutes with real-time POCT and auto-sync</p>
+                            <p className="text-sm text-gray-600">From hours to minutes with AI-assisted workflows</p>
                         </div>
                         <div className="rounded-2xl border border-gray-200 p-6 flex flex-col items-center text-center bg-gray-50">
                             <div className="w-14 h-14 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center mb-4">
                                 <RefreshCw className="w-7 h-7" />
                             </div>
                             <h4 className="font-semibold text-gray-900 mb-2">Eliminate Manual Handovers</h4>
-                            <p className="text-sm text-gray-600">Auto-sync results directly to doctor EMR—no uploads</p>
+                            <p className="text-sm text-gray-600">Auto-sync + deduplication—no manual report handovers</p>
                         </div>
                         <div className="rounded-2xl border border-gray-200 p-6 flex flex-col items-center text-center bg-gray-50">
                             <div className="w-14 h-14 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center mb-4">
                                 <Bell className="w-7 h-7" />
                             </div>
                             <h4 className="font-semibold text-gray-900 mb-2">Improve Follow-up Adherence</h4>
-                            <p className="text-sm text-gray-600">Smart reminders boost patient engagement and outcomes</p>
+                            <p className="text-sm text-gray-600">Via personalized reminders</p>
                         </div>
                     </div>
                 </div>
@@ -174,7 +174,7 @@ function OverviewSectionInner({
                 <div className="px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-8">
                         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Clinical Features</h2>
-                        <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">Comprehensive platform for virtual care, diagnostics, and patient engagement.</p>
+                        <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">AI-enabled health kiosk with triage, routing, summaries, connected diagnostics, unified records, guided referrals, auto-sync to EMR, personalized engagement, population analytics, multilingual support, and ABDM-ready security.</p>
                         <div className="w-20 h-1 bg-blue-400 mx-auto mt-4"></div>
                     </div>
                 </div>
@@ -226,7 +226,7 @@ function OverviewSectionInner({
                 <div className="container mx-auto max-w-7xl">
                     <div className="text-center mb-8">
                         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Security and Compliance</h2>
-                        <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">ABDM-ready integration with enterprise-grade security certifications.</p>
+                        <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">ABDM-ready with enterprise-grade security, AI governance controls, and flexible deployment options.</p>
                         <div className="w-20 h-1 bg-blue-400 mx-auto mt-4"></div>
                     </div>
 
@@ -250,26 +250,33 @@ function OverviewSectionInner({
                     </div>
 
                     {/* Row 2: Additional certifications */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 items-center justify-items-center">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 items-center justify-items-center">
                         <div className="flex items-center justify-center text-center">
                             <div className="bg-blue-50 p-6 rounded-xl border border-blue-200">
                                 <Video className="w-12 h-12 text-blue-600 mx-auto mb-3" />
-                                <h4 className="font-bold text-gray-900 mb-2">ABDM Integration</h4>
+                                <h4 className="font-bold text-gray-900 mb-2">ABDM</h4>
                                 <p className="text-sm text-gray-600">ABHA linking, consented data exchange, interoperable formats</p>
                             </div>
                         </div>
                         <div className="flex items-center justify-center text-center">
                             <div className="bg-blue-50 p-6 rounded-xl border border-blue-200">
                                 <FileText className="w-12 h-12 text-blue-600 mx-auto mb-3" />
-                                <h4 className="font-bold text-gray-900 mb-2">Security & Audit</h4>
+                                <h4 className="font-bold text-gray-900 mb-2">Security</h4>
                                 <p className="text-sm text-gray-600">Role-based access, audit trails, encryption in transit/at rest</p>
                             </div>
                         </div>
                         <div className="flex items-center justify-center text-center">
                             <div className="bg-blue-50 p-6 rounded-xl border border-blue-200">
                                 <Globe className="w-12 h-12 text-blue-600 mx-auto mb-3" />
-                                <h4 className="font-bold text-gray-900 mb-2">Flexible Deployment</h4>
-                                <p className="text-sm text-gray-600">Cloud or On-Premise as per organization policy</p>
+                                <h4 className="font-bold text-gray-900 mb-2">AI Governance</h4>
+                                <p className="text-sm text-gray-600">Guardrails, prompt logs, explainability for clinical support</p>
+                            </div>
+                        </div>
+                        <div className="flex items-center justify-center text-center">
+                            <div className="bg-blue-50 p-6 rounded-xl border border-blue-200">
+                                <Globe className="w-12 h-12 text-blue-600 mx-auto mb-3" />
+                                <h4 className="font-bold text-gray-900 mb-2">Deployment</h4>
+                                <p className="text-sm text-gray-600">Cloud or On-Premise per organization policy</p>
                             </div>
                         </div>
                     </div>
@@ -280,8 +287,8 @@ function OverviewSectionInner({
             <section id="pricing" className="py-10 px-4 sm:px-6 lg:px-8 bg-gray-50 overflow-x-hidden">
                 <div className="container mx-auto max-w-7xl">
                     <div className="text-center mb-8">
-                        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Pricing & CTA</h2>
-                        <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">Modular pricing based on user volume, device integrations, and programs.</p>
+                        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Pricing and CTA</h2>
+                        <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">Modular, based on user volume, device integrations, AI features, and programs.</p>
                         <div className="w-20 h-1 bg-blue-400 mx-auto mt-4"></div>
                     </div>
 
@@ -294,14 +301,15 @@ function OverviewSectionInner({
                                     <div className="text-4xl font-extrabold text-gray-900 mb-4">Contact Us</div>
                                     <p className="text-gray-600 mt-2 mb-6">Pricing tailored to your organization's needs</p>
                                     <ul className="mt-6 space-y-3 text-sm text-gray-700">
-                                        <li>✅ 24/7 virtual doctor access (video consults)</li>
-                                        <li>✅ Connected diagnostics and POCT with real-time posting</li>
-                                        <li>✅ Unified longitudinal health record</li>
-                                        <li>✅ Integrated referrals and guided follow-ups</li>
-                                        <li>✅ Auto-sync to doctor EMR (no manual report handover)</li>
-                                        <li>✅ Smart reminders and digital engagement</li>
-                                        <li>✅ Corporate/community program dashboards</li>
-                                        <li>✅ Multilingual, secure, ABDM-ready</li>
+                                        <li>✅ AI Triage & 24/7 Virtual Care Access</li>
+                                        <li>✅ AI‑Connected Diagnostics & POCT</li>
+                                        <li>✅ Unified Longitudinal Health Record</li>
+                                        <li>✅ Guided Referrals & Follow-ups</li>
+                                        <li>✅ Automated Data Sync to EMR</li>
+                                        <li>✅ Patient Engagement & Proactive Alerts</li>
+                                        <li>✅ Program & Population Health</li>
+                                        <li>✅ Multilingual & Accessible</li>
+                                        <li>✅ Security & Compliance (ABDM-ready)</li>
                                     </ul>
                                 </div>
                                 <Dialog>
@@ -373,26 +381,84 @@ function OverviewSectionInner({
 
                     <div className="mt-12 text-center">
                         <p className="text-lg text-gray-700 font-medium mb-4">
-                            Join the Axon network and enable continuous, data-driven care for your communities
+                            Join the Axon network and deliver AI-enabled, continuous care for your communities
                         </p>
-                        <Button
-                            onClick={() => {
-                                const element = document.getElementById('schedule-demo')
-                                if (element) {
-                                    const offsetTop = element.offsetTop - 140
-                                    window.scrollTo({ top: offsetTop, behavior: 'smooth' })
-                                }
-                            }}
-                            size="lg"
-                            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-4 px-8 rounded-xl text-lg"
-                        >
-                            Download Product Brochure
-                        </Button>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                            <Button
+                                onClick={() => {
+                                    const element = document.getElementById('schedule-demo')
+                                    if (element) {
+                                        const offsetTop = element.offsetTop - 140
+                                        window.scrollTo({ top: offsetTop, behavior: 'smooth' })
+                                    }
+                                }}
+                                size="lg"
+                                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-4 px-8 rounded-xl text-lg"
+                            >
+                                Book a Live Demo
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    const element = document.getElementById('schedule-demo')
+                                    if (element) {
+                                        const offsetTop = element.offsetTop - 140
+                                        window.scrollTo({ top: offsetTop, behavior: 'smooth' })
+                                    }
+                                }}
+                                size="lg"
+                                variant="outline"
+                                className="border-2 border-gray-300 text-gray-800 hover:bg-gray-50 font-semibold py-4 px-8 rounded-xl text-lg"
+                            >
+                                Download Product Brochure
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* Testimonials */}
+            {/* Text Testimonials */}
+            <section className="py-10 overflow-x-hidden px-4 sm:px-6 lg:px-8 bg-white">
+                <div className="container mx-auto max-w-7xl">
+                    <div className="text-center mb-8">
+                        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">What Our Partners Say</h2>
+                        <div className="w-20 h-1 bg-blue-400 mx-auto mt-4"></div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                        <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 border border-blue-200 shadow-lg">
+                            <div className="flex items-start gap-4">
+                                <div className="flex-shrink-0">
+                                    <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-lg">
+                                        “
+                                    </div>
+                                </div>
+                                <div>
+                                    <p className="text-gray-700 text-lg leading-relaxed mb-4 italic">
+                                        "Triage + kiosk diagnostics cut turnaround from hours to minutes."
+                                    </p>
+                                    <p className="text-gray-600 font-semibold">— Head of Diagnostics Network</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 border border-blue-200 shadow-lg">
+                            <div className="flex items-start gap-4">
+                                <div className="flex-shrink-0">
+                                    <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-lg">
+                                        “
+                                    </div>
+                                </div>
+                                <div>
+                                    <p className="text-gray-700 text-lg leading-relaxed mb-4 italic">
+                                        "Smart reminders lifted follow-up adherence and reduced missed re-tests."
+                                    </p>
+                                    <p className="text-gray-600 font-semibold">— Corporate Health Program Manager</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Video Testimonials */}
             <section className="py-10 overflow-x-hidden px-4 sm:px-6 lg:px-8">
                 <ProductTestimonialsSection
                     testimonialUrl={product.testimonialUrl}
@@ -405,5 +471,6 @@ function OverviewSectionInner({
 }
 
 export const OverviewSection = React.memo(OverviewSectionInner)
+
 
 

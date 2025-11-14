@@ -13,8 +13,8 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 
   return {
-    title: `${product.name} - Care, Anywhere — Instantly | Axonic Health`,
-    description: `${product.description} Connect patients to doctors, diagnostics, and follow-ups on a unified, compliant platform. Reduce wait times, eliminate data silos, and deliver continuous, coordinated care around the clock.`,
+    title: `${product.name} (AI‑Enabled Health Kiosk) - Care, Anywhere — Instantly | Axonic Health`,
+    description: `Deploy AxonHealthHub as an AI-powered health kiosk that connects patients to triage, diagnostics, and clinicians on a unified, compliant platform. Reduce wait times, eliminate data silos, and deliver continuous, coordinated care around the clock.`,
     keywords: [
       'virtual care platform',
       'telemedicine',
@@ -43,8 +43,8 @@ export async function generateMetadata(): Promise<Metadata> {
       type: 'website',
       locale: 'en_US',
       url: 'https://axonhealthhub.axonichealth.com',
-      title: `${product.name} - Care, Anywhere — Instantly`,
-      description: `${product.description} Unified platform for virtual care, diagnostics, and continuous patient engagement.`,
+      title: `${product.name} (AI‑Enabled Health Kiosk) - Care, Anywhere — Instantly`,
+      description: `Deploy AxonHealthHub as an AI-powered health kiosk that connects patients to triage, diagnostics, and clinicians on a unified, compliant platform.`,
       siteName: 'Axonic Health',
       images: [
         {
@@ -57,8 +57,8 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${product.name} - Care, Anywhere — Instantly`,
-      description: `${product.description} 24/7 virtual care, connected diagnostics, unified health records.`,
+      title: `${product.name} (AI‑Enabled Health Kiosk) - Care, Anywhere — Instantly`,
+      description: `AI-powered health kiosk with 24/7 virtual care, connected diagnostics, and unified health records.`,
       images: [product.heroImage],
     },
     robots: {
@@ -101,51 +101,51 @@ function extractYouTubeId(url: string): string | null {
 function getEnhancedFeatures() {
   return [
     {
-      title: "24/7 Virtual Care Access",
+      title: "AI Triage & 24/7 Virtual Care Access",
       description:
-        "Provide instant video consultations with certified doctors around the clock. Smart triage and routing ensure patients reach the right specialist without delay. Whether it's an urgent concern or routine check-up, healthcare is always available when your patients need it most. Break down barriers to access and deliver care that never sleeps.",
+        "Intelligent symptom triage and routing to the right clinician. Instant video consults with certified doctors ensure patients never wait for critical help. AxonHealthHub analyzes symptoms, vitals, and history to triage and route to the right specialty, delivering always-on virtual care around the clock.",
       image: "/assets/new-products-1/healthhub/healthhub-1.png",
     },
     {
-      title: "Connected Diagnostics & POCT",
+      title: "AI‑Connected Diagnostics & POCT",
       description:
-        "Enable on-site smart diagnostics with connected Point-of-Care Testing devices. Results post in real-time to patient records and doctor EMRs, accelerating clinical decisions and eliminating manual data entry. From blood tests to imaging, every diagnostic workflow is seamlessly integrated for faster turnaround and better outcomes.",
+        "Kiosk-integrated POCT devices with automated quality checks. Real-time result posting to the patient record and clinician EMR accelerates safe decisions. Automated quality checks and abnormal value flags ensure accurate diagnostics while eliminating manual data entry and reducing turnaround time from hours to minutes.",
       image: "/assets/new-products-1/healthhub/healthhub-2.png",
     },
     {
       title: "Unified Longitudinal Health Record",
       description:
-        "Maintain a single, secure record consolidating labs, consult notes, e-prescriptions, and care plans. Ensure continuity across AxonMD, AxonPharmacy, and partner providers. Every interaction is logged and accessible, creating a complete health story that travels with your patient for truly coordinated care.",
+        "Single, secure record for labs, consult notes, eRx, and care plans. AI-generated clinical highlights speed decision-making by consolidating all interactions into one comprehensive health story. Labs, consult notes, imaging, and e-prescriptions are unified with AI summaries and next-best-action cues for truly coordinated care.",
       image: "/assets/new-products-1/healthhub/healthhub-3.png",
     },
     {
-      title: "Referrals & Follow-ups",
+      title: "Guided Referrals & Follow-ups",
       description:
-        "Streamline integrated referral workflows to specialists with complete context sharing. Post-diagnosis care plans include reminders and next steps to keep patients on track. Automated follow-up notifications improve adherence and ensure no patient falls through the cracks. Build a connected care ecosystem where every provider stays informed.",
+        "Integrated referral workflows and configurable care pathways. Automated reminders and adherence nudges post-diagnosis keep patients on track. From diagnosis to specialty care, referrals and care plans are generated with adherence checkpoints and smart reminders, ensuring no patient falls through the cracks.",
       image: "/assets/new-products-1/healthhub/healthhub-4.png",
     },
     {
-      title: "Automated Data Sync",
+      title: "Automated Data Sync to EMR",
       description:
-        "Results automatically sync to the consulting doctor's EMR, eliminating manual handovers and reducing delays. Maintain data integrity with timestamps and audit trails. Free your staff from data entry and let technology handle the coordination, so clinicians can focus on what matters—patient care.",
+        "Seamless, audit-ready syncing to clinical systems with deduplication. Eliminates manual handovers and reduces delays. Results automatically sync to EMRs with deduplication and audit-ready timestamps—no manual uploads or downloads. Free your staff from data entry and let technology handle the coordination.",
       image: "/assets/new-products-1/healthhub/healthhub-1.png",
     },
     {
-      title: "Patient Engagement & Reminders",
+      title: "Patient Engagement & Proactive Alerts",
       description:
-        "Send automated alerts for reports, prescriptions, re-tests, and follow-ups. Keep patients engaged with timely, personalized communications that improve adherence and outcomes. Multilingual support ensures every patient receives information in their preferred language, driving better compliance and satisfaction.",
+        "Personalized notifications for reports, prescriptions, and re-tests. Multilingual outreach optimized by engagement patterns drives adherence and outcomes. Optimize message timing, language, and channel to drive adherence for reports, refills, re-tests, and scheduled reviews, keeping patients engaged with timely, personalized communications.",
       image: "/assets/new-products-1/healthhub/healthhub-2.png",
     },
     {
-      title: "Population & Program Management",
+      title: "Program & Population Health",
       description:
-        "Monitor corporate and community health programs from centralized dashboards. Track preventive screenings, identify trends, and measure outcomes across populations. Configure workflows by cohort, location, or program type. Gain actionable insights that drive strategic health initiatives and demonstrate measurable impact.",
+        "Dashboards for corporate/community programs with risk stratification. Screening eligibility, cohort insights, and trend detection enable data-driven health initiatives. Identify at-risk cohorts, surface screening gaps, and track trends for corporate/community initiatives via intuitive dashboards that demonstrate measurable impact.",
       image: "/assets/new-products-1/healthhub/healthhub-3.png",
     },
     {
       title: "Multilingual & Accessible",
       description:
-        "Support regional languages for both patients and staff, making healthcare truly inclusive. Simple, mobile-first UI accommodates diverse age groups and digital literacy levels. Remove language and technology barriers to ensure everyone can access quality care with confidence and ease.",
+        "Regional language support and voice-first assistance. Simple, mobile-first UI for diverse populations ensures healthcare is truly inclusive. Remove language and technology barriers to ensure everyone can access quality care with confidence and ease, accommodating diverse age groups and digital literacy levels.",
       image: "/assets/new-products-1/healthhub/healthhub-4.png",
     },
   ]
@@ -177,5 +177,6 @@ export default function AxonHealthHubPage() {
     </div>
   )
 }
+
 
 
