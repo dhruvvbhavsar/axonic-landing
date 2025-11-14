@@ -24,7 +24,7 @@ interface ProductPageProps {
 export async function generateStaticParams() {
   const slugs = getAllProductSlugs()
   // Exclude products with dedicated route folders
-  const filteredSlugs = slugs.filter(slug => slug !== 'axonscribe' && slug !== 'axonmd' && slug !== 'axonhis')
+  const filteredSlugs = slugs.filter(slug => slug !== 'axonscribe' && slug !== 'axonmd' && slug !== 'axonhis' && slug !== 'axonhealthhub')
   return filteredSlugs.map((slug) => ({
     slug: slug,
   }))
@@ -35,7 +35,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params
   
   // Redirect products with dedicated pages
-  if (slug === 'axonscribe' || slug === 'axonmd' || slug === 'axonhis') {
+  if (slug === 'axonscribe' || slug === 'axonmd' || slug === 'axonhis' || slug === 'axonhealthhub') {
     notFound() // This will trigger Next.js to use the static route instead
   }
   
