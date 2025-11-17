@@ -225,14 +225,14 @@ export default function ResumeForm({ doctorPartialRegId }: Props) {
     submittingRef.current = true
     setError(null)
     // Validate required fields
-    if (!details.firstName.trim()) { setError('First name is required'); return }
-    if (!details.lastName.trim()) { setError('Last name is required'); return }
-    if (!details.emailId.trim() || !validateEmail(details.emailId)) { setError('Valid email is required'); return }
-    if (!details.gender) { setError('Gender is required'); return }
-    if (!details.speciality) { setError('Speciality is required'); return }
-    if (!details.registrationNumber.trim()) { setError('Registration number is required'); return }
-    if (!details.phone.trim() || details.phone.length < 8 || details.phone.length > 15) { setError('Valid mobile number is required'); return }
-    if (!selectedCountryId || !selectedStateId || !selectedCityId || !selectedZoneId) { setError('Country, Zone, State and City are required'); return }
+    if (!details.firstName.trim()) { setError('First name is required'); submittingRef.current = false; return }
+    if (!details.lastName.trim()) { setError('Last name is required'); submittingRef.current = false; return }
+    if (!details.emailId.trim() || !validateEmail(details.emailId)) { setError('Valid email is required'); submittingRef.current = false; return }
+    if (!details.gender) { setError('Gender is required'); submittingRef.current = false; return }
+    if (!details.speciality) { setError('Speciality is required'); submittingRef.current = false; return }
+    if (!details.registrationNumber.trim()) { setError('Registration number is required'); submittingRef.current = false; return }
+    if (!details.phone.trim() || details.phone.length < 8 || details.phone.length > 15) { setError('Valid mobile number is required'); submittingRef.current = false; return }
+    if (!selectedCountryId || !selectedStateId || !selectedCityId || !selectedZoneId) { setError('Country, Zone, State and City are required'); submittingRef.current = false; return }
 
     setSaving(true)
     try {
@@ -265,6 +265,8 @@ export default function ResumeForm({ doctorPartialRegId }: Props) {
         }
       } catch (preErr: any) {
         setError(preErr?.message || 'Validation failed')
+        submittingRef.current = false
+        setSaving(false)
         return
       }
 
