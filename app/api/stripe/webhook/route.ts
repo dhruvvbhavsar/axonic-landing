@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { COUNTRY_CODES } from '@/lib/country-codes'
-import { buildExternalUrlFromRequest, ExternalApiEndpoints } from '@/lib/external-api'
+import { buildExternalUrlFromRequest, buildExternalUrlFromAlias, ExternalApiEndpoints } from '@/lib/external-api'
 
 function getCountryNameFromCode(code?: string | null): string | undefined {
   if (!code) return undefined
@@ -411,7 +411,10 @@ export async function POST(request: NextRequest) {
         subscriptionPaymentDetails: JSON.stringify(paymentDetails),
       }
 
-      const savePartialUrl = buildExternalUrlFromRequest(request, ExternalApiEndpoints.saveDoctorPartial)
+      // Read environment alias from metadata (set during checkout)
+      // Default to null/undefined if not present (backward compatibility)
+      const envAlias = md.external_api_alias || null
+      const savePartialUrl = buildExternalUrlFromAlias(envAlias, ExternalApiEndpoints.saveDoctorPartial)
       console.log('[doctor-partial-save] payload', partialPayload)
       let partialId: number | null = null
       try {

@@ -49,4 +49,23 @@ export function buildExternalUrlFromRequest(req: NextRequest, path: string): str
   return `${base}${suffix}`
 }
 
+export function buildExternalUrlFromAlias(alias: ExternalApiAlias | string | null | undefined, path: string): string {
+  // In production, always use axonmd
+  if (!isDevLikeEnv()) {
+    const base = EXTERNAL_BASES.axonmd.replace(/\/$/, '')
+    const suffix = path.startsWith('/') ? path : `/${path}`
+    return `${base}${suffix}`
+  }
+  
+  // In dev/local, use provided alias or default to ocipmsqa
+  const normalizedAlias = (alias || '').toLowerCase() as ExternalApiAlias
+  const base = (normalizedAlias && normalizedAlias !== 'axonmd' && EXTERNAL_BASES[normalizedAlias])
+    ? EXTERNAL_BASES[normalizedAlias]
+    : EXTERNAL_BASES.ocipmsqa
+  
+  const baseClean = base.replace(/\/$/, '')
+  const suffix = path.startsWith('/') ? path : `/${path}`
+  return `${baseClean}${suffix}`
+}
+
 

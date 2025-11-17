@@ -149,10 +149,15 @@ export async function POST(request: NextRequest) {
     })
 
     const origin = request.headers.get('origin') || 'http://localhost:3000'
+    
+    // Read environment selection from header (for dev/local environments)
+    const externalApiAlias = request.headers.get('x-external-api') || ''
+    // Only store non-production aliases (never store 'axonmd')
+    const envAlias = externalApiAlias && externalApiAlias !== 'axonmd' ? externalApiAlias : ''
 
     // Route to AxonHIS flow
     if (product === 'axonhis') {
-      return handleAxonHISCheckout(body, region, origin)
+      return handleAxonHISCheckout(body, region, origin, envAlias)
     }
 
     // Existing AxonMD flow (unchanged for backward compatibility)
@@ -242,31 +247,39 @@ export async function POST(request: NextRequest) {
 
     const mappedPriceId = SANDBOX_PRICE_IDS[region]?.[plan]?.[billingCycle]
 
+    // Build metadata object with environment alias if present
+    const sessionMetadata: Record<string, string> = {
+      product: 'axonmd',
+      doctor_first_name: body.doctor?.firstName || '',
+      doctor_last_name: body.doctor?.lastName || '',
+      doctor_registration_number: body.doctor?.registrationNumber || '',
+      doctor_country_code: body.doctor?.countryCode || '',
+      doctor_phone: body.doctor?.phone || '',
+      doctor_speciality: body.doctor?.speciality || '',
+      doctor_gender: body.doctor?.gender || '',
+      doctor_country: body.doctor?.country || '',
+      plan,
+      billingCycle,
+      region,
+      private_network: body.privateNetwork ? 'true' : 'false',
+      unit_country_id: body.unitMasterDto?.countryId?.toString() || '',
+      unit_state_id: body.unitMasterDto?.stateId?.toString() || '',
+      unit_city_id: body.unitMasterDto?.cityId?.toString() || '',
+      unit_zone_id: body.unitMasterDto?.zoneId?.toString() || '',
+      trial_days: String(trialDays),
+    }
+    
+    // Add environment alias to metadata if present (for dev/local environments)
+    if (envAlias) {
+      sessionMetadata.external_api_alias = envAlias
+    }
+
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       success_url: successUrl,
       cancel_url: cancelUrl,
       customer_email: body.doctor?.email || body.customerEmail,
-      metadata: {
-        product: 'axonmd',
-        doctor_first_name: body.doctor?.firstName || '',
-        doctor_last_name: body.doctor?.lastName || '',
-        doctor_registration_number: body.doctor?.registrationNumber || '',
-        doctor_country_code: body.doctor?.countryCode || '',
-        doctor_phone: body.doctor?.phone || '',
-        doctor_speciality: body.doctor?.speciality || '',
-        doctor_gender: body.doctor?.gender || '',
-        doctor_country: body.doctor?.country || '',
-        plan,
-        billingCycle,
-        region,
-        private_network: body.privateNetwork ? 'true' : 'false',
-        unit_country_id: body.unitMasterDto?.countryId?.toString() || '',
-        unit_state_id: body.unitMasterDto?.stateId?.toString() || '',
-        unit_city_id: body.unitMasterDto?.cityId?.toString() || '',
-        unit_zone_id: body.unitMasterDto?.zoneId?.toString() || '',
-        trial_days: String(trialDays),
-      },
+      metadata: sessionMetadata,
       line_items: mappedPriceId
         ? [
           {
@@ -292,26 +305,7 @@ export async function POST(request: NextRequest) {
         ],
       subscription_data: {
         trial_period_days: trialDays,
-        metadata: {
-          product: 'axonmd',
-          doctor_first_name: body.doctor?.firstName || '',
-          doctor_last_name: body.doctor?.lastName || '',
-          doctor_registration_number: body.doctor?.registrationNumber || '',
-          doctor_country_code: body.doctor?.countryCode || '',
-          doctor_phone: body.doctor?.phone || '',
-          doctor_speciality: body.doctor?.speciality || '',
-          doctor_gender: body.doctor?.gender || '',
-          doctor_country: body.doctor?.country || '',
-          plan,
-          billingCycle,
-          region,
-          private_network: body.privateNetwork ? 'true' : 'false',
-          unit_country_id: body.unitMasterDto?.countryId?.toString() || '',
-          unit_state_id: body.unitMasterDto?.stateId?.toString() || '',
-          unit_city_id: body.unitMasterDto?.cityId?.toString() || '',
-          unit_zone_id: body.unitMasterDto?.zoneId?.toString() || '',
-          trial_days: String(trialDays),
-        },
+        metadata: sessionMetadata,
       },
       billing_address_collection: 'required',
       automatic_tax: { enabled: false },
@@ -333,7 +327,8 @@ async function handleAxonHISCheckout(
     cancelUrl?: string
   },
   region: Region,
-  origin: string
+  origin: string,
+  envAlias: string
 ) {
   const secretKey = process.env.STRIPE_SECRET_KEY
   if (!secretKey) {
@@ -383,32 +378,40 @@ async function handleAxonHISCheckout(
     : billingCycle === 'semi-annual' ? 'Semi-Annual'
       : 'Annual'
 
+  // Build metadata object with environment alias if present
+  const sessionMetadata: Record<string, string> = {
+    product: 'axonhis',
+    organization_name: body.organization?.organizationName || '',
+    contact_person_name: body.organization?.contactPerson || '',
+    contact_person_email: body.organization?.email || '',
+    contact_person_phone: body.organization?.phone || '',
+    contact_person_country_code: body.organization?.countryCode || '',
+    organization_email: body.organization?.organizationEmail || '',
+    beds_count: body.organization?.beds?.toString() || '',
+    address: body.organization?.address || '',
+    postal_code: body.organization?.postalCode || '',
+    subdomain: body.organization?.subDomain || '',
+    app_url: body.organization?.appUrl || '',
+    plan,
+    billingCycle,
+    region,
+    unit_country_id: body.unitMasterDto?.countryId?.toString() || '',
+    unit_state_id: body.unitMasterDto?.stateId?.toString() || '',
+    unit_city_id: body.unitMasterDto?.cityId?.toString() || '',
+    unit_zone_id: body.unitMasterDto?.zoneId?.toString() || '',
+  }
+  
+  // Add environment alias to metadata if present (for dev/local environments)
+  if (envAlias) {
+    sessionMetadata.external_api_alias = envAlias
+  }
+
   const session = await stripe.checkout.sessions.create({
     mode: 'subscription',
     success_url: successUrl,
     cancel_url: cancelUrl,
     customer_email: body.organization?.organizationEmail || body.organization?.email,
-    metadata: {
-      product: 'axonhis',
-      organization_name: body.organization?.organizationName || '',
-      contact_person_name: body.organization?.contactPerson || '',
-      contact_person_email: body.organization?.email || '',
-      contact_person_phone: body.organization?.phone || '',
-      contact_person_country_code: body.organization?.countryCode || '',
-      organization_email: body.organization?.organizationEmail || '',
-      beds_count: body.organization?.beds?.toString() || '',
-      address: body.organization?.address || '',
-      postal_code: body.organization?.postalCode || '',
-      subdomain: body.organization?.subDomain || '',
-      app_url: body.organization?.appUrl || '',
-      plan,
-      billingCycle,
-      region,
-      unit_country_id: body.unitMasterDto?.countryId?.toString() || '',
-      unit_state_id: body.unitMasterDto?.stateId?.toString() || '',
-      unit_city_id: body.unitMasterDto?.cityId?.toString() || '',
-      unit_zone_id: body.unitMasterDto?.zoneId?.toString() || '',
-    },
+    metadata: sessionMetadata,
     line_items: [
       {
         price_data: {
@@ -426,27 +429,7 @@ async function handleAxonHISCheckout(
       },
     ],
     subscription_data: {
-      metadata: {
-        product: 'axonhis',
-        organization_name: body.organization?.organizationName || '',
-        contact_person_name: body.organization?.contactPerson || '',
-        contact_person_email: body.organization?.email || '',
-        contact_person_phone: body.organization?.phone || '',
-        contact_person_country_code: body.organization?.countryCode || '',
-        organization_email: body.organization?.organizationEmail || '',
-        beds_count: body.organization?.beds?.toString() || '',
-        address: body.organization?.address || '',
-        postal_code: body.organization?.postalCode || '',
-        subdomain: body.organization?.subDomain || '',
-        app_url: body.organization?.appUrl || '',
-        plan,
-        billingCycle,
-        region,
-        unit_country_id: body.unitMasterDto?.countryId?.toString() || '',
-        unit_state_id: body.unitMasterDto?.stateId?.toString() || '',
-        unit_city_id: body.unitMasterDto?.cityId?.toString() || '',
-        unit_zone_id: body.unitMasterDto?.zoneId?.toString() || '',
-      },
+      metadata: sessionMetadata,
     },
     billing_address_collection: 'required',
     automatic_tax: { enabled: false },
