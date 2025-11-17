@@ -433,9 +433,11 @@ export async function POST(request: NextRequest) {
       // Email resume link
       try {
         const origin = getRequestOrigin(request)
+        // Attach environment alias (if any) so resume flow knows which backend to talk to
+        const query = envAlias ? `?external_api_alias=${encodeURIComponent(envAlias)}` : ''
         const resumeUrl = partialId
-          ? `${origin}/our-products/axonmd/resume/${encodeURIComponent(partialId)}`
-          : `${origin}/our-products/axonmd/`
+          ? `${origin}/our-products/axonmd/resume/${encodeURIComponent(partialId)}${query}`
+          : `${origin}/our-products/axonmd/${query}`
         const customerEmail = (session?.customer_details?.email || session?.customer_email || '').toString()
         if (customerEmail) {
           await sendPartialRegistrationEmail(

@@ -1,5 +1,6 @@
 "use client"
 import * as React from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
@@ -35,7 +36,16 @@ function addDaysDate(d: Date, days: number): Date {
 type Props = { doctorPartialRegId: string }
 
 export default function ResumeForm({ doctorPartialRegId }: Props) {
-  const apiHeader = useExternalApiHeader()
+  const searchParams = useSearchParams()
+  const urlEnvAlias = searchParams.get('external_api_alias')
+  const headerFromSwitcher = useExternalApiHeader()
+  // If env alias is present in URL (from email), prefer that over switcher/localStorage
+  const apiHeader = React.useMemo(() => {
+    if (urlEnvAlias) {
+      return { 'x-external-api': urlEnvAlias }
+    }
+    return headerFromSwitcher
+  }, [urlEnvAlias, headerFromSwitcher])
   const [loading, setLoading] = React.useState(true)
   const [error, setError] = React.useState<string | null>(null)
   const [saving, setSaving] = React.useState(false)
@@ -301,7 +311,7 @@ export default function ResumeForm({ doctorPartialRegId }: Props) {
 
       const resp = await fetch('/api/external/doctors/save', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...apiHeader },
         body: JSON.stringify(payload),
       })
       if (!resp.ok) {
@@ -336,7 +346,7 @@ export default function ResumeForm({ doctorPartialRegId }: Props) {
         }
         await fetch('/api/external/doctors/update', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', ...apiHeader },
           body: JSON.stringify(updatePayload),
         }).catch(() => {})
       } catch {

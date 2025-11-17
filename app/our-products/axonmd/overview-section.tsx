@@ -799,7 +799,7 @@ function OverviewSectionInner({
                                     
                                     const response = await fetch('/api/checkout', {
                                         method: 'POST',
-                                        headers: { 'Content-Type': 'application/json' },
+                                        headers: { 'Content-Type': 'application/json', ...apiHeader },
                                         body: JSON.stringify(payload),
                                     })
                                     const data = await response.json()

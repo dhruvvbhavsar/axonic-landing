@@ -127,14 +127,14 @@ export default function Page() {
                       <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 flex-shrink-0"></div>
                       <span className="text-gray-700">Your <strong>Email Verification Link</strong> (Doctor Account)</span>
                     </div>
-                    <div className="flex items-start gap-2 text-sm">
+                    {/* <div className="flex items-start gap-2 text-sm">
                       <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 flex-shrink-0"></div>
                       <span className="text-gray-700">Your <strong>Secretary Account Username</strong> (for clinic staff)</span>
                     </div>
                     <div className="flex items-start gap-2 text-sm">
                       <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 flex-shrink-0"></div>
                       <span className="text-gray-700">Your <strong>Email Verification Link</strong> (Secretary Account)</span>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
