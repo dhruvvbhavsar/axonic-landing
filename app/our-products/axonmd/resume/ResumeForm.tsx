@@ -77,7 +77,7 @@ export default function ResumeForm({ doctorPartialRegId }: Props) {
         // Load partial
         const resp = await fetch('/api/external/doctor-partial/get', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', ...apiHeader },
           body: JSON.stringify({ doctorPartialRegId: Number(doctorPartialRegId) }),
         })
         const json = await resp.json()

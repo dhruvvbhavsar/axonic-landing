@@ -6,6 +6,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { ExternalApiAlias } from '@/lib/external-api'
 import { Settings } from 'lucide-react'
 
+const EXTERNAL_BASES: Record<ExternalApiAlias, string> = {
+  axonmd: 'https://axonmd.axonichealth.co.in',
+  ocipmsqa: 'https://ocipmsqa.axonichealth.com',
+  ocicliniqpp: 'https://ocicliniqpp.cliniq.in',
+  staging: 'https://pmstest.axonichealth.co.in',
+  hotfix: 'https://ocipmsqahf.axonichealth.com',
+}
+
 const STORAGE_KEY = 'external-api-alias'
 
 // Don't allow dev/local to access production
@@ -44,16 +52,24 @@ export function ExternalApiProvider({ children }: { children: React.ReactNode })
       // Don't allow dev/local to select production endpoint
       if (stored && stored !== 'axonmd' && DEV_EXTERNAL_API_LABELS[stored as Exclude<ExternalApiAlias, 'axonmd'>]) {
         setAliasState(stored)
+        const baseUrl = EXTERNAL_BASES[stored]
+        console.log(`[env-selector] Loaded environment from storage: ${stored} (${DEV_EXTERNAL_API_LABELS[stored as Exclude<ExternalApiAlias, 'axonmd'>]}) -> ${baseUrl}`)
       }
     }
   }, [])
 
   const setAlias = React.useCallback((newAlias: ExternalApiAlias) => {
+    const previousAlias = alias
     setAliasState(newAlias)
     if (typeof window !== 'undefined') {
       localStorage.setItem(STORAGE_KEY, newAlias)
+      const baseUrl = EXTERNAL_BASES[newAlias]
+      const label = DEV_EXTERNAL_API_LABELS[newAlias as Exclude<ExternalApiAlias, 'axonmd'>] || EXTERNAL_API_LABELS[newAlias]
+      if (previousAlias !== newAlias) {
+        console.log(`[env-selector] Environment changed: ${previousAlias || 'default'} -> ${newAlias} (${label}) -> ${baseUrl}`)
+      }
     }
-  }, [])
+  }, [alias])
 
   return (
     <ExternalApiContext.Provider value={{ alias, setAlias }}>
@@ -106,7 +122,8 @@ export function ExternalApiSwitcher() {
           <Select
             value={currentAlias}
             onValueChange={(value) => {
-              setAlias(value as ExternalApiAlias)
+              const newAlias = value as ExternalApiAlias
+              setAlias(newAlias)
             }}
           >
             <SelectTrigger className="w-full border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
