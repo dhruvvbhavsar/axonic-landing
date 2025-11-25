@@ -481,7 +481,7 @@ function OverviewSectionInner({
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         {/* Basic Plan */}
                         <Card className="rounded-3xl border-0 shadow-lg h-full">
                             <CardContent className="p-8 flex flex-col h-full">
@@ -594,13 +594,14 @@ function OverviewSectionInner({
                                 <div className="flex-grow">
                                 <div className="flex items-center justify-between mb-2">
                                     <h3 className="text-xl font-bold text-gray-900">Advanced</h3>
-                                    <span className="relative inline-block">
-                                        <span className="absolute -inset-1 rounded-lg bg-blue-300 opacity-60 animate-pulse rotate-3 z-0"></span>
-                                        <span className="relative inline-block px-3 py-1 rounded-lg text-white text-2xl font-extrabold bg-red-600 border-2 border-blue-400 shadow-[3px_3px_0px_rgba(0,0,0,0.3)] -rotate-3 z-10">
-                                            40% OFF
+                                    {billingCycle === 'yearly' && (
+                                        <span className="relative inline-block">
+                                            <span className="absolute -inset-1 rounded-lg bg-blue-300 opacity-60 animate-pulse rotate-3 z-0"></span>
+                                            <span className="relative inline-block px-3 py-1 rounded-lg text-white text-2xl font-extrabold bg-red-600 border-2 border-blue-400 shadow-[3px_3px_0px_rgba(0,0,0,0.3)] -rotate-3 z-10">
+                                                40% OFF
+                                            </span>
                                         </span>
-                                        <span className="absolute inset-0 rounded-lg border-2 border-dashed border-white animate-pulse -rotate-3 z-20 pointer-events-none"></span>
-                                    </span>
+                                    )}
                                 </div>
                                 {pricingRegion === 'UK' ? (
                                     billingCycle === 'monthly' ? (
@@ -643,7 +644,7 @@ function OverviewSectionInner({
                         </Card>
 
                         {/* Enterprise Plan */}
-                        <Card className="rounded-3xl border-0 shadow-lg h-full">
+                        {/* <Card className="rounded-3xl border-0 shadow-lg h-full">
                             <CardContent className="p-8 flex flex-col h-full">
                                 <div className="flex-grow">
                                 <h3 className="text-xl font-bold text-gray-900 mb-2">Enterprise</h3>
@@ -673,7 +674,7 @@ function OverviewSectionInner({
                                     </DialogContent>
                                 </Dialog>
                             </CardContent>
-                        </Card>
+                        </Card> */}
                     </div>
                 </div>
             </section>

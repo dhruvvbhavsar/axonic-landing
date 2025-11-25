@@ -101,52 +101,52 @@ function extractYouTubeId(url: string): string | null {
 function getEnhancedFeatures() {
   return [
     {
-      title: "AI Triage & 24/7 Virtual Care Access",
+      title: "Integrated Vitals & Health Monitoring",
       description:
-        "Intelligent symptom triage and routing to the right clinician. Instant video consults with certified doctors ensure patients never wait for critical help. AxonHealthHub analyzes symptoms, vitals, and history to triage and route to the right specialty, delivering always-on virtual care around the clock.",
-      image: "/assets/new-products-1/healthhub/healthhub-1.png",
+        "AxonHealthHub captures basic vitals for accurate, automated baseline health assessments within seconds. The system provides comprehensive vital sign monitoring including height, weight, BMI, blood pressure, pulse, temperature, and SpO2, enabling rapid health evaluations at the point of care.",
+      image: "/assets/new-products-1/healthhub-1/1.png",
     },
     {
-      title: "AI‑Connected Diagnostics & POCT",
+      title: "Instant 12-Lead ECG for Cardiac Screening",
       description:
-        "Kiosk-integrated POCT devices with automated quality checks. Real-time result posting to the patient record and clinician EMR accelerates safe decisions. Automated quality checks and abnormal value flags ensure accurate diagnostics while eliminating manual data entry and reducing turnaround time from hours to minutes.",
-      image: "/assets/new-products-1/healthhub/healthhub-2.png",
+        "Built-in clinical-grade ECG for rapid cardiac evaluation, enabling early detection of arrhythmias and cardiac emergencies in any setting. The system delivers comprehensive 12-lead electrocardiogram readings for immediate cardiac assessment and monitoring.",
+      image: "/assets/new-products-1/healthhub-1/2.png",
     },
     {
-      title: "Unified Longitudinal Health Record",
+      title: "Advanced POCT Lab for Rapid Disease Detection",
       description:
-        "Single, secure record for labs, consult notes, eRx, and care plans. AI-generated clinical highlights speed decision-making by consolidating all interactions into one comprehensive health story. Labs, consult notes, imaging, and e-prescriptions are unified with AI summaries and next-best-action cues for truly coordinated care.",
-      image: "/assets/new-products-1/healthhub/healthhub-3.png",
+        "The Health ATM houses a comprehensive Point-of-Care Testing (POCT) suite for both communicable and non-communicable diseases, delivering results in minutes. The integrated lab supports a wide range of diagnostic tests including RT-PCR, HbA1c, lipid profile, troponin, glucose, and urinalysis.",
+      image: "/assets/new-products-1/healthhub-1/3.png",
     },
     {
-      title: "Guided Referrals & Follow-ups",
+      title: "Connected Diagnostic Devices for Complete Examination",
       description:
-        "Integrated referral workflows and configurable care pathways. Automated reminders and adherence nudges post-diagnosis keep patients on track. From diagnosis to specialty care, referrals and care plans are generated with adherence checkpoints and smart reminders, ensuring no patient falls through the cracks.",
-      image: "/assets/new-products-1/healthhub/healthhub-4.png",
+        "Integration of digital stethoscope, otoscope, laryngoscope, dental camera, and other devices to facilitate high-fidelity remote physical examinations, extending clinical reach beyond basic vitals. These connected diagnostic tools enable comprehensive remote assessments with clinical-grade accuracy.",
+      image: "/assets/new-products-1/healthhub-1/4.png",
     },
     {
-      title: "Automated Data Sync to EMR",
+      title: "AI-Powered Triage & 24x7 Telemedicine Access",
       description:
-        "Seamless, audit-ready syncing to clinical systems with deduplication. Eliminates manual handovers and reduces delays. Results automatically sync to EMRs with deduplication and audit-ready timestamps—no manual uploads or downloads. Free your staff from data entry and let technology handle the coordination.",
-      image: "/assets/new-products-1/healthhub/healthhub-1.png",
+        "Connection to AxonDoc's multilingual AI triage supporting over 100 languages, providing instant symptom assessment and auto-generated summaries that sync directly into the EMR (AxonMD) for continuous access to care. The system ensures patients receive immediate, intelligent routing to appropriate care providers around the clock.",
+      image: "/assets/new-products-1/healthhub-1/5.png",
     },
     {
-      title: "Patient Engagement & Proactive Alerts",
+      title: "Real-Time EMR Integration & Multilingual Teleconsultations",
       description:
-        "Personalized notifications for reports, prescriptions, and re-tests. Multilingual outreach optimized by engagement patterns drives adherence and outcomes. Optimize message timing, language, and channel to drive adherence for reports, refills, re-tests, and scheduled reviews, keeping patients engaged with timely, personalized communications.",
-      image: "/assets/new-products-1/healthhub/healthhub-2.png",
+        "All data flows to AxonMD, an AI-enhanced EMR, allowing doctors to access real-time kiosk readings and conduct teleconsultations with built-in live translation, ensuring seamless care anytime, anywhere, in any language. This integration enables clinicians to make informed decisions with complete patient context.",
+      image: "/assets/new-products-1/healthhub-1/6.png",
     },
     {
-      title: "Program & Population Health",
+      title: "Longitudinal Integration with AxonHIS for a Hub-and-Spoke Network",
       description:
-        "Dashboards for corporate/community programs with risk stratification. Screening eligibility, cohort insights, and trend detection enable data-driven health initiatives. Identify at-risk cohorts, surface screening gaps, and track trends for corporate/community initiatives via intuitive dashboards that demonstrate measurable impact.",
-      image: "/assets/new-products-1/healthhub/healthhub-3.png",
+        "AxonHealthHub's direct connection with AxonHIS ensures seamless data flow across clinics, health centers, and hospitals, thereby creating a unified hub-and-spoke ecosystem that links primary, secondary, and tertiary care into a longitudinal digital clinical pathway. This integration eliminates data silos and enables coordinated care across the entire healthcare network.",
+      image: "/assets/new-products-1/healthhub-1/7.png",
     },
     {
-      title: "Multilingual & Accessible",
+      title: "Optional Imaging Add-ons (Ultrasound & X-ray)",
       description:
-        "Regional language support and voice-first assistance. Simple, mobile-first UI for diverse populations ensures healthcare is truly inclusive. Remove language and technology barriers to ensure everyone can access quality care with confidence and ease, accommodating diverse age groups and digital literacy levels.",
-      image: "/assets/new-products-1/healthhub/healthhub-4.png",
+        "AxonHealthHub's capability to integrate digital ultrasound and digital X-ray transforms the Health ATM into a comprehensive diagnostic hub for point-of-care imaging. These optional imaging add-ons extend the kiosk's diagnostic capabilities, enabling advanced imaging studies at the point of care.",
+      image: "/assets/new-products-1/healthhub-1/8.png",
     },
   ]
 }

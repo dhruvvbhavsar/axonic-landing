@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
+import { getAxonMDPriceId, getAxonHISPriceId } from '@/lib/stripe-prices'
 
 type BillingCycle = 'monthly' | 'yearly'
 type BillingCycleHIS = 'monthly' | 'semi-annual' | 'annual'
@@ -186,66 +187,8 @@ export async function POST(request: NextRequest) {
       }
     } catch {}
 
-    // Prefer using provided Stripe Price IDs when available (SANDBOX)
-    // Region-specific prices: UK -> GBP, India -> INR
-    const SANDBOX_PRICE_IDS: Record<Region, Record<Plan, Record<BillingCycle, string>>> = {
-      UK: {
-        basic: {
-          monthly: '', // TODO: Add Stripe Price ID for Basic plan (UK, monthly)
-          yearly: '', // TODO: Add Stripe Price ID for Basic plan (UK, yearly)
-        },
-        professional: {
-          monthly: 'price_1SDLP003TVi4FRa6kCJYA869',
-          yearly: 'price_1SDLP003TVi4FRa6mwYKp0GM',
-
-          // monthly: 'price_1SPcZqP10jvuKxaDFladS0Un',
-          // yearly: 'price_1SPcZqP10jvuKxaDQlmDZatE',
-        },
-        advanced: {
-          monthly: 'price_1SDLRG03TVi4FRa6owv5oN7F',
-          yearly: 'price_1SDLRG03TVi4FRa6VV0GCe0j',
-
-          // monthly: 'price_1SPcZmP10jvuKxaD1wG0AJc6',
-          // yearly: 'price_1SPcZmP10jvuKxaDMVwdvrYh',
-        },
-      },
-      India: {
-        basic: {
-          monthly: '', // TODO: Add Stripe Price ID for Basic plan (India, monthly)
-          yearly: '', // TODO: Add Stripe Price ID for Basic plan (India, yearly)
-        },
-        professional: {
-          monthly: 'price_1SDLP003TVi4FRa6pHsl7y9f',
-          yearly: 'price_1SDLP003TVi4FRa65Y1vyh80',
-
-          // monthly: 'price_1SPcZqP10jvuKxaDGDQ075i4',
-          // yearly: 'price_1SPcZqP10jvuKxaDnqLu4IwG',
-        },
-        advanced: {
-          monthly: 'price_1SDLRG03TVi4FRa6bPT3CHU0',
-          yearly: 'price_1SDLRG03TVi4FRa6C7jF9sfq',
-
-          // monthly: 'price_1SPcZmP10jvuKxaD4Xne3ZxR',
-          // yearly: 'price_1SPcZmP10jvuKxaDCknV0mNV',
-        },
-      },
-    }
-
-    // Previous LIVE price IDs (commented for reference)
-    /*
-    const LIVE_PRICE_IDS: Record<Plan, Record<BillingCycle, string>> = {
-      professional: {
-        monthly: 'price_1SCeTlP10jvuKxaDk2WhXm24',
-        yearly: 'price_1SCeTlP10jvuKxaD2FLrFQ3L',
-      },
-      advanced: {
-        monthly: 'price_1SCeXqP10jvuKxaD2L5hdSNS',
-        yearly: 'price_1SCeXqP10jvuKxaDAcfCrXiG',
-      },
-    }
-    */
-
-    const mappedPriceId = SANDBOX_PRICE_IDS[region]?.[plan]?.[billingCycle]
+    // Get price ID from central configuration (handles sandbox vs production)
+    const mappedPriceId = getAxonMDPriceId(region, plan, billingCycle)
 
     // Build metadata object with environment alias if present
     const sessionMetadata: Record<string, string> = {
@@ -355,24 +298,9 @@ async function handleAxonHISCheckout(
   const interval = getIntervalHIS(billingCycle)
   const intervalCount = getIntervalCountHIS(billingCycle)
 
-  // TODO: Replace with actual Stripe Price IDs once created in Stripe Dashboard
-  // See STRIPE_AXONHIS_SETUP_GUIDE.md for instructions
-  // Example structure:
-  const AXONHIS_PRICE_IDS: Record<Region, Record<PlanHIS, Record<BillingCycleHIS, string>>> = {
-    India: {
-      lite: { monthly: 'price_1SQOtV03TVi4FRa6XB76tkTA', 'semi-annual': 'price_1SQOtV03TVi4FRa6E4U5qQ5t', annual: 'price_1SQOtV03TVi4FRa6ODkOQNbP' },
-      pro: { monthly: 'price_1SQOwX03TVi4FRa6PlhomHpS', 'semi-annual': 'price_1SQOwX03TVi4FRa6MzsSdT4H', annual: 'price_1SQOwX03TVi4FRa6SPXuIK53' },
-      advance: { monthly: 'price_1SQP2n03TVi4FRa6j6jc3ofN', 'semi-annual': 'price_1SQP2n03TVi4FRa66xOJUvYO', annual: 'price_1SQP2n03TVi4FRa6d8CZmEVt' },
-    },
-    UK: {
-      lite: { monthly: 'price_1SQOtV03TVi4FRa6NIuuQafX', 'semi-annual': 'price_1SQOtV03TVi4FRa6LthOsVSz', annual: 'price_1SQOtV03TVi4FRa69o4dBpDf' },
-      pro: { monthly: 'price_1SQOwX03TVi4FRa6JqueyzlZ', 'semi-annual': 'price_1SQOwX03TVi4FRa6btYWD2j2', annual: 'price_1SQOwX03TVi4FRa6n3aVSA3S' },
-      advance: { monthly: 'price_1SQP2n03TVi4FRa6TUiE3vwN', 'semi-annual': 'price_1SQP2n03TVi4FRa6IDDI7tWh', annual: 'price_1SQP2n03TVi4FRa6nAqBZe0P' },
-    },
-  }
-  const mappedPriceId = AXONHIS_PRICE_IDS[region]?.[plan]?.[billingCycle]
+  // Get price ID from central configuration (handles sandbox vs production)
+  const mappedPriceId = getAxonHISPriceId(region, plan, billingCycle)
 
-  // Use inline price_data for now (dummy Price IDs not yet created)
   const planName = plan === 'lite' ? 'Lite' : plan === 'pro' ? 'Pro' : 'Advance'
   const billingCycleName = billingCycle === 'monthly' ? 'Monthly'
     : billingCycle === 'semi-annual' ? 'Semi-Annual'
@@ -412,22 +340,29 @@ async function handleAxonHISCheckout(
     cancel_url: cancelUrl,
     customer_email: body.organization?.organizationEmail || body.organization?.email,
     metadata: sessionMetadata,
-    line_items: [
-      {
-        price_data: {
-          currency,
-          product_data: {
-            name: `AxonHIS ${planName} (${region}, ${billingCycleName})`,
-          },
-          unit_amount: unitAmount,
-          recurring: {
-            interval,
-            interval_count: intervalCount,
-          },
+    line_items: mappedPriceId
+      ? [
+        {
+          price: mappedPriceId,
+          quantity: 1,
         },
-        quantity: 1,
-      },
-    ],
+      ]
+      : [
+        {
+          price_data: {
+            currency,
+            product_data: {
+              name: `AxonHIS ${planName} (${region}, ${billingCycleName})`,
+            },
+            unit_amount: unitAmount,
+            recurring: {
+              interval,
+              interval_count: intervalCount,
+            },
+          },
+          quantity: 1,
+        },
+      ],
     subscription_data: {
       metadata: sessionMetadata,
     },
