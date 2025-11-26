@@ -102,49 +102,49 @@ function getEnhancedFeatures() {
       title: "Unified Hospital Platform",
       description:
         "Consolidate 50+ modules into one ecosystem—registration, ER, OPD, IPD, OT, ICU, pharmacy, labs, radiology, inventory, and finance. Eliminate data silos with a single source of truth for clinical and administrative workflows. Seamless integration ensures that every department communicates effortlessly, reducing errors and improving coordination across your entire hospital.",
-      image: "/assets/new-products-1/scribe/1.jpg",
+      image: "/assets/new-products-1/his-1/1.png",
     },
     {
       title: "Smarter Care Delivery",
       description:
         "Streamline ER triage, OPD scheduling, and IPD bed tracking. Coordinate nurse-doctor-pharmacy-lab handoffs with automated notifications. Improve patient satisfaction through timely transfers and discharge readiness. Smart workflows reduce wait times and ensure that the right care reaches patients at the right time.",
-      image: "/assets/new-products-1/scribe/2.jpg",
+      image: "/assets/new-products-1/his-1/2.png",
     },
     {
       title: "Automated Billing Accuracy",
       description:
         "Capture charges at the point of care. Link every order, procedure, and consumable to billing in real time. Reduce missed items and delays to achieve consistent, audit-ready revenue integrity. Eliminate revenue leakage with 100% charge capture that automatically tracks every billable service and procedure.",
-      image: "/assets/new-products-1/scribe/3.jpg",
+      image: "/assets/new-products-1/his-1/3.png",
     },
     {
       title: "360° EMR for Clinicians",
       description:
         "Give doctors a unified clinical view—vitals, diagnostics, medications, progress notes, orders, and imaging—without switching between systems. Use templates, order sets, and favourites to speed documentation. Comprehensive patient history at your fingertips enables faster, more informed clinical decisions.",
-      image: "/assets/new-products-1/scribe/4.jpg",
+      image: "/assets/new-products-1/his-1/4.png",
     },
     {
       title: "Diagnostics & Ancillary Integration",
       description:
         "Seamless LIS and RIS/PACS workflows from eOrder to result posting. Pharmacy e-prescriptions with stock checks and substitutions. CSSD tracking for OT packs and instrument cycles. End-to-end integration eliminates manual data entry and ensures accurate, timely results delivery.",
-      image: "/assets/new-products-1/scribe/scribe-1.png",
+      image: "/assets/new-products-1/his-1/5.png",
     },
     {
       title: "Real-Time BI & MIS",
       description:
         "Gain visibility with occupancy, TATs, cancellations, revenue, and resource utilization dashboards. Drill down by department, unit, payer, and provider for operational decisions that stick. Built-in analytics empower management with actionable insights for continuous improvement and strategic planning.",
-      image: "/assets/new-products-1/scribe/scribe-1.png",
+      image: "/assets/new-products-1/his-1/6.png",
     },
     {
       title: "Asset & Inventory Control",
       description:
         "Track equipment utilization and maintenance with alerts. Monitor stock, expiries, and batch at wards, OT, ICU, and pharmacy. Reduce loss, shrinkage, and downtime. Comprehensive asset management ensures your hospital resources are optimally utilized and always ready when needed.",
-      image: "/assets/new-products-1/scribe/1.jpg",
+      image: "/assets/new-products-1/his-1/7.png",
     },
     {
       title: "Personalization & Customization",
       description:
         "Configure branded discharge summaries, invoices, and claims. Build custom order sets per specialty and save favourite prescriptions and care plans. Adapt workflows by department without heavy IT lift. Flexible configuration means AxonHIS adapts to your hospital's unique processes, not the other way around.",
-      image: "/assets/new-products-1/scribe/2.jpg",
+      image: "/assets/new-products-1/his-1/8.png",
     },
   ]
 }

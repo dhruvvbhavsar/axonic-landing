@@ -7,6 +7,7 @@ import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import GaTracker from "@/components/ga-tracker";
 import { GA_MEASUREMENT_ID } from "@/lib/gtag";
+import { ExternalApiProvider, ExternalApiSwitcher } from "@/components/external-api-switcher";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -70,12 +71,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-          strategy="afterInteractive"
-        />
-        <Script id="ga-gtag-init" strategy="afterInteractive">
-          {`
+        <ExternalApiProvider>
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+            strategy="afterInteractive"
+          />
+          <Script id="ga-gtag-init" strategy="afterInteractive">
+            {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
@@ -83,15 +85,17 @@ export default function RootLayout({
               page_path: window.location.pathname,
             });
           `}
-        </Script>
-        <Navigation />
-        <Suspense fallback={null}>
-          <GaTracker />
-        </Suspense>
-        <main>
-          {children}
-        </main>
-        <Footer />
+          </Script>
+          <Navigation />
+          <Suspense fallback={null}>
+            <GaTracker />
+          </Suspense>
+          <main>
+            {children}
+          </main>
+          <Footer />
+          <ExternalApiSwitcher />
+        </ExternalApiProvider>
       </body>
     </html>
   );

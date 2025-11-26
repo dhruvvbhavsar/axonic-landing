@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { jwtVerify } from 'jose'
 import Stripe from 'stripe'
-import { getExternalApiBase } from '@/lib/external-api'
+import { getExternalApiBaseFromRequest } from '@/lib/external-api'
 
 function getEnv(name: string, fallback?: string): string {
   const v = process.env[name] || fallback
@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
 
     // Determine return URL based on environment
     let returnUrl: string
-    const externalApiBase = getExternalApiBase()
+    const externalApiBase = getExternalApiBaseFromRequest(request)
 
     if (process.env.NODE_ENV === 'development') {
       returnUrl = 'http://localhost:3000/our-products/axonmd/'

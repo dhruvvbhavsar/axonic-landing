@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { buildExternalUrl, ExternalApiEndpoints } from '@/lib/external-api'
+import { buildExternalUrlFromRequest, ExternalApiEndpoints } from '@/lib/external-api'
 
 export async function POST(request: NextRequest) {
   try {
@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
     if (!registrationNumber || typeof registrationNumber !== 'string') {
       return NextResponse.json({ error: 'registrationNumber is required' }, { status: 400 })
     }
-    const url = buildExternalUrl(ExternalApiEndpoints.checkRegistrationExists)
+    const url = buildExternalUrlFromRequest(request, ExternalApiEndpoints.checkRegistrationExists)
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

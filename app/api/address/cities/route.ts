@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { buildExternalUrl, ExternalApiEndpoints } from '@/lib/external-api'
+import { buildExternalUrlFromRequest, ExternalApiEndpoints } from '@/lib/external-api'
 
 export async function GET(request: NextRequest) {
   try {
@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'stateId is required' }, { status: 400 })
     }
     
-    const url = `${buildExternalUrl(ExternalApiEndpoints.addressData)}?addressId=${stateId}&addressKey=city`
+    const url = `${buildExternalUrlFromRequest(request, ExternalApiEndpoints.addressData)}?addressId=${stateId}&addressKey=city`
     const upstream = await fetch(url, {
       method: 'GET',
       cache: 'no-store',
