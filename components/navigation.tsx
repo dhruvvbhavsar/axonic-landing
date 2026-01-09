@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
-import Image from "next/image"
-import { Menu, X } from "lucide-react"
+import * as React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { Menu, X } from "lucide-react";
 
 import {
   NavigationMenu,
@@ -13,104 +13,136 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
-import { cn, getBaseDomain, getConsultingSubdomainUrl, getPlatformSubdomainUrl, getProductSubdomainUrl } from "@/lib/utils"
+} from "@/components/ui/navigation-menu";
+import {
+  cn,
+  getBaseDomain,
+  getConsultingSubdomainUrl,
+  getPlatformSubdomainUrl,
+  getProductSubdomainUrl,
+} from "@/lib/utils";
 
 export function Navigation() {
-  const [isScrolled, setIsScrolled] = React.useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
-  const [isSubdomain, setIsSubdomain] = React.useState(false)
-  const [baseDomain, setBaseDomain] = React.useState('')
+  const [isScrolled, setIsScrolled] = React.useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const [isSubdomain, setIsSubdomain] = React.useState(false);
+  const [baseDomain, setBaseDomain] = React.useState("");
 
   // Check if we're on a subdomain after hydration
   React.useEffect(() => {
-    const hostname = window.location.hostname
-    const domain = getBaseDomain()
-    const isOnSubdomain = hostname !== 'localhost' && hostname !== '127.0.0.1' && hostname !== domain.split(':')[0]
-    
-    setIsSubdomain(isOnSubdomain)
-    setBaseDomain(domain)
-  }, [])
+    const hostname = window.location.hostname;
+    const domain = getBaseDomain();
+    const isOnSubdomain =
+      hostname !== "localhost" &&
+      hostname !== "127.0.0.1" &&
+      hostname !== domain.split(":")[0];
+
+    setIsSubdomain(isOnSubdomain);
+    setBaseDomain(domain);
+  }, []);
 
   // Helper function to generate navigation URLs
   const getNavUrl = (path: string) => {
     if (isSubdomain && baseDomain) {
-      const protocol = baseDomain.includes('localhost') ? 'http:' : 'https:'
-      return `${protocol}//${baseDomain}${path}`
+      const protocol = baseDomain.includes("localhost") ? "http:" : "https:";
+      return `${protocol}//${baseDomain}${path}`;
     }
     // If we're on the main domain or during SSR, use relative paths
-    return path
-  }
+    return path;
+  };
 
   React.useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
-    }
+      setIsScrolled(window.scrollY > 10);
+    };
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Close mobile menu when clicking outside or on a link
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as HTMLElement
-      if (!target.closest('.mobile-menu') && !target.closest('.mobile-menu-button')) {
-        setIsMobileMenuOpen(false)
+      const target = event.target as HTMLElement;
+      if (
+        !target.closest(".mobile-menu") &&
+        !target.closest(".mobile-menu-button")
+      ) {
+        setIsMobileMenuOpen(false);
       }
-    }
+    };
 
     if (isMobileMenuOpen) {
-      document.addEventListener('click', handleClickOutside)
+      document.addEventListener("click", handleClickOutside);
       // Prevent body scroll when menu is open
-      document.body.style.overflow = 'hidden'
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset'
+      document.body.style.overflow = "unset";
     }
 
     return () => {
-      document.removeEventListener('click', handleClickOutside)
-      document.body.style.overflow = 'unset'
-    }
-  }, [isMobileMenuOpen])
+      document.removeEventListener("click", handleClickOutside);
+      document.body.style.overflow = "unset";
+    };
+  }, [isMobileMenuOpen]);
 
-  const closeMobileMenu = () => setIsMobileMenuOpen(false)
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
   // Helper component to handle both relative and absolute URLs
-  const SmartLink = React.forwardRef<HTMLAnchorElement, { href: string; children: React.ReactNode; className?: string; onClick?: () => void; [key: string]: any }>(
-    ({ href, children, className, onClick, ...props }, ref) => {
-      const isFullUrl = href.startsWith('http://') || href.startsWith('https://')
-      
-      if (isFullUrl) {
-        return (
-          <a ref={ref} href={href} className={className} onClick={onClick} {...props}>
-            {children}
-          </a>
-        )
-      }
-      
-      return (
-        <Link href={href} className={className} onClick={onClick} {...props}>
-          {children}
-        </Link>
-      )
+  const SmartLink = React.forwardRef<
+    HTMLAnchorElement,
+    {
+      href: string;
+      children: React.ReactNode;
+      className?: string;
+      onClick?: () => void;
+      [key: string]: any;
     }
-  )
-  SmartLink.displayName = "SmartLink"
+  >(({ href, children, className, onClick, ...props }, ref) => {
+    const isFullUrl = href.startsWith("http://") || href.startsWith("https://");
+
+    if (isFullUrl) {
+      return (
+        <a
+          ref={ref}
+          href={href}
+          className={className}
+          onClick={onClick}
+          {...props}
+        >
+          {children}
+        </a>
+      );
+    }
+
+    return (
+      <Link href={href} className={className} onClick={onClick} {...props}>
+        {children}
+      </Link>
+    );
+  });
+  SmartLink.displayName = "SmartLink";
 
   return (
     <>
-      <div className={cn(
-        "fixed top-0 left-0 right-0 z-50 flex items-center justify-between w-full px-4 sm:px-6 py-4 transition-all duration-300",
-        isScrolled 
-          ? "bg-white/95 backdrop-blur-sm shadow-sm" 
-          : "bg-transparent"
-      )}>
+      <div
+        className={cn(
+          "fixed top-0 left-0 right-0 z-50 flex items-center justify-between w-full px-4 sm:px-6 py-4 transition-all duration-300",
+          isScrolled
+            ? "bg-white/95 backdrop-blur-sm shadow-sm"
+            : "bg-transparent",
+        )}
+      >
         {/* Logo */}
         <div className="flex items-center">
-          <SmartLink href={getNavUrl("/")} className="flex items-center space-x-2">
+          <SmartLink
+            href={getNavUrl("/")}
+            className="flex items-center space-x-2"
+          >
             <Image
-              src={isScrolled ? "/logos/logo-black.png" : "/logos/logo-white.png"}
+              src={
+                isScrolled ? "/logos/logo-black.png" : "/logos/logo-white.png"
+              }
               alt="Axonic Logo"
               width={160}
               height={50}
@@ -124,83 +156,131 @@ export function Navigation() {
           <NavigationMenu viewport={false}>
             <NavigationMenuList>
               {/* Product shortcuts */}
-              {[{label:'AxonScribe', slug:'axonscribe'}, {label:'AxonMD', slug:'axonmd'}, {label:'AxonCare', slug:'axoncare'}, {label:'AxonHIS', slug:'axonhis'}, {label:'AxonHealthHub', slug:'axonhealthhub'}].map((item) => (
+              {[
+                { label: "AxonScribe", slug: "axonscribe" },
+                { label: "AxonMD", slug: "axonmd" },
+                { label: "AxonCare", slug: "axoncare" },
+                { label: "AxonHIS", slug: "axonhis" },
+                { label: "AxonHealthHub", slug: "axonhealthhub" },
+              ].map((item) => (
                 <NavigationMenuItem key={item.slug}>
-                  <NavigationMenuLink asChild className={cn(
-                    navigationMenuTriggerStyle(),
-                    "transition-colors duration-300",
-                    isScrolled 
-                      ? "text-gray-900 hover:text-yellow-500" 
-                      : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
-                  )}>
-                    <SmartLink href={getProductSubdomainUrl(item.slug)}>{item.label}</SmartLink>
+                  <NavigationMenuLink
+                    asChild
+                    className={cn(
+                      navigationMenuTriggerStyle(),
+                      "transition-colors duration-300",
+                      isScrolled
+                        ? "text-gray-900 hover:text-yellow-500"
+                        : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10",
+                    )}
+                  >
+                    <SmartLink href={getProductSubdomainUrl(item.slug)}>
+                      {item.label}
+                    </SmartLink>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               ))}
 
               {/* Our Platform */}
               <NavigationMenuItem>
-                <NavigationMenuLink asChild className={cn(
-                  navigationMenuTriggerStyle(),
-                  "transition-colors duration-300",
-                  isScrolled 
-                    ? "text-gray-900 hover:text-yellow-500" 
-                    : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
-                )}>
-                  <SmartLink href={getPlatformSubdomainUrl()}>Our Platform</SmartLink>
+                <NavigationMenuLink
+                  asChild
+                  className={cn(
+                    navigationMenuTriggerStyle(),
+                    "transition-colors duration-300",
+                    isScrolled
+                      ? "text-gray-900 hover:text-yellow-500"
+                      : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10",
+                  )}
+                >
+                  <SmartLink href={getPlatformSubdomainUrl()}>
+                    Our Platform
+                  </SmartLink>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
               {/* About Us dropdown */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className={cn(
-                  "transition-colors duration-300",
-                  isScrolled 
-                    ? "text-gray-900 hover:text-yellow-500" 
-                    : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10"
-                )}>
+                <NavigationMenuTrigger
+                  className={cn(
+                    "transition-colors duration-300",
+                    isScrolled
+                      ? "text-gray-900 hover:text-yellow-500"
+                      : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10",
+                  )}
+                >
                   About Us
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="left-auto right-0">
                   <ul className="grid w-[220px] gap-2 p-2 bg-white">
                     <li>
                       <NavigationMenuLink asChild>
-                        <SmartLink href={getNavUrl("/about-us#team")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                        <SmartLink
+                          href={getNavUrl("/about-us#team")}
+                          className="block p-2 hover:bg-accent rounded-sm text-gray-900"
+                        >
                           <div className="font-medium">Team</div>
                         </SmartLink>
                       </NavigationMenuLink>
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <SmartLink href={getNavUrl("/our-products")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                        <SmartLink
+                          href={getNavUrl("/advisors-board")}
+                          className="block p-2 hover:bg-accent rounded-sm text-gray-900"
+                        >
+                          <div className="font-medium">
+                            Advisors & Board Members
+                          </div>
+                        </SmartLink>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <SmartLink
+                          href={getNavUrl("/our-products")}
+                          className="block p-2 hover:bg-accent rounded-sm text-gray-900"
+                        >
                           <div className="font-medium">Our Products</div>
                         </SmartLink>
                       </NavigationMenuLink>
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <SmartLink href={getNavUrl("/blogs")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                        <SmartLink
+                          href={getNavUrl("/blogs")}
+                          className="block p-2 hover:bg-accent rounded-sm text-gray-900"
+                        >
                           <div className="font-medium">Blog</div>
                         </SmartLink>
                       </NavigationMenuLink>
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <SmartLink href={getNavUrl("/#testimonials")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                        <SmartLink
+                          href={getNavUrl("/#testimonials")}
+                          className="block p-2 hover:bg-accent rounded-sm text-gray-900"
+                        >
                           <div className="font-medium">Testimonials</div>
                         </SmartLink>
                       </NavigationMenuLink>
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <SmartLink href={getNavUrl("/careers")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                        <SmartLink
+                          href={getNavUrl("/careers")}
+                          className="block p-2 hover:bg-accent rounded-sm text-gray-900"
+                        >
                           <div className="font-medium">Careers</div>
                         </SmartLink>
                       </NavigationMenuLink>
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <SmartLink href={getNavUrl("/contact-us")} className="block p-2 hover:bg-accent rounded-sm text-gray-900">
+                        <SmartLink
+                          href={getNavUrl("/contact-us")}
+                          className="block p-2 hover:bg-accent rounded-sm text-gray-900"
+                        >
                           <div className="font-medium">Contact Us</div>
                         </SmartLink>
                       </NavigationMenuLink>
@@ -216,9 +296,9 @@ export function Navigation() {
         <button
           className={cn(
             "lg:hidden mobile-menu-button p-2 rounded-md transition-colors duration-300",
-            isScrolled 
-              ? "text-gray-900 hover:bg-gray-100" 
-              : "text-white hover:bg-white/10"
+            isScrolled
+              ? "text-gray-900 hover:bg-gray-100"
+              : "text-white hover:bg-white/10",
           )}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Toggle mobile menu"
@@ -260,7 +340,13 @@ export function Navigation() {
               {/* Mobile menu items */}
               <nav className="flex-1 px-4 py-6 space-y-2">
                 {/* Product shortcuts */}
-                {[{label:'AxonScribe', slug:'axonscribe'}, {label:'AxonMD', slug:'axonmd'}, {label:'AxonCare', slug:'axoncare'}, {label:'AxonHIS', slug:'axonhis'}, {label:'AxonHealthHub', slug:'axonhealthhub'}].map((item) => (
+                {[
+                  { label: "AxonScribe", slug: "axonscribe" },
+                  { label: "AxonMD", slug: "axonmd" },
+                  { label: "AxonCare", slug: "axoncare" },
+                  { label: "AxonHIS", slug: "axonhis" },
+                  { label: "AxonHealthHub", slug: "axonhealthhub" },
+                ].map((item) => (
                   <SmartLink
                     key={item.slug}
                     href={getProductSubdomainUrl(item.slug)}
@@ -290,6 +376,13 @@ export function Navigation() {
                     onClick={closeMobileMenu}
                   >
                     Team
+                  </SmartLink>
+                  <SmartLink
+                    href={getNavUrl("/advisors-board")}
+                    className="block px-6 py-2 rounded-md text-gray-700 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
+                    onClick={closeMobileMenu}
+                  >
+                    Advisors & Board Members
                   </SmartLink>
                   <SmartLink
                     href={getNavUrl("/our-products")}
@@ -333,5 +426,5 @@ export function Navigation() {
         </div>
       )}
     </>
-  )
-} 
+  );
+}

@@ -1,56 +1,65 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
-import Image from "next/image"
-import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react"
-import { getBaseDomain } from "@/lib/utils"
+import * as React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
+import { getBaseDomain } from "@/lib/utils";
 
 export function Footer() {
-  const [isSubdomain, setIsSubdomain] = React.useState(false)
-  const [baseDomain, setBaseDomain] = React.useState('')
+  const [isSubdomain, setIsSubdomain] = React.useState(false);
+  const [baseDomain, setBaseDomain] = React.useState("");
 
   // Check if we're on a subdomain after hydration
   React.useEffect(() => {
-    const hostname = window.location.hostname
-    const domain = getBaseDomain()
-    const isOnSubdomain = hostname !== 'localhost' && hostname !== '127.0.0.1' && hostname !== domain.split(':')[0]
-    
-    setIsSubdomain(isOnSubdomain)
-    setBaseDomain(domain)
-  }, [])
+    const hostname = window.location.hostname;
+    const domain = getBaseDomain();
+    const isOnSubdomain =
+      hostname !== "localhost" &&
+      hostname !== "127.0.0.1" &&
+      hostname !== domain.split(":")[0];
+
+    setIsSubdomain(isOnSubdomain);
+    setBaseDomain(domain);
+  }, []);
 
   // Helper function to generate navigation URLs
   const getNavUrl = (path: string) => {
     if (isSubdomain && baseDomain) {
-      const protocol = baseDomain.includes('localhost') ? 'http:' : 'https:'
-      return `${protocol}//${baseDomain}${path}`
+      const protocol = baseDomain.includes("localhost") ? "http:" : "https:";
+      return `${protocol}//${baseDomain}${path}`;
     }
     // If we're on the main domain or during SSR, use relative paths
-    return path
-  }
+    return path;
+  };
 
   // Helper component to handle both relative and absolute URLs
-  const SmartLink = React.forwardRef<HTMLAnchorElement, { href: string; children: React.ReactNode; className?: string; [key: string]: any }>(
-    ({ href, children, className, ...props }, ref) => {
-      const isFullUrl = href.startsWith('http://') || href.startsWith('https://')
-      
-      if (isFullUrl) {
-        return (
-          <a ref={ref} href={href} className={className} {...props}>
-            {children}
-          </a>
-        )
-      }
-      
-      return (
-        <Link href={href} className={className} {...props}>
-          {children}
-        </Link>
-      )
+  const SmartLink = React.forwardRef<
+    HTMLAnchorElement,
+    {
+      href: string;
+      children: React.ReactNode;
+      className?: string;
+      [key: string]: any;
     }
-  )
-  SmartLink.displayName = "SmartLink"
+  >(({ href, children, className, ...props }, ref) => {
+    const isFullUrl = href.startsWith("http://") || href.startsWith("https://");
+
+    if (isFullUrl) {
+      return (
+        <a ref={ref} href={href} className={className} {...props}>
+          {children}
+        </a>
+      );
+    }
+
+    return (
+      <Link href={href} className={className} {...props}>
+        {children}
+      </Link>
+    );
+  });
+  SmartLink.displayName = "SmartLink";
 
   return (
     <footer className="bg-[#1a1a2e] text-white">
@@ -69,21 +78,33 @@ export function Footer() {
               />
             </div>
             <p className="text-gray-300 text-sm leading-relaxed mb-6">
-              At Axonic, we bridge the gaps connecting the healthcare system globally with our revolutionary technological solutions.
+              At Axonic, we bridge the gaps connecting the healthcare system
+              globally with our revolutionary technological solutions.
             </p>
-            
+
             {/* Social Media Icons */}
             <div className="flex space-x-3">
               {/* <Link href="https://x.com/AxonicH86117" className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-yellow-500 transition-colors">
                 <Twitter className="w-4 h-4 text-[#1a1a2e]" />
               </Link> */}
-              <Link href="https://www.facebook.com/axonichealth/" target="_blank" className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-yellow-500 transition-colors">
+              <Link
+                href="https://www.facebook.com/axonichealth/"
+                target="_blank"
+                className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-yellow-500 transition-colors"
+              >
                 <Facebook className="w-4 h-4 text-[#1a1a2e]" />
               </Link>
-              <Link href="https://in.linkedin.com/company/axonichealth" target="_blank" className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-yellow-500 transition-colors">
+              <Link
+                href="https://in.linkedin.com/company/axonichealth"
+                target="_blank"
+                className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-yellow-500 transition-colors"
+              >
                 <Linkedin className="w-4 h-4 text-[#1a1a2e]" />
               </Link>
-              <Link href="https://www.instagram.com/axonichealth?igsh=Y29wNWJvZHk2aTJw" className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-yellow-500 transition-colors">
+              <Link
+                href="https://www.instagram.com/axonichealth?igsh=Y29wNWJvZHk2aTJw"
+                className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-yellow-500 transition-colors"
+              >
                 <Instagram className="w-4 h-4 text-[#1a1a2e]" />
               </Link>
             </div>
@@ -91,19 +112,26 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-yellow-500">Contact</h3>
+            <h3 className="text-lg font-semibold mb-4 text-yellow-500">
+              Contact
+            </h3>
             <div className="space-y-3">
               <div className="flex items-start space-x-2">
                 <div className="text-yellow-500 mt-1">📍</div>
                 <div className="text-gray-300 text-sm">
-                  3911 Concord Pike<br />
-                  #8030, Wilmington,<br />
+                  3911 Concord Pike
+                  <br />
+                  #8030, Wilmington,
+                  <br />
                   Delaware,19803
                 </div>
               </div>
               <div className="flex items-center space-x-2">
                 <div className="text-yellow-500">✉️</div>
-                <Link href="mailto:info@axonichealth.com" className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
+                <Link
+                  href="mailto:info@axonichealth.com"
+                  className="text-gray-300 text-sm hover:text-yellow-500 transition-colors"
+                >
                   info@axonichealth.com
                 </Link>
               </div>
@@ -112,30 +140,55 @@ export function Footer() {
 
           {/* Pages */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-yellow-500">Pages</h3>
+            <h3 className="text-lg font-semibold mb-4 text-yellow-500">
+              Pages
+            </h3>
             <ul className="space-y-2">
               <li>
-                <SmartLink href={getNavUrl("/about-us")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
+                <SmartLink
+                  href={getNavUrl("/about-us")}
+                  className="text-gray-300 text-sm hover:text-yellow-500 transition-colors"
+                >
                   About Us
                 </SmartLink>
               </li>
               <li>
-                <SmartLink href={"/ai-platform"} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
+                <SmartLink
+                  href={getNavUrl("/advisors-board")}
+                  className="text-gray-300 text-sm hover:text-yellow-500 transition-colors"
+                >
+                  Advisors & Board Members
+                </SmartLink>
+              </li>
+              <li>
+                <SmartLink
+                  href={"/ai-platform"}
+                  className="text-gray-300 text-sm hover:text-yellow-500 transition-colors"
+                >
                   AI Platform
                 </SmartLink>
               </li>
               <li>
-                <SmartLink href={getNavUrl("/careers")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
+                <SmartLink
+                  href={getNavUrl("/careers")}
+                  className="text-gray-300 text-sm hover:text-yellow-500 transition-colors"
+                >
                   Careers
                 </SmartLink>
               </li>
               <li>
-                <SmartLink href={getNavUrl("/blogs")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
+                <SmartLink
+                  href={getNavUrl("/blogs")}
+                  className="text-gray-300 text-sm hover:text-yellow-500 transition-colors"
+                >
                   Blogs
                 </SmartLink>
               </li>
               <li>
-                <SmartLink href={getNavUrl("/contact-us")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
+                <SmartLink
+                  href={getNavUrl("/contact-us")}
+                  className="text-gray-300 text-sm hover:text-yellow-500 transition-colors"
+                >
                   Contact Us
                 </SmartLink>
               </li>
@@ -144,15 +197,23 @@ export function Footer() {
 
           {/* Our Offerings */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-yellow-500">Our Offerings</h3>
+            <h3 className="text-lg font-semibold mb-4 text-yellow-500">
+              Our Offerings
+            </h3>
             <ul className="space-y-2">
               <li>
-                <SmartLink href={getNavUrl("/our-products")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
+                <SmartLink
+                  href={getNavUrl("/our-products")}
+                  className="text-gray-300 text-sm hover:text-yellow-500 transition-colors"
+                >
                   Our Products
                 </SmartLink>
               </li>
               <li>
-                <SmartLink href={getNavUrl("/our-services")} className="text-gray-300 text-sm hover:text-yellow-500 transition-colors">
+                <SmartLink
+                  href={getNavUrl("/our-services")}
+                  className="text-gray-300 text-sm hover:text-yellow-500 transition-colors"
+                >
                   Our Services
                 </SmartLink>
               </li>
@@ -169,23 +230,32 @@ export function Footer() {
               Copyright © 2024 Axonic All rights reserved
             </div>
             <div className="flex flex-wrap items-center space-x-6 text-sm">
-              <SmartLink href={getNavUrl("/refund-policy")} className="text-gray-400 hover:text-yellow-500 transition-colors flex items-center">
+              <SmartLink
+                href={getNavUrl("/refund-policy")}
+                className="text-gray-400 hover:text-yellow-500 transition-colors flex items-center"
+              >
                 <span className="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span>
                 Refund Policy
               </SmartLink>
-              <SmartLink href={getNavUrl("/privacy-policy")} className="text-gray-400 hover:text-yellow-500 transition-colors flex items-center">
+              <SmartLink
+                href={getNavUrl("/privacy-policy")}
+                className="text-gray-400 hover:text-yellow-500 transition-colors flex items-center"
+              >
                 <span className="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span>
                 Privacy Policy
               </SmartLink>
-              <SmartLink href={getNavUrl("/terms-conditions")} className="text-gray-400 hover:text-yellow-500 transition-colors flex items-center">
+              <SmartLink
+                href={getNavUrl("/terms-conditions")}
+                className="text-gray-400 hover:text-yellow-500 transition-colors flex items-center"
+              >
                 <span className="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span>
                 Term and Conditions
               </SmartLink>
             </div>
-            
+
             {/* Back to Top Button */}
-            <button 
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               className="w-8 h-8 bg-gray-700 hover:bg-yellow-500 rounded border border-gray-600 flex items-center justify-center transition-colors"
               aria-label="Back to top"
             >
@@ -195,5 +265,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
-} 
+  );
+}
