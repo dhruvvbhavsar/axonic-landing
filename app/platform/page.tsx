@@ -53,6 +53,7 @@ export default function PlatformPage() {
   const patientsProducts = [
     products.find(p => p.slug === "axonhealthhub"), // AxonHealthHub
     products.find(p => p.slug === "axoncare"),      // AxonCare
+    products.find(p => p.slug === "axonhomeclinic"), // AxonHomeClinic
     products.find(p => p.slug === "axondoc"),       // AxonDoc
     products.find(p => p.slug === "axonbuddy"),     // AxonBuddy
   ].filter((product): product is NonNullable<typeof product> => product !== undefined);

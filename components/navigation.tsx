@@ -162,6 +162,7 @@ export function Navigation() {
                 { label: "AxonCare", slug: "axoncare" },
                 { label: "AxonHIS", slug: "axonhis" },
                 { label: "AxonHealthHub", slug: "axonhealthhub" },
+                { label: "AxonHomeClinic", slug: "axonhomeclinic" },
               ].map((item) => (
                 <NavigationMenuItem key={item.slug}>
                   <NavigationMenuLink
@@ -346,6 +347,7 @@ export function Navigation() {
                   { label: "AxonCare", slug: "axoncare" },
                   { label: "AxonHIS", slug: "axonhis" },
                   { label: "AxonHealthHub", slug: "axonhealthhub" },
+                  { label: "AxonHomeClinic", slug: "axonhomeclinic" },
                 ].map((item) => (
                   <SmartLink
                     key={item.slug}

@@ -41,7 +41,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Axonic Health",
       images: [
         {
-          url: "/assets/new-products/AxonHealthHub.png",
+          url: "/assets/new-products-1/homeclinic/1.png",
           width: 1200,
           height: 630,
           alt: `AxonHomeClinic - Personal Smart Health Hub`,
@@ -52,7 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: `AxonHomeClinic - Your Personal Smart Health Hub`,
       description: `Clinic-grade care at home, connected to doctors 24×7. AI health assistant, vital monitoring, and instant consultations.`,
-      images: ["/assets/new-products/AxonHealthHub.png"],
+      images: ["/assets/new-products-1/homeclinic/1.png"],
     },
     robots: {
       index: true,
@@ -139,8 +139,8 @@ function getEnhancedFeatures() {
 
 export default function AxonHomeClinicPage() {
   const features = getEnhancedFeatures();
-  const videoUrl = "https://youtu.be/RHBiso6sE_g?si=X7Gi9oidF7tWScMm";
-  const videoId = extractYouTubeId(videoUrl) || "RHBiso6sE_g";
+  const videoUrl = "https://youtu.be/uJyRMYEXJ7Y";
+  const videoId = extractYouTubeId(videoUrl) || "uJyRMYEXJ7Y";
 
   const navItems = [
     { href: "#overview", label: "Overview" },
@@ -151,7 +151,7 @@ export default function AxonHomeClinicPage() {
 
   const product = {
     name: "AxonHomeClinic",
-    heroImage: "/assets/new-products/AxonHealthHub.png",
+    heroImage: "/assets/new-products-1/homeclinic/1.png",
     description: "Clinic-grade care at home, connected to doctors 24×7.",
     calendlyUrl: "https://zcal.co/i/pooei9_f?embed=1&embedType=iframe",
     testimonialUrl: "https://www.youtube.com/embed/2OPJaJoi0Gs",
