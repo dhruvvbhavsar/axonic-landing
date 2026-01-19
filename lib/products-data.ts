@@ -1,32 +1,32 @@
 export interface Product {
-  id: number
-  name: string
-  slug: string
-  logo: string
-  image: string
-  heroImage: string
-  videoUrl: string
-  testimonialUrl: string
-  description: string
-  shortDescription: string
-  subtitle: string
+  id: number;
+  name: string;
+  slug: string;
+  logo: string;
+  image: string;
+  heroImage: string;
+  videoUrl: string;
+  testimonialUrl: string;
+  description: string;
+  shortDescription: string;
+  subtitle: string;
   features: {
-    title: string
-    description: string
-    image: string
-  }[]
+    title: string;
+    description: string;
+    image: string;
+  }[];
   valuePropositions: {
-    title: string
-    description: string
-    image: string
-  }[]
-  ctaText: string
-  ctaSubtext: string
-  redirectUrl?: string
-  calendlyUrl?: string
-  shortPunchLine?: string
-  aiImage?: string
-  platformImage?: string
+    title: string;
+    description: string;
+    image: string;
+  }[];
+  ctaText: string;
+  ctaSubtext: string;
+  redirectUrl?: string;
+  calendlyUrl?: string;
+  shortPunchLine?: string;
+  aiImage?: string;
+  platformImage?: string;
 }
 
 export const products: Product[] = [
@@ -41,53 +41,63 @@ export const products: Product[] = [
     heroImage: "/assets/new-products/AxonCare.png",
     videoUrl: "https://youtube.com/shorts/TTL3e1lJibc?si=huUbgKvbzyYunBJY",
     testimonialUrl: "https://www.youtube.com/embed/qrCEQBEdrC4",
-    description: "Predictive Risk Intelligence for Strategic Medicine - advanced analytics for healthcare outcomes.",
-    shortDescription: "Predictive Risk Intelligence for Strategic Medicine - advanced analytics for healthcare outcomes.",
+    description:
+      "Predictive Risk Intelligence for Strategic Medicine - advanced analytics for healthcare outcomes.",
+    shortDescription:
+      "Predictive Risk Intelligence for Strategic Medicine - advanced analytics for healthcare outcomes.",
     subtitle: "Predictive Intelligence for Strategic Healthcare",
     features: [
       {
         title: "Advanced Risk Analytics",
-        description: "Sophisticated algorithms analyze patient data to identify potential health risks and predict adverse events before they occur.",
-        image: "/assets/image2.png"
+        description:
+          "Sophisticated algorithms analyze patient data to identify potential health risks and predict adverse events before they occur.",
+        image: "/assets/image2.png",
       },
       {
         title: "Strategic Care Planning",
-        description: "Data-driven insights enable healthcare providers to develop strategic care plans based on predictive analytics and risk assessment.",
-        image: "/assets/image3.png"
+        description:
+          "Data-driven insights enable healthcare providers to develop strategic care plans based on predictive analytics and risk assessment.",
+        image: "/assets/image3.png",
       },
       {
         title: "Population Health Insights",
-        description: "Comprehensive analysis of population health trends, disease patterns, and risk factors for proactive healthcare management.",
-        image: "/assets/image4.png"
+        description:
+          "Comprehensive analysis of population health trends, disease patterns, and risk factors for proactive healthcare management.",
+        image: "/assets/image4.png",
       },
       {
         title: "Clinical Decision Intelligence",
-        description: "AI-powered decision support tools that provide evidence-based recommendations for clinical interventions and treatment strategies.",
-        image: "/assets/image5.png"
-      }
+        description:
+          "AI-powered decision support tools that provide evidence-based recommendations for clinical interventions and treatment strategies.",
+        image: "/assets/image5.png",
+      },
     ],
     valuePropositions: [
       {
         title: "Proactive Risk Management",
-        description: "AxonCare enables early identification of health risks, allowing for proactive interventions that prevent adverse outcomes and improve patient care.",
-        image: "/assets/image1.png"
+        description:
+          "AxonCare enables early identification of health risks, allowing for proactive interventions that prevent adverse outcomes and improve patient care.",
+        image: "/assets/image1.png",
       },
       {
         title: "Strategic Healthcare Planning",
-        description: "Data-driven insights support strategic decision-making in healthcare delivery, resource allocation, and care management strategies.",
-        image: "/assets/image2.png"
+        description:
+          "Data-driven insights support strategic decision-making in healthcare delivery, resource allocation, and care management strategies.",
+        image: "/assets/image2.png",
       },
       {
         title: "Improved Clinical Outcomes",
-        description: "Predictive analytics and intelligent recommendations lead to better clinical decisions, improved patient outcomes, and reduced healthcare costs.",
-        image: "/assets/image3.png"
-      }
+        description:
+          "Predictive analytics and intelligent recommendations lead to better clinical decisions, improved patient outcomes, and reduced healthcare costs.",
+        image: "/assets/image3.png",
+      },
     ],
     ctaText: "Book Appointment Now",
-    ctaSubtext: "Join the AxonCare Network and revolutionize your healthcare strategy with advanced predictive analytics and risk intelligence.",
+    ctaSubtext:
+      "Join the AxonCare Network and revolutionize your healthcare strategy with advanced predictive analytics and risk intelligence.",
     redirectUrl: "https://axoncare.axonichealth.com",
     calendlyUrl: "https://calendly.com/axonichealth-info/axoncare",
-    shortPunchLine: "Smart Health, Anytime, Anywhere"
+    shortPunchLine: "Smart Health, Anytime, Anywhere",
   },
   {
     id: 2,
@@ -100,52 +110,62 @@ export const products: Product[] = [
     aiImage: "/assets/ai-images/his.png",
     videoUrl: "https://www.youtube.com/watch?v=syMnFR0qx6k",
     testimonialUrl: "https://www.youtube.com/embed/qrCEQBEdrC4",
-    description: "Advanced Clinical Excellence platform for healthcare management and patient care optimization.",
-    shortDescription: "Advanced Clinical Excellence platform for healthcare management and patient care optimization.",
+    description:
+      "Advanced Clinical Excellence platform for healthcare management and patient care optimization.",
+    shortDescription:
+      "Advanced Clinical Excellence platform for healthcare management and patient care optimization.",
     subtitle: "Transforming Clinical Excellence Through Technology",
     features: [
       {
         title: "One Platform. Total Control.",
-        description: "50+ modules from registration to discharge. Real-time sync across clinical, financial, and admin workflows with built-in ABDM, HL7, HIPAA & GDPR compliance",
-        image: "/assets/new-products-1/his/his-1.png"
+        description:
+          "50+ modules from registration to discharge. Real-time sync across clinical, financial, and admin workflows with built-in ABDM, HL7, HIPAA & GDPR compliance",
+        image: "/assets/new-products-1/his/his-1.png",
       },
       {
         title: "Insights That Drive Action",
-        description: "Live BI dashboards and predictive analytics to monitor KPIs, billing, outcomes, and inventory. Drill into patient-level trends for data-driven decisions.",
-        image: "/assets/new-products-1/his/his-2.png"
+        description:
+          "Live BI dashboards and predictive analytics to monitor KPIs, billing, outcomes, and inventory. Drill into patient-level trends for data-driven decisions.",
+        image: "/assets/new-products-1/his/his-2.png",
       },
       {
         title: "Smarter EMR. Safer Care.",
-        description: "AI-powered EMR with smart documentation, color-coded triage, automated vitals, and voice inputs. Enhances care across OPD, IPD, ER, and specialty workflows",
-        image: "/assets/new-products-1/his/his-3.png"
+        description:
+          "AI-powered EMR with smart documentation, color-coded triage, automated vitals, and voice inputs. Enhances care across OPD, IPD, ER, and specialty workflows",
+        image: "/assets/new-products-1/his/his-3.png",
       },
       {
         title: "Care That Moves With You.",
-        description: "Branded mobile app for staff and patients, manage appointments, reports, billing, and e-prescriptions. Includes queue alerts, remote access & notifications.",
-        image: "/assets/new-products-1/his/his-4.png"
+        description:
+          "Branded mobile app for staff and patients, manage appointments, reports, billing, and e-prescriptions. Includes queue alerts, remote access & notifications.",
+        image: "/assets/new-products-1/his/his-4.png",
       },
     ],
     valuePropositions: [
       {
         title: "Enhanced Clinical Outcomes",
-        description: "AxonHIS optimizes clinical workflows and decision-making processes, leading to improved patient outcomes and reduced medical errors through systematic excellence.",
-        image: "/assets/new-products-1/his/c-1.png"
+        description:
+          "AxonHIS optimizes clinical workflows and decision-making processes, leading to improved patient outcomes and reduced medical errors through systematic excellence.",
+        image: "/assets/new-products-1/his/c-1.png",
       },
       {
         title: "Improved Operational Efficiency",
-        description: "Streamlined processes and automated workflows reduce administrative burden, allowing healthcare professionals to focus more time on direct patient care.",
-        image: "/assets/new-products-1/his/c-2.png"
+        description:
+          "Streamlined processes and automated workflows reduce administrative burden, allowing healthcare professionals to focus more time on direct patient care.",
+        image: "/assets/new-products-1/his/c-2.png",
       },
       {
         title: "Data-Driven Clinical Excellence",
-        description: "Advanced analytics and reporting provide actionable insights to continuously improve clinical practices and maintain the highest standards of care.",
-        image: "/assets/new-products-1/his/c-3.png"
-      }
+        description:
+          "Advanced analytics and reporting provide actionable insights to continuously improve clinical practices and maintain the highest standards of care.",
+        image: "/assets/new-products-1/his/c-3.png",
+      },
     ],
     ctaText: "Request Demo",
-    ctaSubtext: "Join the AxonHIS Network and revolutionize your healthcare delivery with advanced clinical management solutions.",
+    ctaSubtext:
+      "Join the AxonHIS Network and revolutionize your healthcare delivery with advanced clinical management solutions.",
     calendlyUrl: "https://zcal.co/i/6mWi0QPB?embed=1&embedType=iframe",
-    shortPunchLine: "Total Hospital Intelligence in One Platform (50+ Modules)"
+    shortPunchLine: "Total Hospital Intelligence in One Platform (50+ Modules)",
   },
   {
     id: 3,
@@ -156,74 +176,88 @@ export const products: Product[] = [
     heroImage: "/assets/new-products/AxonMD.png",
     platformImage: "/assets/platform-images/axonmd.png",
     aiImage: "/assets/ai-images/md.png",
-    videoUrl: "https://www.youtube.com/shorts/KUNycXG36fA", 
+    videoUrl: "https://www.youtube.com/shorts/KUNycXG36fA",
     testimonialUrl: "https://www.youtube.com/embed/AQmvWNxE-XM",
-    description: "Clinic Management Made Simple - Unify your in-clinic and virtual practice with a complete, ABDM-compliant EMR. Cut documentation time with powerful voice AI and smart tools.",
-    shortDescription: "Complete clinic management solution with integrated patient scheduling and records.",
+    description:
+      "Clinic Management Made Simple - Unify your in-clinic and virtual practice with a complete, ABDM-compliant EMR. Cut documentation time with powerful voice AI and smart tools.",
+    shortDescription:
+      "Complete clinic management solution with integrated patient scheduling and records.",
     subtitle: "Clinic Management Made Simple",
     features: [
       {
         title: "Comprehensive EMR",
-        description: "AxonMD is more than just a casesheet; it's a complete clinical operating system. Manage the entire patient journey from appointment scheduling and billing to prescriptions and secure digital health records. Run your entire practice on one powerful, integrated platform.",
-        image: "/assets/new-products-1/scribe/1.jpg"
+        description:
+          "AxonMD is more than just a casesheet; it's a complete clinical operating system. Manage the entire patient journey from appointment scheduling and billing to prescriptions and secure digital health records. Run your entire practice on one powerful, integrated platform.",
+        image: "/assets/new-products-1/scribe/1.jpg",
       },
       {
         title: "Axona: Voice AI Assistant",
-        description: "Experience a truly hands-free clinic with Axona. Dictate case notes, write prescriptions, and navigate the entire platform using simple voice commands. From scheduling to referrals, your voice is now your most powerful tool for clinical efficiency.",
-        image: "/assets/new-products-1/scribe/2.jpg"
+        description:
+          "Experience a truly hands-free clinic with Axona. Dictate case notes, write prescriptions, and navigate the entire platform using simple voice commands. From scheduling to referrals, your voice is now your most powerful tool for clinical efficiency.",
+        image: "/assets/new-products-1/scribe/2.jpg",
       },
       {
         title: "CliniTalk - Unified & Multilingual Consultations",
-        description: "Manage your practice from one dashboard for both in-clinic and virtual care. Break language barriers with CliniTalk, offering real-time multilingual assistance during secure video calls. Deliver seamless, accessible care to every patient, regardless of location or language.",
-        image: "/assets/new-products-1/scribe/3.jpg"
+        description:
+          "Manage your practice from one dashboard for both in-clinic and virtual care. Break language barriers with CliniTalk, offering real-time multilingual assistance during secure video calls. Deliver seamless, accessible care to every patient, regardless of location or language.",
+        image: "/assets/new-products-1/scribe/3.jpg",
       },
       {
         title: "Smart Buttons",
-        description: "Smart History, Smart order set, smart examinations - intelligent shortcuts that populate forms automatically, reducing documentation time by 70% while ensuring comprehensive and accurate records.",
-        image: "/assets/new-products-1/scribe/4.jpg"
+        description:
+          "Smart History, Smart order set, smart examinations - intelligent shortcuts that populate forms automatically, reducing documentation time by 70% while ensuring comprehensive and accurate records.",
+        image: "/assets/new-products-1/scribe/4.jpg",
       },
       {
         title: "Advanced Medication Management",
-        description: "Enhance patient safety and adherence with intelligent prescription tools. The system automatically checks for drug-drug interactions and sends automated refill reminders to patients. Improve treatment outcomes through superior medication compliance.",
-        image: "/assets/new-products-1/scribe/scribe-1.png"
+        description:
+          "Enhance patient safety and adherence with intelligent prescription tools. The system automatically checks for drug-drug interactions and sends automated refill reminders to patients. Improve treatment outcomes through superior medication compliance.",
+        image: "/assets/new-products-1/scribe/scribe-1.png",
       },
       {
         title: "Health ATM Integration",
-        description: "Instantly access patient vitals captured from integrated health kiosks. Key metrics like BP, SpO2, and temperature are auto-synced to your dashboard and the patient's record. Make data-driven decisions with zero manual entry.",
-        image: "/assets/new-products-1/scribe/scribe-1.png"
+        description:
+          "Instantly access patient vitals captured from integrated health kiosks. Key metrics like BP, SpO2, and temperature are auto-synced to your dashboard and the patient's record. Make data-driven decisions with zero manual entry.",
+        image: "/assets/new-products-1/scribe/scribe-1.png",
       },
       {
         title: "Seamless Specialist Referrals",
-        description: "Easily refer patients to specialists within your network directly from the EMR. The system allows you to track the reason for referral and receive feedback from the consulting provider. Build a collaborative and efficient care ecosystem.",
-        image: "/assets/new-products-1/scribe/scribe-1.png"
+        description:
+          "Easily refer patients to specialists within your network directly from the EMR. The system allows you to track the reason for referral and receive feedback from the consulting provider. Build a collaborative and efficient care ecosystem.",
+        image: "/assets/new-products-1/scribe/scribe-1.png",
       },
       {
         title: "Personalization",
-        description: "Personalize the platform to match your workflow. Create custom-branded patient reports, build pre-defined 'Order Sets' for common conditions, and save favourite prescriptions. Work faster and more consistently with tools designed for you.",
-        image: "/assets/new-products-1/scribe/scribe-1.png"
-      }
+        description:
+          "Personalize the platform to match your workflow. Create custom-branded patient reports, build pre-defined 'Order Sets' for common conditions, and save favourite prescriptions. Work faster and more consistently with tools designed for you.",
+        image: "/assets/new-products-1/scribe/scribe-1.png",
+      },
     ],
     valuePropositions: [
       {
         title: "50% Time Savings",
-        description: "Cut documentation time by 50% with voice AI and smart automation tools, giving you more time to focus on patient care.",
-        image: "/assets/new-products-1/scribe/c-1.png"
+        description:
+          "Cut documentation time by 50% with voice AI and smart automation tools, giving you more time to focus on patient care.",
+        image: "/assets/new-products-1/scribe/c-1.png",
       },
       {
         title: "2x Patient Capacity",
-        description: "Scale up your practice and serve twice as many patients without compromising on care quality or work-life balance.",
-        image: "/assets/new-products-1/scribe/c-2.png"
+        description:
+          "Scale up your practice and serve twice as many patients without compromising on care quality or work-life balance.",
+        image: "/assets/new-products-1/scribe/c-2.png",
       },
       {
         title: "25% Cost Reduction",
-        description: "Reduce operational costs by 25% through streamlined workflows, reduced errors, and efficient resource utilization.",
-        image: "/assets/new-products-1/scribe/c-3.png"
-      }
+        description:
+          "Reduce operational costs by 25% through streamlined workflows, reduced errors, and efficient resource utilization.",
+        image: "/assets/new-products-1/scribe/c-3.png",
+      },
     ],
     ctaText: "Start Your Journey",
-    ctaSubtext: "Join thousands of doctors who have transformed their practice with AxonMD.",
+    ctaSubtext:
+      "Join thousands of doctors who have transformed their practice with AxonMD.",
     calendlyUrl: "https://zcal.co/i/oQCFdJIS?embed=1&embedType=iframe",
-    shortPunchLine: "Clinic Management Made Simple"
+    shortPunchLine: "Clinic Management Made Simple",
   },
   {
     id: 4,
@@ -236,52 +270,62 @@ export const products: Product[] = [
     heroImage: "/assets/new-products-1/healthhub/HEALTHHUB.png",
     videoUrl: "https://youtu.be/RHBiso6sE_g?si=X7Gi9oidF7tWScMm",
     testimonialUrl: "https://www.youtube.com/embed/2OPJaJoi0Gs",
-    description: "24/7 healthcare access platform providing round-the-clock medical support and consultations.",
-    shortDescription: "24/7 healthcare access platform providing round-the-clock medical support and consultations.",
+    description:
+      "24/7 healthcare access platform providing round-the-clock medical support and consultations.",
+    shortDescription:
+      "24/7 healthcare access platform providing round-the-clock medical support and consultations.",
     subtitle: "Healthcare That Never Sleeps",
     features: [
       {
         title: "Instant Smart Diagnostics",
-        description: "Do quick basic health checks and POCT tests on the spot — no queues, no hassle.",
-        image: "/assets/new-products-1/healthhub/healthhub-1.png"
+        description:
+          "Do quick basic health checks and POCT tests on the spot — no queues, no hassle.",
+        image: "/assets/new-products-1/healthhub/healthhub-1.png",
       },
       {
         title: "Plug into Expert Help",
-        description: "Seamlessly links patients to AxonDoc for medical guidance follow-ups with real time doctor.",
-        image: "/assets/new-products-1/healthhub/healthhub-2.png"
+        description:
+          "Seamlessly links patients to AxonDoc for medical guidance follow-ups with real time doctor.",
+        image: "/assets/new-products-1/healthhub/healthhub-2.png",
       },
       {
         title: "Book & Connect on the Go",
-        description: "Patients can self-book appointments and jump straight into secure video calls with doctors — anytime, anywhere.",
-        image: "/assets/new-products-1/healthhub/healthhub-3.png"
+        description:
+          "Patients can self-book appointments and jump straight into secure video calls with doctors — anytime, anywhere.",
+        image: "/assets/new-products-1/healthhub/healthhub-3.png",
       },
       {
         title: "Vitals Sync & Care Continuity",
-        description: "All readings and reports flow directly into the patient’s health record — so doctors see the full picture, instantly.",
-        image: "/assets/new-products-1/healthhub/healthhub-4.png"
-      }
+        description:
+          "All readings and reports flow directly into the patient’s health record — so doctors see the full picture, instantly.",
+        image: "/assets/new-products-1/healthhub/healthhub-4.png",
+      },
     ],
     valuePropositions: [
       {
         title: "Access Health, Anytime",
-        description: "Get instant tests and vitals without waiting in line — stay ahead of problems, easily.",
-        image: "/assets/new-products-1/healthhub/c-1.png"
+        description:
+          "Get instant tests and vitals without waiting in line — stay ahead of problems, easily.",
+        image: "/assets/new-products-1/healthhub/c-1.png",
       },
       {
         title: "See Doctors, Faster",
-        description: "Book your own slot and connect by video in minutes — no calls, no confusion.",
-        image: "/assets/new-products-1/healthhub/c-2.png"
+        description:
+          "Book your own slot and connect by video in minutes — no calls, no confusion.",
+        image: "/assets/new-products-1/healthhub/c-2.png",
       },
       {
         title: "One Hub, Total Care",
-        description: "From quick checks to live consults and follow-ups — everything is linked in one smart system.",
-        image: "/assets/new-products-1/healthhub/c-3.png"
-      }
+        description:
+          "From quick checks to live consults and follow-ups — everything is linked in one smart system.",
+        image: "/assets/new-products-1/healthhub/c-3.png",
+      },
     ],
     ctaText: "Request Demo",
-    ctaSubtext: "Join the AxonHealthHub Network and provide your patients with round-the-clock access to quality healthcare services.",
+    ctaSubtext:
+      "Join the AxonHealthHub Network and provide your patients with round-the-clock access to quality healthcare services.",
     calendlyUrl: "https://zcal.co/i/pooei9_f?embed=1&embedType=iframe",
-    shortPunchLine: "Complete Healthcare in Your Community"
+    shortPunchLine: "Complete Healthcare in Your Community",
   },
   {
     id: 5,
@@ -293,110 +337,130 @@ export const products: Product[] = [
     platformImage: "/assets/platform-images/axonlab.png",
     videoUrl: "https://youtu.be/cOdfvKDkzM8",
     testimonialUrl: "https://www.youtube.com/embed/2OPJaJoi0Gs",
-    description: "Laboratory information management system for seamless diagnostic workflows.",
-    shortDescription: "Laboratory information management system for seamless diagnostic workflows.",
+    description:
+      "Laboratory information management system for seamless diagnostic workflows.",
+    shortDescription:
+      "Laboratory information management system for seamless diagnostic workflows.",
     subtitle: "Connecting Diagnostics, Delivering Results",
     features: [
       {
         title: "Smart Test Management",
-        description: "Dynamic test catalog with configurable pricing, TAT, reference ranges, and sample rules, customized per specialty",
-        image: "/assets/new-products-1/lab/lab-1.png"
+        description:
+          "Dynamic test catalog with configurable pricing, TAT, reference ranges, and sample rules, customized per specialty",
+        image: "/assets/new-products-1/lab/lab-1.png",
       },
       {
         title: "Insightful Dashboards and Reports",
-        description: "Track TAT, test volumes, and KPIs with real-time MIS and department-wise compliance reports.",
-        image: "/assets/new-products-1/lab/lab-2.png"
+        description:
+          "Track TAT, test volumes, and KPIs with real-time MIS and department-wise compliance reports.",
+        image: "/assets/new-products-1/lab/lab-2.png",
       },
       {
         title: "End-to-End Sample Intelligence",
-        description: "Barcode-based Lifecycle Tracking from collection to disposal, Bi-directional Analyzer Integration ensures zero errors and full traceability.",
-        image: "/assets/new-products-1/lab/lab-3.png"
+        description:
+          "Barcode-based Lifecycle Tracking from collection to disposal, Bi-directional Analyzer Integration ensures zero errors and full traceability.",
+        image: "/assets/new-products-1/lab/lab-3.png",
       },
       {
         title: "Specialty Driven Lab workflow",
-        description: "Dedicated modules for Histopathology and Microbiology, covering grossing, slide tracking, antibiograms, and digital reporting for accuracy and compliance.",
-        image: "/assets/new-products-1/lab/lab-4.png"
-      }
+        description:
+          "Dedicated modules for Histopathology and Microbiology, covering grossing, slide tracking, antibiograms, and digital reporting for accuracy and compliance.",
+        image: "/assets/new-products-1/lab/lab-4.png",
+      },
     ],
     valuePropositions: [
       {
         title: "Improved Test Accuracy",
-        description: "AxonLab reduces manual errors and ensures consistent quality through automated processes and comprehensive quality control measures.",
-        image: "/assets/new-products-1/lab/c-1.png"
+        description:
+          "AxonLab reduces manual errors and ensures consistent quality through automated processes and comprehensive quality control measures.",
+        image: "/assets/new-products-1/lab/c-1.png",
       },
       {
         title: "Faster Turnaround Times",
-        description: "Optimized workflows and automated processes significantly reduce test processing times, delivering results faster to healthcare providers.",
-        image: "/assets/new-products-1/lab/c-2.png"
+        description:
+          "Optimized workflows and automated processes significantly reduce test processing times, delivering results faster to healthcare providers.",
+        image: "/assets/new-products-1/lab/c-2.png",
       },
       {
         title: "Enhanced Laboratory Efficiency",
-        description: "Streamlined operations, resource optimization, and improved workflow management increase overall laboratory productivity and efficiency.",
-        image: "/assets/new-products-1/lab/c-3.png"
-      }
+        description:
+          "Streamlined operations, resource optimization, and improved workflow management increase overall laboratory productivity and efficiency.",
+        image: "/assets/new-products-1/lab/c-3.png",
+      },
     ],
     ctaText: "Request Demo",
-    ctaSubtext: "Join the AxonLab Network and enhance your diagnostic capabilities with advanced laboratory management solutions.",
+    ctaSubtext:
+      "Join the AxonLab Network and enhance your diagnostic capabilities with advanced laboratory management solutions.",
     calendlyUrl: "https://zcal.co/i/e42rVkXo?embed=1&embedType=iframe",
-    shortPunchLine: "Empowering Doctors, Enhancing Care"
+    shortPunchLine: "Empowering Doctors, Enhancing Care",
   },
-  
+
   {
     id: 6,
     name: "AxonSurge",
-    slug: "axonsurge", 
+    slug: "axonsurge",
     logo: "/logos/AxonSurge.png",
     image: "/assets/ourProducts/SurgeHub.png",
     heroImage: "/assets/new-products/AxonSurge.png",
     platformImage: "/assets/platform-images/axonsurge.png",
     videoUrl: "https://www.youtube.com/watch?v=u_xkIe_htWI",
     testimonialUrl: "https://www.youtube.com/embed/qrCEQBEdrC4",
-    description: "Surgical workflow management platform for operating room efficiency and patient safety.",
-    shortDescription: "Surgical workflow management platform for operating room efficiency and patient safety.",
+    description:
+      "Surgical workflow management platform for operating room efficiency and patient safety.",
+    shortDescription:
+      "Surgical workflow management platform for operating room efficiency and patient safety.",
     subtitle: "Transforming Operating Theatre Management",
     features: [
       {
         title: "Smart OT Scheduling",
-        description: "Centralized dashboard prevents OT clashes and supports emergency overrides. Real-time availability of surgeons, slots, and equipment—streamlined for efficiency.",
-        image: "/assets/new-products-1/surge/surge-1.png"
+        description:
+          "Centralized dashboard prevents OT clashes and supports emergency overrides. Real-time availability of surgeons, slots, and equipment—streamlined for efficiency.",
+        image: "/assets/new-products-1/surge/surge-1.png",
       },
       {
         title: "Instrument & Supply Intelligence",
-        description: "Track trays, implants, and consumables using barcodes/RFID. Get expiry alerts and auto-deduct stock from inventory based on OT usage.",
-        image: "/assets/new-products-1/surge/surge-2.png"
+        description:
+          "Track trays, implants, and consumables using barcodes/RFID. Get expiry alerts and auto-deduct stock from inventory based on OT usage.",
+        image: "/assets/new-products-1/surge/surge-2.png",
       },
       {
         title: "Surgical Workflow Automation",
-        description: "Digitized pre, intra, and post-op workflows with WHO checklists, real-time logging, and multimedia documentation for safer, standardized surgeries.",
-        image: "/assets/new-products-1/surge/surge-3.png"
+        description:
+          "Digitized pre, intra, and post-op workflows with WHO checklists, real-time logging, and multimedia documentation for safer, standardized surgeries.",
+        image: "/assets/new-products-1/surge/surge-3.png",
       },
       {
         title: "Surgical Outcomes Dashboard",
-        description: "Monitor KPIs like blood loss, complications, and OT time. Visualize outcomes through real-time dashboards and attach photos/videos for complete records.",
-        image: "/assets/new-products-1/surge/surge-4.png"
-      }
+        description:
+          "Monitor KPIs like blood loss, complications, and OT time. Visualize outcomes through real-time dashboards and attach photos/videos for complete records.",
+        image: "/assets/new-products-1/surge/surge-4.png",
+      },
     ],
     valuePropositions: [
       {
         title: "Improved Surgical Efficiency",
-        description: "AxonSurge optimises resource utilisation, reduces operating room downtime, and allows hospitals to perform more procedures.",
-        image: "/assets/new-products-1/surge/c-1.png"
+        description:
+          "AxonSurge optimises resource utilisation, reduces operating room downtime, and allows hospitals to perform more procedures.",
+        image: "/assets/new-products-1/surge/c-1.png",
       },
       {
         title: "Enhanced Patient Care",
-        description: "Streamlined workflows and focus on safety protocols contribute to better patient outcomes and reduced complications.",
-        image: "/assets/new-products-1/surge/c-2.png"
+        description:
+          "Streamlined workflows and focus on safety protocols contribute to better patient outcomes and reduced complications.",
+        image: "/assets/new-products-1/surge/c-2.png",
       },
       {
         title: "Data-Driven Decision Making",
-        description: "AxonSurge provides actionable insights to continuously improve surgical processes and patient care delivery.",
-        image: "/assets/image2.png"
-      }
+        description:
+          "AxonSurge provides actionable insights to continuously improve surgical processes and patient care delivery.",
+        image: "/assets/image2.png",
+      },
     ],
     ctaText: "Request Demo",
-    ctaSubtext: "Transform your operating theatre management with AxonSurge's advanced surgical workflow solutions.",
+    ctaSubtext:
+      "Transform your operating theatre management with AxonSurge's advanced surgical workflow solutions.",
     calendlyUrl: "https://zcal.co/i/NB3chiD3?embed=1&embedType=iframe",
-    shortPunchLine: "Transforming Operating Theatre Management"
+    shortPunchLine: "Transforming Operating Theatre Management",
   },
   {
     id: 7,
@@ -414,345 +478,460 @@ export const products: Product[] = [
     features: [
       {
         title: "E-Indents to billing with audit-ready workflows",
-        description: "Digitally manage indents, issues, and billing while ensuring every transaction is traceable and compliant.",
-        image: "/assets/new-products-1/pharma/pharma-1.png"
+        description:
+          "Digitally manage indents, issues, and billing while ensuring every transaction is traceable and compliant.",
+        image: "/assets/new-products-1/pharma/pharma-1.png",
       },
       {
         title: "Digital drug registers for narcotics",
-        description: "Ensure secure, compliant handling of controlled substances with easy-to-maintain digital registers.",
-        image: "/assets/new-products-1/pharma/pharma-2.png"
+        description:
+          "Ensure secure, compliant handling of controlled substances with easy-to-maintain digital registers.",
+        image: "/assets/new-products-1/pharma/pharma-2.png",
       },
       {
-        title: "ABC/VED stock classification with smart alerts & refill triggers",
-        description: "Prioritize inventory effectively with automated stock classification, low-stock alerts, and intelligent reordering.",
-        image: "/assets/new-products-1/pharma/pharma-3.png"
+        title:
+          "ABC/VED stock classification with smart alerts & refill triggers",
+        description:
+          "Prioritize inventory effectively with automated stock classification, low-stock alerts, and intelligent reordering.",
+        image: "/assets/new-products-1/pharma/pharma-3.png",
       },
       {
-        title: "Barcode dispensing with FEFO expiry tracking & multi-store visibility",
-        description: "Improve safety and efficiency through barcode-based dispensing, real-time expiry monitoring, and oversight across all pharmacy outlets.",
-        image: "/assets/new-products-1/pharma/pharma-4.png"
-      }
+        title:
+          "Barcode dispensing with FEFO expiry tracking & multi-store visibility",
+        description:
+          "Improve safety and efficiency through barcode-based dispensing, real-time expiry monitoring, and oversight across all pharmacy outlets.",
+        image: "/assets/new-products-1/pharma/pharma-4.png",
+      },
     ],
     valuePropositions: [
       {
         title: "Enhanced patient safety and medication accuracy",
-        description: "Barcode dispensing and FEFO tracking minimize errors and prevent dispensing expired or incorrect drugs.",
-        image: "/assets/new-products-1/lab/c-1.png"
+        description:
+          "Barcode dispensing and FEFO tracking minimize errors and prevent dispensing expired or incorrect drugs.",
+        image: "/assets/new-products-1/lab/c-1.png",
       },
       {
         title: "Reduced stockouts and wastage",
-        description: "Automated classification, alerts, and refill triggers ensure optimal stock levels and reduce expired stock loss.",
-        image: "/assets/new-products-1/lab/c-2.png"
+        description:
+          "Automated classification, alerts, and refill triggers ensure optimal stock levels and reduce expired stock loss.",
+        image: "/assets/new-products-1/lab/c-2.png",
       },
       {
         title: "Simplified compliance and audit readiness",
-        description: "Digital registers, traceable workflows, and detailed logs make audits easy and stress-free.",
-        image: "/assets/new-products-1/lab/c-3.png"
-      }
+        description:
+          "Digital registers, traceable workflows, and detailed logs make audits easy and stress-free.",
+        image: "/assets/new-products-1/lab/c-3.png",
+      },
     ],
     ctaText: "Request Demo",
-    ctaSubtext: "Join the AxonPharma Network and provide your patients with instant access to quality healthcare services.",
+    ctaSubtext:
+      "Join the AxonPharma Network and provide your patients with instant access to quality healthcare services.",
     calendlyUrl: "https://zcal.co/i/JEV0gUEV?embed=1&embedType=iframe",
-    shortPunchLine: "Smarter Pharmacy, Safer Patients"
+    shortPunchLine: "Smarter Pharmacy, Safer Patients",
   },
-  
-  
+
   {
-  "id": 9,
-  "name": "AxonDoc",
-  "slug": "axondoc",
-  "logo": "/logos/AxonDoc.png",
-  "image": "/assets/ourProducts/AxonaDocImage.png",
-  "platformImage": "/assets/platform-images/axondoc.png",
-  "aiImage": "/assets/ai-images/axondoc.png",
-  "heroImage": "/assets/new-products-1/doc/DOC.png",
-  "videoUrl": "https://youtu.be/glvGIGOLSlg",
-  "testimonialUrl": "https://www.youtube.com/embed/abc123doc",
-  "description": "AxonDoc — Listening to patients, simplifying for doctors.",
-  "shortDescription": "Instant Expertise, Infinite Care.",
-  "subtitle": "Instant Expertise, Infinite Care",
-  "features": [
-    {
-      "title": "AI Triage & Guidance",
-      "description": "Smart conversational flows handle early questions, suggest next steps, and ease doctor's workload.",
-      "image": "/assets/new-products-1/doc/doc-1.png"
-    },
-    {
-      "title": "Regional Language Support",
-      "description": "Patients chat naturally in their language — AxonDoc understands and translates for clear, inclusive care.",
-      "image": "/assets/new-products-1/doc/doc-2.png"
-    },
-    {
-      "title": "Voice-to-Case in Seconds",
-      "description": "AxonDoc is always on — supporting patients and providers anytime, anywhere.Captures patient symptoms by voice, auto-summarizes them, and fills the casesheet — no typing needed.",
-      "image": "/assets/new-products-1/doc/doc-3.png"
-    },
-    {
-      "title": "Integrated into AxonMD and AxonHealthHub",
-      "description": "Works hand-in-hand with your EMR and Health Hub tools — boosting doctor efficiency without replacing human care.",
-      "image": "/assets/new-products-1/doc/doc-4.png"
-    }
-  ],
-  "valuePropositions": [
-    {
-      "title": "Less Manual Work",
-      "description": "Automates routine history-taking and frees doctors for real medical decisions.",
-      "image": "/assets/new-products-1/doc/c-1.png"
-    },
-    {
-      "title": "See More Patients, Smoothly",
-      "description": " Faster triage and summaries mean better flow and shorter waiting times.",
-      "image": "/assets/new-products-1/doc/c-2.png"
-    },
-    {
-      "title": "Serve All Communities",
-      "description": "Breaks language barriers and makes smart AI care accessible for everyone.",
-      "image": "/assets/new-products-1/doc/c-3.png"
-    }
-  ],
-  "ctaText": "Try AxonDoc",
-  "ctaSubtext": "Experience the future of healthcare documentation today.",
-  "calendlyUrl": "https://zcal.co/i/0WuOFyzD?embed=1&embedType=iframe",
-  "shortPunchLine": "Instant Expertise, Infinite Care"
-},
-{
-  "id": 10,
-  "name": "AxonBuddy",
-  "slug": "axonbuddy",
-  "logo": "/logos/AxonBuddy.png",
-  "image": "/assets/ourProducts/AxonaBuddyImage.png",
-  "heroImage": "/assets/new-products-1/buddy/BUDDY.png",
-  "platformImage": "/assets/platform-images/axonbuddy.png",
-  "aiImage": "/assets/ai-images/buddy.png",
-  "videoUrl": "https://youtube.com/shorts/2bSA6Yha6nM",
-  "testimonialUrl": "https://www.youtube.com/embed/abc123buddy",
-  "description": "24/7 Health Wisdom at Your Service",
-  "shortDescription": "Always by your side, AxonBuddy offers intelligent, multilingual health guidance tailored to your symptoms, history, and needs — anytime, anywhere.",
-  "subtitle": "24/7 Health Wisdom at Your Service",
-  "features": [
-    {
-      "title": "24/7 personalized health companion",
-      "description": "Always available to guide users with reliable health information and support, day or night.",
-      "image": "/assets/new-products-1/buddy/buddy-1.png"
-    },
-    {
-      "title": "Customized advice based on medical history",
-      "description": "Provides recommendations and guidance tailored to each user’s health records and conditions.",
-      "image": "/assets/new-products-1/buddy/buddy-2.png"
-    },
-    {
-      "title": "Symptom-based specialty consultation suggestion",
-      "description": "Smart algorithms suggest when and which specialist to consult — helping users seek timely expert care.",
-      "image": "/assets/new-products-1/buddy/buddy-3.png"
-    },
-    {
-      "title": "Multilingual, conversational health concierge",
-      "description": "Engages users in natural, friendly dialogue in their preferred language for better understanding and comfort.",
-      "image": "/assets/new-products-1/buddy/buddy-4.png"
-    }
-  ],
-  "valuePropositions": [
-    {
-      "title": "Empowers users with instant, trusted guidance",
-      "description": "AxonBuddy helps people make informed health decisions anytime, reducing anxiety and confusion.",
-      "image": "/assets/new-products-1/buddy/c-1.png"
-    },
-    {
-      "title": "Drives timely access to the right care",
-      "description": "By flagging the need for specialty consultations, it helps prevent delays in diagnosis and treatment.",
-      "image": "/assets/new-products-1/buddy/c-2.png"
-    },
-    {
-      "title": "Promotes inclusivity and user comfort",
-      "description": "Conversational, multilingual support ensures everyone can access advice in a way that feels natural and respectful.",
-      "image": "/assets/new-products-1/buddy/c-3.png"
-    }
-  ],
-  "ctaText": "Download AxonBuddy",
-  "ctaSubtext": "Stay on top of your health with your new digital buddy.",
-  "calendlyUrl": "https://zcal.co/i/Ne5KB8r1?embed=1&embedType=iframe",
-  "shortPunchLine": "24/7 Health Wisdom at Your Service"
-},
-{
-  "id": 11,
-  "name": "AxonScribe",
-  "slug": "axonscribe",
-  "logo": "/logos/AxonScribe.png",
-  "image": "/assets/ourProducts/AxonaScribeImage.png",
-  "platformImage": "/assets/platform-images/axonscribe.png",
-  "aiImage": "/assets/ai-images/scribe.png",
-  "heroImage": "/assets/new-products-1/scribe/SCRIBE.png",
-  "videoUrl": "https://www.youtube.com/watch?v=PM9LlDn4S40",
-  "testimonialUrl": "https://www.youtube.com/embed/abc123scribe",
-  "description": "More time for meaningful interactions, shorter wait times, and improved satisfaction.",
-  "shortDescription": "Where Conversations Become Care Records",
-  "subtitle": "Patient-Centered Care",
-  "features": [
-    {
-      "title": "Voice-to-Text Transcription",
-      "description": "Capture consultations naturally with real-time speech-to-text that recognizes medical terminology.",
-      "image": "/assets/new-products-1/scribe/scribe-1.png"
-    },
-    {
-      "title": "Medical Terminology Recognition",
-      "description": "Ensure accuracy with AI-trained models built to understand healthcare-specific vocabulary.",
-      "image": "/assets/new-products-1/scribe/scribe-1.png"
-    },
-    {
-      "title": "Template Auto-Population",
-      "description": "Speed up documentation with smart templates for SOAP notes, referral letters, discharge summaries, procedure notes, and insurance forms.",
-      "image": "/assets/new-products-1/scribe/scribe-1.png"
-    },
-    {
-      "title": "EMR Integration & GDPR Compliance",
-      "description": "Securely connect with your existing EMR system while maintaining full compliance with GDPR standards.",
-      "image": "/assets/new-products-1/scribe/scribe-1.png"
-    }
-  ],
-  "valuePropositions": [
-    {
-      "title": "Streamlined Documentation & Efficiency",
-      "description": "One-click templates and AI transcription drastically cut admin time, so you can see more patients without feeling rushed.",
-      "image": "/assets/new-products-1/scribe/c-1.png"
-    },
-    {
-      "title": "Reliable Accuracy in Clinical Notes",
-      "description": "Eliminate errors and standardize communication across SOAP notes, referrals, and insurance documentation, boosting trust with patients and referrers.",
-      "image": "/assets/new-products-1/scribe/c-2.png"
-    },
-    {
-      "title": "Enhanced Patient Experience",
-      "description": "By streamlining workflows, reducing wait times, and enabling more focused doctor-patient interaction, AxonScribe helps you deliver care that patients truly value.",
-      "image": "/assets/new-products-1/scribe/c-3.png"
-    }
-  ],
-  "ctaText": "Book Demo",
-  "ctaSubtext": "Revolutionize your consultation process with AxonScribe.",
-  // "redirectUrl": "https://axonscribe.axonichealth.com",
-  "calendlyUrl": "https://zcal.co/i/sea8eyUB?embed=1&embedType=iframe",
-  "shortPunchLine": "Where Conversations Become Care Records"
-},
-{
-  "id": 12,
-  "name": "AxonA",
-  "slug": "axona",
-  "logo": "/logos/AxonA.png",
-  "image": "/assets/ourProducts/AxonaAImage.png",
-  "platformImage": "/assets/platform-images/axona.png",
-  "aiImage": "/assets/ai-images/axona.png",
-  "heroImage": "/assets/new-products-1/axona/AXONA.png",
-  "videoUrl": "https://youtu.be/KmalK7AXfnE?si=S2FFuGH7nWfEELsX",
-  "testimonialUrl": "https://www.youtube.com/embed/abc123axa",
-  "description": "Ambient Scribe, your Intelligent Clinical Associate, who makes you a Superdoctor ",
-  "shortDescription": "Ambient Scribe, your Intelligent Clinical Associate, who makes you a Superdoctor ",
-  "subtitle": "Redefining Healthcare Intelligence",
-  "features": [
-    {
-      "title": "One-click Smart Buttons for Case Entry",
-      "description": "Quickly populate casesheets with customizable, condition-specific templates — saving time and ensuring thorough documentation.",
-      "image": "/assets/new-products-1/axona/axona-1.png"
-    },
-    {
-      "title": "Hands-free Consultation Mode",
-      "description": "Enable voice-driven, AI-supported transcription and record-keeping — no typing, no distraction.",
-      "image": "/assets/new-products-1/axona/axona-2.png"
-    },
-    {
-      "title": "Automated GP Letter Generation",
-      "description": "Instantly create accurate, professional GP referral and update letters using AI-powered templates.",
-      "image": "/assets/new-products-1/axona/axona-3.png"
-    },
-    {
-      "title": "AI Decision Support & Alerts",
-      "description": "Get real-time suggestions, reminders, and safety alerts during consultation — helping you deliver safer, smarter care.",
-      "image": "/assets/new-products-1/axona/axona-4.png"
-    }
-  ],
-  "valuePropositions": [
-    {
-      "title": "Faster documentation, higher throughput",
-      "description": "One-click smart buttons, automated GP letters, and hands-free consultation tools cut admin time dramatically — so you can see more patients without feeling rushed or overworked.",
-      "image": "/assets/new-products-1/axona/c-1.png"
-    },
-    {
-      "title": "Consistent accuracy and quality of care",
-      "description": "AxonA ensures complete, error-free records and standardized communication — boosting compliance, reducing errors, and enhancing trust with patients and referrers.",
-      "image": "/assets/new-products-1/axona/c-2.png"
-    },
-    {
-      "title": "Better patient experience, greater satisfaction",
-      "description": "With streamlined visits, shorter wait times, and more focused doctor-patient interaction, AxonA helps you deliver care that patients truly value and remember.",
-      "image": "/assets/new-products-1/axona/c-3.png"
-    }
-  ],
-  "ctaText": "Explore AxonA",
-  "ctaSubtext": "Turn your data into action with healthcare intelligence.",
-  "calendlyUrl": "https://zcal.co/i/ij8u5mRT?embed=1&embedType=iframe",
-  "shortPunchLine": "Your Intelligent Clinical Associate makes you a Superdoctor"
-},
-{
-  "id": 13,
-  "name": "AxonLife",
-  "slug": "axonlife",
-  "logo": "/logos/AxonLife.png",
-  "image": "/assets/ourProducts/AxonaLifeImage.png",
-  "platformImage": "/assets/platform-images/axonlife.png",
-  "heroImage": "/assets/new-products/AxonLife.png",
-  "videoUrl": "https://www.youtube.com/shorts/abc123life",
-  "testimonialUrl": "https://www.youtube.com/embed/abc123life",
-  "description": "Nurturing Dreams Into Reality",
-  "shortDescription": "Nurturing Dreams Into Reality",
-  "subtitle": "Nurturing Dreams Into Reality",
-  features: [
-    {
-      title: "End-to-End Fertility Journey Management –",
-      description: "From first consultation to embryo transfer, everything in one platform.",
-      image: "/assets/new-products-1/life/life-1.png"
-    },
-    {
-      title: "Advanced Embryology & Cryopreservation Tools –",
-      description: "Professional-grade lab and storage management made simple.",
-      image: "/assets/new-products-1/life/life-2.png"
-    },
-    {
-      title: "Seamless Multi-Clinic & Partner Tracking –",
-      description: "Unified records for couples across multiple locations.",
-      image: "/assets/new-products-1/life/life-3.png"
-    },
-    {
-      title: "Smart Operations with Compliance & Security –",
-      description: "Automated scheduling, billing, and HIPAA-ready data protection.",
-      image: "/assets/new-products-1/life/life-4.png"
-    },
-  ],
-  valuePropositions: [
-    {
-      title: "Seamless Fertility Journey",
-      description: "Manage every step from first consultation to embryo transfer in one integrated platform.",
-      image: "/assets/new-products-1/life/c-1.png"
-    },
-    {
-      title: "Advanced Embryology & Andrology Tools",
-      description: "Professional-grade lab management tailored for reproductive medicine.",
-      image: "/assets/new-products-1/life/c-2.png"
-    },
-    {
-      title: "Scalable, Secure & Compliant",
-      description: "HIPAA-ready system designed for single clinics to multi-branch fertility networks.",
-      image: "/assets/new-products-1/life/c-3.png"
-    }
-  ],
-  "ctaText": "Download AxonLife",
-  "ctaSubtext": "Stay on top of your health with your new digital companion.",
-  "calendlyUrl": "https://zcal.co/i/OpaKY8_S?embed=1&embedType=iframe",
-  "shortPunchLine": "Nurturing Dreams Into Reality"
-}
-]
+    id: 9,
+    name: "AxonDoc",
+    slug: "axondoc",
+    logo: "/logos/AxonDoc.png",
+    image: "/assets/ourProducts/AxonaDocImage.png",
+    platformImage: "/assets/platform-images/axondoc.png",
+    aiImage: "/assets/ai-images/axondoc.png",
+    heroImage: "/assets/new-products-1/doc/DOC.png",
+    videoUrl: "https://youtu.be/glvGIGOLSlg",
+    testimonialUrl: "https://www.youtube.com/embed/abc123doc",
+    description: "AxonDoc — Listening to patients, simplifying for doctors.",
+    shortDescription: "Instant Expertise, Infinite Care.",
+    subtitle: "Instant Expertise, Infinite Care",
+    features: [
+      {
+        title: "AI Triage & Guidance",
+        description:
+          "Smart conversational flows handle early questions, suggest next steps, and ease doctor's workload.",
+        image: "/assets/new-products-1/doc/doc-1.png",
+      },
+      {
+        title: "Regional Language Support",
+        description:
+          "Patients chat naturally in their language — AxonDoc understands and translates for clear, inclusive care.",
+        image: "/assets/new-products-1/doc/doc-2.png",
+      },
+      {
+        title: "Voice-to-Case in Seconds",
+        description:
+          "AxonDoc is always on — supporting patients and providers anytime, anywhere.Captures patient symptoms by voice, auto-summarizes them, and fills the casesheet — no typing needed.",
+        image: "/assets/new-products-1/doc/doc-3.png",
+      },
+      {
+        title: "Integrated into AxonMD and AxonHealthHub",
+        description:
+          "Works hand-in-hand with your EMR and Health Hub tools — boosting doctor efficiency without replacing human care.",
+        image: "/assets/new-products-1/doc/doc-4.png",
+      },
+    ],
+    valuePropositions: [
+      {
+        title: "Less Manual Work",
+        description:
+          "Automates routine history-taking and frees doctors for real medical decisions.",
+        image: "/assets/new-products-1/doc/c-1.png",
+      },
+      {
+        title: "See More Patients, Smoothly",
+        description:
+          " Faster triage and summaries mean better flow and shorter waiting times.",
+        image: "/assets/new-products-1/doc/c-2.png",
+      },
+      {
+        title: "Serve All Communities",
+        description:
+          "Breaks language barriers and makes smart AI care accessible for everyone.",
+        image: "/assets/new-products-1/doc/c-3.png",
+      },
+    ],
+    ctaText: "Try AxonDoc",
+    ctaSubtext: "Experience the future of healthcare documentation today.",
+    calendlyUrl: "https://zcal.co/i/0WuOFyzD?embed=1&embedType=iframe",
+    shortPunchLine: "Instant Expertise, Infinite Care",
+  },
+  {
+    id: 10,
+    name: "AxonBuddy",
+    slug: "axonbuddy",
+    logo: "/logos/AxonBuddy.png",
+    image: "/assets/ourProducts/AxonaBuddyImage.png",
+    heroImage: "/assets/new-products-1/buddy/BUDDY.png",
+    platformImage: "/assets/platform-images/axonbuddy.png",
+    aiImage: "/assets/ai-images/buddy.png",
+    videoUrl: "https://youtube.com/shorts/2bSA6Yha6nM",
+    testimonialUrl: "https://www.youtube.com/embed/abc123buddy",
+    description: "24/7 Health Wisdom at Your Service",
+    shortDescription:
+      "Always by your side, AxonBuddy offers intelligent, multilingual health guidance tailored to your symptoms, history, and needs — anytime, anywhere.",
+    subtitle: "24/7 Health Wisdom at Your Service",
+    features: [
+      {
+        title: "24/7 personalized health companion",
+        description:
+          "Always available to guide users with reliable health information and support, day or night.",
+        image: "/assets/new-products-1/buddy/buddy-1.png",
+      },
+      {
+        title: "Customized advice based on medical history",
+        description:
+          "Provides recommendations and guidance tailored to each user’s health records and conditions.",
+        image: "/assets/new-products-1/buddy/buddy-2.png",
+      },
+      {
+        title: "Symptom-based specialty consultation suggestion",
+        description:
+          "Smart algorithms suggest when and which specialist to consult — helping users seek timely expert care.",
+        image: "/assets/new-products-1/buddy/buddy-3.png",
+      },
+      {
+        title: "Multilingual, conversational health concierge",
+        description:
+          "Engages users in natural, friendly dialogue in their preferred language for better understanding and comfort.",
+        image: "/assets/new-products-1/buddy/buddy-4.png",
+      },
+    ],
+    valuePropositions: [
+      {
+        title: "Empowers users with instant, trusted guidance",
+        description:
+          "AxonBuddy helps people make informed health decisions anytime, reducing anxiety and confusion.",
+        image: "/assets/new-products-1/buddy/c-1.png",
+      },
+      {
+        title: "Drives timely access to the right care",
+        description:
+          "By flagging the need for specialty consultations, it helps prevent delays in diagnosis and treatment.",
+        image: "/assets/new-products-1/buddy/c-2.png",
+      },
+      {
+        title: "Promotes inclusivity and user comfort",
+        description:
+          "Conversational, multilingual support ensures everyone can access advice in a way that feels natural and respectful.",
+        image: "/assets/new-products-1/buddy/c-3.png",
+      },
+    ],
+    ctaText: "Download AxonBuddy",
+    ctaSubtext: "Stay on top of your health with your new digital buddy.",
+    calendlyUrl: "https://zcal.co/i/Ne5KB8r1?embed=1&embedType=iframe",
+    shortPunchLine: "24/7 Health Wisdom at Your Service",
+  },
+  {
+    id: 11,
+    name: "AxonScribe",
+    slug: "axonscribe",
+    logo: "/logos/AxonScribe.png",
+    image: "/assets/ourProducts/AxonaScribeImage.png",
+    platformImage: "/assets/platform-images/axonscribe.png",
+    aiImage: "/assets/ai-images/scribe.png",
+    heroImage: "/assets/new-products-1/scribe/SCRIBE.png",
+    videoUrl: "https://www.youtube.com/watch?v=PM9LlDn4S40",
+    testimonialUrl: "https://www.youtube.com/embed/abc123scribe",
+    description:
+      "More time for meaningful interactions, shorter wait times, and improved satisfaction.",
+    shortDescription: "Where Conversations Become Care Records",
+    subtitle: "Patient-Centered Care",
+    features: [
+      {
+        title: "Voice-to-Text Transcription",
+        description:
+          "Capture consultations naturally with real-time speech-to-text that recognizes medical terminology.",
+        image: "/assets/new-products-1/scribe/scribe-1.png",
+      },
+      {
+        title: "Medical Terminology Recognition",
+        description:
+          "Ensure accuracy with AI-trained models built to understand healthcare-specific vocabulary.",
+        image: "/assets/new-products-1/scribe/scribe-1.png",
+      },
+      {
+        title: "Template Auto-Population",
+        description:
+          "Speed up documentation with smart templates for SOAP notes, referral letters, discharge summaries, procedure notes, and insurance forms.",
+        image: "/assets/new-products-1/scribe/scribe-1.png",
+      },
+      {
+        title: "EMR Integration & GDPR Compliance",
+        description:
+          "Securely connect with your existing EMR system while maintaining full compliance with GDPR standards.",
+        image: "/assets/new-products-1/scribe/scribe-1.png",
+      },
+    ],
+    valuePropositions: [
+      {
+        title: "Streamlined Documentation & Efficiency",
+        description:
+          "One-click templates and AI transcription drastically cut admin time, so you can see more patients without feeling rushed.",
+        image: "/assets/new-products-1/scribe/c-1.png",
+      },
+      {
+        title: "Reliable Accuracy in Clinical Notes",
+        description:
+          "Eliminate errors and standardize communication across SOAP notes, referrals, and insurance documentation, boosting trust with patients and referrers.",
+        image: "/assets/new-products-1/scribe/c-2.png",
+      },
+      {
+        title: "Enhanced Patient Experience",
+        description:
+          "By streamlining workflows, reducing wait times, and enabling more focused doctor-patient interaction, AxonScribe helps you deliver care that patients truly value.",
+        image: "/assets/new-products-1/scribe/c-3.png",
+      },
+    ],
+    ctaText: "Book Demo",
+    ctaSubtext: "Revolutionize your consultation process with AxonScribe.",
+    // "redirectUrl": "https://axonscribe.axonichealth.com",
+    calendlyUrl: "https://zcal.co/i/sea8eyUB?embed=1&embedType=iframe",
+    shortPunchLine: "Where Conversations Become Care Records",
+  },
+  {
+    id: 12,
+    name: "AxonA",
+    slug: "axona",
+    logo: "/logos/AxonA.png",
+    image: "/assets/ourProducts/AxonaAImage.png",
+    platformImage: "/assets/platform-images/axona.png",
+    aiImage: "/assets/ai-images/axona.png",
+    heroImage: "/assets/new-products-1/axona/AXONA.png",
+    videoUrl: "https://youtu.be/KmalK7AXfnE?si=S2FFuGH7nWfEELsX",
+    testimonialUrl: "https://www.youtube.com/embed/abc123axa",
+    description:
+      "Ambient Scribe, your Intelligent Clinical Associate, who makes you a Superdoctor ",
+    shortDescription:
+      "Ambient Scribe, your Intelligent Clinical Associate, who makes you a Superdoctor ",
+    subtitle: "Redefining Healthcare Intelligence",
+    features: [
+      {
+        title: "One-click Smart Buttons for Case Entry",
+        description:
+          "Quickly populate casesheets with customizable, condition-specific templates — saving time and ensuring thorough documentation.",
+        image: "/assets/new-products-1/axona/axona-1.png",
+      },
+      {
+        title: "Hands-free Consultation Mode",
+        description:
+          "Enable voice-driven, AI-supported transcription and record-keeping — no typing, no distraction.",
+        image: "/assets/new-products-1/axona/axona-2.png",
+      },
+      {
+        title: "Automated GP Letter Generation",
+        description:
+          "Instantly create accurate, professional GP referral and update letters using AI-powered templates.",
+        image: "/assets/new-products-1/axona/axona-3.png",
+      },
+      {
+        title: "AI Decision Support & Alerts",
+        description:
+          "Get real-time suggestions, reminders, and safety alerts during consultation — helping you deliver safer, smarter care.",
+        image: "/assets/new-products-1/axona/axona-4.png",
+      },
+    ],
+    valuePropositions: [
+      {
+        title: "Faster documentation, higher throughput",
+        description:
+          "One-click smart buttons, automated GP letters, and hands-free consultation tools cut admin time dramatically — so you can see more patients without feeling rushed or overworked.",
+        image: "/assets/new-products-1/axona/c-1.png",
+      },
+      {
+        title: "Consistent accuracy and quality of care",
+        description:
+          "AxonA ensures complete, error-free records and standardized communication — boosting compliance, reducing errors, and enhancing trust with patients and referrers.",
+        image: "/assets/new-products-1/axona/c-2.png",
+      },
+      {
+        title: "Better patient experience, greater satisfaction",
+        description:
+          "With streamlined visits, shorter wait times, and more focused doctor-patient interaction, AxonA helps you deliver care that patients truly value and remember.",
+        image: "/assets/new-products-1/axona/c-3.png",
+      },
+    ],
+    ctaText: "Explore AxonA",
+    ctaSubtext: "Turn your data into action with healthcare intelligence.",
+    calendlyUrl: "https://zcal.co/i/ij8u5mRT?embed=1&embedType=iframe",
+    shortPunchLine:
+      "Your Intelligent Clinical Associate makes you a Superdoctor",
+  },
+  {
+    id: 13,
+    name: "AxonLife",
+    slug: "axonlife",
+    logo: "/logos/AxonLife.png",
+    image: "/assets/ourProducts/AxonaLifeImage.png",
+    platformImage: "/assets/platform-images/axonlife.png",
+    heroImage: "/assets/new-products/AxonLife.png",
+    videoUrl: "https://www.youtube.com/shorts/abc123life",
+    testimonialUrl: "https://www.youtube.com/embed/abc123life",
+    description: "Nurturing Dreams Into Reality",
+    shortDescription: "Nurturing Dreams Into Reality",
+    subtitle: "Nurturing Dreams Into Reality",
+    features: [
+      {
+        title: "End-to-End Fertility Journey Management –",
+        description:
+          "From first consultation to embryo transfer, everything in one platform.",
+        image: "/assets/new-products-1/life/life-1.png",
+      },
+      {
+        title: "Advanced Embryology & Cryopreservation Tools –",
+        description:
+          "Professional-grade lab and storage management made simple.",
+        image: "/assets/new-products-1/life/life-2.png",
+      },
+      {
+        title: "Seamless Multi-Clinic & Partner Tracking –",
+        description: "Unified records for couples across multiple locations.",
+        image: "/assets/new-products-1/life/life-3.png",
+      },
+      {
+        title: "Smart Operations with Compliance & Security –",
+        description:
+          "Automated scheduling, billing, and HIPAA-ready data protection.",
+        image: "/assets/new-products-1/life/life-4.png",
+      },
+    ],
+    valuePropositions: [
+      {
+        title: "Seamless Fertility Journey",
+        description:
+          "Manage every step from first consultation to embryo transfer in one integrated platform.",
+        image: "/assets/new-products-1/life/c-1.png",
+      },
+      {
+        title: "Advanced Embryology & Andrology Tools",
+        description:
+          "Professional-grade lab management tailored for reproductive medicine.",
+        image: "/assets/new-products-1/life/c-2.png",
+      },
+      {
+        title: "Scalable, Secure & Compliant",
+        description:
+          "HIPAA-ready system designed for single clinics to multi-branch fertility networks.",
+        image: "/assets/new-products-1/life/c-3.png",
+      },
+    ],
+    ctaText: "Download AxonLife",
+    ctaSubtext: "Stay on top of your health with your new digital companion.",
+    calendlyUrl: "https://zcal.co/i/OpaKY8_S?embed=1&embedType=iframe",
+    shortPunchLine: "Nurturing Dreams Into Reality",
+  },
+  {
+    id: 14,
+    name: "AxonHomeClinic",
+    slug: "axonhomeclinic",
+    logo: "/logos/AxonCare.png",
+    image: "/assets/ourProducts/PrismProductImage.png",
+    heroImage: "/assets/new-products/AxonHealthHub.png",
+    platformImage: "/assets/platform-images/axoncare.png",
+    videoUrl: "https://youtu.be/RHBiso6sE_g?si=X7Gi9oidF7tWScMm",
+    testimonialUrl: "https://www.youtube.com/embed/2OPJaJoi0Gs",
+    description:
+      "Clinic-grade care at home, connected to doctors 24×7. Your personal smart health hub with integrated IoT vital monitoring, AI health assistant, and instant video consultations.",
+    shortDescription:
+      "Your Personal Smart Health Hub - Clinic-grade care at home, connected to doctors 24×7.",
+    subtitle: "Smart Healthcare for Modern Homes",
+    features: [
+      {
+        title: "24×7 Access to Doctors from Home",
+        description:
+          "Instant video consultations with the Axoncare Network of doctors, anytime—day or night—without leaving the comfort of home.",
+        image: "/assets/new-products-1/homeclinic/1.jpeg",
+      },
+      {
+        title: "AxonDoc™ – AI Doctor's Assistant",
+        description:
+          "An always-available AI assistant that speaks your language, guides you to the right care pathway, answers health questions, and books doctor appointments automatically.",
+        image: "/assets/new-products-1/homeclinic/2.jpeg",
+      },
+      {
+        title: "Integrated IoT Vital Monitoring",
+        description:
+          "Measures BP, Pulse, Respiratory Rate, Temperature, SpO₂, and 1-lead ECG, with a digital stethoscope enabling remote auscultation during consultations.",
+        image: "/assets/new-products-1/homeclinic/3.jpeg",
+      },
+      {
+        title: "Real-Time Health Data Sync",
+        description:
+          "All vitals and consultation data are synced live to the Axoncare Patient App, creating a continuous, easily accessible health record.",
+        image: "/assets/new-products-1/homeclinic/4.jpeg",
+      },
+    ],
+    valuePropositions: [
+      {
+        title: "Chronic Disease Management",
+        description:
+          "Supports ongoing care for diabetes, hypertension, cardiac and respiratory conditions, enabling proactive monitoring and reducing emergency hospital visits.",
+        image: "/assets/new-products-1/homeclinic/v1.jpeg",
+      },
+      {
+        title: "Multi-Member Family Profiles",
+        description:
+          "One device supports multiple family members, making it ideal for families with children and elderly parents.",
+        image: "/assets/new-products-1/homeclinic/v2.jpeg",
+      },
+      {
+        title: "Premium Health-First Living",
+        description:
+          "An in-home smart healthcare amenity that helps real estate developers differentiate projects and build wellness-focused communities.",
+        image: "/assets/new-products-1/homeclinic/v3.jpeg",
+      },
+    ],
+    ctaText: "Contact Us",
+    ctaSubtext:
+      "Get in touch for pricing and deployment options for your home or community.",
+    calendlyUrl: "https://zcal.co/axonichealth/axonhomeclinic",
+    shortPunchLine: "Clinic-Grade Care at Home",
+  },
+];
 
 export function getProductBySlug(slug: string): Product | undefined {
-  return products.find(product => product.slug === slug)
+  return products.find((product) => product.slug === slug);
 }
 
 export function getAllProductSlugs(): string[] {
-  return products.map(product => product.slug)
-} 
+  return products.map((product) => product.slug);
+}
