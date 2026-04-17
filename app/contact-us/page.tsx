@@ -72,7 +72,7 @@ export default function ContactUsPage() {
     `
 
     const emailPayload = {
-      to: "info@axonichealth.com;sales@axonichealth.com",
+      to: "info@axonichealth.com",
       // to: 'dhruv.bhavsar@axonichealth.com',
       from: "info@axonichealth.com",
       subject: `New Contact Us Submission from ${name}`,
