@@ -95,7 +95,7 @@ export function DemoRequestDialog({ productName, calendlyUrl, defaultTab = 'cale
           <Button
             variant="outline"
             className="py-2 px-6 rounded-xl font-semibold text-sm"
-            onClick={() => window.open(`tel:+18002101999`, '_self')}
+            onClick={() => window.open(`tel:+918956652831`, '_self')}
           >
             📞 Call Us Instead
           </Button>

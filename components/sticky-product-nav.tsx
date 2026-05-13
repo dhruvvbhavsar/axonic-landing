@@ -95,7 +95,7 @@ export function StickyProductNav({
             ))}
             {/* Call Us Button */}
             <button
-              onClick={() => window.open(`tel:+18002101999`, '_self')}
+              onClick={() => window.open(`tel:+918956652831`, '_self')}
               className="text-xs sm:text-sm md:text-base px-3 sm:px-4 py-2 rounded-full transition-all duration-200 font-medium whitespace-nowrap text-gray-700 hover:text-yellow-600 bg-white hover:bg-yellow-50 border border-gray-300 hover:border-yellow-400"
             >
               Call Us
