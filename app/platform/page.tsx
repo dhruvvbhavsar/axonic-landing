@@ -5,7 +5,8 @@ import Image from "next/image"
 import Link from "next/link"
 import { PageHeader } from "@/components/page-header"
 import { Card, CardContent } from "@/components/ui/card"
-import { products } from "@/lib/products-data"
+import { Button } from "@/components/ui/button"
+import { products, type Product } from "@/lib/products-data"
 import { getProductSubdomainUrl, getPlatformSubdomainUrl } from "@/lib/utils"
 import clsx from "clsx"
 
@@ -46,6 +47,50 @@ const ConnectableNode: React.FC<{
     <div className="relative z-10">{children}</div>
   </div>
 )
+
+function PlatformProductCard({
+  product,
+  description,
+}: {
+  product: Product
+  description: string
+}) {
+  return (
+    <Card className="platform-card relative z-30 bg-white rounded-[28px] shadow-lg hover:shadow-xl transition-all duration-300 p-8 h-[520px] md:h-[560px] flex flex-col">
+      <CardContent className="p-0 text-center w-full flex flex-col flex-1">
+        <div className="mb-8 h-64 w-full flex items-center justify-center">
+          <Image
+            src={product.platformImage ?? product.heroImage}
+            alt={product.name}
+            width={300}
+            height={256}
+            className="max-h-full w-auto object-contain"
+          />
+        </div>
+
+        <div className="mb-4 flex justify-center">
+          <Image
+            src={product.logo}
+            alt={`${product.name} Logo`}
+            width={200}
+            height={60}
+            className="w-auto max-h-10 md:max-h-12 object-contain"
+          />
+        </div>
+
+        <p className="text-base text-gray-900 leading-relaxed font-semibold flex-1">
+          {description}
+        </p>
+
+        <Link href={product.redirectUrl || getProductSubdomainUrl(product.slug)}>
+          <Button className="w-full mt-6 bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200">
+            Know More
+          </Button>
+        </Link>
+      </CardContent>
+    </Card>
+  )
+}
 
 export default function PlatformPage() {
   // Organize products by column based on their target audience
@@ -133,38 +178,10 @@ export default function PlatformPage() {
                       hasLeft={hasLeft}
                       hasRight={hasRight}
                     >
-                      <Card className="platform-card relative z-30 bg-white rounded-[28px] shadow-lg hover:shadow-xl transition-all duration-300 p-8 h-[520px] md:h-[540px] flex items-start cursor-pointer">
-                        <CardContent className="p-0 text-center w-full">
-                          <Link href={product.redirectUrl || getProductSubdomainUrl(product.slug)} className="block w-full h-full">
-                            {/* Product Image */}
-                            <div className="mb-8 h-64 w-full flex items-center justify-center">
-                              <Image
-                                src={product.platformImage ?? product.heroImage}
-                                alt={product.name}
-                                width={300}
-                                height={256}
-                                className="max-h-full w-auto object-contain"
-                              />
-                            </div>
-
-                            {/* Product Logo */}
-                            <div className="mb-4 flex justify-center">
-                              <Image
-                                src={product.logo}
-                                alt={`${product.name} Logo`}
-                                width={200}
-                                height={60}
-                                className="w-auto max-h-10 md:max-h-12 object-contain"
-                              />
-                            </div>
-
-                            {/* Description */}
-                            <p className="text-base text-gray-900 leading-relaxed font-semibold">
-                              {product.shortPunchLine}
-                            </p>
-                          </Link>
-                        </CardContent>
-                      </Card>
+                      <PlatformProductCard
+                        product={product}
+                        description={product.shortPunchLine ?? product.shortDescription}
+                      />
                     </ConnectableNode>
                   )
                 })}
@@ -215,38 +232,10 @@ export default function PlatformPage() {
                       hasLeft={hasLeft}
                       hasRight={hasRight}
                     >
-                      <Card className="platform-card relative z-30 bg-white rounded-[28px] shadow-lg hover:shadow-xl transition-all duration-300 p-8 h-[520px] md:h-[540px] flex items-start cursor-pointer">
-                        <CardContent className="p-0 text-center w-full">
-                          <Link href={product.redirectUrl || getProductSubdomainUrl(product.slug)} className="block w-full h-full">
-                            {/* Product Image */}
-                            <div className="mb-8 h-64 w-full flex items-center justify-center">
-                              <Image  
-                                src={product.platformImage ?? product.heroImage}
-                                alt={product.name}
-                                width={300}
-                                height={256}
-                                className="max-h-full w-auto object-contain"
-                              />
-                            </div>
-
-                            {/* Product Logo */}
-                            <div className="mb-4 flex justify-center">
-                              <Image
-                                src={product.logo}
-                                alt={`${product.name} Logo`}
-                                width={200}
-                                height={60}
-                                className="w-auto max-h-10 md:max-h-12 object-contain"
-                              />
-                            </div>
-
-                            {/* Description */}
-                            <p className="text-base text-gray-900 leading-relaxed font-semibold">
-                              {product.shortDescription}
-                            </p>
-                          </Link>
-                        </CardContent>
-                      </Card>
+                      <PlatformProductCard
+                        product={product}
+                        description={product.shortDescription}
+                      />
                     </ConnectableNode>
                   )
                 })}
@@ -297,38 +286,10 @@ export default function PlatformPage() {
                       hasLeft={hasLeft}
                       hasRight={hasRight}
                     >
-                      <Card className="platform-card relative z-30 bg-white rounded-[28px] shadow-lg hover:shadow-xl transition-all duration-300 p-8 h-[520px] md:h-[540px] flex items-start cursor-pointer">
-                        <CardContent className="p-0 text-center w-full">
-                          <Link href={product.redirectUrl || getProductSubdomainUrl(product.slug)} className="block w-full h-full">
-                            {/* Product Image */}
-                            <div className="mb-8 h-64 w-full flex items-center justify-center">
-                              <Image
-                                src={product.platformImage ?? product.heroImage}
-                                alt={product.name}
-                                width={300}
-                                height={256}
-                                className="max-h-full w-auto object-contain"
-                              />
-                            </div>
-
-                            {/* Product Logo */}
-                            <div className="mb-4 flex justify-center">
-                              <Image
-                                src={product.logo}
-                                alt={`${product.name} Logo`}
-                                width={200}
-                                height={60}
-                                className="w-auto max-h-10 md:max-h-12 object-contain"
-                              />
-                            </div>
-
-                            {/* Description */}
-                            <p className="text-base text-gray-900 leading-relaxed font-semibold">
-                              {product.shortDescription}
-                            </p>
-                          </Link>
-                        </CardContent>
-                      </Card>
+                      <PlatformProductCard
+                        product={product}
+                        description={product.shortDescription}
+                      />
                     </ConnectableNode>
                   )
                 })}

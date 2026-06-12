@@ -4,10 +4,19 @@ import * as React from "react"
 import Link from "next/link"
 import Image from "next/image"
 
-import gdprImage from "@/public/abdm/gdpr.png"
 import abdmImage from "@/public/abdm/abdm.png"
+import gdprImage from "@/public/abdm/gdpr.png"
 import hippaImage from "@/public/abdm/hippa.png"
+import soc2Image from "@/public/abdm/soc-2.png"
 import isoImage from "@/public/abdm/iso.png"
+
+const complianceBadges = [
+  { src: abdmImage, alt: "ABDM (Ayushman Bharat Digital Mission) Compliance Badge" },
+  { src: gdprImage, alt: "GDPR Compliance Badge" },
+  { src: hippaImage, alt: "HIPAA Compliance Badge" },
+  { src: soc2Image, alt: "SOC 2 Compliance Badge" },
+  { src: isoImage, alt: "ISO 27001:2022 Compliance Badge" },
+]
 
 export function CTASection() {
   return (
@@ -31,59 +40,21 @@ export function CTASection() {
           </Link>
         </div>
 
-        {/* Compliance Badges */}
-        <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 lg:gap-16">
-          {/* GDPR Badge */}
-          <div className="flex flex-col items-center group">
-            <div className="w-28 h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 hover:scale-110 transition-transform duration-300 cursor-pointer">
-              <Image
-                src={gdprImage}
-                alt="GDPR Compliance Badge"
-                width={144}
-                height={144}
-                className="w-full h-full object-contain drop-shadow-lg group-hover:drop-shadow-xl transition-all duration-300"
-              />
+        {/* Compliance Badges — same order as AxonMD: ABDM, GDPR, HIPAA, SOC 2, ISO */}
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-8 items-center justify-items-center max-w-5xl mx-auto">
+          {complianceBadges.map((badge) => (
+            <div key={badge.alt} className="flex flex-col items-center group">
+              <div className="w-28 h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 hover:scale-110 transition-transform duration-300">
+                <Image
+                  src={badge.src}
+                  alt={badge.alt}
+                  width={144}
+                  height={144}
+                  className="w-full h-full object-contain drop-shadow-lg group-hover:drop-shadow-xl transition-all duration-300"
+                />
+              </div>
             </div>
-          </div>
-
-          {/* ABDM Badge */}
-          <div className="flex flex-col items-center group">
-            <div className="w-28 h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 hover:scale-110 transition-transform duration-300 cursor-pointer">
-              <Image
-                src={abdmImage}
-                alt="ABDM (Ayushman Bharat Digital Mission) Compliance Badge"
-                width={144}
-                height={144}
-                className="w-full h-full object-contain drop-shadow-lg group-hover:drop-shadow-xl transition-all duration-300"
-              />
-            </div>
-          </div>
-
-          {/* HIPAA Badge */}
-          <div className="flex flex-col items-center group">
-            <div className="w-28 h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 hover:scale-110 transition-transform duration-300 cursor-pointer">
-              <Image
-                src={hippaImage}
-                alt="HIPAA Compliance Badge"
-                width={144}
-                height={144}
-                className="w-full h-full object-contain drop-shadow-lg group-hover:drop-shadow-xl transition-all duration-300"
-              />
-            </div>
-          </div>
-
-          {/* ISO Badge */}
-          <div className="flex flex-col items-center group">
-            <div className="w-28 h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 hover:scale-110 transition-transform duration-300 cursor-pointer">
-              <Image
-                src={isoImage}
-                alt="ISO 27001:2022 Compliance Badge"
-                width={144}
-                height={144}
-                className="w-full h-full object-contain drop-shadow-lg group-hover:drop-shadow-xl transition-all duration-300"
-              />
-            </div>
-          </div>
+          ))}
         </div>
 
         {/* Additional Trust Text */}
