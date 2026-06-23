@@ -2,12 +2,11 @@
 
 import * as React from "react"
 import Image from "next/image"
-import Link from "next/link"
 import { PageHeader } from "@/components/page-header"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { ProductPageLink } from "@/components/product-page-link"
 import { products, type Product } from "@/lib/products-data"
-import { getProductSubdomainUrl } from "@/lib/utils"
 import clsx from "clsx"
 
 // Helper wrapper that renders dashed connector lines to neighbouring nodes.
@@ -86,9 +85,9 @@ function PlatformProductCard({
           asChild
           className="w-full mt-6 bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200"
         >
-          <Link href={getProductSubdomainUrl(product.slug)}>
+          <ProductPageLink slug={product.slug}>
             Know More
-          </Link>
+          </ProductPageLink>
         </Button>
       </CardContent>
     </Card>

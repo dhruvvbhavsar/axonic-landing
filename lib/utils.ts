@@ -35,52 +35,47 @@ export function getBaseDomain(): string {
 
 // Utility function to generate subdomain URL for products
 export function getProductSubdomainUrl(productSlug: string): string {
-  // Check for explicit disable flag (useful for preview environments)
   const disableSubdomains = process.env.NEXT_PUBLIC_DISABLE_SUBDOMAIN_ROUTING === 'true'
+
+  if (typeof window !== 'undefined') {
+    const { hostname, protocol, port } = window.location
+
+    if (hostname.includes('.amplifyapp.com') || hostname.includes('.vercel.app') || disableSubdomains) {
+      if (hostname.includes('.localhost') && !disableSubdomains) {
+        return `${protocol}//${productSlug}.localhost:${port || '3000'}`
+      }
+      return `/our-products/${productSlug}`
+    }
+
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+      if (hostname.includes('.localhost')) {
+        return `${protocol}//${productSlug}.localhost:${port || '3000'}`
+      }
+      return `/our-products/${productSlug}`
+    }
+
+    // Production custom domains (e.g. platform.axonichealth.com -> axonmd.axonichealth.com)
+    const baseDomain = getBaseDomain()
+    return `https://${productSlug}.${baseDomain}`
+  }
+
   if (disableSubdomains) {
     return `/our-products/${productSlug}`
   }
-  
-  // Check if we're on Amplify or Vercel preview domains (client-side)
-  if (typeof window !== 'undefined') {
-    const hostname = window.location.hostname
-    if (hostname.includes('.amplifyapp.com') || hostname.includes('.vercel.app')) {
-      // Use path-based routing for preview/dev environments
-      return `/our-products/${productSlug}`
-    }
+
+  const envDomain = process.env.NEXT_PUBLIC_BASE_DOMAIN
+  if (
+    envDomain &&
+    envDomain !== 'localhost:3000' &&
+    !envDomain.includes('localhost') &&
+    !envDomain.includes('.amplifyapp.com') &&
+    !envDomain.includes('.vercel.app')
+  ) {
+    const normalizedDomain = envDomain.replace(/^https?:\/\//, '').split('/')[0]
+    return `https://${productSlug}.${normalizedDomain}`
   }
-  
-  // For production domains, always use subdomain routing
-  const baseDomain = process.env.NEXT_PUBLIC_BASE_DOMAIN || 'localhost:3000'
-  
-  // If we have a production domain set, use subdomain routing
-  // But skip if baseDomain looks like an Amplify or Vercel domain
-  if (baseDomain !== 'localhost:3000' && 
-      !baseDomain.includes('localhost') && 
-      !baseDomain.includes('.amplifyapp.com') && 
-      !baseDomain.includes('.vercel.app')) {
-    return `https://${productSlug}.${baseDomain}`
-  }
-  
-  // Handle localhost development
-  if (typeof window === 'undefined') {
-    return `/our-products/${productSlug}`
-  }
-  
-  const currentBaseDomain = getBaseDomain()
-  const protocol = window.location.protocol
-  
-  // Handle localhost development - check if subdomain routing is being used
-  if (currentBaseDomain.includes('localhost')) {
-    // If we're already on a subdomain (e.g., axonhis.localhost), use subdomain URLs
-    if (window.location.hostname.includes('.localhost')) {
-      return `${protocol}//${productSlug}.localhost:${window.location.port || '3000'}`
-    }
-    // Otherwise fallback to path-based routing for plain localhost
-    return `/our-products/${productSlug}`
-  }
-  
-  return `${protocol}//${productSlug}.${currentBaseDomain}`
+
+  return `/our-products/${productSlug}`
 }
 
 // Utility function to generate platform subdomain URL
