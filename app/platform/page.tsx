@@ -7,7 +7,7 @@ import { PageHeader } from "@/components/page-header"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { products, type Product } from "@/lib/products-data"
-import { getProductSubdomainUrl, getPlatformSubdomainUrl } from "@/lib/utils"
+import { getProductSubdomainUrl } from "@/lib/utils"
 import clsx from "clsx"
 
 // Helper wrapper that renders dashed connector lines to neighbouring nodes.
@@ -82,11 +82,14 @@ function PlatformProductCard({
           {description}
         </p>
 
-        <Link href={product.redirectUrl || getProductSubdomainUrl(product.slug)}>
-          <Button className="w-full mt-6 bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200">
+        <Button
+          asChild
+          className="w-full mt-6 bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200"
+        >
+          <Link href={getProductSubdomainUrl(product.slug)}>
             Know More
-          </Button>
-        </Link>
+          </Link>
+        </Button>
       </CardContent>
     </Card>
   )
