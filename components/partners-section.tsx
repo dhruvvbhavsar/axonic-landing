@@ -64,7 +64,7 @@ export function PartnersSection() {
         {/* Section Title */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Our Partners
+            Powered by the Best in Healthcare
           </h2>
           <div className="w-24 h-1 bg-yellow-500 mx-auto"></div>
         </div>
@@ -231,8 +231,7 @@ export function PartnersSection() {
         {/* Bottom Text */}
         <div className="text-center mt-16">
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            We collaborate with leading healthcare organizations, technology providers, and industry experts 
-            to deliver comprehensive solutions that transform healthcare delivery worldwide.
+            We don't work alone. We partner with the world's leading healthcare organizations, technology pioneers, and industry experts to build solutions that set the global standard.
           </p>
         </div>
       </div>

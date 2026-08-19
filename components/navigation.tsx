@@ -218,6 +218,22 @@ export function Navigation() {
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
+              {/* Our Customers */}
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  asChild
+                  className={cn(
+                    navigationMenuTriggerStyle(),
+                    "transition-colors duration-300",
+                    isScrolled
+                      ? "text-gray-900 hover:text-yellow-500"
+                      : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10",
+                  )}
+                >
+                  <SmartLink href={getNavUrl("/our-customers")}>Our Customers</SmartLink>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+
               {/* About Us dropdown */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger
@@ -391,6 +407,14 @@ export function Navigation() {
                   onClick={closeMobileMenu}
                 >
                   Village Health Initiative
+                </SmartLink>
+
+                <SmartLink
+                  href={getNavUrl("/our-customers")}
+                  className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
+                  onClick={closeMobileMenu}
+                >
+                  Our Customers
                 </SmartLink>
 
                 {/* About Us submenu */}

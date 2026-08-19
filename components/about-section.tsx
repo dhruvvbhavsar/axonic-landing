@@ -66,7 +66,7 @@ export function AboutSection() {
               {/* Header */}
               <div className="mb-6">
                 <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
-                  Redefining All Possibilities in Healthcare:
+                  Healthcare Redefined. Outcomes Redesigned.
                 </h2>
                 <h3 className="text-2xl font-semibold text-gray-800">
                   AxonCare by Axonic
@@ -77,29 +77,28 @@ export function AboutSection() {
               {/* Content */}
               <div className="space-y-6 text-gray-700 leading-relaxed">
                 <p>
-                  The current state of healthcare is a harsh reality. Millions
-                  lose their lives each year due to delayed care, limited
-                  access, affordability issues, and even poor quality of
-                  service. In India alone, over 2.3 million lives were lost in
-                  2018 for these very reasons. Globally, the number climbs to a
-                  staggering 5 million. Even developed nations struggle, with
-                  countries like England facing hundreds of needless deaths
-                  weekly from excessive emergency room wait times.
+                  The current state of healthcare is failing millions. Delays,
+                  inaccessibility, cost barriers, and uneven quality claim lives
+                  every year. In India alone, over 2.3 million people died in
+                  2018 from these failures. Worldwide, the toll climbs to a
+                  staggering 5 million. Even advanced healthcare systems like
+                  England's report hundreds of preventable deaths weekly due to
+                  emergency room delays.
                 </p>
 
                 <p>
                   <span className="font-semibold text-gray-900">
-                    Axonic is here to disrupt the status quo.
+                    Axonic is rewriting the rules.
                   </span>{" "}
-                  We envision a future where seamless data empowers{" "}
-                  <span className="font-semibold">everyone</span>, regardless of
-                  location, to access quality healthcare. Our service{" "}
+                  We built a future where intelligent, connected data puts
+                  quality care within reach of{" "}
+                  <span className="font-semibold">everyone</span>, everywhere.
+                  Our service{" "}
                   <span className="font-semibold text-yellow-600">
                     AxonCare
                   </span>
-                  , demolishes barriers, making care accessible, readily
-                  available, and affordable. No matter where you are, AxonCare
-                  by Axonic connects you to the care you deserve.
+                  , demolishes distance, cost, and complexity. No excuses. No
+                  barriers. Just care that finds you.
                 </p>
               </div>
 

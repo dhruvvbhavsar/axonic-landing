@@ -1,6 +1,6 @@
 import { HeroSection } from "@/components/hero-section";
 import { AboutSection } from "@/components/about-section";
-import { ThreeAsSection } from "@/components/three-as-section";
+import { MajorProductsComparison } from "@/components/major-products-comparison";
 import { PartnersSection } from "@/components/partners-section";
 import { TestimonialsSection } from "@/components/testimonials-section";
 import { CTASection } from "@/components/cta-section";
@@ -10,7 +10,7 @@ export default function Home() {
     <>
       <HeroSection />
       <AboutSection />
-      <ThreeAsSection />
+      <MajorProductsComparison />
 
       <PartnersSection />
       <TestimonialsSection />

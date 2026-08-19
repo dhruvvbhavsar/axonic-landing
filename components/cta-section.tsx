@@ -25,18 +25,18 @@ export function CTASection() {
         {/* Main CTA Content */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 max-w-4xl mx-auto leading-tight">
-            Interested in Learning How Axonic Can Transform Your Healthcare Experience?
+            See How Axonic Transforms Healthcare—Starting Now.
           </h2>
           
           <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Leave a message for a strategic consultation, and we'll be happy to connect.
+            Tell us what you're solving. We'll show you exactly how Axonic delivers.
           </p>
 
           <Link
             href="/contact-us"
             className="inline-block bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg"
           >
-            Contact Today!
+            Book a Consultation
           </Link>
         </div>
 

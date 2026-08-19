@@ -7,10 +7,10 @@ export function HeroSection() {
   
   const headings: string[] = React.useMemo(
     () => [
-      "World's First AI integrated Healthcare System",
-      "Revolutionizing Healthcare with AI",
-      "Doctor in your pocket 24/7",
-      "Healthcare Accessible Anytime, Anywhere, In Any Language",
+      "World's First AI-Powered Healthcare Operating System",
+      "AI That Delivers Care, Not Just Promises",
+      "Expert Care in Your Pocket, 24/7",
+      "Care Without Borders. Language Without Limits.",
     ],
     []
   )

@@ -154,13 +154,13 @@ export function TestimonialsSection() {
         {/* Call to Action */}
         <div className="text-center mt-12">
           <p className="text-gray-600 mb-6">
-            Ready to experience the difference? Join thousands of satisfied patients.
+            Join thousands who already trust Axonic. Your turn starts now.
           </p>
           <a
             href="/contact-us"
             className="inline-flex items-center bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
           >
-            Get Started Today
+            Start Your Care Journey
           </a>
         </div>
       </div>
