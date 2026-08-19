@@ -84,9 +84,6 @@ export default function OurCustomersPage() {
               </div>
             ))}
           </div>
-          <p className="mt-6 text-center text-xs text-gray-500">
-            Placeholder company names and logos — ready to be replaced with customer assets.
-          </p>
         </div>
       </section>
     </div>
