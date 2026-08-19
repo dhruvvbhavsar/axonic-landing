@@ -15,8 +15,9 @@ export function middleware(request: NextRequest) {
   const isLocalhost = hostname === 'localhost:3000' || hostname === '127.0.0.1:3000' || hostname === 'localhost' || hostname === '127.0.0.1'
   const isAmplifyDomain = hostname.includes('.amplifyapp.com')
   const isVercelPreview = hostname.includes('.vercel.app')
-  
-  if (isLocalhost || isAmplifyDomain || isVercelPreview) {
+  const isPreviewDomain = hostname.split(':')[0] === 'preview.axonichealth.com'
+
+  if (isLocalhost || isAmplifyDomain || isVercelPreview || isPreviewDomain) {
     return NextResponse.next()
   }
   
@@ -83,4 +84,4 @@ export const config = {
      */
     '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
-} 
+}

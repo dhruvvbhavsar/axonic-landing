@@ -20,6 +20,7 @@ import {
   getConsultingSubdomainUrl,
   getPlatformSubdomainUrl,
   getProductSubdomainUrl,
+  isPreviewDomain,
 } from "@/lib/utils";
 
 export function Navigation() {
@@ -43,6 +44,9 @@ export function Navigation() {
 
   // Helper function to generate navigation URLs
   const getNavUrl = (path: string) => {
+    // The preview deployment serves the main site on this host. Keep links
+    // path-based so they stay on preview.axonichealth.com.
+    if (isPreviewDomain()) return path;
     if (isSubdomain && baseDomain) {
       const protocol = baseDomain.includes("localhost") ? "http:" : "https:";
       return `${protocol}//${baseDomain}${path}`;

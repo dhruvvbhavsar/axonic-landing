@@ -33,6 +33,12 @@ export function getBaseDomain(): string {
   return hostname
 }
 
+/** Preview deployments use the main app's path routes, not production subdomains. */
+export function isPreviewDomain(): boolean {
+  if (typeof window === 'undefined') return false
+  return window.location.hostname === 'preview.axonichealth.com'
+}
+
 // Utility function to generate subdomain URL for products
 export function getProductSubdomainUrl(productSlug: string): string {
   const disableSubdomains = process.env.NEXT_PUBLIC_DISABLE_SUBDOMAIN_ROUTING === 'true'
@@ -40,7 +46,7 @@ export function getProductSubdomainUrl(productSlug: string): string {
   if (typeof window !== 'undefined') {
     const { hostname, protocol, port } = window.location
 
-    if (hostname.includes('.amplifyapp.com') || hostname.includes('.vercel.app') || disableSubdomains) {
+    if (isPreviewDomain() || hostname.includes('.amplifyapp.com') || hostname.includes('.vercel.app') || disableSubdomains) {
       if (hostname.includes('.localhost') && !disableSubdomains) {
         return `${protocol}//${productSlug}.localhost:${port || '3000'}`
       }
@@ -82,7 +88,7 @@ export function getProductSubdomainUrl(productSlug: string): string {
 export function getPlatformSubdomainUrl(): string {
   // Check for explicit disable flag (useful for preview environments)
   const disableSubdomains = process.env.NEXT_PUBLIC_DISABLE_SUBDOMAIN_ROUTING === 'true'
-  if (disableSubdomains) {
+  if (disableSubdomains || isPreviewDomain()) {
     return `/platform`
   }
   
@@ -132,7 +138,7 @@ export function getPlatformSubdomainUrl(): string {
 export function getConsultingSubdomainUrl(): string {
   // Check for explicit disable flag (useful for preview environments)
   const disableSubdomains = process.env.NEXT_PUBLIC_DISABLE_SUBDOMAIN_ROUTING === 'true'
-  if (disableSubdomains) {
+  if (disableSubdomains || isPreviewDomain()) {
     return `/consulting`
   }
   

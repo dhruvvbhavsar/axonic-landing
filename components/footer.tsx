@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
-import { getBaseDomain } from "@/lib/utils";
+import { getBaseDomain, isPreviewDomain } from "@/lib/utils";
 
 export function Footer() {
   const [isSubdomain, setIsSubdomain] = React.useState(false);
@@ -25,6 +25,7 @@ export function Footer() {
 
   // Helper function to generate navigation URLs
   const getNavUrl = (path: string) => {
+    if (isPreviewDomain()) return path;
     if (isSubdomain && baseDomain) {
       const protocol = baseDomain.includes("localhost") ? "http:" : "https:";
       return `${protocol}//${baseDomain}${path}`;
