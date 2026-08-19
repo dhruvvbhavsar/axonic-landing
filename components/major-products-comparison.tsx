@@ -88,7 +88,8 @@ export function MajorProductsComparison() {
         </div>
 
         <div className="overflow-hidden border border-gray-200 bg-white shadow-xl shadow-gray-200/70">
-          <div className="overflow-x-auto">
+          {/* Desktop comparison table */}
+          <div className="hidden overflow-x-auto md:block">
             <table className="min-w-[1120px] w-full border-collapse text-left">
               <thead>
                 <tr className="bg-gray-950 text-white">
@@ -182,6 +183,72 @@ export function MajorProductsComparison() {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* Mobile product cards keep every comparison field readable without horizontal scrolling. */}
+          <div className="divide-y divide-gray-200 md:hidden">
+            {majorProducts.map((product) => (
+              <article key={product.slug} className="p-5 sm:p-6">
+                <div className="flex items-start gap-4">
+                  <div className="relative h-20 w-24 shrink-0 overflow-hidden border border-gray-200 bg-gray-50">
+                    <Image
+                      src={product.heroImage}
+                      alt={`${product.name} product preview`}
+                      fill
+                      sizes="96px"
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <Image
+                      src={product.logo}
+                      alt={`${product.name} logo`}
+                      width={140}
+                      height={40}
+                      className="mb-2 max-h-8 w-auto max-w-[140px] object-contain object-left"
+                    />
+                    <h3 className="text-lg font-bold text-gray-950">{product.name}</h3>
+                    <p className="mt-1 text-sm leading-5 text-gray-600">
+                      {product.shortPunchLine ?? product.subtitle}
+                    </p>
+                  </div>
+                </div>
+
+                <dl className="mt-5 space-y-4 text-sm">
+                  <div>
+                    <dt className="text-xs font-semibold uppercase tracking-wide text-gray-500">Built for</dt>
+                    <dd className="mt-1 leading-6 text-gray-700">{product.audience}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs font-semibold uppercase tracking-wide text-gray-500">Best use</dt>
+                    <dd className="mt-1 font-semibold leading-6 text-gray-950">{product.bestFor}</dd>
+                    <dd className="mt-1 leading-6 text-gray-600">{product.proof}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs font-semibold uppercase tracking-wide text-gray-500">What stands out</dt>
+                    <dd className="mt-2 flex flex-wrap gap-2">
+                      {product.highlights.map((highlight) => (
+                        <span
+                          key={highlight}
+                          className="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs font-semibold text-gray-700"
+                        >
+                          <CheckCircle2 className="size-3.5 text-yellow-500" />
+                          {highlight}
+                        </span>
+                      ))}
+                    </dd>
+                  </div>
+                </dl>
+
+                <Link
+                  href={product.redirectUrl || getProductSubdomainUrl(product.slug)}
+                  className="mt-6 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-md bg-yellow-500 px-4 py-2 text-sm font-semibold text-white transition-colors duration-200 hover:bg-yellow-600"
+                >
+                  View Product
+                  <ArrowUpRight className="size-4" />
+                </Link>
+              </article>
+            ))}
           </div>
         </div>
       </div>
