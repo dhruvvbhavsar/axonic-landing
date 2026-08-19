@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { PageHeader } from "@/components/page-header";
 
 export const metadata: Metadata = {
@@ -8,18 +9,28 @@ export const metadata: Metadata = {
 };
 
 const customers = [
-  { name: "Northstar Hospitals", initials: "NH", tone: "bg-blue-950" },
-  { name: "Meridian Health", initials: "MH", tone: "bg-emerald-800" },
-  { name: "Clearview Clinics", initials: "CC", tone: "bg-sky-700" },
-  { name: "Aster Labs", initials: "AL", tone: "bg-violet-800" },
-  { name: "Harbour Medical", initials: "HM", tone: "bg-cyan-800" },
-  { name: "WellSpring Care", initials: "WC", tone: "bg-teal-700" },
-  { name: "Oakline Health", initials: "OH", tone: "bg-stone-800" },
-  { name: "Nova Diagnostics", initials: "ND", tone: "bg-indigo-800" },
-  { name: "Unity Pharmacy", initials: "UP", tone: "bg-rose-800" },
-  { name: "Cedar Medical Group", initials: "CM", tone: "bg-amber-700" },
-  { name: "PulsePoint Health", initials: "PH", tone: "bg-red-800" },
-  { name: "Evergreen Clinics", initials: "EC", tone: "bg-green-800" },
+  { name: "Sonoclinic Diagnostic Center - Pimpri", logo: "/assets/customer-logos/customer-01.png" },
+  { name: "Aarogya Pathology labs and X-ray", logo: "/assets/customer-logos/customer-02.png" },
+  { name: "NAHAR MEDICAL CENTER LLP", logo: "/assets/customer-logos/customer-03.png" },
+  { name: "SHRI SHYAM HOSPITAL (A UNIT OF SS NIRAMAYA PVT LTD)", logo: "/assets/customer-logos/customer-04.png" },
+  { name: "Gemini Heart & Emergency Care", logo: "/assets/customer-logos/customer-05.png" },
+  { name: "RAJRIT HEALTHCARE SERVICES", logo: "/assets/customer-logos/customer-06.png" },
+  { name: "WELLNESS LABORATORIES", logo: "/assets/customer-logos/customer-07.jpg" },
+  { name: "Bharati Diagnostics", logo: "/assets/customer-logos/customer-08.png" },
+  { name: "GURU NANAK MEDICAL FOUNDATION", logo: "/assets/customer-logos/customer-09.png" },
+  { name: "Nakoda Bhairav Foundation Charitable Trust", logo: "/assets/customer-logos/customer-10.jpg" },
+  { name: "Next Gen Health & Wellness", logo: "/assets/customer-logos/customer-11.png" },
+  { name: "Nikhil Hospitals", logo: "/assets/customer-logos/customer-12.jpeg" },
+  { name: "SVH SPECIALITY HOSPITAL", logo: "/assets/customer-logos/customer-13.png" },
+  { name: "BALAJI HOSPITALS AND DIABETES CENTRE", logo: "/assets/customer-logos/customer-14.jpg" },
+  { name: "Orthocare Tezpur Pvt. Ltd.", logo: "/assets/customer-logos/customer-15.jpg" },
+  { name: "SHREE SIDDHIVINAYAK NURSING HOME", logo: "/assets/customer-logos/customer-16.png" },
+  { name: "NJSM DIAGNOSTICS VEERAYATAN", logo: "/assets/customer-logos/customer-17.png" },
+  { name: "INDO US HOSPITAL", logo: "/assets/customer-logos/customer-18.png" },
+  { name: "Neo TrueNorth Hospitals", logo: "/assets/customer-logos/customer-19.png" },
+  { name: "GLOBAL HOSPITAL", logo: "/assets/customer-logos/customer-20.png" },
+  { name: "Privy Wellness Clinic", logo: "/assets/customer-logos/customer-21.png" },
+  { name: "FAH Superspeciality Hospitals", logo: "/assets/customer-logos/customer-22.jpeg" },
 ];
 
 export default function OurCustomersPage() {
@@ -58,11 +69,14 @@ export default function OurCustomersPage() {
                 key={customer.name}
                 className="group flex min-h-44 flex-col items-center justify-center gap-5 border-b border-r border-gray-200 px-4 py-8 text-center transition-colors duration-300 hover:bg-yellow-50/70"
               >
-                <div
-                  aria-hidden="true"
-                  className={`flex size-14 items-center justify-center rounded-xl ${customer.tone} text-sm font-bold tracking-widest text-white shadow-sm transition-transform duration-300 group-hover:-translate-y-1`}
-                >
-                  {customer.initials}
+                <div className="relative flex h-20 w-full items-center justify-center transition-transform duration-300 group-hover:-translate-y-1">
+                  <Image
+                    src={customer.logo}
+                    alt={`${customer.name} logo`}
+                    fill
+                    sizes="(max-width: 640px) 40vw, (max-width: 1024px) 30vw, 220px"
+                    className="object-contain"
+                  />
                 </div>
                 <p className="text-sm font-semibold leading-5 text-gray-800 sm:text-base">
                   {customer.name}
