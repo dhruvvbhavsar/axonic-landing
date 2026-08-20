@@ -11,7 +11,7 @@ interface PageHeaderProps {
 
 export function PageHeader({ title, backgroundImage, navLinks }: PageHeaderProps) {
   return (
-    <section className="relative h-40 sm:h-44 w-full overflow-hidden">
+    <section className="relative h-36 w-full overflow-hidden sm:h-40">
       {/* Background Image or Gradient */}
       {backgroundImage ? (
         <div 
@@ -35,7 +35,7 @@ export function PageHeader({ title, backgroundImage, navLinks }: PageHeaderProps
       <div className="absolute inset-0 bg-black/40" />
 
       {/* Title and certifications share the same fixed row as the homepage placement. */}
-      <div className="absolute left-0 right-0 top-[4.75rem] z-10 h-[4.25rem]">
+      <div className="absolute left-0 right-0 top-[3.75rem] z-10 h-[4.25rem]">
         <div className="absolute inset-0 flex items-center justify-center px-4 text-center">
           <div className="max-w-[55vw]">
             <h1 className="text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl lg:text-4xl">

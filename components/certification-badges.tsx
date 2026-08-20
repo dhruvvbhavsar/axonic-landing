@@ -37,7 +37,7 @@ export function CertificationBadges({ size = "panel", className = "" }: Certific
           alt={certification.label}
           width={112}
           height={112}
-          className={`size-20 object-contain sm:size-24 lg:size-28 ${certification.className}`}
+          className={`size-24 object-contain sm:size-32 lg:size-40 ${certification.className}`}
         />
       ))}
     </div>

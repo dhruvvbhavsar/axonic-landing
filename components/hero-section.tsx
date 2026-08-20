@@ -61,7 +61,7 @@ export function HeroSection() {
 
       <CertificationBadges
         size="panel"
-        className="absolute right-6 top-[4.75rem] z-10 hidden lg:flex"
+        className="absolute right-6 top-[3.75rem] z-10 hidden lg:flex"
       />
 
       {/* Content positioned at bottom */}

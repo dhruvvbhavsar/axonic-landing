@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/carousel"
 import { products } from "@/lib/products-data"
 import { getProductSubdomainUrl } from "@/lib/utils"
-import { CertificationBadges } from "@/components/certification-badges"
 
 export default function OurProductsPage() {
   const [api, setApi] = React.useState<CarouselApi>()
@@ -162,11 +161,31 @@ export default function OurProductsPage() {
         </div>
       </section>
 
-      <section className="bg-[#f3f7fb] px-4 py-14 sm:px-6 sm:py-18 lg:px-8" aria-labelledby="products-security-heading">
-        <div className="container mx-auto max-w-6xl">
-          <h2 id="products-security-heading" className="max-w-3xl text-3xl font-bold tracking-tight text-gray-950 sm:text-4xl">Security standards you can recognize</h2>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-gray-600">Healthcare, privacy, and information-security controls are built into the platform from the start.</p>
-          <CertificationBadges size="showcase" className="mt-8 justify-start" />
+      <section className="overflow-x-hidden bg-white px-4 py-12 sm:px-6 lg:px-8" aria-labelledby="products-security-heading">
+        <div className="container mx-auto max-w-7xl">
+          <div className="mb-8 text-center">
+            <h2 id="products-security-heading" className="mb-4 text-2xl font-bold text-gray-900 md:text-3xl">Security and Compliance</h2>
+            <p className="mx-auto max-w-2xl text-base text-gray-600 md:text-lg">Full ABDM Compliance with enterprise-grade security certifications.</p>
+            <div className="mx-auto mt-4 h-1 w-20 bg-blue-400" />
+          </div>
+
+          <div className="mb-12 grid grid-cols-1 items-center justify-items-center gap-8 sm:grid-cols-5">
+            <div className="flex items-center justify-center">
+              <Image src="/abdm/abdm.png" alt="ABDM Compliance" width={208} height={208} className="h-24 w-auto object-contain sm:h-32 lg:h-40" />
+            </div>
+            <div className="flex items-center justify-center">
+              <Image src="/abdm/gdpr.png" alt="GDPR Compliance" width={208} height={208} className="h-24 w-auto object-contain sm:h-32 lg:h-40" />
+            </div>
+            <div className="flex items-center justify-center">
+              <Image src="/abdm/hippa.png" alt="HIPAA Compliance" width={208} height={208} className="h-24 w-auto object-contain sm:h-32 lg:h-40" />
+            </div>
+            <div className="flex items-center justify-center">
+              <Image src="/abdm/soc-2.png" alt="SOC 2 Compliance" width={208} height={208} className="h-24 w-auto object-contain sm:h-32 lg:h-40" />
+            </div>
+            <div className="flex items-center justify-center">
+              <Image src="/abdm/iso.png" alt="ISO 27001 Certification" width={208} height={208} className="h-20 w-auto object-contain sm:h-28 lg:h-36" />
+            </div>
+          </div>
         </div>
       </section>
 
