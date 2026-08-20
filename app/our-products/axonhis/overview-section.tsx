@@ -769,7 +769,7 @@ export function OverviewSection({
             <section className="py-10 overflow-x-hidden px-4 sm:px-6 lg:px-8">
                 <div className="container mx-auto max-w-7xl">
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">What Our Customers Say</h2>
+                        <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">What Customers Say</h2>
                         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
                             Hear from healthcare leaders who transformed their operations with AxonHIS
                         </p>
@@ -1544,6 +1544,5 @@ export function OverviewSection({
         </div>
     )
 }
-
 
 

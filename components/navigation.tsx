@@ -166,7 +166,6 @@ export function Navigation() {
                 { label: "AxonCare", slug: "axoncare" },
                 { label: "AxonHIS", slug: "axonhis" },
                 { label: "AxonHealthHub", slug: "axonhealthhub" },
-                { label: "AxonHomeClinic", slug: "axonhomeclinic" },
               ].map((item) => (
                 <NavigationMenuItem key={item.slug}>
                   <NavigationMenuLink
@@ -186,7 +185,7 @@ export function Navigation() {
                 </NavigationMenuItem>
               ))}
 
-              {/* Our Platform */}
+              {/* Platform */}
               <NavigationMenuItem>
                 <NavigationMenuLink
                   asChild
@@ -199,12 +198,12 @@ export function Navigation() {
                   )}
                 >
                   <SmartLink href={getPlatformSubdomainUrl()}>
-                    Our Platform
+                    Platform
                   </SmartLink>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
-              {/* Village Health Initiative */}
+              {/* Health Initiative */}
               <NavigationMenuItem>
                 <NavigationMenuLink
                   asChild
@@ -217,12 +216,12 @@ export function Navigation() {
                   )}
                 >
                   <SmartLink href={getNavUrl("/village-health-initiative")}>
-                    Village Health Initiative
+                    Health Initiative
                   </SmartLink>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
-              {/* Our Customers */}
+              {/* Customers */}
               <NavigationMenuItem>
                 <NavigationMenuLink
                   asChild
@@ -234,7 +233,7 @@ export function Navigation() {
                       : "text-white hover:text-yellow-200 bg-transparent hover:bg-white/10",
                   )}
                 >
-                  <SmartLink href={getNavUrl("/our-customers")}>Our Customers</SmartLink>
+                  <SmartLink href={getNavUrl("/our-customers")}>Customers</SmartLink>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
@@ -348,6 +347,7 @@ export function Navigation() {
             <Menu className="h-6 w-6" />
           )}
         </button>
+
       </div>
 
       {/* Mobile Menu Overlay */}
@@ -375,7 +375,6 @@ export function Navigation() {
                   <X className="h-5 w-5" />
                 </button>
               </div>
-
               {/* Mobile menu items */}
               <nav className="flex-1 px-4 py-6 space-y-2">
                 {/* Product shortcuts */}
@@ -385,7 +384,6 @@ export function Navigation() {
                   { label: "AxonCare", slug: "axoncare" },
                   { label: "AxonHIS", slug: "axonhis" },
                   { label: "AxonHealthHub", slug: "axonhealthhub" },
-                  { label: "AxonHomeClinic", slug: "axonhomeclinic" },
                 ].map((item) => (
                   <SmartLink
                     key={item.slug}
@@ -402,7 +400,7 @@ export function Navigation() {
                   className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                   onClick={closeMobileMenu}
                 >
-                  Our Platform
+                  Platform
                 </SmartLink>
 
                 <SmartLink
@@ -410,7 +408,7 @@ export function Navigation() {
                   className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                   onClick={closeMobileMenu}
                 >
-                  Village Health Initiative
+                  Health Initiative
                 </SmartLink>
 
                 <SmartLink
@@ -418,7 +416,7 @@ export function Navigation() {
                   className="block px-3 py-2 rounded-md text-gray-900 hover:bg-gray-100 hover:text-yellow-500 transition-colors"
                   onClick={closeMobileMenu}
                 >
-                  Our Customers
+                  Customers
                 </SmartLink>
 
                 {/* About Us submenu */}

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { PageHeader } from "@/components/page-header";
 
 export const metadata: Metadata = {
-  title: "Our Customers | Axonic Health",
+  title: "Customers | Axonic Health",
   description:
     "Meet the healthcare organisations using Axonic Health to deliver more connected, efficient care.",
 };
@@ -36,7 +36,7 @@ const customers = [
 export default function OurCustomersPage() {
   return (
     <div className="min-h-screen bg-white">
-      <PageHeader title="Our Customers" />
+      <PageHeader title="Customers" />
 
       <section className="border-b border-gray-200 bg-white py-16 sm:py-20">
         <div className="container mx-auto max-w-6xl px-6">

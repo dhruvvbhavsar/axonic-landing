@@ -14,7 +14,7 @@ export const tickerItems: string[] = [
   "Breaking language barriers in healthcare",
   "From chest pain to emergency care in minutes",
   "Saving lives through accessible diagnostics",
-  "Village Health Initiative — bringing care closer to communities",
+  "Health Initiative — bringing care closer to communities",
   "24/7 virtual consultations for every patient",
   "AxonScribe — where conversations become care records",
   "Redefining all possibilities in healthcare",

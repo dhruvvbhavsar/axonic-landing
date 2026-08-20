@@ -60,7 +60,7 @@ const testimonials = [
   {
     image: "/assets/aboutSection/aboutSection4.png",
     name: "Field Coordinator",
-    role: "Village Health Initiative",
+    role: "Health Initiative",
     quote:
       "Having point-of-care equipment changed everything. We didn't have to wait for anyone to travel.",
   },
@@ -82,7 +82,7 @@ export default function VillageHealthInitiativePage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <PageHeader title="Village Health Initiative" />
+      <PageHeader title="Health Initiative" />
 
       <div className="grid min-h-[calc(100vh-9rem)] grid-cols-1 lg:grid-cols-2">
         {/* ── LEFT: Story Slideshow ───────────────────────── */}
@@ -233,7 +233,7 @@ export default function VillageHealthInitiativePage() {
               </span>
             </p>
             <p className="mt-2 text-sm text-gray-400">
-              Kasurdi Village · Axonic Village Health Initiative
+              Kasurdi Village · Axonic Health Initiative
             </p>
           </div>
         </div>

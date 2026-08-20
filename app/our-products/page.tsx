@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/carousel"
 import { products } from "@/lib/products-data"
 import { getProductSubdomainUrl } from "@/lib/utils"
+import { CertificationBadges } from "@/components/certification-badges"
 
 export default function OurProductsPage() {
   const [api, setApi] = React.useState<CarouselApi>()
@@ -158,6 +159,14 @@ export default function OurProductsPage() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="bg-[#f3f7fb] px-4 py-14 sm:px-6 sm:py-18 lg:px-8" aria-labelledby="products-security-heading">
+        <div className="container mx-auto max-w-6xl">
+          <h2 id="products-security-heading" className="max-w-3xl text-3xl font-bold tracking-tight text-gray-950 sm:text-4xl">Security standards you can recognize</h2>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-gray-600">Healthcare, privacy, and information-security controls are built into the platform from the start.</p>
+          <CertificationBadges size="showcase" className="mt-8 justify-start" />
         </div>
       </section>
 

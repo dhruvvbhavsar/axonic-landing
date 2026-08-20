@@ -58,11 +58,6 @@ export function middleware(request: NextRequest) {
       return NextResponse.rewrite(url)
     }
 
-    if (subdomain === 'axonhomeclinic') {
-      url.pathname = `/our-products/axonhomeclinic/`
-      return NextResponse.rewrite(url)
-    }
-    
     // For other products, rewrite to the slug-based route
     url.pathname = `/our-products/${subdomain}`
     return NextResponse.rewrite(url)

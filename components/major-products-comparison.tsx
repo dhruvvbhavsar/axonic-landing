@@ -13,7 +13,7 @@ const majorProductSlugs = [
   "axonmd",
   "axonhealthhub",
   "axonscribe",
-  "axonhomeclinic",
+  "axoncare",
 ] as const
 
 const productDetails: Record<
@@ -49,11 +49,11 @@ const productDetails: Record<
     proof: "AI transcription, SOAP notes, specialty templates, multilingual capture, and offline recording.",
     highlights: ["AI scribe", "SOAP notes", "Multilingual capture"],
   },
-  axonhomeclinic: {
-    audience: "Homes, families, and wellness-first communities",
-    bestFor: "Clinic-grade care from home",
-    proof: "IoT vitals, remote auscultation, AI guidance, family profiles, and instant doctor access.",
-    highlights: ["Home vitals", "Family profiles", "Doctor access"],
+  axoncare: {
+    audience: "Care teams and population health programs",
+    bestFor: "Predictive risk intelligence for proactive care",
+    proof: "Advanced analytics identify emerging health risks and help teams plan earlier, more targeted interventions.",
+    highlights: ["Risk analytics", "Care planning", "Population insights"],
   },
 }
 

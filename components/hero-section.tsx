@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
+import { CertificationBadges } from "@/components/certification-badges"
 
 export function HeroSection() {
   
@@ -58,6 +59,11 @@ export function HeroSection() {
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/50" />
 
+      <CertificationBadges
+        size="panel"
+        className="absolute right-6 top-[4.75rem] z-10 hidden lg:flex"
+      />
+
       {/* Content positioned at bottom */}
       <div className="absolute bottom-0 left-0 right-0 z-10 pb-20">
         <div className="container mx-auto px-6">
@@ -89,4 +95,4 @@ export function HeroSection() {
       </div>
     </section>
   )
-} 
+}

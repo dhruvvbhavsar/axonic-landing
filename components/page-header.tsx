@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { CertificationBadges } from "@/components/certification-badges"
 
 interface PageHeaderProps {
   title: string
@@ -10,7 +11,7 @@ interface PageHeaderProps {
 
 export function PageHeader({ title, backgroundImage, navLinks }: PageHeaderProps) {
   return (
-    <section className="relative h-24 sm:h-28 md:h-32 lg:h-36 w-full overflow-hidden">
+    <section className="relative h-40 sm:h-44 w-full overflow-hidden">
       {/* Background Image or Gradient */}
       {backgroundImage ? (
         <div 
@@ -33,35 +34,36 @@ export function PageHeader({ title, backgroundImage, navLinks }: PageHeaderProps
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/40" />
 
-      {/* Content */}
-      <div className="absolute inset-0 flex items-end pb-6 justify-center z-10">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-
-          <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white tracking-tight leading-tight">
-            {title}
-          </h1>
-
-          {/* Decorative Line Below */}
-          <div className="w-16 sm:w-20 md:w-24 h-px bg-gradient-to-r from-transparent via-yellow-400 to-transparent mx-auto mt-3 sm:mt-4 md:mt-6"></div>
-
-          {navLinks && navLinks.length > 0 && (
-            <nav className="mt-3 sm:mt-4 md:mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href + link.label}
-                  href={link.href}
-                  className="text-xs sm:text-sm md:text-base text-white/90 hover:text-yellow-300 bg-white/10 hover:bg-white/20 border border-white/20 px-2 sm:px-3 py-1 rounded-full transition-colors"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </nav>
-          )}
+      {/* Title and certifications share the same fixed row as the homepage placement. */}
+      <div className="absolute left-0 right-0 top-[4.75rem] z-10 h-[4.25rem]">
+        <div className="absolute inset-0 flex items-center justify-center px-4 text-center">
+          <div className="max-w-[55vw]">
+            <h1 className="text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl lg:text-4xl">
+              {title}
+            </h1>
+            <div className="mx-auto mt-2 h-px w-20 bg-yellow-400"></div>
+          </div>
         </div>
+
+        <CertificationBadges size="panel" className="absolute right-6 top-0 hidden lg:flex" />
       </div>
+
+      {navLinks && navLinks.length > 0 && (
+        <nav className="absolute bottom-2 left-1/2 z-10 flex -translate-x-1/2 flex-wrap items-center justify-center gap-2 sm:gap-3">
+          {navLinks.map((link) => (
+            <a
+              key={link.href + link.label}
+              href={link.href}
+              className="rounded-full border border-white/20 bg-white/10 px-2 py-1 text-xs text-white/90 transition-colors hover:bg-white/20 hover:text-yellow-300 sm:px-3 sm:text-sm md:text-base"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+      )}
 
       {/* Bottom Border */}
       <div className="absolute bottom-0 left-0 right-0 h-0.5 sm:h-1 bg-gradient-to-r from-transparent via-yellow-400 to-transparent"></div>
     </section>
   )
-} 
+}

@@ -100,7 +100,6 @@ export default function PlatformPage() {
   const patientsProducts = [
     products.find(p => p.slug === "axonhealthhub"), // AxonHealthHub
     products.find(p => p.slug === "axoncare"),      // AxonCare
-    products.find(p => p.slug === "axonhomeclinic"), // AxonHomeClinic
     products.find(p => p.slug === "axondoc"),       // AxonDoc
     products.find(p => p.slug === "axonbuddy"),     // AxonBuddy
   ].filter((product): product is NonNullable<typeof product> => product !== undefined);
@@ -122,7 +121,7 @@ export default function PlatformPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Page Header */}
-      <PageHeader title="Our Platform" />
+      <PageHeader title="Platform" />
 
       {/* Main Platform Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
@@ -332,4 +331,4 @@ export default function PlatformPage() {
       </section>
     </div>
   )
-} 
+}
