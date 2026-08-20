@@ -11,7 +11,7 @@ interface PageHeaderProps {
 
 export function PageHeader({ title, backgroundImage, navLinks }: PageHeaderProps) {
   return (
-    <section className="relative h-36 w-full overflow-hidden sm:h-40">
+    <section className="relative h-[8.5rem] w-full overflow-hidden">
       {/* Background Image or Gradient */}
       {backgroundImage ? (
         <div 
@@ -41,7 +41,7 @@ export function PageHeader({ title, backgroundImage, navLinks }: PageHeaderProps
             <h1 className="text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl lg:text-4xl">
               {title}
             </h1>
-            <div className="mx-auto mt-2 h-px w-20 bg-yellow-400"></div>
+            <div className="mx-auto mt-1 h-px w-20 bg-yellow-400"></div>
           </div>
         </div>
 
