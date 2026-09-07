@@ -389,7 +389,7 @@ export function OverviewSection({
             </section>
 
             {/* Pricing */}
-            <section id="pricing" className="py-10 px-4 sm:px-6 lg:px-8 bg-gray-50 overflow-x-hidden">
+            <section id="pricing" className="hidden py-10 px-4 sm:px-6 lg:px-8 bg-gray-50 overflow-x-hidden">
                 <div className="container mx-auto max-w-7xl">
                     <div className="text-center mb-8">
                         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Pricing</h2>
@@ -708,5 +708,4 @@ export function OverviewSection({
         </div>
     )
 }
-
 
