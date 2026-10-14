@@ -190,7 +190,7 @@ export default function ContactUsPage() {
                   <h3 className="font-medium text-gray-900 mb-2">Development Centre Pune:</h3>
                   <div className="flex items-start space-x-3">
                     <MapPin className="w-5 h-5 text-yellow-500 mt-0.5 flex-shrink-0" />
-                    <p className="text-gray-600">403, 4th Floor, Kapil Zenith IT Park, Bavdhan,Pune 411021</p>
+                    <p className="text-gray-600">Shop 114, Wbiz, Near Hotel Ginger, Bhumkar Chowk, Wakad, Pune Maharashtra India</p>
                   </div>
                 </div>
                 
