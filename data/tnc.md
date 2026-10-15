@@ -2,7 +2,7 @@
 
 **EFFECTIVE DATE:** 25th September 2024
 
-This Terms of Use and the policies referred to herein contain the terms and conditions that apply to your use of our Platform and our Mobile Application by the name **AxonCare**, developed by **Axonic Health Private Limited**, a corporation whose principal place of business is at Shop 114, Wbiz, Near Hotel Ginger, Bhumkar Chowk, Wakad, Pune Maharashtra India ("We/Our/Us/Company") from time to time and services provided therein ("Platform"). By using and continuing to use the Platform, the User ("You/Your") representing the Organization with which the Company has entered into an agreement for use of the Platform ("Client") agrees to abide by this Agreement. These Terms of Use along with the Privacy policy together shall hereinafter be referred to as the Terms.
+This Terms of Use and the policies referred to herein contain the terms and conditions that apply to your use of our Platform and our Mobile Application by the name **AxonCare**, developed by **Axonic Health Private Limited**, a corporation whose principal place of business is at Shop 114, Wbiz, Near Hotel Ginger, Bhumkar Chowk, Wakad, Pune Maharashtra India - 411057 ("We/Our/Us/Company") from time to time and services provided therein ("Platform"). By using and continuing to use the Platform, the User ("You/Your") representing the Organization with which the Company has entered into an agreement for use of the Platform ("Client") agrees to abide by this Agreement. These Terms of Use along with the Privacy policy together shall hereinafter be referred to as the Terms.
 
 **PLEASE READ THESE TERMS CAREFULLY. THIS AGREEMENT GOVERNS YOUR USE OF THE PLATFORM AND/OR OUR APP AND SERVICES MADE AVAILABLE THROUGH THE PLATFORM AND/OR OUR APP. IF YOU DO NOT AGREE TO THE TERMS, PLEASE DO NOT USE THE PLATFORM.**
 
@@ -152,7 +152,7 @@ The Company shall have the right to place advertisements and publicity materials
 
 The Company may deliver notice to you under this Agreement by means of electronic mail, a general notice on the Company's Platform, or by written communication to your address on record in the Company's account information. You may give notice to the Company at any time via electronic mail to legal@axonichealth.com or by letter delivered to the following address:
 
-Shop 114, Wbiz, Near Hotel Ginger, Bhumkar Chowk, Wakad, Pune Maharashtra India
+Shop 114, Wbiz, Near Hotel Ginger, Bhumkar Chowk, Wakad, Pune Maharashtra India - 411057
 
 ## Contact Us
 

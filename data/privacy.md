@@ -4,7 +4,7 @@
 
 We believe in openness and privacy therefore at **Axonic Health Private Limited** ("Company/we/our/us"), the User's ("you/your") privacy is of paramount importance. We respect your privacy and are committed to protecting it through our compliance with this policy which governs the use of our Mobile Application **AxonCare**, developed by Axonic Health Private Limited.
 
-**Company Address:** Shop 114, Wbiz, Near Hotel Ginger, Bhumkar Chowk, Wakad, Pune Maharashtra India
+**Company Address:** Shop 114, Wbiz, Near Hotel Ginger, Bhumkar Chowk, Wakad, Pune Maharashtra India - 411057
 
 This Privacy Policy is incorporated by reference into the Terms of Use of the Platform and shall be read along with the Terms of Use.
 
